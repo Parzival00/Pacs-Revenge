@@ -28,7 +28,7 @@ public class EnemyVisualizer : MonoBehaviour
     [SerializeField] [Range(-180f, 180f)] float eastMinThreshold = -112.5f;
     [SerializeField] [Range(-180f, 180f)] float southeastMaxThreshold = -112.5f;
     [SerializeField] [Range(-180f, 180f)] float southeastMinThreshold = -157.5f;
-    [SerializeField] [Range(-180f, 180f)] float southMaxThreshold = -157.5f; //special case
+    [SerializeField] [Range(-180f, 180f)] float southMaxThreshold = -157.5f;
     [SerializeField] [Range(-180f, 180f)] float southMinThreshold = 157.5f;
     [SerializeField] [Range(-180f, 180f)] float southwestMaxThreshold = 157.5f;
     [SerializeField] [Range(-180f, 180f)] float southwestMinThreshold = 112.5f;
@@ -38,12 +38,6 @@ public class EnemyVisualizer : MonoBehaviour
     [SerializeField] [Range(-180f, 180f)] float northwestMinThreshold = 22.5f;
 
     //Vector3 currentDirection;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -93,6 +87,7 @@ public class EnemyVisualizer : MonoBehaviour
             //currentDirection = new Vector3(1, 0, 1).normalized;
         }
 
-        spriteRenderer.transform.rotation = Quaternion.FromToRotation(spriteRenderer.transform.forward, dirToPlayer) * spriteRenderer.transform.rotation;
+        transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
+        //spriteRenderer.transform.rotation *= Quaternion.LookRotation(dirToPlayer, Vector3.up);//  * spriteRenderer.transform.rotation;
     }
 }
