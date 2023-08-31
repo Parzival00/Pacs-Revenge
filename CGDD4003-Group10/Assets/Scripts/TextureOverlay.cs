@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyVisualizer : MonoBehaviour
+public class TextureOverlay : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] Transform player;
