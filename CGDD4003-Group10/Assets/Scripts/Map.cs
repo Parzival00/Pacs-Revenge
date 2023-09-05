@@ -21,6 +21,7 @@ public class Map : MonoBehaviour
     [SerializeField] Vector3 centerOffset;
     [SerializeField] bool startGridFromOrigin;
     [SerializeField] bool visualizePlayerGridLocation;
+    [SerializeField] bool visualizeMap;
 
     // Start is called before the first frame update
     void Start()
@@ -112,5 +113,33 @@ public class Map : MonoBehaviour
             Gizmos.color = Color.green;
             Gizmos.DrawWireCube(worldPos, Vector3.one * size / 2);
         }
+
+        if (visualizeMap && map != null)
+        {
+            for (int y = 0; y < mapHeight; y++)
+            {
+                for (int x = 0; x < mapWidth; x++)
+                {
+                    Vector3 offset = Vector3.zero;
+                    if (!startGridFromOrigin)
+                        offset = -new Vector3(mapWidth, 0, mapHeight) / 2f * size;
+
+                    Vector3 worldPos = new Vector3(x, 0, y) * size + offset + transform.position + centerOffset;
+
+                    if (SampleGrid(new Vector2Int(x, y)) == GridType.Air)
+                    {
+                        Gizmos.color = Color.white;
+                    }
+                    else
+                    {
+                        Gizmos.color = Color.red;
+                    }
+
+                    Gizmos.DrawWireCube(worldPos, Vector3.one * size);
+
+                }
+            }
+        }
+
     }
 }
