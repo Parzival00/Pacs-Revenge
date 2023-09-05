@@ -34,6 +34,7 @@ public class GridVisualization : MonoBehaviour
                     Vector3 offset = Vector3.zero;
                     if (!startGridFromOrigin)
                         offset = -new Vector3(width, 0, height) / 2f * size;
+                    Gizmos.color = Color.white;
                     Gizmos.DrawWireCube(transform.position + offset + new Vector3(x, 0, y) * size + centerOffset, Vector3.one * size);
                 }
             }
