@@ -10,16 +10,18 @@ public class Map : MonoBehaviour
         Wall
     }
 
-    public GridType[,] map;
+    public GridType[,] map { get; private set; }
 
     [SerializeField] Transform player;
-    [SerializeField] GameObject cube;
-    [SerializeField] LayerMask obstacles;
+
+    [Header("Map Settings")]
     [SerializeField] float size = 1f;
     [SerializeField] int mapWidth = 50;
     [SerializeField] int mapHeight = 50;
     [SerializeField] Vector3 centerOffset;
     [SerializeField] bool startGridFromOrigin;
+
+    [Header("Debug Settings")]
     [SerializeField] bool visualizePlayerGridLocation;
     [SerializeField] bool visualizeMap;
 
@@ -87,6 +89,11 @@ public class Map : MonoBehaviour
         Vector3 adjustedPos = pos - offset - transform.position - centerOffset + Vector3.one * size / 2;
 
         return new Vector2Int(Mathf.Clamp(Mathf.FloorToInt(adjustedPos.x / size), 0, mapWidth - 1), Mathf.Clamp(Mathf.FloorToInt(adjustedPos.z / size), 0, mapHeight - 1));
+    }
+
+    public Vector2Int GetPlayerPosition()
+    {
+        return GetGridLocation(player.position);
     }
 
     // Update is called once per frame
