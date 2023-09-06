@@ -91,6 +91,22 @@ public class Map : MonoBehaviour
         return new Vector2Int(Mathf.Clamp(Mathf.FloorToInt(adjustedPos.x / size), 0, mapWidth - 1), Mathf.Clamp(Mathf.FloorToInt(adjustedPos.z / size), 0, mapHeight - 1));
     }
 
+    /// <summary>
+    /// Returns the world position of the given grid position
+    /// </summary>
+    /// <param name="gridPosition"></param>
+    /// <returns></returns>
+    public Vector3 GetWorldFromGrid(Vector2Int gridPosition)
+    {
+        Vector3 offset = Vector3.zero;
+        if (!startGridFromOrigin)
+            offset = -new Vector3(mapWidth, 0, mapHeight) / 2f * size;
+
+        Vector3 worldPos = new Vector3(gridPosition.x, 0, gridPosition.y) * size + offset + transform.position + centerOffset;
+
+        return worldPos;
+    }
+
     public Vector2Int GetPlayerPosition()
     {
         return GetGridLocation(player.position);

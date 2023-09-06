@@ -16,11 +16,13 @@ public class Ghost : MonoBehaviour
     protected Mode currentMode;
 
     [SerializeField] protected NavMeshAgent navMesh;
+    [SerializeField] protected Map map;
     [SerializeField] protected int pelletsNeededToStart = 10;
     [SerializeField] protected float speed = 2f;
     [SerializeField] protected Transform player;
 
     protected Vector3 targetPosition;
+    protected Vector2Int lastPlayerGridPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +31,8 @@ public class Ghost : MonoBehaviour
 
         if (navMesh == null)
             navMesh = GetComponent<NavMeshAgent>();
+
+        navMesh.speed = speed;
     }
 
     // Update is called once per frame
@@ -58,7 +62,16 @@ public class Ghost : MonoBehaviour
 
     protected virtual void Chase()
     {
+        Vector2Int playerGridPosition = map.GetPlayerPosition();
 
+        if(lastPlayerGridPosition != playerGridPosition)
+        {
+            targetPosition = map.GetWorldFromGrid(playerGridPosition);
+
+            navMesh.SetDestination(targetPosition);
+        }
+
+        lastPlayerGridPosition = playerGridPosition;
     }
 
     protected virtual void Scatter()
@@ -68,7 +81,7 @@ public class Ghost : MonoBehaviour
 
     protected virtual void Dormant()
     {
-
+        currentMode = Mode.Chase;
     }
 
     protected virtual void Respawn()
