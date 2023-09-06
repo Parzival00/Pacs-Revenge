@@ -12,6 +12,10 @@ public class PlayerController : MonoBehaviour
     private float cameraPitch;
     public float sensitivity;
     public bool lockCursor = true;
+    public bool paused;
+
+    public AudioClip gunshot;
+    public AudioSource weaponSound;
 
     public float baseSpeed;
     private float speed;
@@ -19,6 +23,14 @@ public class PlayerController : MonoBehaviour
     private Vector2 currentDirection;
     private Vector2 currentVelocity;
     private CharacterController character;
+
+    public float fireRate;
+    private float fireTimer;
+    public Transform bulletOrigin;
+    private LineRenderer laserLine;
+    public Camera fpsCam;   
+    private WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
+    public float weaponRange;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +42,7 @@ public class PlayerController : MonoBehaviour
             Cursor.visible = false;
         }
         speed = baseSpeed;
+        laserLine = GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
@@ -37,6 +50,7 @@ public class PlayerController : MonoBehaviour
     {
         mouseControl();
         movementControl();
+        fire();
     }
     void mouseControl()
     {
@@ -65,5 +79,40 @@ public class PlayerController : MonoBehaviour
         }
         Vector3 velocity = (playerT.forward * currentDirection.y + playerT.right * currentDirection.x) * speed;
         character.Move(velocity * Time.deltaTime);
+    }
+    void fire()
+    {
+        if (fireTimer <= 0 && Input.GetMouseButton(0) && !paused)
+        {
+            /*Projectile bullet = Instantiate(Resources.Load<Projectile>("Bullet"), bulletOrigin.transform, false);
+            bullet.transform.localEulerAngles = Vector3.up * -cameraPitch;
+            bullet.transform.localPosition += Vector3.forward * 1.5f;
+            bullet.transform.parent = null;*/
+            StartCoroutine(ShotEffect());
+            Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
+            RaycastHit hit;
+            laserLine.SetPosition(0, bulletOrigin.position);
+            if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange))
+            {
+                laserLine.SetPosition(1, hit.point);
+            }
+            else
+            {
+                laserLine.SetPosition(1, rayOrigin + (fpsCam.transform.forward * weaponRange));
+            }
+            fireTimer = fireRate;
+            //weaponSound.PlayOneShot(gunshot);
+        }
+        else if (fireTimer > 0)
+        {
+            fireTimer -= Time.deltaTime;
+        }
+    }
+    private IEnumerator ShotEffect()
+    {
+        weaponSound.PlayOneShot(gunshot);
+        laserLine.enabled = true;
+        yield return shotDuration;
+        laserLine.enabled = false;
     }
 }
