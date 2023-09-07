@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
-    int powerPellet = 0;
+    static int score = 0;
+    public GameObject textUI;
     void Start()
     {
         
@@ -13,16 +15,45 @@ public class Score : MonoBehaviour
     
     void Update()
     {
-        
+        updateScore();
     }
-    private void OnCollisionEnter(Collision other)
+
+    /*private void OnCollisionEnter(Collision other)
     {
-        //Make if statement with tag
-        Destroy(other.gameObject);
-        powerPellet++;
+        if (other.gameObject.tag == "powerPellet") 
+        {
+            other.gameObject.SetActive(false);
+            //Destroy(other.gameObject);
+            score += 50;
+        }
+
+        if (other.gameObject.tag == "Cherry") 
+        {
+            other.gameObject.SetActive(false);
+            //Destroy(other.gameObject);
+            score += 100;
+        }
+    }*/
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "powerPellet")
+        {
+            other.gameObject.SetActive(false);
+            //Destroy(other.gameObject);
+            score += 50;
+        }
+
+        if (other.gameObject.tag == "Cherry")
+        {
+            other.gameObject.SetActive(false);
+            //Destroy(other.gameObject);
+            score += 100;
+        }
     }
-    public void getScore() 
+
+
+    void updateScore() 
     {
-        //Add all points up
+        textUI.GetComponent<Text>().text = "Score: " + score;
     }
 }
