@@ -17,9 +17,16 @@ public class Ghost : MonoBehaviour
 
     [SerializeField] protected NavMeshAgent navMesh;
     [SerializeField] protected Map map;
+
+    [Header("Ghost Settings")]
     [SerializeField] protected int pelletsNeededToStart = 10;
     [SerializeField] protected float speed = 2f;
+    [SerializeField] protected float respawnWaitTime = 5f;
+
+    [Header("Transform Targets")]
     [SerializeField] protected Transform player;
+    [SerializeField] protected Transform scatterTarget;
+    [SerializeField] protected Transform respawnPoint;
 
     protected Vector3 targetPosition;
     protected Vector2Int lastPlayerGridPosition;
@@ -60,6 +67,7 @@ public class Ghost : MonoBehaviour
         }
     }
 
+    //Chase the player
     protected virtual void Chase()
     {
         Vector2Int playerGridPosition = map.GetPlayerPosition();
@@ -74,18 +82,43 @@ public class Ghost : MonoBehaviour
         lastPlayerGridPosition = playerGridPosition;
     }
 
+    //Scatter and move to the provided transforms location
     protected virtual void Scatter()
     {
+        Vector2Int scatterTargetGridPos = map.GetGridLocation(scatterTarget.position);
 
+        navMesh.SetDestination(map.GetWorldFromGrid(scatterTargetGridPos));
     }
 
+    //Mode at the games start to keep ghost unactive until the required pellets are collected
     protected virtual void Dormant()
     {
         currentMode = Mode.Chase;
     }
 
+    bool startedRespawnSequence = false; //Used in the Respawn mode to check whether the timer has started
+    float respawnTimer; //Used in the Respawn mode to hold the time when the ghost will change back to Chase mode
+
+    //Mode activated when a ghost is shot. Ghost moves to provided respawn location and wants specified amount of time before shifting to Chase mode
     protected virtual void Respawn()
     {
+        Vector2Int respawnPointGridPos = map.GetGridLocation(respawnPoint.position);
 
+        navMesh.SetDestination(map.GetWorldFromGrid(respawnPointGridPos));
+
+        if (navMesh.remainingDistance <= 0.01f)
+        {
+            if (startedRespawnSequence == false)
+            {
+                startedRespawnSequence = true;
+                respawnTimer = Time.time + respawnWaitTime;
+            }
+        }
+
+        if(startedRespawnSequence && Time.time >= respawnTimer)
+        {
+            startedRespawnSequence = false;
+            currentMode = Mode.Chase;
+        }
     }
 }
