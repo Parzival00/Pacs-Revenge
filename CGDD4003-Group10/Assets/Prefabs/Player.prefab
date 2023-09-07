@@ -65,7 +65,8 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials: []
+  m_Materials:
+  - {fileID: 2100000, guid: 4a8ec7cb94040c044bc53f3ddfd66ad5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -150,12 +151,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCam: {fileID: 2701049378798147818}
   playerT: {fileID: 743185093512582757}
-  sensitivity: 4
+  baseSpeed: 10
+  sprintMultiplier: 3
   lockCursor: 1
   paused: 0
+  sensitivity: 4
   gunshot: {fileID: 0}
   weaponSound: {fileID: 4052137048052693561}
-  baseSpeed: 10
   fireRate: 1
   bulletOrigin: {fileID: 3381070145667223872}
   fpsCam: {fileID: 7004879224189848639}
