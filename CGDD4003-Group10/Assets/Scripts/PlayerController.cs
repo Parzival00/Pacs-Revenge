@@ -9,28 +9,31 @@ public class PlayerController : MonoBehaviour
     public Transform playerCam;
     public Transform playerT;
 
-    private float cameraPitch;
-    public float sensitivity;
-    public bool lockCursor = true;
-    public bool paused;
-
-    public AudioClip gunshot;
-    public AudioSource weaponSound;
-
-    public float baseSpeed;
+    [Header("Movement Settings")]
+    [SerializeField] float baseSpeed;
+    [SerializeField] float sprintMultiplier;
     private float speed;
     private float moveSmoothTime = 0.1f;
     private Vector2 currentDirection;
     private Vector2 currentVelocity;
     private CharacterController character;
 
-    public float fireRate;
-    private float fireTimer;
-    public Transform bulletOrigin;
+    float cameraPitch;
+    [Header("Mouse Settings")]
+    [SerializeField] bool lockCursor = true;
+    [SerializeField] bool paused;
+    [SerializeField] float sensitivity;
+
+    [Header("Weapon Settings")]
+    [SerializeField] AudioClip gunshot;
+    [SerializeField] AudioSource weaponSound;
+    [SerializeField] float fireRate;
+    [SerializeField] Transform bulletOrigin;
+    [SerializeField] Camera fpsCam;
+    [SerializeField] WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
+    [SerializeField] float weaponRange;
     private LineRenderer laserLine;
-    public Camera fpsCam;   
-    private WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
-    public float weaponRange;
+    private float fireTimer;
 
     // Start is called before the first frame update
     void Start()
@@ -48,11 +51,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mouseControl();
-        movementControl();
-        fire();
+        MouseControl();
+        MovementControl();
+        Fire();
     }
-    void mouseControl()
+    /// <summary>
+    /// This method takes the mouse position and rotates the player and camera accordingly. Using the x position of the mouse for horizontal and the y position for vertical.
+    /// </summary>
+    void MouseControl()
     {
         Vector2 mousePosition = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
@@ -63,7 +69,11 @@ public class PlayerController : MonoBehaviour
         playerT.Rotate(Vector3.up * mousePosition.x * sensitivity);
 
     }
-    void movementControl()
+    /// <summary>
+    /// Uses the input axis system to move the player's character controller
+    /// Has a sprint ability activated by the L-shift key
+    /// </summary>
+    void MovementControl()
     {
         Vector2 targetDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         targetDirection.Normalize();
@@ -71,7 +81,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey("left shift"))
         {
-            speed = baseSpeed * 3f;
+            speed = baseSpeed * sprintMultiplier;
         }
         else
         {
@@ -80,7 +90,11 @@ public class PlayerController : MonoBehaviour
         Vector3 velocity = (playerT.forward * currentDirection.y + playerT.right * currentDirection.x) * speed;
         character.Move(velocity * Time.deltaTime);
     }
-    void fire()
+    /// <summary>
+    /// When the left mouse button is pressed this generates a raycast to where the player was aiming.
+    /// A sound effect is played and the raytrace is rendered
+    /// </summary>
+    void Fire()
     {
         if (fireTimer <= 0 && Input.GetMouseButton(0) && !paused)
         {
@@ -108,6 +122,10 @@ public class PlayerController : MonoBehaviour
             fireTimer -= Time.deltaTime;
         }
     }
+    /// <summary>
+    /// Plays the weapon sound effect and enables the line render
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator ShotEffect()
     {
         weaponSound.PlayOneShot(gunshot);
