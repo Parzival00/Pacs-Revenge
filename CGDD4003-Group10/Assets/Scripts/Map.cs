@@ -13,6 +13,8 @@ public class Map : MonoBehaviour
     public GridType[,] map { get; private set; }
 
     [SerializeField] Transform player;
+    [SerializeField] Teleport leftEdge;
+    [SerializeField] Teleport rightEdge;
 
     [Header("Map Settings")]
     [SerializeField] float size = 1f;
@@ -73,7 +75,6 @@ public class Map : MonoBehaviour
             return GridType.Air;
         return map[gridLoc.x, gridLoc.y];
     }
-
 
     /// <summary>
     /// Takes in a position on the map and returns the integered location on the map grid

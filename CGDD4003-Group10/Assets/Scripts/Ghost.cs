@@ -72,9 +72,11 @@ public class Ghost : MonoBehaviour
     {
         Vector2Int playerGridPosition = map.GetPlayerPosition();
 
-        if(lastPlayerGridPosition != playerGridPosition)
+        if(lastPlayerGridPosition != playerGridPosition || !navMesh.enabled)
         {
             targetPosition = map.GetWorldFromGrid(playerGridPosition);
+
+            navMesh.enabled = true;
 
             navMesh.SetDestination(targetPosition);
         }
@@ -106,7 +108,7 @@ public class Ghost : MonoBehaviour
 
         navMesh.SetDestination(map.GetWorldFromGrid(respawnPointGridPos));
 
-        if (navMesh.remainingDistance <= 0.01f)
+        if (navMesh.remainingDistance <= 0.1f)
         {
             if (startedRespawnSequence == false)
             {
@@ -119,6 +121,25 @@ public class Ghost : MonoBehaviour
         {
             startedRespawnSequence = false;
             currentMode = Mode.Chase;
+
+            lastPlayerGridPosition = new Vector2Int(-1, -1);
         }
+    }
+
+    /// <summary>
+    /// Called when ghost is hit with the gun and sets the mode to respawn
+    /// </summary>
+    public virtual void GotHit()
+    {
+        currentMode = Mode.Respawn;
+    }
+
+    /// <summary>
+    /// Disable the nav mesh temporarily to set the position to given location. (Used in combination with the teleport class) 
+    /// </summary>
+    public void SetPosition(Vector3 pos)
+    {
+        navMesh.enabled = false;
+        transform.position = pos;
     }
 }

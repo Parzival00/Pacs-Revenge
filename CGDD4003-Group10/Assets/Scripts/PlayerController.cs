@@ -88,6 +88,7 @@ public class PlayerController : MonoBehaviour
             speed = baseSpeed;
         }
         Vector3 velocity = (playerT.forward * currentDirection.y + playerT.right * currentDirection.x) * speed;
+        character.enabled = true;
         character.Move(velocity * Time.deltaTime);
     }
     /// <summary>
@@ -109,6 +110,16 @@ public class PlayerController : MonoBehaviour
             if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange))
             {
                 laserLine.SetPosition(1, hit.point);
+
+                //Detect hit on enemy
+                if (hit.collider.gameObject.tag == "Enemy")
+                {
+                    Ghost ghost = hit.collider.gameObject.GetComponent<Ghost>();
+                    if(ghost != null)
+                    {
+                        ghost.GotHit();
+                    }
+                }
             }
             else
             {
@@ -132,5 +143,14 @@ public class PlayerController : MonoBehaviour
         laserLine.enabled = true;
         yield return shotDuration;
         laserLine.enabled = false;
+    }
+
+    /// <summary>
+    /// Disable the character controller temporarily to set the position to given location. (Used in combination with the teleport class) 
+    /// </summary>
+    public void SetPosition(Vector3 pos)
+    {
+        character.enabled = false;
+        transform.position = pos;
     }
 }
