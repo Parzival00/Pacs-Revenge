@@ -13,8 +13,8 @@ public class Map : MonoBehaviour
     public GridType[,] map { get; private set; }
 
     [SerializeField] Transform player;
-    [SerializeField] Teleport leftEdge;
-    [SerializeField] Teleport rightEdge;
+    [SerializeField] Transform leftEdge;
+    [SerializeField] Transform rightEdge;
 
     [Header("Map Settings")]
     [SerializeField] float size = 1f;
@@ -108,9 +108,62 @@ public class Map : MonoBehaviour
         return worldPos;
     }
 
+    /// <summary>
+    /// Return the player position intgered on the map grid
+    /// </summary>
     public Vector2Int GetPlayerPosition()
     {
         return GetGridLocation(player.position);
+    }
+
+    /// <summary>
+    /// Takes in the ghost position on the map and returns position to get to the player the quickest
+    /// </summary>
+    public Vector2Int GetPlayerPosition(Vector3 ghostPosition)
+    {
+        Vector2Int playerGridPos = GetGridLocation(player.position);
+        Vector2Int ghostGridPos = GetGridLocation(ghostPosition);
+        Vector2Int leftEdgeGridPos = GetGridLocation(leftEdge.position);
+        Vector2Int rightEdgeGridPos = GetGridLocation(rightEdge.position);
+
+        float distBtwGhostToPlayer = Vector2Int.Distance(playerGridPos, ghostGridPos);
+
+        float distBtwGhostToLeftEdge = Vector2Int.Distance(ghostGridPos, leftEdgeGridPos);
+        float distBtwPlayerToLeftEdge = Vector2Int.Distance(playerGridPos, leftEdgeGridPos);
+
+        float distBtwGhostToRightEdge = Vector2Int.Distance(ghostGridPos, rightEdgeGridPos);
+        float distBtwPlayerToRightEdge = Vector2Int.Distance(playerGridPos, rightEdgeGridPos);
+
+        if(distBtwGhostToRightEdge < distBtwGhostToLeftEdge)
+        {
+            if(distBtwGhostToPlayer < distBtwGhostToRightEdge)
+            {
+                return playerGridPos;
+            } 
+            else if(distBtwGhostToPlayer < distBtwPlayerToLeftEdge)
+            {
+                return playerGridPos;
+            } 
+            else
+            {
+                return rightEdgeGridPos;
+            }
+        } 
+        else
+        {
+            if (distBtwGhostToPlayer < distBtwGhostToLeftEdge)
+            {
+                return playerGridPos;
+            }
+            else if (distBtwGhostToPlayer < distBtwPlayerToRightEdge)
+            {
+                return playerGridPos;
+            }
+            else
+            {
+                return leftEdgeGridPos;
+            }
+        }
     }
 
     // Update is called once per frame

@@ -70,7 +70,7 @@ public class Ghost : MonoBehaviour
     //Chase the player
     protected virtual void Chase()
     {
-        Vector2Int playerGridPosition = map.GetPlayerPosition();
+        Vector2Int playerGridPosition = map.GetPlayerPosition(transform.position);
 
         if(lastPlayerGridPosition != playerGridPosition || !navMesh.enabled)
         {
