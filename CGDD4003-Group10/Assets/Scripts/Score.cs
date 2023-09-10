@@ -5,11 +5,15 @@ using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
-    static int score = 0;
-    public GameObject textUI;
+    public static int score { get; private set; }
+    public static int pelletsCollected {get; private set; }
+
+    [SerializeField] GameObject textUI;
+
     void Start()
     {
-        
+        pelletsCollected = 0;
+        score = 0;
     }
 
     
@@ -36,9 +40,10 @@ public class Score : MonoBehaviour
     }*/
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "powerPellet")
+        if (other.gameObject.tag == "Pellet")
         {
             other.gameObject.SetActive(false);
+            pelletsCollected += 1;
             //Destroy(other.gameObject);
             score += 50;
         }

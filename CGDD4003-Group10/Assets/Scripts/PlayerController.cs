@@ -31,9 +31,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform bulletOrigin;
     [SerializeField] Camera fpsCam;
     [SerializeField] WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
+    [SerializeField] WaitForSeconds gunTimer = new WaitForSeconds(5f);
     [SerializeField] float weaponRange;
     private LineRenderer laserLine;
     private float fireTimer;
+
+    [Header("GameObject Refereneces")]
+    [SerializeField] GameObject gun;
+    [SerializeField] GameObject hud;
+
+    private bool gunActivated;
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +53,10 @@ public class PlayerController : MonoBehaviour
         }
         speed = baseSpeed;
         laserLine = GetComponent<LineRenderer>();
+
+        gunActivated = false;
+        gun.SetActive(false);
+        hud.SetActive(false);
     }
 
     // Update is called once per frame
@@ -53,7 +64,9 @@ public class PlayerController : MonoBehaviour
     {
         MouseControl();
         MovementControl();
-        Fire();
+
+        if(gunActivated)
+            Fire();
     }
     /// <summary>
     /// This method takes the mouse position and rotates the player and camera accordingly. Using the x position of the mouse for horizontal and the y position for vertical.
@@ -153,5 +166,64 @@ public class PlayerController : MonoBehaviour
     {
         character.enabled = false;
         transform.position = pos;
+    }
+
+    Coroutine gunTimerCoroutine;
+    /// <summary>
+    /// Activates the gun and any related visuals and start the gun timer coroutine
+    /// </summary>
+    public void ActivateGun()
+    {
+        if (gunTimerCoroutine != null)
+            StopCoroutine(gunTimerCoroutine);
+
+        gunActivated = true;
+        gun.SetActive(true);
+        hud.SetActive(true);
+
+        Ghost[] ghosts = FindObjectsOfType<Ghost>();
+        foreach(Ghost ghost in ghosts)
+        {
+            ghost.InitiateScatter();
+        }
+
+        gunTimerCoroutine = StartCoroutine(GunTimer());
+    }
+
+    /// <summary>
+    /// Waits a certain amount before deactivating the gun
+    /// </summary>
+    IEnumerator GunTimer()
+    {
+        yield return gunTimer;
+
+        DeactivateGun();
+    }
+
+    /// <summary>
+    /// Deactivates the gun and any related visuals
+    /// </summary>
+    void DeactivateGun()
+    {
+        gunActivated = false;
+        gun.SetActive(false);
+        hud.SetActive(false);
+
+        Ghost[] ghosts = FindObjectsOfType<Ghost>();
+        foreach (Ghost ghost in ghosts)
+        {
+            ghost.DeactivateScatter();
+        }
+
+        gunTimerCoroutine = null;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Weapon")
+        {
+            Destroy(other.gameObject);
+            ActivateGun();
+        }
     }
 }

@@ -95,7 +95,8 @@ public class Ghost : MonoBehaviour
     //Mode at the games start to keep ghost unactive until the required pellets are collected
     protected virtual void Dormant()
     {
-        currentMode = Mode.Chase;
+        if(Score.pelletsCollected >= pelletsNeededToStart)
+            currentMode = Mode.Chase;
     }
 
     bool startedRespawnSequence = false; //Used in the Respawn mode to check whether the timer has started
@@ -124,6 +125,16 @@ public class Ghost : MonoBehaviour
 
             lastPlayerGridPosition = new Vector2Int(-1, -1);
         }
+    }
+
+    public virtual void InitiateScatter()
+    {
+        currentMode = Mode.Scatter;
+    }
+    public virtual void DeactivateScatter()
+    {
+        if(currentMode == Mode.Scatter)
+            currentMode = Mode.Chase;
     }
 
     /// <summary>
