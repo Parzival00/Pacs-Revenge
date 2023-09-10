@@ -117,6 +117,7 @@ public class PlayerController : MonoBehaviour
                     Ghost ghost = hit.collider.gameObject.GetComponent<Ghost>();
                     if(ghost != null)
                     {
+                        Score.AddToScore(200);
                         ghost.GotHit();
                     }
                 }

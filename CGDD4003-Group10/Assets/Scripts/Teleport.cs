@@ -15,14 +15,14 @@ public class Teleport : MonoBehaviour
             Ghost ghost = other.gameObject.GetComponent<Ghost>();
 
             if (ghost != null)
-                ghost.SetPosition(destination.position + destinationOffset);
+                ghost.SetPosition(new Vector3(destination.position.x, other.transform.position.y, destination.position.z) + destinationOffset);
         }
         else if (other.tag == "Player")
         {
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
 
             if (player != null)
-                player.SetPosition(destination.position + destinationOffset);
+                player.SetPosition(new Vector3(destination.position.x, other.transform.position.y, destination.position.z) + destinationOffset);
         }
     }
 }

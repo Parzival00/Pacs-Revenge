@@ -56,4 +56,9 @@ public class Score : MonoBehaviour
     {
         textUI.GetComponent<Text>().text = "Score: " + score;
     }
+
+    public static void AddToScore(int amount)
+    {
+        score += amount;
+    }
 }

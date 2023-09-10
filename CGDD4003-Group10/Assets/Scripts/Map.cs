@@ -27,7 +27,6 @@ public class Map : MonoBehaviour
     [SerializeField] bool visualizePlayerGridLocation;
     [SerializeField] bool visualizeMap;
 
-    // Start is called before the first frame update
     void Start()
     {
         //Initialize map array
@@ -55,8 +54,6 @@ public class Map : MonoBehaviour
     /// <summary>
     /// Takes in a map grid location and returns the grid type [air, wall, etc.]
     /// </summary>
-    /// <param name="pos"></param>
-    /// <returns></returns>
     public GridType SampleGrid(Vector2Int pos)
     {
         if (pos.x >= mapWidth || pos.y >= mapHeight)
@@ -66,8 +63,6 @@ public class Map : MonoBehaviour
     /// <summary>
     /// Takes in a location on the map and returns the grid type [air, wall, etc.] at that location
     /// </summary>
-    /// <param name="pos"></param>
-    /// <returns></returns>
     public GridType SampleGrid(Vector3 pos)
     {
         Vector2Int gridLoc = GetGridLocation(pos);
@@ -79,8 +74,6 @@ public class Map : MonoBehaviour
     /// <summary>
     /// Takes in a position on the map and returns the integered location on the map grid
     /// </summary>
-    /// <param name="pos"></param>
-    /// <returns></returns>
     public Vector2Int GetGridLocation(Vector3 pos)
     {
         Vector3 offset = Vector3.zero;
@@ -95,8 +88,6 @@ public class Map : MonoBehaviour
     /// <summary>
     /// Returns the world position of the given grid position
     /// </summary>
-    /// <param name="gridPosition"></param>
-    /// <returns></returns>
     public Vector3 GetWorldFromGrid(Vector2Int gridPosition)
     {
         Vector3 offset = Vector3.zero;
@@ -165,13 +156,6 @@ public class Map : MonoBehaviour
             }
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 
     //Debug Function
     private void OnDrawGizmos()
