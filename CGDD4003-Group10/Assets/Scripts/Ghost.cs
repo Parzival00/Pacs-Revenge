@@ -17,6 +17,7 @@ public class Ghost : MonoBehaviour
 
     [SerializeField] protected NavMeshAgent navMesh;
     [SerializeField] protected Map map;
+    [SerializeField] protected Transform ghostIcon;
 
     [Header("Ghost Settings")]
     [SerializeField] protected int pelletsNeededToStart = 10;
@@ -46,6 +47,7 @@ public class Ghost : MonoBehaviour
     void Update()
     {
         Act();
+        RotateGhostIcons();
     }
 
     public void Act()
@@ -152,5 +154,10 @@ public class Ghost : MonoBehaviour
     {
         navMesh.enabled = false;
         transform.position = pos;
+    }
+
+    private void RotateGhostIcons()
+    {
+        ghostIcon.rotation = Quaternion.Euler(90, player.transform.eulerAngles.y, 0);
     }
 }
