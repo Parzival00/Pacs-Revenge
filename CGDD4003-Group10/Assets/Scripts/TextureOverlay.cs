@@ -53,8 +53,6 @@ public class TextureOverlay : MonoBehaviour
         Vector3 dirToPlayer = (new Vector3(player.position.x, 0, player.position.z) - new Vector3(mainTransform.position.x, 0, mainTransform.position.z)).normalized; //to - from
         float angleBtwPlayer = Vector3.SignedAngle(forward, dirToPlayer, mainTransform.up);
 
-        print("Angle: " + angleBtwPlayer);
-
         if(angleBtwPlayer < northMaxThreshold - thresholdPadding && angleBtwPlayer > northMinThreshold + thresholdPadding)
         {
             spriteRenderer.sprite = north;
