@@ -753,6 +753,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 18005305}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &22945491 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7347426521344473151, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+  m_PrefabInstance: {fileID: 1592177426}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &23596203
 GameObject:
   m_ObjectHideFlags: 0
@@ -42307,7 +42312,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: -1235801388, guid: 76d56dde16e210b4d9425a226001d5ec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -42328,7 +42333,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.81438, y: 0.81438, z: 0.81438}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1838464799}
@@ -76400,6 +76405,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: gun
+      value: 
+      objectReference: {fileID: 22945491}
+    - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: hud
+      value: 
+      objectReference: {fileID: 49030727}
+    - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5301077504717036913, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: m_Name
       value: Player
@@ -87467,15 +87484,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 646037380}
+  main: {fileID: 1838464799}
   spriteRenderer: {fileID: 876936867}
-  north: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  northeast: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  east: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  southeast: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  south: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  southwest: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  west: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  northwest: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  north: {fileID: -1235801388, guid: 76d56dde16e210b4d9425a226001d5ec, type: 3}
+  northeast: {fileID: 1236236861, guid: 76d56dde16e210b4d9425a226001d5ec, type: 3}
+  east: {fileID: 811493160, guid: 76d56dde16e210b4d9425a226001d5ec, type: 3}
+  southeast: {fileID: -1707503634, guid: 76d56dde16e210b4d9425a226001d5ec, type: 3}
+  south: {fileID: 50727044, guid: 76d56dde16e210b4d9425a226001d5ec, type: 3}
+  southwest: {fileID: -1184564550, guid: 76d56dde16e210b4d9425a226001d5ec, type: 3}
+  west: {fileID: 1320546917, guid: 76d56dde16e210b4d9425a226001d5ec, type: 3}
+  northwest: {fileID: -1634969284, guid: 76d56dde16e210b4d9425a226001d5ec, type: 3}
   thresholdPadding: 2
   northMaxThreshold: 22.5
   northMinThreshold: -22.5
@@ -87503,7 +87521,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.00000032782552}
   m_LocalPosition: {x: 0.08, y: 2.05, z: -3.97}
-  m_LocalScale: {x: 7.7483253, y: 7.7483253, z: 7.7483253}
+  m_LocalScale: {x: 2.4063973, y: 2.4063973, z: 2.4063973}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 876936868}

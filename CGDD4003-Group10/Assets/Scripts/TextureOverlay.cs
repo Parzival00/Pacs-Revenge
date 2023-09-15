@@ -6,6 +6,7 @@ public class TextureOverlay : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] Transform player;
+    [SerializeField] Transform mainTransform;
     [SerializeField] SpriteRenderer spriteRenderer;
 
     [Header("Sprites")]
@@ -39,12 +40,20 @@ public class TextureOverlay : MonoBehaviour
 
     //Vector3 currentDirection;
 
+    private void Start()
+    {
+        if (mainTransform == null)
+            mainTransform = transform;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        Vector3 forward = transform.forward;
-        Vector3 dirToPlayer = (new Vector3(player.position.x, 0, player.position.z) - new Vector3(transform.position.x, 0, transform.position.y)).normalized; //to - from
-        float angleBtwPlayer = Vector3.SignedAngle(forward, dirToPlayer, transform.up);
+        Vector3 forward = mainTransform.forward;
+        Vector3 dirToPlayer = (new Vector3(player.position.x, 0, player.position.z) - new Vector3(mainTransform.position.x, 0, mainTransform.position.z)).normalized; //to - from
+        float angleBtwPlayer = Vector3.SignedAngle(forward, dirToPlayer, mainTransform.up);
+
+        print("Angle: " + angleBtwPlayer);
 
         if(angleBtwPlayer < northMaxThreshold - thresholdPadding && angleBtwPlayer > northMinThreshold + thresholdPadding)
         {
@@ -66,7 +75,7 @@ public class TextureOverlay : MonoBehaviour
             spriteRenderer.sprite = southeast;
             //currentDirection = new Vector3(-1, 0, -1).normalized;
         }
-        else if (angleBtwPlayer < southMaxThreshold - thresholdPadding && angleBtwPlayer > southMinThreshold + thresholdPadding)
+        else if (angleBtwPlayer < southMaxThreshold - thresholdPadding || angleBtwPlayer > southMinThreshold + thresholdPadding) //Special case
         {
             spriteRenderer.sprite = south;
             //currentDirection = Vector3.back;
@@ -87,7 +96,7 @@ public class TextureOverlay : MonoBehaviour
             //currentDirection = new Vector3(1, 0, 1).normalized;
         }
 
-        transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
+        spriteRenderer.transform.LookAt(new Vector3(player.position.x, mainTransform.position.y, player.position.z));
         //spriteRenderer.transform.rotation *= Quaternion.LookRotation(dirToPlayer, Vector3.up);//  * spriteRenderer.transform.rotation;
     }
 }
