@@ -23,6 +23,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _NoiseTexture:
+        m_Texture: {fileID: 2800000, guid: 693e9014c707ce84a92afebef2fdebe4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -37,13 +41,23 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _FogDistance: 20.1
-    - _Step_1: 0.387
-    - _Step_1_Opaqeness: 0.78
-    - _Step_2: 0.264
-    - _Step_2_Opaqeness: 0.45
-    - _Step_3: 0.158
-    - _Step_3_Opaqueness: 0.2
+    - _BrightnessFactorCutoff: 3
+    - _BrightnessFactorStrength: 0.24
+    - _FogDistance: 21.7
+    - _NoiseFactorScale: 2540.7
+    - _NoiseFactorStrength: 0.27
+    - _Step_1: 0.841
+    - _Step_1_Opaqeness: 0.92
+    - _Step_2: 0.472
+    - _Step_2_Opaqeness: 0.8
+    - _Step_3: 0.295
+    - _Step_3_Opaqueness: 0.6
+    - _Step_4: 0.187
+    - _Step_4_Opaqueness: 0.36
+    - _Step_5: 0.119
+    - _Step_5_Opaqueness: 0.14
     m_Colors:
     - _Fog_Color: {r: 0.005072976, g: 0.005072976, b: 0.047169805, a: 0}
+    - _NoiseFactorOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _NoiseFactorTiling: {r: 0.68, g: 0.78, b: 0, a: 0}
   m_BuildTextureStacks: []
