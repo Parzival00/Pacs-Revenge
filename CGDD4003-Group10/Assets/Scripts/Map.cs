@@ -172,6 +172,7 @@ public class Map : MonoBehaviour
             return currentGridPos + dir;
 
         Vector2Int nextGridPos = currentGridPos + dir;
+        nextGridPos = new Vector2Int(Mathf.Clamp(nextGridPos.x, 0, mapWidth - 1), Mathf.Clamp(nextGridPos.y, 0, mapHeight - 1));
 
         if (map[nextGridPos.x, nextGridPos.y] == GridType.Wall)
         {
@@ -180,12 +181,12 @@ public class Map : MonoBehaviour
 
             if (dirAngleToUp <= 0.1f && dirAngleToUp >= -0.1f) //given direction is perpendicular to the up and down dir
             {
-                if (prioritizeUp && map[currentGridPos.x, currentGridPos.y + 1] == GridType.Air)
+                if (prioritizeUp && currentGridPos.y < mapHeight - 1 && map[currentGridPos.x, currentGridPos.y + 1] == GridType.Air)
                 {
                     nextGridPos = currentGridPos + Vector2Int.up;
                     usedDir = Vector2Int.up;
                 }
-                else
+                else if(currentGridPos.y > 0 && map[currentGridPos.x, currentGridPos.y - 1] == GridType.Air)
                 {
                     nextGridPos = currentGridPos + Vector2Int.down;
                     usedDir = Vector2Int.down;
@@ -194,12 +195,12 @@ public class Map : MonoBehaviour
             }
             else if (dirAngleToLeft <= 0.1f && dirAngleToLeft >= -0.1f) //given direction is perpendicular to the left and right dir
             {
-                if (prioritizeRight && map[currentGridPos.x + 1, currentGridPos.y] == GridType.Air)
+                if (prioritizeRight && currentGridPos.x < mapWidth - 1 && map[currentGridPos.x + 1, currentGridPos.y] == GridType.Air)
                 {
                     nextGridPos = currentGridPos + Vector2Int.right;
                     usedDir = Vector2Int.right;
                 }
-                else
+                else if (currentGridPos.x > 0 && map[currentGridPos.x - 1, currentGridPos.y] == GridType.Air)
                 {
                     nextGridPos = currentGridPos + Vector2Int.left;
                     usedDir = Vector2Int.left;
@@ -246,6 +247,41 @@ public class Map : MonoBehaviour
         for (int i = 0; i < spacesAhead; i++)
         {
             nextGridPos = GetNextGridPosition(nextGridPos, currentDir, prioritizeUp, prioritizeRight, out currentDir);
+        }
+
+        return nextGridPos;
+    }
+
+    /// <summary>
+    /// (Experimental) Takes in a grid position, any grid-space direction (not just left, right, up and down), and priorities and returns the grid position in that direction from current grid position
+    /// </summary>
+    public Vector2Int GetGridPositionAhead(Vector2Int currentGridPos, Vector2Int dir, bool prioritizeUp, bool prioritizeRight)
+    {
+        if(map == null)
+            return currentGridPos + dir;
+
+        //Vector2Int clampedDir = new Vector2Int(Mathf.Clamp(dir.x, -1, 1), Mathf.Clamp(dir.y, -1, 1));
+        Vector2Int nextGridPos = currentGridPos + dir;
+        nextGridPos = new Vector2Int(Mathf.Clamp(nextGridPos.x, 0, mapWidth - 1), Mathf.Clamp(nextGridPos.y, 0, mapHeight - 1));
+
+        if(map[nextGridPos.x, nextGridPos.y] == GridType.Wall)
+        {
+            if(prioritizeUp && nextGridPos.y < mapHeight - 1 && map[nextGridPos.x, nextGridPos.y + 1] == GridType.Air)
+            {
+                nextGridPos = nextGridPos + Vector2Int.up;
+            } 
+            else if (nextGridPos.y > 0 && map[nextGridPos.x, nextGridPos.y - 1] == GridType.Air) 
+            {
+                nextGridPos = nextGridPos + Vector2Int.down;
+            } 
+            else if (prioritizeRight && nextGridPos.x < mapWidth - 1 && map[nextGridPos.x + 1, nextGridPos.y] == GridType.Air)
+            {
+                nextGridPos = nextGridPos + Vector2Int.right;
+            }
+            else if (nextGridPos.y > 0 && map[nextGridPos.x - 1, nextGridPos.y] == GridType.Air)
+            {
+                nextGridPos = nextGridPos + Vector2Int.left;
+            }
         }
 
         return nextGridPos;
@@ -348,7 +384,7 @@ public class Map : MonoBehaviour
 
             Vector2Int gridLocation = GetGridLocation(player.position);
 
-            Vector2Int nextGridLocation = GetGridPositionAhead(gridLocation, player.forward, 4, true, true);
+            Vector2Int nextGridLocation = GetGridPositionAhead(gridLocation, new Vector2Int(2,2), true, true);
 
             Vector3 worldPos = new Vector3(nextGridLocation.x, 0, nextGridLocation.y) * size + offset + transform.position + centerOffset;
 
