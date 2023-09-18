@@ -18,11 +18,16 @@ public class Ghost : MonoBehaviour
     [SerializeField] protected NavMeshAgent navMesh;
     [SerializeField] protected Map map;
     [SerializeField] protected Transform ghostIcon;
+    [SerializeField] protected GhostSpriteController spriteController;
+    [SerializeField] protected SpriteRenderer spriteRenderer;
 
     [Header("Ghost Settings")]
     [SerializeField] protected int pelletsNeededToStart = 10;
     [SerializeField] protected float speed = 2f;
     [SerializeField] protected float respawnWaitTime = 5f;
+
+    [Header("Collider")]
+    [SerializeField] protected Collider ghostCollider;
 
     [Header("Transform Targets")]
     [SerializeField] protected Transform player;
@@ -31,6 +36,9 @@ public class Ghost : MonoBehaviour
 
     protected Vector3 targetPosition;
     protected Vector2Int lastPlayerGridPosition;
+
+    protected Vector2Int lastGridPosition;
+    protected Vector2Int currentGridPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -46,8 +54,12 @@ public class Ghost : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        currentGridPosition = map.GetGridLocation(transform.position);
+
         Act();
         RotateGhostIcons();
+
+        lastGridPosition = currentGridPosition;
     }
 
     public void Act()
@@ -72,7 +84,7 @@ public class Ghost : MonoBehaviour
     //Chase the player
     protected virtual void Chase()
     {
-        Vector2Int playerGridPosition = map.GetPlayerPosition(transform.position);
+        Vector2Int playerGridPosition = map.CheckEdgePositions(transform.position);
 
         if(lastPlayerGridPosition != playerGridPosition || !navMesh.enabled)
         {
@@ -102,31 +114,48 @@ public class Ghost : MonoBehaviour
     }
 
     bool startedRespawnSequence = false; //Used in the Respawn mode to check whether the timer has started
-    float respawnTimer; //Used in the Respawn mode to hold the time when the ghost will change back to Chase mode
 
     //Mode activated when a ghost is shot. Ghost moves to provided respawn location and wants specified amount of time before shifting to Chase mode
     protected virtual void Respawn()
     {
-        Vector2Int respawnPointGridPos = map.GetGridLocation(respawnPoint.position);
+        if (!startedRespawnSequence)
+        {
+            StartCoroutine(RespawnSequence());
+        }
+    }
 
+    protected virtual IEnumerator RespawnSequence()
+    {
+        spriteRenderer.color = Color.black;
+        navMesh.ResetPath();
+        ghostCollider.enabled = false;
+        startedRespawnSequence = true;
+
+        WaitForSeconds deathWait = new WaitForSeconds(3f);
+
+        yield return deathWait;
+
+        Vector2Int respawnPointGridPos = map.GetGridLocation(respawnPoint.position);
         navMesh.SetDestination(map.GetWorldFromGrid(respawnPointGridPos));
 
-        if (navMesh.remainingDistance <= 0.1f)
-        {
-            if (startedRespawnSequence == false)
-            {
-                startedRespawnSequence = true;
-                respawnTimer = Time.time + respawnWaitTime;
-            }
-        }
+        yield return null;
 
-        if(startedRespawnSequence && Time.time >= respawnTimer)
-        {
-            startedRespawnSequence = false;
-            currentMode = Mode.Chase;
+        WaitUntil arrivedAtRespawnPoint = new WaitUntil(() => navMesh.remainingDistance <= 0.1f);
 
-            lastPlayerGridPosition = new Vector2Int(-1, -1);
-        }
+        yield return new WaitUntil(() => navMesh.remainingDistance <= 0.1f);
+
+        WaitForSeconds respawnWait = new WaitForSeconds(respawnWaitTime);
+
+        yield return respawnWait;
+
+        //Reset variables
+        startedRespawnSequence = false;
+
+        spriteRenderer.color = Color.white;
+
+        currentMode = Mode.Chase;
+        ghostCollider.enabled = true;
+        lastPlayerGridPosition = new Vector2Int(-1, -1);
     }
 
     public virtual void InitiateScatter()

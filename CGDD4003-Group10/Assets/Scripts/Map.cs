@@ -26,6 +26,7 @@ public class Map : MonoBehaviour
     [Header("Debug Settings")]
     [SerializeField] bool visualizePlayerGridLocation;
     [SerializeField] bool visualizeMap;
+    [SerializeField] bool visualizePlayerNextLocation;
 
     void Start()
     {
@@ -86,6 +87,171 @@ public class Map : MonoBehaviour
     }
 
     /// <summary>
+    /// Takes in a world-space dir and returns the grid space direction [0,1], [0,-1], [1,0], or [-1,0]
+    /// </summary>
+    public Vector2Int GetGridSpaceDirection(Vector3 dir)
+    {
+        Vector2Int integeredDir = Vector2Int.zero;
+        dir = dir.normalized;
+
+        float dirAngleToForward = Vector3.Dot(dir, Vector3.forward);
+        if (dirAngleToForward >= 0.5f)
+        {
+            integeredDir = Vector2Int.up;
+        }
+
+        float dirAngleToBack = Vector3.Dot(dir, Vector3.back);
+        if (dirAngleToBack >= 0.5f)
+        {
+            integeredDir = Vector2Int.down;
+        }
+
+        float dirAngleToLeft = Vector3.Dot(dir, Vector3.left);
+        if (dirAngleToLeft >= 0.5f)
+        {
+            integeredDir = Vector2Int.left;
+        }
+
+        float dirAngleToRight = Vector3.Dot(dir, Vector3.right);
+        if (dirAngleToRight >= 0.5f)
+        {
+            integeredDir = Vector2Int.right;
+        }
+
+        return integeredDir;
+    }
+
+    /// <summary>
+    /// Takes in a grid position, integered grid-space direction, and priorities and finds the next grid position along that direction taking into account any walls
+    /// </summary>
+    public Vector2Int GetNextGridPosition(Vector2Int currentGridPos, Vector2Int dir, bool prioritizeUp, bool prioritizeRight)
+    {
+        if (map == null)
+            return currentGridPos + dir;
+
+        Vector2Int nextGridPos = currentGridPos + dir;
+
+        if(map[nextGridPos.x, nextGridPos.y] == GridType.Wall)
+        {
+            float dirAngleToUp = Vector2.Dot(dir, Vector2.up);
+            float dirAngleToLeft = Vector2.Dot(dir, Vector2.left);
+
+            if(dirAngleToUp <= 0.1f && dirAngleToUp >= -0.1f) //given direction is perpendicular to the up and down dir
+            {
+                if(prioritizeUp && map[currentGridPos.x, currentGridPos.y + 1] == GridType.Air)
+                {
+                    nextGridPos = currentGridPos + Vector2Int.up;
+                } else
+                {
+                    nextGridPos = currentGridPos + Vector2Int.down;
+                }
+
+            } else if (dirAngleToLeft <= 0.1f && dirAngleToLeft >= -0.1f) //given direction is perpendicular to the left and right dir
+            {
+                if (prioritizeRight && map[currentGridPos.x + 1, currentGridPos.y] == GridType.Air)
+                {
+                    nextGridPos = currentGridPos + Vector2Int.right;
+                }
+                else
+                {
+                    nextGridPos = currentGridPos + Vector2Int.left;
+                }
+            }
+        }
+
+        return nextGridPos;
+    }
+
+    /// <summary>
+    /// Takes in a grid position, integered grid-space direction, and priorities and finds the next grid position along that direction taking into account any walls
+    /// </summary>
+    public Vector2Int GetNextGridPosition(Vector2Int currentGridPos, Vector2Int dir, bool prioritizeUp, bool prioritizeRight, out Vector2Int usedDir)
+    {
+        usedDir = dir;
+        if (map == null)
+            return currentGridPos + dir;
+
+        Vector2Int nextGridPos = currentGridPos + dir;
+
+        if (map[nextGridPos.x, nextGridPos.y] == GridType.Wall)
+        {
+            float dirAngleToUp = Vector2.Dot(dir, Vector2.up);
+            float dirAngleToLeft = Vector2.Dot(dir, Vector2.left);
+
+            if (dirAngleToUp <= 0.1f && dirAngleToUp >= -0.1f) //given direction is perpendicular to the up and down dir
+            {
+                if (prioritizeUp && map[currentGridPos.x, currentGridPos.y + 1] == GridType.Air)
+                {
+                    nextGridPos = currentGridPos + Vector2Int.up;
+                    usedDir = Vector2Int.up;
+                }
+                else
+                {
+                    nextGridPos = currentGridPos + Vector2Int.down;
+                    usedDir = Vector2Int.down;
+                }
+
+            }
+            else if (dirAngleToLeft <= 0.1f && dirAngleToLeft >= -0.1f) //given direction is perpendicular to the left and right dir
+            {
+                if (prioritizeRight && map[currentGridPos.x + 1, currentGridPos.y] == GridType.Air)
+                {
+                    nextGridPos = currentGridPos + Vector2Int.right;
+                    usedDir = Vector2Int.right;
+                }
+                else
+                {
+                    nextGridPos = currentGridPos + Vector2Int.left;
+                    usedDir = Vector2Int.left;
+                }
+            }
+        }
+
+        return nextGridPos;
+    }
+
+    /// <summary>
+    /// Takes in a grid position, world-space direction, and priorities and finds the next grid position along that direction taking into account any walls
+    /// </summary>
+    public Vector2Int GetNextGridPosition(Vector2Int currentGridPos, Vector3 dir, bool prioritizeUp, bool prioritizeRight)
+    {
+        Vector2Int integeredDir = GetGridSpaceDirection(dir);
+
+        return GetNextGridPosition(currentGridPos, integeredDir, prioritizeUp, prioritizeRight);
+    }
+
+    /// <summary>
+    /// Takes in a grid position, integered grid-space direction, number of spaces ahead, and priorities and returns the grid position in the direction 'spacesAhead' of current grid position
+    /// </summary>
+    public Vector2Int GetGridPositionAhead(Vector2Int currentGridPos, Vector2Int dir, int spacesAhead, bool prioritizeUp, bool prioritizeRight)
+    {
+        Vector2Int nextGridPos = currentGridPos;
+        for (int i = 0; i < spacesAhead; i++)
+        {
+            nextGridPos = GetNextGridPosition(nextGridPos, dir, prioritizeUp, prioritizeRight);
+        }
+
+        return nextGridPos;
+    }
+
+    /// <summary>
+    /// Takes in a grid position, world-space direction, number of spaces ahead, and priorities and returns the grid position in the direction 'spacesAhead' of current grid position
+    /// </summary>
+    public Vector2Int GetGridPositionAhead(Vector2Int currentGridPos, Vector3 dir, int spacesAhead, bool prioritizeUp, bool prioritizeRight)
+    {
+        Vector2Int integeredDir = GetGridSpaceDirection(dir);
+
+        Vector2Int nextGridPos = currentGridPos;
+        Vector2Int currentDir = integeredDir;
+        for (int i = 0; i < spacesAhead; i++)
+        {
+            nextGridPos = GetNextGridPosition(nextGridPos, currentDir, prioritizeUp, prioritizeRight, out currentDir);
+        }
+
+        return nextGridPos;
+    }
+
+    /// <summary>
     /// Returns the world position of the given grid position
     /// </summary>
     public Vector3 GetWorldFromGrid(Vector2Int gridPosition)
@@ -110,7 +276,7 @@ public class Map : MonoBehaviour
     /// <summary>
     /// Takes in the ghost position on the map and returns position to get to the player the quickest
     /// </summary>
-    public Vector2Int GetPlayerPosition(Vector3 ghostPosition)
+    public Vector2Int CheckEdgePositions(Vector3 ghostPosition)
     {
         Vector2Int playerGridPos = GetGridLocation(player.position);
         Vector2Int ghostGridPos = GetGridLocation(ghostPosition);
@@ -167,11 +333,26 @@ public class Map : MonoBehaviour
                 offset = -new Vector3(mapWidth, 0, mapHeight) / 2f * size;
 
             Vector2Int gridLocation = GetGridLocation(player.position);
-            print(gridLocation);
 
             Vector3 worldPos = new Vector3(gridLocation.x, 0, gridLocation.y) * size + offset + transform.position + centerOffset;
 
             Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(worldPos, Vector3.one * size / 2);
+        }
+
+        if (visualizePlayerNextLocation && player)
+        {
+            Vector3 offset = Vector3.zero;
+            if (!startGridFromOrigin)
+                offset = -new Vector3(mapWidth, 0, mapHeight) / 2f * size;
+
+            Vector2Int gridLocation = GetGridLocation(player.position);
+
+            Vector2Int nextGridLocation = GetGridPositionAhead(gridLocation, player.forward, 4, true, true);
+
+            Vector3 worldPos = new Vector3(nextGridLocation.x, 0, nextGridLocation.y) * size + offset + transform.position + centerOffset;
+
+            Gizmos.color = Color.blue;
             Gizmos.DrawWireCube(worldPos, Vector3.one * size / 2);
         }
 

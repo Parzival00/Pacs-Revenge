@@ -8,7 +8,6 @@ public class GhostSpriteController : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField] Transform mainTransform;
     [SerializeField] Transform spriteTransform;
-    //[SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Animator animator;
 
     [Header("Sprite GameObjects")]
@@ -40,8 +39,6 @@ public class GhostSpriteController : MonoBehaviour
     [SerializeField] [Range(-180f, 180f)] float northwestMaxThreshold = 67.5f;
     [SerializeField] [Range(-180f, 180f)] float northwestMinThreshold = 22.5f;
 
-    //Vector3 currentDirection;
-
     private void Start()
     {
         if (mainTransform == null)
@@ -60,61 +57,58 @@ public class GhostSpriteController : MonoBehaviour
         if(angleBtwPlayer < northMaxThreshold - thresholdPadding && angleBtwPlayer > northMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = north;
-            //north.SetActive(true);
-            //spriteRenderer.sprite = north;
-            //currentDirection = Vector3.forward;
         } 
         else if (angleBtwPlayer < northeastMaxThreshold - thresholdPadding && angleBtwPlayer > northeastMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = northeast;
-            //northeast.SetActive(true);
-            //spriteRenderer.sprite = northeast;
-            //currentDirection = new Vector3(-1, 0, 1).normalized;
         }
         else if (angleBtwPlayer < eastMaxThreshold - thresholdPadding && angleBtwPlayer > eastMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = east;
-            //east.SetActive(true);
-            //spriteRenderer.sprite = east;
-            //currentDirection = Vector3.left;
         }
         else if (angleBtwPlayer < southeastMaxThreshold - thresholdPadding && angleBtwPlayer > southeastMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = southeast;
-            //southeast.SetActive(true);
-            //spriteRenderer.sprite = southeast;
-            //currentDirection = new Vector3(-1, 0, -1).normalized;
         }
         else if (angleBtwPlayer < southMaxThreshold - thresholdPadding || angleBtwPlayer > southMinThreshold + thresholdPadding) //Special case
         {
             animator.runtimeAnimatorController = south;
-            //south.SetActive(true);
-            //spriteRenderer.sprite = south;
-            //currentDirection = Vector3.back;
         }
         else if (angleBtwPlayer < southwestMaxThreshold - thresholdPadding && angleBtwPlayer > southwestMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = southwest;
-            //southwest.SetActive(true);
-            //spriteRenderer.sprite = southwest;
-            //currentDirection = new Vector3(1, 0, -1).normalized;
         }
         else if (angleBtwPlayer < westMaxThreshold - thresholdPadding && angleBtwPlayer > westMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = west;
-            //west.SetActive(true);
-            //spriteRenderer.sprite = west;
-            //currentDirection = Vector3.right;
         }
         else if (angleBtwPlayer < northwestMaxThreshold - thresholdPadding && angleBtwPlayer > northwestMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = northwest;
-            //northwest.SetActive(true);
-            //spriteRenderer.sprite = northwest;
-            //currentDirection = new Vector3(1, 0, 1).normalized;
         }
 
         spriteTransform.transform.LookAt(new Vector3(player.position.x, mainTransform.position.y, player.position.z));
-        //spriteRenderer.transform.rotation *= Quaternion.LookRotation(dirToPlayer, Vector3.up);//  * spriteRenderer.transform.rotation;
+    }
+
+    public void StartDeathAnimation()
+    {
+        animator.SetTrigger("Death");
+        animator.ResetTrigger("Reform");
+    }
+
+    public void StartMovingCorpse()
+    {
+        animator.SetBool("MoveCorpse", true);
+    }
+
+    public void StopMovingCorpse()
+    {
+        animator.SetBool("MoveCorpse", false);
+    }
+
+    public void StartReformAnimation()
+    {
+        animator.SetTrigger("Reform");
+        animator.ResetTrigger("Death");
     }
 }
