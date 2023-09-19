@@ -285,7 +285,7 @@ public class Ghost : MonoBehaviour
 
         yield return new WaitUntil(() => navMesh.remainingDistance <= 0.1f);
 
-        WaitForSeconds respawnWait = new WaitForSeconds(respawnWaitTime);
+        WaitForSeconds respawnWait = new WaitForSeconds(respawnWaitTime + currentHitArea.respawnTimeAddition);
 
         yield return respawnWait;
 
