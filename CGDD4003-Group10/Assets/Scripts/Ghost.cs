@@ -130,10 +130,10 @@ public class Ghost : MonoBehaviour
     protected virtual void Chase()
     {
         Vector2Int playerGridPosition = map.CheckEdgePositions(transform.position);
+        targetGridPosition = playerGridPosition;
 
         if (lastTargetGridPosition != playerGridPosition || !navMesh.enabled)
         {
-            targetGridPosition = playerGridPosition;
 
             targetPosition = map.GetWorldFromGrid(playerGridPosition);
 
@@ -160,7 +160,7 @@ public class Ghost : MonoBehaviour
     {
         navMesh.enabled = true;
 
-        if (currentGridPosition != lastGridPosition)
+        if (currentGridPosition != lastGridPosition || navMesh.remainingDistance < 0.1f)
         {
             float angleToUp = Vector2.Dot(currentDirection, Vector2.up);
             float angleToDown = Vector2.Dot(currentDirection, Vector2.down);
@@ -175,11 +175,11 @@ public class Ghost : MonoBehaviour
             if(angleToUp >= -0.1f && map.SampleGrid(currentGridPosition + Vector2Int.up) == Map.GridType.Air)
             {
                 Vector2Int nextGridPosUp = currentGridPosition + Vector2Int.up;
-                float distanceToUp = Vector2Int.Distance(currentGridPosition + nextGridPosUp, targetGridPosition);
+                float distanceToUp = Vector2Int.Distance(currentGridPosition, targetGridPosition);
                 if(distanceToUp < distToTargetFromNext)
                 {
                     distToTargetFromNext = distanceToUp;
-                    desiredNextGridPosition = currentGridPosition + nextGridPosUp;
+                    desiredNextGridPosition = nextGridPosUp;
                     desiredNextDirection = Vector2Int.up;
                 }
             }
@@ -221,6 +221,8 @@ public class Ghost : MonoBehaviour
 
             nextGridPosition = desiredNextGridPosition;
             currentDirection = desiredNextDirection;
+
+            print(currentDirection);
         }
 
         navMesh.SetDestination(map.GetWorldFromGrid(nextGridPosition));

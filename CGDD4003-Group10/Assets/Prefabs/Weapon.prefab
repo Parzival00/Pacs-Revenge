@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1361447389590609570}
   - component: {fileID: 5116189760092394474}
   - component: {fileID: 5851679180937758972}
-  - component: {fileID: 7117478407861043287}
   m_Layer: 0
   m_Name: Gat
   m_TagString: Weapon
@@ -84,29 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &7117478407861043287
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1561272346430316062}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &3550454985558555889
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,6 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7465043686356946606}
+  - component: {fileID: 8682133017349688744}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Weapon
@@ -141,6 +118,27 @@ Transform:
   - {fileID: 6576465031578488163}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8682133017349688744
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3550454985558555889}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.6682525, y: 0.7065761, z: 0.46355894}
+  m_Center: {x: 0.018076539, y: -0.0011547804, z: -0.0039372444}
 --- !u!1 &7455486211433142026
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +150,6 @@ GameObject:
   - component: {fileID: 1656758169172429471}
   - component: {fileID: 1394175360199188829}
   - component: {fileID: 3280414137471851047}
-  - component: {fileID: 4085094555842207760}
   m_Layer: 0
   m_Name: In Game Sprite
   m_TagString: Untagged
@@ -239,27 +236,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dff18f8dd9a8534b864d986eebf9f7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &4085094555842207760
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7455486211433142026}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 3.6, y: 1.47, z: 0.2}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8701021153185527432
 GameObject:
   m_ObjectHideFlags: 0
