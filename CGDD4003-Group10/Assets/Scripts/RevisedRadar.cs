@@ -9,21 +9,27 @@ public class RevisedRadar : MonoBehaviour
     [SerializeField] float trackingRadius;
     void Update()
     {
+        //sets the location of the radar object to the players location rotates constantly
         this.transform.position = new Vector3(player.position.x,3.306f,player.position.z);
         this.transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
 
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
 
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, fwd, out hit, 10))
+        //draw a raycast that returns all objects hit and stores them in an array
+        RaycastHit[] hits;
+        hits = Physics.RaycastAll(transform.position, fwd, 10);
+        if (hits.Length > 0)
         {
-            GameObject objectHit = hit.collider.gameObject;
-            if (objectHit.tag == "MinimapObject")
+            foreach(RaycastHit hit in hits)
             {
-                
-                objectHit.GetComponent<SpriteRenderer>().color = new Color(255, 255,255, 1);
+                //if the object is a minimap object, then make in transparent
+                GameObject objectHit = hit.collider.gameObject;
+                if (objectHit.tag == "MinimapObject")
+                {
+                    Color color = objectHit.GetComponent<SpriteRenderer>().color;
+                    objectHit.GetComponent<SpriteRenderer>().color = new Color(color.r, color.g, color.b, 1);
+                }
             }
-        }
-            
+        }           
     }
 }

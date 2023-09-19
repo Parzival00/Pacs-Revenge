@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -54356,6 +54356,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.0066666673, y: 0.02, z: 0.01}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &1307276379 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 4856677005804188932, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
+  m_PrefabInstance: {fileID: 1663180879}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1308600826
 GameObject:
   m_ObjectHideFlags: 0
@@ -63629,6 +63634,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1340896710}
     m_Modifications:
+    - target: {fileID: 696709370598365337, guid: 5d8988313b2408b4fbc3bb6102082b93, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3550454985558555889, guid: 5d8988313b2408b4fbc3bb6102082b93, type: 3}
       propertyPath: m_Name
       value: Pellet (50)
@@ -67197,6 +67206,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Weapn (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6576465031578488163, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7465043686356946606, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
       propertyPath: m_LocalPosition.x
       value: -26
@@ -68698,6 +68711,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2191023438221307184, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
+      propertyPath: m_DrawMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4370590752001792513, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
       propertyPath: map
       value: 
@@ -68710,6 +68727,10 @@ PrefabInstance:
       propertyPath: respawnPoint
       value: 
       objectReference: {fileID: 1066572706}
+    - target: {fileID: 4370590752001792513, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
+      propertyPath: ghostCollider
+      value: 
+      objectReference: {fileID: 1307276379}
     - target: {fileID: 4370590752001792513, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
       propertyPath: scatterTarget
       value: 
@@ -80641,6 +80662,7 @@ MonoBehaviour:
   startGridFromOrigin: 0
   visualizePlayerGridLocation: 0
   visualizeMap: 0
+  visualizePlayerNextLocation: 0
 --- !u!4 &1980276348
 Transform:
   m_ObjectHideFlags: 0
@@ -86412,6 +86434,10 @@ PrefabInstance:
     - target: {fileID: 3550454985558555889, guid: 5d8988313b2408b4fbc3bb6102082b93, type: 3}
       propertyPath: m_Name
       value: Pellet
+      objectReference: {fileID: 0}
+    - target: {fileID: 7340616609695037105, guid: 5d8988313b2408b4fbc3bb6102082b93, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7465043686356946606, guid: 5d8988313b2408b4fbc3bb6102082b93, type: 3}
       propertyPath: m_LocalPosition.x
