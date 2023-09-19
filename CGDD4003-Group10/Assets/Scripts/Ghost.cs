@@ -221,8 +221,6 @@ public class Ghost : MonoBehaviour
 
             nextGridPosition = desiredNextGridPosition;
             currentDirection = desiredNextDirection;
-
-            print(currentDirection);
         }
 
         navMesh.SetDestination(map.GetWorldFromGrid(nextGridPosition));
