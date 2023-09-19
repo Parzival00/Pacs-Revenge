@@ -151,17 +151,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCam: {fileID: 2701049378798147818}
   playerT: {fileID: 743185093512582757}
-  baseSpeed: 10
+  baseSpeed: 7
   sprintMultiplier: 3
+  velocity: {x: 0, y: 0, z: 0}
   lockCursor: 1
   paused: 0
   sensitivity: 4
-  gunshot: {fileID: 0}
+  gunshot: {fileID: 8300000, guid: 7d12aadad7324e54cb0527a4aa37974c, type: 3}
   weaponSound: {fileID: 4052137048052693561}
   fireRate: 1
   bulletOrigin: {fileID: 3381070145667223872}
   fpsCam: {fileID: 7004879224189848639}
   weaponRange: 50
+  targetingMask:
+    serializedVersion: 2
+    m_Bits: 0
   gun: {fileID: 0}
   hud: {fileID: 0}
 --- !u!120 &208930143002471842
@@ -320,6 +324,7 @@ GameObject:
   - component: {fileID: 7004879224189848639}
   - component: {fileID: 4147895983895633019}
   - component: {fileID: 7971333262844333254}
+  - component: {fileID: 7651606205664661790}
   - component: {fileID: 4052137048052693561}
   m_Layer: 0
   m_Name: Main Camera
@@ -448,6 +453,21 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!114 &7651606205664661790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6821514254823661221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f00661a6a4401943993a47f7eca8e7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkBobSpeed: 17
+  bobAmount: 0.1
+  pc: {fileID: 2865670225406934770}
 --- !u!82 &4052137048052693561
 AudioSource:
   m_ObjectHideFlags: 0

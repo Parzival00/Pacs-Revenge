@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 currentDirection;
     private Vector2 currentVelocity;
     private CharacterController character;
+    [HideInInspector]
+    public Vector3 velocity = Vector3.zero; //used for view bobbing as well
 
     float cameraPitch;
     [Header("Mouse Settings")]
@@ -40,6 +42,7 @@ public class PlayerController : MonoBehaviour
     [Header("GameObject Refereneces")]
     [SerializeField] GameObject gun;
     [SerializeField] GameObject hud;
+    [SerializeField] GameObject railgunChargeBar;
 
     private bool gunActivated;
 
@@ -101,7 +104,7 @@ public class PlayerController : MonoBehaviour
         {
             speed = baseSpeed;
         }
-        Vector3 velocity = (playerT.forward * currentDirection.y + playerT.right * currentDirection.x) * speed;
+        velocity = (playerT.forward * currentDirection.y + playerT.right * currentDirection.x) * speed;
         character.enabled = true;
         character.Move(velocity * Time.deltaTime);
     }
@@ -113,10 +116,6 @@ public class PlayerController : MonoBehaviour
     {
         if (fireTimer <= 0 && Input.GetMouseButton(0) && !paused)
         {
-            /*Projectile bullet = Instantiate(Resources.Load<Projectile>("Bullet"), bulletOrigin.transform, false);
-            bullet.transform.localEulerAngles = Vector3.up * -cameraPitch;
-            bullet.transform.localPosition += Vector3.forward * 1.5f;
-            bullet.transform.parent = null;*/
             StartCoroutine(ShotEffect());
             Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
             RaycastHit hit;
