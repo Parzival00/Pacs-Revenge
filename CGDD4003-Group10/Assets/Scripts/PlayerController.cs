@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
     [SerializeField] WaitForSeconds gunTimer = new WaitForSeconds(5f);
     [SerializeField] float weaponRange;
+    [SerializeField] LayerMask targetingMask;
     private LineRenderer laserLine;
     private float fireTimer;
 
@@ -54,9 +55,9 @@ public class PlayerController : MonoBehaviour
         speed = baseSpeed;
         laserLine = GetComponent<LineRenderer>();
 
-        gunActivated = false;
-        gun.SetActive(false);
-        hud.SetActive(false);
+        gunActivated = true;
+        gun.SetActive(true);
+        hud.SetActive(true);
     }
 
     // Update is called once per frame
@@ -120,19 +121,30 @@ public class PlayerController : MonoBehaviour
             Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
             RaycastHit hit;
             laserLine.SetPosition(0, bulletOrigin.position);
-            if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange))
+            
+            if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange, targetingMask))
             {
                 laserLine.SetPosition(1, hit.point);
+
+                print("Hit: " + hit.collider.gameObject.name);
+
+                TargetAreaCollider targetAreaCollider = hit.collider.GetComponent<TargetAreaCollider>();
+
+                if(targetAreaCollider != null)
+                {
+                    Ghost.HitInformation hitInformation = targetAreaCollider.OnShot();
+                    Score.AddToScore(hitInformation.pointWorth + hitInformation.targetArea.pointsAddition);
+                }
 
                 //Detect hit on enemy
                 if (hit.collider.gameObject.tag == "Enemy")
                 {
-                    Ghost ghost = hit.collider.gameObject.GetComponent<Ghost>();
-                    if(ghost != null)
-                    {
-                        Score.AddToScore(200);
-                        ghost.GotHit();
-                    }
+                    //Ghost ghost = hit.collider.gameObject.GetComponent<Ghost>();
+                    //if(ghost != null)
+                    //{
+                    //    Score.AddToScore(200);
+                    //    ghost.GotHit();
+                    //}
                 }
             }
             else

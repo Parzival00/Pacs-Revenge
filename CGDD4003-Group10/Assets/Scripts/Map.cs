@@ -58,7 +58,7 @@ public class Map : MonoBehaviour
     public GridType SampleGrid(Vector2Int pos)
     {
         if (pos.x >= mapWidth || pos.y >= mapHeight)
-            return GridType.Air;
+            return GridType.Wall;
         return map[pos.x, pos.y];
     }
     /// <summary>
@@ -68,7 +68,7 @@ public class Map : MonoBehaviour
     {
         Vector2Int gridLoc = GetGridLocation(pos);
         if (gridLoc.x >= mapWidth || gridLoc.y >= mapHeight)
-            return GridType.Air;
+            return GridType.Wall;
         return map[gridLoc.x, gridLoc.y];
     }
 
@@ -300,6 +300,21 @@ public class Map : MonoBehaviour
 
         return worldPos;
     }
+
+    /*public void CheckForIntersection(Vector2Int gridPosition, Vector2Int direction)
+    {
+        Vector2Int intersections = Vector2Int.zero;
+
+        float angleToUp = Vector2.Dot(direction, Vector2.up);
+        float angleToDown = Vector2.Dot(direction, Vector2.down);
+        float angleToRight = Vector2.Dot(direction, Vector2.right);
+        float angleToLeft = Vector2.Dot(direction, Vector2.left);
+
+        if(SampleGrid(gridPosition + Vector2Int.up) == GridType.Air)
+        {
+            intersections.y = 1;
+        }
+    }*/
 
     /// <summary>
     /// Return the player position intgered on the map grid

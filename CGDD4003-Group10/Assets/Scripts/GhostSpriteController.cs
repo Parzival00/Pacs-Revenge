@@ -4,13 +4,27 @@ using UnityEngine;
 
 public class GhostSpriteController : MonoBehaviour
 {
+    public enum Orientation
+    {
+        North,
+        Northeast,
+        East,
+        Southeast,
+        South,
+        Southwest,
+        West,
+        Northwest
+    }
+
+    public Orientation orientation { get; private set; }
+
     [Header("References")]
     [SerializeField] Transform player;
     [SerializeField] Transform mainTransform;
     [SerializeField] Transform spriteTransform;
     [SerializeField] Animator animator;
 
-    [Header("Sprite GameObjects")]
+    [Header("Sprite Animator Controllers")]
     [SerializeField] RuntimeAnimatorController north;
     [SerializeField] AnimatorOverrideController northeast;
     [SerializeField] AnimatorOverrideController east;
@@ -19,6 +33,16 @@ public class GhostSpriteController : MonoBehaviour
     [SerializeField] AnimatorOverrideController southwest;
     [SerializeField] AnimatorOverrideController west;
     [SerializeField] AnimatorOverrideController northwest;
+
+    [Header("Collider Parent GameObjects")]
+    [SerializeField] GameObject northColliders;
+    [SerializeField] GameObject northeastColliders;
+    [SerializeField] GameObject eastColliders;
+    [SerializeField] GameObject southeastColliders;
+    [SerializeField] GameObject southColliders;
+    [SerializeField] GameObject southwestColliders;
+    [SerializeField] GameObject westColliders;
+    [SerializeField] GameObject northwestColliders;
 
     [Header("Rotation Thresholds")]
     [SerializeField] [Range(0, 11.25f)] float thresholdPadding = 2f;
@@ -45,11 +69,21 @@ public class GhostSpriteController : MonoBehaviour
             mainTransform = transform;
 
         animator.runtimeAnimatorController = north;
+        orientation = Orientation.North;
     }
 
     // Update is called once per frame
     void Update()
     {
+        northColliders.SetActive(false);
+        northeastColliders.SetActive(false);
+        eastColliders.SetActive(false);
+        southeastColliders.SetActive(false);
+        southColliders.SetActive(false);
+        southwestColliders.SetActive(false);
+        westColliders.SetActive(false);
+        northwestColliders.SetActive(false);
+
         Vector3 forward = mainTransform.forward;
         Vector3 dirToPlayer = (new Vector3(player.position.x, 0, player.position.z) - new Vector3(mainTransform.position.x, 0, mainTransform.position.z)).normalized; //to - from
         float angleBtwPlayer = Vector3.SignedAngle(forward, dirToPlayer, mainTransform.up);
@@ -57,34 +91,50 @@ public class GhostSpriteController : MonoBehaviour
         if(angleBtwPlayer < northMaxThreshold - thresholdPadding && angleBtwPlayer > northMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = north;
+            northColliders.SetActive(true);
+            orientation = Orientation.North;
         } 
         else if (angleBtwPlayer < northeastMaxThreshold - thresholdPadding && angleBtwPlayer > northeastMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = northeast;
+            northeastColliders.SetActive(true);
+            orientation = Orientation.Northeast;
         }
         else if (angleBtwPlayer < eastMaxThreshold - thresholdPadding && angleBtwPlayer > eastMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = east;
+            eastColliders.SetActive(true);
+            orientation = Orientation.East;
         }
         else if (angleBtwPlayer < southeastMaxThreshold - thresholdPadding && angleBtwPlayer > southeastMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = southeast;
+            southeastColliders.SetActive(true);
+            orientation = Orientation.Southeast;
         }
         else if (angleBtwPlayer < southMaxThreshold - thresholdPadding || angleBtwPlayer > southMinThreshold + thresholdPadding) //Special case
         {
             animator.runtimeAnimatorController = south;
+            southColliders.SetActive(true);
+            orientation = Orientation.South;
         }
         else if (angleBtwPlayer < southwestMaxThreshold - thresholdPadding && angleBtwPlayer > southwestMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = southwest;
+            southwestColliders.SetActive(true);
+            orientation = Orientation.Southwest;
         }
         else if (angleBtwPlayer < westMaxThreshold - thresholdPadding && angleBtwPlayer > westMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = west;
+            westColliders.SetActive(true);
+            orientation = Orientation.West;
         }
         else if (angleBtwPlayer < northwestMaxThreshold - thresholdPadding && angleBtwPlayer > northwestMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = northwest;
+            northwestColliders.SetActive(true);
+            orientation = Orientation.Northwest;
         }
 
         spriteTransform.transform.LookAt(new Vector3(player.position.x, mainTransform.position.y, player.position.z));
