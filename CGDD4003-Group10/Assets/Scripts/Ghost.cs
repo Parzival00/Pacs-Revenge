@@ -63,6 +63,7 @@ public class Ghost : MonoBehaviour
     [SerializeField] protected Transform respawnPoint;
     [SerializeField] protected Transform spawnExit;
 
+    //AI Variables
     protected Vector3 targetPosition;
     protected Vector2Int targetGridPosition;
     protected Vector2Int lastTargetGridPosition;
@@ -73,8 +74,9 @@ public class Ghost : MonoBehaviour
 
     protected Vector2Int currentDirection;
 
-    protected Dictionary<TargetAreaType, TargetArea> targetAreaDirectory;
-    protected TargetArea currentHitArea;
+    //Target Area Variables
+    protected Dictionary<TargetAreaType, TargetArea> targetAreaDirectory; //Dictionary to easily search up assigned target areas and their values
+    protected TargetArea currentHitArea; //Currently shot target area (used to get the respawn wait time addition)
 
     // Start is called before the first frame update
     void Start()
@@ -130,21 +132,12 @@ public class Ghost : MonoBehaviour
     protected virtual void Chase()
     {
         Vector2Int playerGridPosition = map.CheckEdgePositions(transform.position);
+
         targetGridPosition = playerGridPosition;
 
-        if (lastTargetGridPosition != playerGridPosition || !navMesh.enabled)
-        {
-
-            targetPosition = map.GetWorldFromGrid(playerGridPosition);
-
-            //navMesh.enabled = true;
-
-            //navMesh.SetDestination(targetPosition);
-        }
-
-        lastTargetGridPosition = playerGridPosition;
-
         Move();
+
+        lastTargetGridPosition = targetGridPosition;
     }
 
     //Scatter and move to the provided transforms location
@@ -152,10 +145,16 @@ public class Ghost : MonoBehaviour
     {
         Vector2Int scatterTargetGridPos = map.GetGridLocation(scatterTarget.position);
 
-        navMesh.SetDestination(map.GetWorldFromGrid(scatterTargetGridPos));
+        targetGridPosition = scatterTargetGridPos;
+
+        Move();
+
+        lastTargetGridPosition = targetGridPosition;
     }
 
-
+    /// <summary>
+    /// Moves the Ghost towards the target location following all the rules of Pac-Man's ghosts
+    /// </summary>
     protected void Move()
     {
         navMesh.enabled = true;
@@ -233,6 +232,7 @@ public class Ghost : MonoBehaviour
             currentMode = Mode.Exiting;
     }
 
+    //Mode for exiting the spawn location
     protected virtual void Exiting()
     {
         Vector2Int spawnExitGridPosition = map.GetGridLocation(spawnExit.position);
@@ -302,6 +302,8 @@ public class Ghost : MonoBehaviour
     public virtual void InitiateScatter()
     {
         currentMode = Mode.Scatter;
+        currentDirection = -currentDirection;
+        nextGridPosition = map.GetNextGridPosition(currentGridPosition, currentDirection, true, true);
     }
     public virtual void DeactivateScatter()
     {
@@ -309,6 +311,7 @@ public class Ghost : MonoBehaviour
             currentMode = Mode.Chase;
     }
 
+    //Gets the target area from the directory using the target area type
     public TargetArea GetTargetArea(TargetAreaType type)
     {
         return targetAreaDirectory[type];

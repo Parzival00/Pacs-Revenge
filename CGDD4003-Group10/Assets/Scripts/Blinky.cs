@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Blinky : Ghost
 {
-    // Start is called before the first frame update
-    void Start()
+    //Blinky's chase is the simplest being go to the player location so just uses base functionality of Chase()
+    protected override void Chase()
     {
-        
-    }
+        base.Chase();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

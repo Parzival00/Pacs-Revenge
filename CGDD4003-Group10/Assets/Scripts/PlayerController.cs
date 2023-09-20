@@ -33,11 +33,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform bulletOrigin;
     [SerializeField] Camera fpsCam;
     [SerializeField] WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
-    [SerializeField] WaitForSeconds gunTimer = new WaitForSeconds(5f);
     [SerializeField] float weaponRange;
     [SerializeField] LayerMask targetingMask;
+    [SerializeField] float gunTimeAmount = 5f;
     private LineRenderer laserLine;
     private float fireTimer;
+
+    private WaitForSeconds gunTimer;
 
     [Header("GameObject Refereneces")]
     [SerializeField] GameObject gun;
@@ -61,6 +63,8 @@ public class PlayerController : MonoBehaviour
         gunActivated = true;
         gun.SetActive(true);
         hud.SetActive(true);
+
+        gunTimer = new WaitForSeconds(gunTimeAmount);
     }
 
     // Update is called once per frame
@@ -120,7 +124,8 @@ public class PlayerController : MonoBehaviour
             Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
             RaycastHit hit;
             laserLine.SetPosition(0, bulletOrigin.position);
-            
+
+            //Detect hit on enemy
             if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange, targetingMask))
             {
                 laserLine.SetPosition(1, hit.point);
@@ -133,17 +138,6 @@ public class PlayerController : MonoBehaviour
                 {
                     Ghost.HitInformation hitInformation = targetAreaCollider.OnShot();
                     Score.AddToScore(hitInformation.pointWorth + hitInformation.targetArea.pointsAddition);
-                }
-
-                //Detect hit on enemy
-                if (hit.collider.gameObject.tag == "Enemy")
-                {
-                    //Ghost ghost = hit.collider.gameObject.GetComponent<Ghost>();
-                    //if(ghost != null)
-                    //{
-                    //    Score.AddToScore(200);
-                    //    ghost.GotHit();
-                    //}
                 }
             }
             else

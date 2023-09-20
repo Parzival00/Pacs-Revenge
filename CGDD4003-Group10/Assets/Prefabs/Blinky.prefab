@@ -10,9 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2725491476164826808}
   - component: {fileID: 2191023438221307184}
+  - component: {fileID: 1048903624261015843}
+  - component: {fileID: 6039650700603564001}
   m_Layer: 7
   m_Name: MinimapSprite
-  m_TagString: Untagged
+  m_TagString: MinimapObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84,6 +86,40 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!65 &1048903624261015843
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785863062986361225}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.2800006, y: 1.3800001, z: 0.68}
+  m_Center: {x: -0.00000011920929, y: 0, z: 0}
+--- !u!114 &6039650700603564001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785863062986361225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427ac1e57afc9cb40a97235b83560503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeModifier: 0.75
 --- !u!1 &1486671627734405349
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72c31d73d62657740b1dcc53d09e44ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghost: {fileID: 4370590752001792513}
+  ghost: {fileID: 4775153053850207514}
   targetAreaType: 3
 --- !u!1 &2053023959483097477
 GameObject:
@@ -252,7 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72c31d73d62657740b1dcc53d09e44ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghost: {fileID: 4370590752001792513}
+  ghost: {fileID: 4775153053850207514}
   targetAreaType: 1
 --- !u!1 &5522081866609916370
 GameObject:
@@ -358,7 +394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72c31d73d62657740b1dcc53d09e44ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghost: {fileID: 4370590752001792513}
+  ghost: {fileID: 4775153053850207514}
   targetAreaType: 4
 --- !u!1 &7291928817217145316
 GameObject:
@@ -458,8 +494,8 @@ GameObject:
   - component: {fileID: 8557475669440150629}
   - component: {fileID: 5715384835566075559}
   - component: {fileID: 4856677005804188932}
-  - component: {fileID: 4370590752001792513}
   - component: {fileID: 3522524652610482106}
+  - component: {fileID: 4775153053850207514}
   m_Layer: 0
   m_Name: Blinky
   m_TagString: Enemy
@@ -480,8 +516,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2725491476164826808}
   - {fileID: 5574988903311039125}
+  - {fileID: 2725491476164826808}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3971016356918884752
@@ -582,49 +618,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1.75, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4370590752001792513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7559388939437528121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6f3d83b4fd23ee4c9d7fa61cc854b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  navMesh: {fileID: 3522524652610482106}
-  map: {fileID: 0}
-  ghostIcon: {fileID: 2725491476164826808}
-  spriteController: {fileID: 0}
-  spriteRenderer: {fileID: 0}
-  exitSpawnToRight: 1
-  pelletsNeededToStart: 10
-  speed: 3
-  respawnWaitTime: 5
-  pointWorth: 20
-  targetAreas:
-  - respawnTimeAddition: 0
-    pointsAddition: 0
-    type: 2
-  - respawnTimeAddition: 5
-    pointsAddition: 50
-    type: 1
-  - respawnTimeAddition: 15
-    pointsAddition: 160
-    type: 3
-  - respawnTimeAddition: 12
-    pointsAddition: 125
-    type: 4
-  - respawnTimeAddition: 12
-    pointsAddition: 125
-    type: 5
-  ghostCollider: {fileID: 4856677005804188932}
-  player: {fileID: 0}
-  scatterTarget: {fileID: 0}
-  respawnPoint: {fileID: 0}
-  spawnExit: {fileID: 0}
 --- !u!195 &3522524652610482106
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -647,6 +640,49 @@ NavMeshAgent:
   m_BaseOffset: 0.88
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &4775153053850207514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7559388939437528121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 921fefad9d52a244a808738cba7a86b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  navMesh: {fileID: 3522524652610482106}
+  map: {fileID: 0}
+  ghostIcon: {fileID: 2725491476164826808}
+  spriteController: {fileID: 0}
+  spriteRenderer: {fileID: 526460352791212807}
+  exitSpawnToRight: 0
+  pelletsNeededToStart: 0
+  speed: 2
+  respawnWaitTime: 5
+  pointWorth: 200
+  targetAreas:
+  - respawnTimeAddition: 0
+    pointsAddition: 0
+    type: 2
+  - respawnTimeAddition: 5
+    pointsAddition: 50
+    type: 1
+  - respawnTimeAddition: 15
+    pointsAddition: 175
+    type: 3
+  - respawnTimeAddition: 11
+    pointsAddition: 125
+    type: 4
+  - respawnTimeAddition: 11
+    pointsAddition: 125
+    type: 5
+  ghostCollider: {fileID: 4856677005804188932}
+  player: {fileID: 0}
+  scatterTarget: {fileID: 0}
+  respawnPoint: {fileID: 0}
+  spawnExit: {fileID: 0}
 --- !u!1 &7972887654353586157
 GameObject:
   m_ObjectHideFlags: 0
@@ -715,7 +751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72c31d73d62657740b1dcc53d09e44ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghost: {fileID: 4370590752001792513}
+  ghost: {fileID: 4775153053850207514}
   targetAreaType: 5
 --- !u!1 &8237213041290169622
 GameObject:
@@ -783,5 +819,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72c31d73d62657740b1dcc53d09e44ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghost: {fileID: 4370590752001792513}
+  ghost: {fileID: 4775153053850207514}
   targetAreaType: 2
