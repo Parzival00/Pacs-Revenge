@@ -9,6 +9,12 @@ public class TargetAreaCollider : MonoBehaviour
     [SerializeField] Ghost.TargetAreaType targetAreaType;
     //[SerializeField] SpriteRenderer spriteRenderer;
 
+    private void Start()
+    {
+        if (ghost == null)
+            ghost = transform.root.GetComponent<Ghost>();
+    }
+
     public Ghost.HitInformation OnShot()
     {
         ghost.GotHit(targetAreaType);

@@ -46,6 +46,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject hud;
     [SerializeField] GameObject railgunChargeBar;
 
+    [Header("Animator")]
+    [SerializeField] Animator animator;
+
     private bool gunActivated;
 
     // Start is called before the first frame update
@@ -60,11 +63,14 @@ public class PlayerController : MonoBehaviour
         speed = baseSpeed;
         laserLine = GetComponent<LineRenderer>();
 
-        gunActivated = true;
-        gun.SetActive(true);
-        hud.SetActive(true);
+        gunActivated = false;
+        gun.SetActive(false);
+        hud.SetActive(false);
 
         gunTimer = new WaitForSeconds(gunTimeAmount);
+
+        if (animator == null)
+            animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -183,8 +189,15 @@ public class PlayerController : MonoBehaviour
             StopCoroutine(gunTimerCoroutine);
 
         gunActivated = true;
-        gun.SetActive(true);
+        if(animator == null)
+            gun.SetActive(true);
         hud.SetActive(true);
+
+        if (animator != null)
+        {
+            animator.ResetTrigger("UnequipGun");
+            animator.SetTrigger("EquipGun");
+        }
 
         Ghost[] ghosts = FindObjectsOfType<Ghost>();
         foreach(Ghost ghost in ghosts)
@@ -211,8 +224,15 @@ public class PlayerController : MonoBehaviour
     void DeactivateGun()
     {
         gunActivated = false;
-        gun.SetActive(false);
+        if(animator == null)
+            gun.SetActive(false);
         hud.SetActive(false);
+
+        if (animator != null)
+        {
+            animator.ResetTrigger("EquipGun");
+            animator.SetTrigger("UnequipGun");
+        }
 
         Ghost[] ghosts = FindObjectsOfType<Ghost>();
         foreach (Ghost ghost in ghosts)

@@ -775,7 +775,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -819,9 +819,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 10
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 200
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -849,7 +849,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 8693637553251266476}
   exitSpawnToRight: 0
   pelletsNeededToStart: 20
-  speed: 3
+  speed: 4.5
   respawnWaitTime: 5
   pointWorth: 20
   targetAreas:
@@ -865,8 +865,8 @@ MonoBehaviour:
   - respawnTimeAddition: 5
     pointsAddition: 50
     type: 1
-  ghostCollider: {fileID: 3189278963225092051}
   player: {fileID: 0}
   scatterTarget: {fileID: 0}
   respawnPoint: {fileID: 0}
   spawnExit: {fileID: 0}
+  colliders: {fileID: 1486938528494309636}

@@ -54,14 +54,14 @@ public class Ghost : MonoBehaviour
     [SerializeField] protected int pointWorth = 20;
     [SerializeField] protected TargetArea[] targetAreas;
 
-    [Header("Collider")]
-    [SerializeField] protected Collider ghostCollider;
-
     [Header("Transform Targets")]
     [SerializeField] protected Transform player;
     [SerializeField] protected Transform scatterTarget;
     [SerializeField] protected Transform respawnPoint;
     [SerializeField] protected Transform spawnExit;
+
+    [Header("Colliders Parent GameObject")] //Used only for ghosts without different perspectives yet
+    [SerializeField] GameObject colliders;
 
     //AI Variables
     protected Vector3 targetPosition;
@@ -268,8 +268,13 @@ public class Ghost : MonoBehaviour
     protected virtual IEnumerator RespawnSequence()
     {
         spriteRenderer.color = Color.black;
+
+        if (spriteController)
+            spriteController.DeactivateColliders();
+        if (colliders)
+            colliders.SetActive(false);
+
         navMesh.ResetPath();
-        ghostCollider.enabled = false;
         startedRespawnSequence = true;
 
         WaitForSeconds deathWait = new WaitForSeconds(3f);
@@ -292,10 +297,16 @@ public class Ghost : MonoBehaviour
         //Reset variables
         startedRespawnSequence = false;
 
+        print("Respawned: " + name);
+
         spriteRenderer.color = Color.white;
 
+        if(spriteController)
+            spriteController.ActivateColliders();
+        if(colliders)
+            colliders.SetActive(true);
+
         currentMode = Mode.Exiting;
-        ghostCollider.enabled = true;
         lastTargetGridPosition = new Vector2Int(-1, -1);
     }
 

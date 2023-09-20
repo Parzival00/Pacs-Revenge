@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class Score : MonoBehaviour
 {
     public static int score { get; private set; }
     public static int pelletsCollected {get; private set; }
 
-    [SerializeField] GameObject textUI;
+    [SerializeField] TMP_Text scoreUI;
 
     void Start()
     {
@@ -19,7 +19,7 @@ public class Score : MonoBehaviour
     
     void Update()
     {
-        updateScore();
+        UpdateScore();
     }
 
     /*private void OnCollisionEnter(Collision other)
@@ -57,9 +57,9 @@ public class Score : MonoBehaviour
     }
 
 
-    void updateScore() 
+    void UpdateScore() 
     {
-        textUI.GetComponent<Text>().text = "Score: " + score;
+        scoreUI.text = "Score: " + score;
     }
 
     public static void AddToScore(int amount)

@@ -18,6 +18,8 @@ public class GhostSpriteController : MonoBehaviour
 
     public Orientation orientation { get; private set; }
 
+    private bool collidersActive = true;
+
     [Header("References")]
     [SerializeField] Transform player;
     [SerializeField] Transform mainTransform;
@@ -70,6 +72,8 @@ public class GhostSpriteController : MonoBehaviour
 
         animator.runtimeAnimatorController = north;
         orientation = Orientation.North;
+
+        ActivateColliders();
     }
 
     // Update is called once per frame
@@ -91,50 +95,66 @@ public class GhostSpriteController : MonoBehaviour
         if(angleBtwPlayer < northMaxThreshold - thresholdPadding && angleBtwPlayer > northMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = north;
-            northColliders.SetActive(true);
             orientation = Orientation.North;
-        } 
+
+            if (collidersActive)
+                northColliders.SetActive(true);
+        }
         else if (angleBtwPlayer < northeastMaxThreshold - thresholdPadding && angleBtwPlayer > northeastMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = northeast;
-            northeastColliders.SetActive(true);
             orientation = Orientation.Northeast;
+
+            if (collidersActive)
+                northeastColliders.SetActive(true);
         }
         else if (angleBtwPlayer < eastMaxThreshold - thresholdPadding && angleBtwPlayer > eastMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = east;
-            eastColliders.SetActive(true);
             orientation = Orientation.East;
+
+            if (collidersActive)
+                eastColliders.SetActive(true);
         }
         else if (angleBtwPlayer < southeastMaxThreshold - thresholdPadding && angleBtwPlayer > southeastMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = southeast;
-            southeastColliders.SetActive(true);
             orientation = Orientation.Southeast;
+
+            if (collidersActive)
+                southeastColliders.SetActive(true);
         }
         else if (angleBtwPlayer < southMaxThreshold - thresholdPadding || angleBtwPlayer > southMinThreshold + thresholdPadding) //Special case
         {
             animator.runtimeAnimatorController = south;
-            southColliders.SetActive(true);
             orientation = Orientation.South;
+
+            if (collidersActive)
+                southColliders.SetActive(true);
         }
         else if (angleBtwPlayer < southwestMaxThreshold - thresholdPadding && angleBtwPlayer > southwestMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = southwest;
-            southwestColliders.SetActive(true);
             orientation = Orientation.Southwest;
+
+            if (collidersActive)
+                southwestColliders.SetActive(true);
         }
         else if (angleBtwPlayer < westMaxThreshold - thresholdPadding && angleBtwPlayer > westMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = west;
-            westColliders.SetActive(true);
             orientation = Orientation.West;
+
+            if (collidersActive)
+                westColliders.SetActive(true);
         }
         else if (angleBtwPlayer < northwestMaxThreshold - thresholdPadding && angleBtwPlayer > northwestMinThreshold + thresholdPadding)
         {
             animator.runtimeAnimatorController = northwest;
-            northwestColliders.SetActive(true);
             orientation = Orientation.Northwest;
+
+            if (collidersActive)
+                northwestColliders.SetActive(true);
         }
 
         spriteTransform.transform.LookAt(new Vector3(player.position.x, mainTransform.position.y, player.position.z));
@@ -160,5 +180,15 @@ public class GhostSpriteController : MonoBehaviour
     {
         animator.SetTrigger("Reform");
         animator.ResetTrigger("Death");
+    }
+
+    public void ActivateColliders()
+    {
+        collidersActive = true;
+    }
+
+    public void DeactivateColliders()
+    {
+        collidersActive = false;
     }
 }
