@@ -12,7 +12,6 @@ public class Clyde : Ghost
         
         if (Vector2Int.Distance(playerGridPosition,clydeGridPosition) < 8)
         {
-            print("within clyde radius");
             targetGridPosition = map.GetGridLocation(scatterTarget.position);
         }
         else

@@ -9,7 +9,8 @@ public class Score : MonoBehaviour
     public static int pelletsCollected {get; private set; }
 
     [SerializeField] TMP_Text scoreUI;
-
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip pelletSound;
     void Start()
     {
         pelletsCollected = 0;
@@ -43,6 +44,7 @@ public class Score : MonoBehaviour
         if (other.gameObject.tag == "Pellet")
         {
             other.gameObject.SetActive(false);
+            audioSource.PlayOneShot(pelletSound);
             pelletsCollected += 1;
             //Destroy(other.gameObject);
             score += 50;
