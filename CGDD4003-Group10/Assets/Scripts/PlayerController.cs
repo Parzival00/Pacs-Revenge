@@ -251,11 +251,8 @@ public class PlayerController : MonoBehaviour
             Destroy(other.gameObject);
             ActivateGun();
         }
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.tag == "Enemy")
+        if(other.tag == "Enemy")
         {
             print("hit");
             SceneManager.LoadScene(3);
