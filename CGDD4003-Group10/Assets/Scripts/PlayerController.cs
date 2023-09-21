@@ -255,7 +255,7 @@ public class PlayerController : MonoBehaviour
         if(other.tag == "Enemy")
         {
             print("hit");
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(2);
         }
     }
 }
