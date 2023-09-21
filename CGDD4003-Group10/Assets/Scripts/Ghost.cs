@@ -60,8 +60,16 @@ public class Ghost : MonoBehaviour
     [SerializeField] protected Transform respawnPoint;
     [SerializeField] protected Transform spawnExit;
 
-    [Header("Colliders Parent GameObject")] //Used only for ghosts without different perspectives yet
-    [SerializeField] GameObject colliders;
+    [Header("Player Dectecting Collider")]
+    [SerializeField] Collider collider;
+
+    [Header("Sound Settings")]
+    [SerializeField] AudioSource source;
+    [SerializeField] AudioClip chaseSound;
+    [SerializeField] AudioClip scatterSound;
+    [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip corpseMoveSound;
+    [SerializeField] AudioClip respawnedSound;
 
     //AI Variables
     protected Vector3 targetPosition;
@@ -93,6 +101,9 @@ public class Ghost : MonoBehaviour
         {
             targetAreaDirectory.Add(area.type, area);
         }
+
+        if (collider)
+            collider.enabled = true;
     }
 
     // Update is called once per frame
@@ -138,6 +149,15 @@ public class Ghost : MonoBehaviour
         Move();
 
         lastTargetGridPosition = targetGridPosition;
+
+        //Play Sound
+        source.loop = true;
+        source.clip = chaseSound;
+
+        if(!source.isPlaying || source.clip != chaseSound)
+        {
+            source.Play();
+        }
     }
 
     //Scatter and move to the provided transforms location
@@ -150,6 +170,12 @@ public class Ghost : MonoBehaviour
         Move();
 
         lastTargetGridPosition = targetGridPosition;
+
+        //Play Sound
+        if (source.isPlaying)
+        {
+            source.Stop();
+        }
     }
 
     /// <summary>
@@ -271,8 +297,8 @@ public class Ghost : MonoBehaviour
 
         if (spriteController)
             spriteController.DeactivateColliders();
-        if (colliders)
-            colliders.SetActive(false);
+        if (collider)
+            collider.enabled = false;
 
         navMesh.ResetPath();
         startedRespawnSequence = true;
@@ -303,8 +329,8 @@ public class Ghost : MonoBehaviour
 
         if(spriteController)
             spriteController.ActivateColliders();
-        if(colliders)
-            colliders.SetActive(true);
+        if(collider)
+            collider.enabled = true;
 
         currentMode = Mode.Exiting;
         lastTargetGridPosition = new Vector2Int(-1, -1);
@@ -315,11 +341,17 @@ public class Ghost : MonoBehaviour
         currentMode = Mode.Scatter;
         currentDirection = -currentDirection;
         nextGridPosition = map.GetNextGridPosition(currentGridPosition, currentDirection, true, true);
+
+        if (collider)
+            collider.enabled = false;
     }
     public virtual void DeactivateScatter()
     {
         if(currentMode == Mode.Scatter)
             currentMode = Mode.Chase;
+
+        if (collider)
+            collider.enabled = true;
     }
 
     //Gets the target area from the directory using the target area type

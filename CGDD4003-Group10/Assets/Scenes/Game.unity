@@ -9817,13 +9817,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 54225875}
     - target: {fileID: 3394116844295099061, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+      propertyPath: chaseSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 3c5c6adc90168eb419c691da63ee8549, type: 3}
+    - target: {fileID: 3394116844295099061, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
       propertyPath: respawnPoint
       value: 
       objectReference: {fileID: 1622232903}
     - target: {fileID: 3394116844295099061, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
       propertyPath: ghostCollider
       value: 
-      objectReference: {fileID: 217045696}
+      objectReference: {fileID: 0}
     - target: {fileID: 3394116844295099061, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
       propertyPath: scatterTarget
       value: 
@@ -9873,11 +9877,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ed3e3bfa35c7a34ca414daa7ac849e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!136 &217045696 stripped
-CapsuleCollider:
-  m_CorrespondingSourceObject: {fileID: 4347783197843360900, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
-  m_PrefabInstance: {fileID: 217045693}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &220223956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38370,8 +38369,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4433259139599985882, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: m_Volume
+      value: 0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 4433259139599985882, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: m_PlayOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4648173346818715503, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: m_Volume
+      value: 0.378
       objectReference: {fileID: 0}
     - target: {fileID: 4648173346818715503, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: m_PlayOnAwake
@@ -50087,6 +50094,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 7465043686356946606, guid: 5d8988313b2408b4fbc3bb6102082b93, type: 3}
   m_PrefabInstance: {fileID: 1136773149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1141571433 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 3189278963225092051, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
+  m_PrefabInstance: {fileID: 1970699791}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1142285464
 GameObject:
@@ -69533,6 +69545,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 54225875}
     - target: {fileID: 7488783908990092422, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
+      propertyPath: chaseSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 3c5c6adc90168eb419c691da63ee8549, type: 3}
+    - target: {fileID: 7488783908990092422, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
       propertyPath: respawnPoint
       value: 
       objectReference: {fileID: 1663082612}
@@ -74828,6 +74844,10 @@ PrefabInstance:
       propertyPath: spawnExit
       value: 
       objectReference: {fileID: 54225875}
+    - target: {fileID: 4775153053850207514, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
+      propertyPath: chaseSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 3c5c6adc90168eb419c691da63ee8549, type: 3}
     - target: {fileID: 4775153053850207514, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
       propertyPath: respawnPoint
       value: 
@@ -86584,9 +86604,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 879833135}
     - target: {fileID: 3061552904051411997, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
+      propertyPath: collider
+      value: 
+      objectReference: {fileID: 1141571433}
+    - target: {fileID: 3061552904051411997, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
       propertyPath: spawnExit
       value: 
       objectReference: {fileID: 54225875}
+    - target: {fileID: 3061552904051411997, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
+      propertyPath: chaseSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 3c5c6adc90168eb419c691da63ee8549, type: 3}
     - target: {fileID: 3061552904051411997, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
       propertyPath: respawnPoint
       value: 
@@ -94649,7 +94677,6 @@ SceneRoots:
   - {fileID: 1577671949}
   - {fileID: 689901295}
   - {fileID: 664637258}
-  - {fileID: 1577960914}
   - {fileID: 1511856627}
   - {fileID: 52334585}
   - {fileID: 1070537436}
@@ -94657,6 +94684,7 @@ SceneRoots:
   - {fileID: 1874301100}
   - {fileID: 503286684}
   - {fileID: 1539244258}
+  - {fileID: 1577960914}
   - {fileID: 1718795330}
   - {fileID: 217045693}
   - {fileID: 1970699791}
