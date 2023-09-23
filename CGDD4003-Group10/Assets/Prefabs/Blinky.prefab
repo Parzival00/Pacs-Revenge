@@ -190,6 +190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 4775153053850207514}
   targetAreaType: 3
+  outline: {fileID: 0}
 --- !u!1 &2053023959483097477
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,6 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 4775153053850207514}
   targetAreaType: 1
+  outline: {fileID: 0}
 --- !u!1 &5522081866609916370
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,6 +526,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 4775153053850207514}
   targetAreaType: 4
+  outline: {fileID: 0}
 --- !u!1 &7291928817217145316
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,7 +763,7 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 10
   avoidancePriority: 50
-  m_AngularSpeed: 200
+  m_AngularSpeed: 300
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -811,7 +814,7 @@ MonoBehaviour:
   scatterTarget: {fileID: 0}
   respawnPoint: {fileID: 0}
   spawnExit: {fileID: 0}
-  collider: {fileID: 4856677005804188932}
+  ghostCollider: {fileID: 4856677005804188932}
   source: {fileID: 2619138868853787396}
   chaseSound: {fileID: 8300000, guid: 3c5c6adc90168eb419c691da63ee8549, type: 3}
   scatterSound: {fileID: 0}
@@ -888,6 +891,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 4775153053850207514}
   targetAreaType: 5
+  outline: {fileID: 0}
 --- !u!1 &8237213041290169622
 GameObject:
   m_ObjectHideFlags: 0
@@ -956,3 +960,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 4775153053850207514}
   targetAreaType: 2
+  outline: {fileID: 0}

@@ -61,7 +61,7 @@ public class Ghost : MonoBehaviour
     [SerializeField] protected Transform spawnExit;
 
     [Header("Player Dectecting Collider")]
-    [SerializeField] Collider collider;
+    [SerializeField] Collider ghostCollider;
 
     [Header("Sound Settings")]
     [SerializeField] AudioSource source;
@@ -102,8 +102,8 @@ public class Ghost : MonoBehaviour
             targetAreaDirectory.Add(area.type, area);
         }
 
-        if (collider)
-            collider.enabled = true;
+        if (ghostCollider)
+            ghostCollider.enabled = true;
     }
 
     // Update is called once per frame
@@ -297,8 +297,8 @@ public class Ghost : MonoBehaviour
 
         if (spriteController)
             spriteController.DeactivateColliders();
-        if (collider)
-            collider.enabled = false;
+        if (ghostCollider)
+            ghostCollider.enabled = false;
 
         navMesh.ResetPath();
         startedRespawnSequence = true;
@@ -329,8 +329,8 @@ public class Ghost : MonoBehaviour
 
         if(spriteController)
             spriteController.ActivateColliders();
-        if(collider)
-            collider.enabled = true;
+        if(ghostCollider)
+            ghostCollider.enabled = true;
 
         currentMode = Mode.Exiting;
         lastTargetGridPosition = new Vector2Int(-1, -1);
@@ -342,16 +342,18 @@ public class Ghost : MonoBehaviour
         currentDirection = -currentDirection;
         nextGridPosition = map.GetNextGridPosition(currentGridPosition, currentDirection, true, true);
 
-        if (collider)
-            collider.enabled = false;
+        if (ghostCollider)
+            ghostCollider.enabled = false;
     }
     public virtual void DeactivateScatter()
     {
-        if(currentMode == Mode.Scatter)
+        if (currentMode == Mode.Scatter)
+        {
             currentMode = Mode.Chase;
 
-        if (collider)
-            collider.enabled = true;
+            if (ghostCollider)
+                ghostCollider.enabled = true;
+        }
     }
 
     //Gets the target area from the directory using the target area type

@@ -6731,6 +6731,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7465043686356946606, guid: 5d8988313b2408b4fbc3bb6102082b93, type: 3}
   m_PrefabInstance: {fileID: 142760496}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &143598705 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 838808124917478586, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+  m_PrefabInstance: {fileID: 217045693}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &144180373
 GameObject:
   m_ObjectHideFlags: 0
@@ -9804,6 +9809,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3294179548311665422, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3394116844295099061, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
       propertyPath: map
       value: 
@@ -9827,7 +9836,7 @@ PrefabInstance:
     - target: {fileID: 3394116844295099061, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
       propertyPath: ghostCollider
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 143598705}
     - target: {fileID: 3394116844295099061, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
       propertyPath: scatterTarget
       value: 
@@ -38364,26 +38373,6 @@ PrefabInstance:
       propertyPath: railgunChargeBar
       value: 
       objectReference: {fileID: 1794113779}
-    - target: {fileID: 4052137048052693561, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4433259139599985882, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
-      propertyPath: m_Volume
-      value: 0.22
-      objectReference: {fileID: 0}
-    - target: {fileID: 4433259139599985882, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4648173346818715503, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
-      propertyPath: m_Volume
-      value: 0.378
-      objectReference: {fileID: 0}
-    - target: {fileID: 4648173346818715503, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5301077504717036913, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: m_Name
       value: Player
@@ -38392,6 +38381,10 @@ PrefabInstance:
       propertyPath: scoreUI
       value: 
       objectReference: {fileID: 1602883407}
+    - target: {fileID: 6717606324952877450, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: timeBtwBlinks
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

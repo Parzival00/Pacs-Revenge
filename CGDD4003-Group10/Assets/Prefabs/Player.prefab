@@ -43,8 +43,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 0.669
+  m_PlayOnAwake: 0
+  m_Volume: 0.378
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -128,7 +128,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &2779757974495027448
+--- !u!1 &4552041144137350135
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,8 +136,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3031350237875104961}
-  - component: {fileID: 4433259139599985882}
+  - component: {fileID: 1672897152263471085}
+  - component: {fileID: 7337700370802506642}
   m_Layer: 0
   m_Name: Munch
   m_TagString: Untagged
@@ -145,13 +145,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3031350237875104961
+--- !u!4 &1672897152263471085
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2779757974495027448}
+  m_GameObject: {fileID: 4552041144137350135}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -160,19 +160,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 743185093512582757}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &4433259139599985882
+--- !u!82 &7337700370802506642
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2779757974495027448}
+  m_GameObject: {fileID: 4552041144137350135}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 0.669
+  m_PlayOnAwake: 0
+  m_Volume: 0.378
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -271,6 +271,7 @@ GameObject:
   - component: {fileID: 1318178161834631250}
   - component: {fileID: 2865670225406934770}
   - component: {fileID: 6532150692148206727}
+  - component: {fileID: 6717606324952877450}
   - component: {fileID: 208930143002471842}
   - component: {fileID: 5504658082635863454}
   m_Layer: 0
@@ -295,7 +296,7 @@ Transform:
   m_Children:
   - {fileID: 2701049378798147818}
   - {fileID: 7258861404212812880}
-  - {fileID: 3031350237875104961}
+  - {fileID: 1672897152263471085}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7913088612209654388
@@ -431,6 +432,7 @@ MonoBehaviour:
   hud: {fileID: 0}
   railgunChargeBar: {fileID: 0}
   animator: {fileID: 5504658082635863454}
+  targetOutlineController: {fileID: 6717606324952877450}
 --- !u!114 &6532150692148206727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -444,8 +446,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreUI: {fileID: 0}
-  audioSource: {fileID: 4433259139599985882}
+  audioSource: {fileID: 7337700370802506642}
   pelletSound: {fileID: 8300000, guid: 9712f941024d00b41a68bda490f240cc, type: 3}
+--- !u!114 &6717606324952877450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5301077504717036913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c53ece84e3f6e154299219e82ffc8d0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineTarget: {fileID: 1829968095, guid: 868bedb507ca21245944a6e800a9b79f, type: 3}
+  outlineTargetFill: {fileID: 76428728, guid: 868bedb507ca21245944a6e800a9b79f, type: 3}
+  timeBtwBlinks: 0.5
 --- !u!120 &208930143002471842
 LineRenderer:
   serializedVersion: 2
@@ -688,7 +705,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 631
+    m_Bits: 887
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -774,7 +791,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6821514254823661221}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}

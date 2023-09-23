@@ -229,6 +229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 3
+  outline: {fileID: 0}
 --- !u!1 &548973652523774743
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,6 +300,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 5
+  outline: {fileID: 0}
 --- !u!1 &971424926678157357
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,7 +572,7 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 10
   avoidancePriority: 50
-  m_AngularSpeed: 200
+  m_AngularSpeed: 300
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -621,7 +623,7 @@ MonoBehaviour:
   scatterTarget: {fileID: 0}
   respawnPoint: {fileID: 0}
   spawnExit: {fileID: 0}
-  collider: {fileID: 798158092443242777}
+  ghostCollider: {fileID: 798158092443242777}
   source: {fileID: 1825052027058405750}
   chaseSound: {fileID: 8300000, guid: 3c5c6adc90168eb419c691da63ee8549, type: 3}
   scatterSound: {fileID: 0}
@@ -696,6 +698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 1
+  outline: {fileID: 0}
 --- !u!1 &1347927001696806234
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,6 +802,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 1
+  outline: {fileID: 0}
 --- !u!1 &1496141990655974273
 GameObject:
   m_ObjectHideFlags: 0
@@ -867,6 +871,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 1
+  outline: {fileID: 0}
 --- !u!1 &1595090727917145029
 GameObject:
   m_ObjectHideFlags: 0
@@ -937,6 +942,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 5
+  outline: {fileID: 0}
 --- !u!1 &1910898983810789402
 GameObject:
   m_ObjectHideFlags: 0
@@ -1133,6 +1139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 2
+  outline: {fileID: 0}
 --- !u!1 &2300137102782843528
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,6 +1208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 3
+  outline: {fileID: 0}
 --- !u!1 &2313659170280477895
 GameObject:
   m_ObjectHideFlags: 0
@@ -1271,6 +1279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 4
+  outline: {fileID: 0}
 --- !u!1 &2395433699259438895
 GameObject:
   m_ObjectHideFlags: 0
@@ -1339,6 +1348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 2
+  outline: {fileID: 0}
 --- !u!1 &2878383487226005119
 GameObject:
   m_ObjectHideFlags: 0
@@ -1409,6 +1419,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 4
+  outline: {fileID: 0}
 --- !u!1 &2905676545416344628
 GameObject:
   m_ObjectHideFlags: 0
@@ -1477,6 +1488,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 1
+  outline: {fileID: 0}
 --- !u!1 &3115192810867369101
 GameObject:
   m_ObjectHideFlags: 0
@@ -1547,6 +1559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 4
+  outline: {fileID: 0}
 --- !u!1 &3135532092620971068
 GameObject:
   m_ObjectHideFlags: 0
@@ -1615,6 +1628,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 2
+  outline: {fileID: 0}
 --- !u!1 &3150068593657950854
 GameObject:
   m_ObjectHideFlags: 0
@@ -1683,6 +1697,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 3
+  outline: {fileID: 0}
 --- !u!1 &3229281540503975009
 GameObject:
   m_ObjectHideFlags: 0
@@ -1787,6 +1802,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 2
+  outline: {fileID: 0}
 --- !u!1 &3320815518132540801
 GameObject:
   m_ObjectHideFlags: 0
@@ -1855,6 +1871,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 1
+  outline: {fileID: 0}
 --- !u!1 &3408423577477051160
 GameObject:
   m_ObjectHideFlags: 0
@@ -2029,6 +2046,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 4
+  outline: {fileID: 0}
 --- !u!1 &3680552830231682668
 GameObject:
   m_ObjectHideFlags: 0
@@ -2168,6 +2186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 1
+  outline: {fileID: 0}
 --- !u!1 &5433664028771113531
 GameObject:
   m_ObjectHideFlags: 0
@@ -2236,6 +2255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 2
+  outline: {fileID: 0}
 --- !u!1 &5523989717661486069
 GameObject:
   m_ObjectHideFlags: 0
@@ -2339,6 +2359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 1
+  outline: {fileID: 0}
 --- !u!1 &5897881244210595228
 GameObject:
   m_ObjectHideFlags: 0
@@ -2409,6 +2430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 5
+  outline: {fileID: 0}
 --- !u!1 &6046356629870012566
 GameObject:
   m_ObjectHideFlags: 0
@@ -2477,6 +2499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 2
+  outline: {fileID: 0}
 --- !u!1 &6279929510667162885
 GameObject:
   m_ObjectHideFlags: 0
@@ -2547,6 +2570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 5
+  outline: {fileID: 0}
 --- !u!1 &6524170536660119806
 GameObject:
   m_ObjectHideFlags: 0
@@ -2615,6 +2639,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 3
+  outline: {fileID: 0}
 --- !u!1 &6621351551231189973
 GameObject:
   m_ObjectHideFlags: 0
@@ -2683,6 +2708,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 2
+  outline: {fileID: 0}
 --- !u!1 &6645942875192855302
 GameObject:
   m_ObjectHideFlags: 0
@@ -2751,6 +2777,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 3
+  outline: {fileID: 0}
 --- !u!1 &6847201807171030918
 GameObject:
   m_ObjectHideFlags: 0
@@ -2819,6 +2846,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 2
+  outline: {fileID: 0}
 --- !u!1 &7524667892391792600
 GameObject:
   m_ObjectHideFlags: 0
@@ -2922,6 +2950,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 3
+  outline: {fileID: 0}
 --- !u!1 &8242470879492280412
 GameObject:
   m_ObjectHideFlags: 0
@@ -2990,6 +3019,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 3
+  outline: {fileID: 0}
 --- !u!1 &8566008405265542728
 GameObject:
   m_ObjectHideFlags: 0
@@ -3058,6 +3088,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 1
+  outline: {fileID: 0}
 --- !u!1 &8764933179468221701
 GameObject:
   m_ObjectHideFlags: 0
@@ -3128,6 +3159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 5
+  outline: {fileID: 0}
 --- !u!1 &8960216857523607169
 GameObject:
   m_ObjectHideFlags: 0
@@ -3198,3 +3230,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 7488783908990092422}
   targetAreaType: 4
+  outline: {fileID: 0}

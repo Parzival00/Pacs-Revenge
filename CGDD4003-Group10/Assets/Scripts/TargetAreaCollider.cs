@@ -7,7 +7,7 @@ public class TargetAreaCollider : MonoBehaviour
 {
     [SerializeField] Ghost ghost;
     [SerializeField] Ghost.TargetAreaType targetAreaType;
-    //[SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] SpriteRenderer outline;
 
     private void Start()
     {
@@ -19,5 +19,10 @@ public class TargetAreaCollider : MonoBehaviour
     {
         ghost.GotHit(targetAreaType);
         return ghost.GotHit(targetAreaType);
+    }
+
+    public SpriteRenderer OnTarget()
+    {
+        return outline;
     }
 }

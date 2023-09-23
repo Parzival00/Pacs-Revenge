@@ -47,8 +47,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject hud;
     [SerializeField] GameObject railgunChargeBar;
 
-    [Header("Animator")]
+    [Header("Player Animator")]
     [SerializeField] Animator animator;
+
+    [Header("Target Outline Controller")]
+    [SerializeField] TargetOutlineController targetOutlineController;
 
     private bool gunActivated;
 
@@ -80,8 +83,11 @@ public class PlayerController : MonoBehaviour
         MouseControl();
         MovementControl();
 
-        if(gunActivated)
+        if (gunActivated)
+        {
             Fire();
+            OutlineTargetEnemy();
+        }
     }
     /// <summary>
     /// This method takes the mouse position and rotates the player and camera accordingly. Using the x position of the mouse for horizontal and the y position for vertical.
@@ -170,6 +176,33 @@ public class PlayerController : MonoBehaviour
         yield return shotDuration;
         laserLine.enabled = false;
     }
+    /// <summary>
+    /// Activates the corresponding outline for targeted area
+    /// </summary>
+    private void OutlineTargetEnemy()
+    {
+        Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
+        RaycastHit hit;
+
+        //Detect hit on enemy
+        if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange, targetingMask))
+        {
+            //print("Targetting: " + hit.collider.gameObject.name);
+
+            TargetAreaCollider targetAreaCollider = hit.collider.GetComponent<TargetAreaCollider>();
+
+            if (targetAreaCollider != null)
+            {
+                SpriteRenderer outline = targetAreaCollider.OnTarget();
+                targetOutlineController.SetTargetOutline(outline);
+            }
+        } 
+        else
+        {
+            //print("Not Targetting Anything");
+            targetOutlineController.DeactivateOutline();
+        }
+    }
 
     /// <summary>
     /// Disable the character controller temporarily to set the position to given location. (Used in combination with the teleport class) 
@@ -242,6 +275,9 @@ public class PlayerController : MonoBehaviour
         }
 
         gunTimerCoroutine = null;
+
+        //Deactivate any remaining target outline
+        targetOutlineController.DeactivateOutline();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -254,7 +290,7 @@ public class PlayerController : MonoBehaviour
 
         if(other.tag == "Enemy")
         {
-            print("hit");
+            print("hit by " + other.gameObject.name);
             SceneManager.LoadScene(2);
         }
     }
