@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 //using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerController : MonoBehaviour
@@ -30,7 +31,7 @@ public class PlayerController : MonoBehaviour
     [Header("Weapon Settings")]
     [SerializeField] AudioClip gunshot;
     [SerializeField] AudioSource weaponSound;
-    [SerializeField] float fireRate;
+    [SerializeField] float chargeTime;
     [SerializeField] Transform bulletOrigin;
     [SerializeField] Camera fpsCam;
     [SerializeField] WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
@@ -38,14 +39,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask targetingMask;
     [SerializeField] float gunTimeAmount = 5f;
     private LineRenderer laserLine;
-    private float fireTimer;
+    private float weaponCharge;
+    Slider weaponChargeBar;
 
     private WaitForSeconds gunTimer;
 
     [Header("GameObject Refereneces")]
     [SerializeField] GameObject gun;
     [SerializeField] GameObject hud;
-    [SerializeField] GameObject railgunChargeBar;
+    
 
     [Header("Player Animator")]
     [SerializeField] Animator animator;
@@ -66,7 +68,7 @@ public class PlayerController : MonoBehaviour
         }
         speed = baseSpeed;
         laserLine = GetComponent<LineRenderer>();
-
+        this.weaponChargeBar = (Slider)GameObject.FindGameObjectWithTag("ChargeBar").GetComponent("Slider");
         gunActivated = false;
         gun.SetActive(false);
         hud.SetActive(false);
@@ -87,6 +89,7 @@ public class PlayerController : MonoBehaviour
         {
             Fire();
             OutlineTargetEnemy();
+            updateChargeBar();
         }
     }
     /// <summary>
@@ -131,50 +134,60 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Fire()
     {
-        if (fireTimer <= 0 && Input.GetMouseButton(0) && !paused)
+        if (Input.GetMouseButtonUp(0) && !paused)
         {
-            StartCoroutine(ShotEffect());
-            Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
-            RaycastHit hit;
-            laserLine.SetPosition(0, bulletOrigin.position);
-
-            //Detect hit on enemy
-            if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange, targetingMask))
+            if(weaponCharge >= 1)
             {
-                laserLine.SetPosition(1, hit.point);
+                StartCoroutine(ShotEffect());
+                Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
+                RaycastHit hit;
+                laserLine.SetPosition(0, bulletOrigin.position);
 
-                print("Hit: " + hit.collider.gameObject.name);
-
-                TargetAreaCollider targetAreaCollider = hit.collider.GetComponent<TargetAreaCollider>();
-
-                if(targetAreaCollider != null)
+                //Detect hit on enemy
+                if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange, targetingMask))
                 {
-                    Ghost.HitInformation hitInformation = targetAreaCollider.OnShot();
-                    Score.AddToScore(hitInformation.pointWorth + hitInformation.targetArea.pointsAddition);
+                    laserLine.SetPosition(1, hit.point);
+
+                    print("Hit: " + hit.collider.gameObject.name);
+
+                    TargetAreaCollider targetAreaCollider = hit.collider.GetComponent<TargetAreaCollider>();
+
+                    if (targetAreaCollider != null)
+                    {
+                        Ghost.HitInformation hitInformation = targetAreaCollider.OnShot();
+                        Score.AddToScore(hitInformation.pointWorth + hitInformation.targetArea.pointsAddition);
+                    }
                 }
+                else
+                {
+                    laserLine.SetPosition(1, rayOrigin + (fpsCam.transform.forward * weaponRange));
+                }
+                //weaponSound.PlayOneShot(gunshot);
             }
-            else
-            {
-                laserLine.SetPosition(1, rayOrigin + (fpsCam.transform.forward * weaponRange));
-            }
-            fireTimer = fireRate;
-            //weaponSound.PlayOneShot(gunshot);
+            weaponCharge = 0f;
         }
-        else if (fireTimer > 0)
+        else if (!paused && Input.GetMouseButton(0))
         {
-            fireTimer -= Time.deltaTime;
+            weaponCharge += (Time.deltaTime * (1 / chargeTime));
         }
+        
     }
     /// <summary>
     /// Plays the weapon sound effect and enables the line render
     /// </summary>
-    /// <returns></returns>
     private IEnumerator ShotEffect()
     {
         weaponSound.PlayOneShot(gunshot);
         laserLine.enabled = true;
         yield return shotDuration;
         laserLine.enabled = false;
+    }
+    /// <summary>
+    /// Updates the size of the charge bar based on current charge
+    /// </summary>
+    void updateChargeBar()
+    {
+        weaponChargeBar.value = weaponCharge;
     }
     /// <summary>
     /// Activates the corresponding outline for targeted area
@@ -238,7 +251,6 @@ public class PlayerController : MonoBehaviour
         {
             ghost.InitiateScatter();
         }
-
         gunTimerCoroutine = StartCoroutine(GunTimer());
     }
 
