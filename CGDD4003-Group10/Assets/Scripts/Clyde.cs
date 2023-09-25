@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Clyde : Ghost
 {
+    [Header("Clyde Specific Settings")]
     [SerializeField] int radiusToAvoidPlayer;
     protected override void Chase()
     {

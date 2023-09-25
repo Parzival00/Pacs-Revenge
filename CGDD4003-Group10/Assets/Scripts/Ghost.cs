@@ -338,12 +338,15 @@ public class Ghost : MonoBehaviour
 
     public virtual void InitiateScatter()
     {
-        currentMode = Mode.Scatter;
-        currentDirection = -currentDirection;
-        nextGridPosition = map.GetNextGridPosition(currentGridPosition, currentDirection, true, true);
+        if (currentMode != Mode.Dormant)
+        {
+            currentMode = Mode.Scatter;
+            currentDirection = -currentDirection;
+            nextGridPosition = map.GetNextGridPosition(currentGridPosition, currentDirection, true, true);
 
-        if (ghostCollider)
-            ghostCollider.enabled = false;
+            if (ghostCollider)
+                ghostCollider.enabled = false;
+        }
     }
     public virtual void DeactivateScatter()
     {

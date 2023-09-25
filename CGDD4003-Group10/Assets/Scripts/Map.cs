@@ -7,7 +7,8 @@ public class Map : MonoBehaviour
     public enum GridType
     {
         Air,
-        Wall
+        Wall,
+        Barrier
     }
 
     public GridType[,] map { get; private set; }
@@ -50,6 +51,15 @@ public class Map : MonoBehaviour
             map[index.x, index.y] = GridType.Wall;
         }
 
+        //Gather all barriers in the scene
+        GameObject[] barriers = GameObject.FindGameObjectsWithTag("Barrier");
+
+        //Use the barriers position on the map to mark grid spaces with barriers
+        foreach (GameObject barrier in barriers)
+        {
+            Vector2Int index = GetGridLocation(barrier.transform.position);
+            map[index.x, index.y] = GridType.Barrier;
+        }
     }
 
     /// <summary>
@@ -131,7 +141,7 @@ public class Map : MonoBehaviour
 
         Vector2Int nextGridPos = currentGridPos + dir;
 
-        if(map[nextGridPos.x, nextGridPos.y] == GridType.Wall)
+        if(map[nextGridPos.x, nextGridPos.y] != GridType.Air)
         {
             float dirAngleToUp = Vector2.Dot(dir, Vector2.up);
             float dirAngleToLeft = Vector2.Dot(dir, Vector2.left);
@@ -174,7 +184,7 @@ public class Map : MonoBehaviour
         Vector2Int nextGridPos = currentGridPos + dir;
         nextGridPos = new Vector2Int(Mathf.Clamp(nextGridPos.x, 0, mapWidth - 1), Mathf.Clamp(nextGridPos.y, 0, mapHeight - 1));
 
-        if (map[nextGridPos.x, nextGridPos.y] == GridType.Wall)
+        if (map[nextGridPos.x, nextGridPos.y] != GridType.Air)
         {
             float dirAngleToUp = Vector2.Dot(dir, Vector2.up);
             float dirAngleToLeft = Vector2.Dot(dir, Vector2.left);
@@ -264,7 +274,7 @@ public class Map : MonoBehaviour
         Vector2Int nextGridPos = currentGridPos + dir;
         nextGridPos = new Vector2Int(Mathf.Clamp(nextGridPos.x, 0, mapWidth - 1), Mathf.Clamp(nextGridPos.y, 0, mapHeight - 1));
 
-        if(map[nextGridPos.x, nextGridPos.y] == GridType.Wall)
+        if(map[nextGridPos.x, nextGridPos.y] != GridType.Air)
         {
             if(prioritizeUp && nextGridPos.y < mapHeight - 1 && map[nextGridPos.x, nextGridPos.y + 1] == GridType.Air)
             {
@@ -387,10 +397,10 @@ public class Map : MonoBehaviour
         float distBtwGhostToTarget = Vector2Int.Distance(targetGridPos, ghostGridPos);
 
         float distBtwGhostToLeftEdge = Vector2Int.Distance(ghostGridPos, leftEdgeGridPos);
-        float distBtwPlayerToLeftEdge = Vector2Int.Distance(targetGridPos, leftEdgeGridPos);
+        float distBtwTargetToLeftEdge = Vector2Int.Distance(targetGridPos, leftEdgeGridPos);
 
         float distBtwGhostToRightEdge = Vector2Int.Distance(ghostGridPos, rightEdgeGridPos);
-        float distBtwPlayerToRightEdge = Vector2Int.Distance(targetGridPos, rightEdgeGridPos);
+        float distBtwTargetToRightEdge = Vector2Int.Distance(targetGridPos, rightEdgeGridPos);
 
         if (distBtwGhostToRightEdge < distBtwGhostToLeftEdge)
         {
@@ -398,7 +408,7 @@ public class Map : MonoBehaviour
             {
                 return targetGridPos;
             }
-            else if (distBtwGhostToTarget < distBtwPlayerToLeftEdge)
+            else if (distBtwGhostToTarget < distBtwTargetToLeftEdge)
             {
                 return targetGridPos;
             }
@@ -413,7 +423,7 @@ public class Map : MonoBehaviour
             {
                 return targetGridPos;
             }
-            else if (distBtwGhostToTarget < distBtwPlayerToRightEdge)
+            else if (distBtwGhostToTarget < distBtwTargetToRightEdge)
             {
                 return targetGridPos;
             }
