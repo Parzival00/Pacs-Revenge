@@ -374,6 +374,56 @@ public class Map : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Takes in the ghost position and a target position and returns the grid position to get to the target the quickest
+    /// (Used for pinky because target is not player position)
+    /// </summary>
+    public Vector2Int CheckEdgePositions(Vector3 ghostPosition, Vector2Int targetGridPos)
+    {
+        Vector2Int ghostGridPos = GetGridLocation(ghostPosition);
+        Vector2Int leftEdgeGridPos = GetGridLocation(leftEdge.position);
+        Vector2Int rightEdgeGridPos = GetGridLocation(rightEdge.position);
+
+        float distBtwGhostToTarget = Vector2Int.Distance(targetGridPos, ghostGridPos);
+
+        float distBtwGhostToLeftEdge = Vector2Int.Distance(ghostGridPos, leftEdgeGridPos);
+        float distBtwPlayerToLeftEdge = Vector2Int.Distance(targetGridPos, leftEdgeGridPos);
+
+        float distBtwGhostToRightEdge = Vector2Int.Distance(ghostGridPos, rightEdgeGridPos);
+        float distBtwPlayerToRightEdge = Vector2Int.Distance(targetGridPos, rightEdgeGridPos);
+
+        if (distBtwGhostToRightEdge < distBtwGhostToLeftEdge)
+        {
+            if (distBtwGhostToTarget < distBtwGhostToRightEdge)
+            {
+                return targetGridPos;
+            }
+            else if (distBtwGhostToTarget < distBtwPlayerToLeftEdge)
+            {
+                return targetGridPos;
+            }
+            else
+            {
+                return rightEdgeGridPos;
+            }
+        }
+        else
+        {
+            if (distBtwGhostToTarget < distBtwGhostToLeftEdge)
+            {
+                return targetGridPos;
+            }
+            else if (distBtwGhostToTarget < distBtwPlayerToRightEdge)
+            {
+                return targetGridPos;
+            }
+            else
+            {
+                return leftEdgeGridPos;
+            }
+        }
+    }
+
     //Debug Function
     private void OnDrawGizmos()
     {

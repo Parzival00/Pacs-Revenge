@@ -64,12 +64,12 @@ public class Ghost : MonoBehaviour
     [SerializeField] Collider ghostCollider;
 
     [Header("Sound Settings")]
-    [SerializeField] AudioSource source;
-    [SerializeField] AudioClip chaseSound;
-    [SerializeField] AudioClip scatterSound;
-    [SerializeField] AudioClip deathSound;
-    [SerializeField] AudioClip corpseMoveSound;
-    [SerializeField] AudioClip respawnedSound;
+    [SerializeField] protected AudioSource source;
+    [SerializeField] protected AudioClip chaseSound;
+    [SerializeField] protected AudioClip scatterSound;
+    [SerializeField] protected AudioClip deathSound;
+    [SerializeField] protected AudioClip corpseMoveSound;
+    [SerializeField] protected AudioClip respawnedSound;
 
     //AI Variables
     protected Vector3 targetPosition;
