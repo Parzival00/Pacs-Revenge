@@ -18,7 +18,9 @@ public class MainMenuManager : MonoBehaviour
     }
     public void DisplayOptions() 
     {
-        
+        GameObject.Find("MenuOptions").SetActive(false);
+        GameObject.Find("OptionsMenu").SetActive(true);
+
     }
     public void DisplayScoreBoard() 
     {
