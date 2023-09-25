@@ -14,7 +14,7 @@ public class Pinky : Ghost
     protected override void Chase()
     {
         Vector2Int playerGridPosition = map.GetPlayerPosition();
-        Vector2Int playerGridDir = map.GetGridSpaceDirection(player.rotation.eulerAngles);
+        Vector2Int playerGridDir = map.GetGridSpaceDirection(player.forward);
         Vector2Int pinkyGridTarget = map.GetGridPositionAhead(playerGridPosition, playerGridDir, 4, true, false);
 
         if (originalMode)

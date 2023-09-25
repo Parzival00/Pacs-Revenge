@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     [Header("Target Outline Controller")]
     [SerializeField] TargetOutlineController targetOutlineController;
 
-    private bool gunActivated;
+    public static bool gunActivated { get; private set; }
 
     // Start is called before the first frame update
     void Start()

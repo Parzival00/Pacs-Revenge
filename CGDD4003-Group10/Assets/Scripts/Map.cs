@@ -140,15 +140,16 @@ public class Map : MonoBehaviour
             return currentGridPos + dir;
 
         Vector2Int nextGridPos = currentGridPos + dir;
+        nextGridPos = new Vector2Int(Mathf.Clamp(nextGridPos.x, 0, mapWidth - 1), Mathf.Clamp(nextGridPos.y, 0, mapHeight - 1));
 
-        if(map[nextGridPos.x, nextGridPos.y] != GridType.Air)
+        if (map[nextGridPos.x, nextGridPos.y] != GridType.Air)
         {
             float dirAngleToUp = Vector2.Dot(dir, Vector2.up);
             float dirAngleToLeft = Vector2.Dot(dir, Vector2.left);
 
             if(dirAngleToUp <= 0.1f && dirAngleToUp >= -0.1f) //given direction is perpendicular to the up and down dir
             {
-                if(prioritizeUp && map[currentGridPos.x, currentGridPos.y + 1] == GridType.Air)
+                if(prioritizeUp && currentGridPos.y < mapHeight - 1 &&  map[currentGridPos.x, currentGridPos.y + 1] == GridType.Air)
                 {
                     nextGridPos = currentGridPos + Vector2Int.up;
                 } else
@@ -158,7 +159,7 @@ public class Map : MonoBehaviour
 
             } else if (dirAngleToLeft <= 0.1f && dirAngleToLeft >= -0.1f) //given direction is perpendicular to the left and right dir
             {
-                if (prioritizeRight && map[currentGridPos.x + 1, currentGridPos.y] == GridType.Air)
+                if (prioritizeRight && currentGridPos.x < mapWidth - 1 && map[currentGridPos.x + 1, currentGridPos.y] == GridType.Air)
                 {
                     nextGridPos = currentGridPos + Vector2Int.right;
                 }

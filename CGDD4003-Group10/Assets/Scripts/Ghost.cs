@@ -266,16 +266,24 @@ public class Ghost : MonoBehaviour
 
         if(Vector2Int.Distance(spawnExitGridPosition, currentGridPosition) < 0.05f)
         {
-            currentMode = Mode.Chase;
+            if (PlayerController.gunActivated)
+            {
+                InitiateScatter();
+            }
+            else
+            {
+                currentMode = Mode.Chase;
 
-            if(exitSpawnToRight)
-            {
-                currentDirection = Vector2Int.right;
-                nextGridPosition = spawnExitGridPosition + Vector2Int.right;
-            } else
-            {
-                currentDirection = Vector2Int.left;
-                nextGridPosition = spawnExitGridPosition + Vector2Int.left;
+                if (exitSpawnToRight)
+                {
+                    currentDirection = Vector2Int.right;
+                    nextGridPosition = spawnExitGridPosition + Vector2Int.right;
+                }
+                else
+                {
+                    currentDirection = Vector2Int.left;
+                    nextGridPosition = spawnExitGridPosition + Vector2Int.left;
+                }
             }
         }
     }
