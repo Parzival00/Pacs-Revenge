@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
+    
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.None;
@@ -35,5 +36,11 @@ public class MainMenuManager : MonoBehaviour
         #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
         #endif
+    }
+    public void ResumeGame() 
+    {
+        Time.timeScale = 1;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }

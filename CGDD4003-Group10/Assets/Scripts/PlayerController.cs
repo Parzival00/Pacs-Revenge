@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 //using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerController : MonoBehaviour
 {
     public Transform playerCam;
     public Transform playerT;
+    static bool gameIsPaused;
+    public GameObject pauseMenu;
 
     [Header("Movement Settings")]
     [SerializeField] float baseSpeed;
@@ -90,6 +93,12 @@ public class PlayerController : MonoBehaviour
             Fire();
             OutlineTargetEnemy();
             updateChargeBar();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape)) 
+        {
+            gameIsPaused = !gameIsPaused;
+            PauseGame();
         }
     }
     /// <summary>
@@ -304,6 +313,31 @@ public class PlayerController : MonoBehaviour
         {
             print("hit by " + other.gameObject.name);
             SceneManager.LoadScene(2);
+        }
+    }
+
+    ///Summary
+    ///Pause Game Function
+    ///Summary
+    private void PauseGame() 
+    {
+        if (gameIsPaused)
+        {
+            Time.timeScale = 0.0f;
+            AudioListener.pause = true;
+
+            pauseMenu.SetActive(true);
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else 
+        {
+            Time.timeScale = 1.0f;
+            AudioListener.pause = false;
+            pauseMenu.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 }
