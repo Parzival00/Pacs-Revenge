@@ -311,8 +311,28 @@ public class PlayerController : MonoBehaviour
 
         if(other.tag == "Enemy")
         {
-            print("hit by " + other.gameObject.name);
-            SceneManager.LoadScene(2);
+            Ghost ghost = other.gameObject.transform.root.GetComponent<Ghost>();
+
+            if (ghost.CurrentMode == Ghost.Mode.Chase)
+            {
+                print("hit by " + other.gameObject.name);
+                SceneManager.LoadScene(2);
+            }
+        }
+    }
+
+    //Accounting for scatter ending when player is touching a ghost
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Enemy")
+        {
+            Ghost ghost = other.gameObject.transform.root.GetComponent<Ghost>();
+
+            if (ghost.CurrentMode == Ghost.Mode.Chase)
+            {
+                print("hit by " + other.gameObject.name);
+                SceneManager.LoadScene(2);
+            }
         }
     }
 

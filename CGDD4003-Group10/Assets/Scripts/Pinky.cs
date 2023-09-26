@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Pinky : Ghost
 {
-    [Header("Pinky overflow error: (Pinky had a bug in the original game causing an error choosing a target location in specific situations)")]
-    [SerializeField] bool originalMode;
+    [Header("Pinky Specific Settings")]
+
+    [Tooltip("Pinky overflow error: (Pinky had a bug in the original game causing an error choosing a target location in specific situations)")]
+    [SerializeField] bool originalMode; 
     /// <summary>
     /// Overrides chase mode to choose the space 4 tiles ahead of pac-man instead of pac-man as the target
     /// In the original game there was a bug where if pac-man was facing up pinky would target the space 4 ahead AND 4 to the left of pac-man instead

@@ -105,25 +105,25 @@ public class Map : MonoBehaviour
         dir = dir.normalized;
 
         float dirAngleToForward = Vector3.Dot(dir, Vector3.forward);
-        if (dirAngleToForward >= 0.5f)
+        if (dirAngleToForward >= 0.7f)
         {
             integeredDir = Vector2Int.up;
         }
 
         float dirAngleToBack = Vector3.Dot(dir, Vector3.back);
-        if (dirAngleToBack >= 0.5f)
+        if (dirAngleToBack >= 0.7f)
         {
             integeredDir = Vector2Int.down;
         }
 
         float dirAngleToLeft = Vector3.Dot(dir, Vector3.left);
-        if (dirAngleToLeft >= 0.5f)
+        if (dirAngleToLeft >= 0.7f)
         {
             integeredDir = Vector2Int.left;
         }
 
         float dirAngleToRight = Vector3.Dot(dir, Vector3.right);
-        if (dirAngleToRight >= 0.5f)
+        if (dirAngleToRight >= 0.7f)
         {
             integeredDir = Vector2Int.right;
         }
@@ -257,7 +257,7 @@ public class Map : MonoBehaviour
         Vector2Int currentDir = integeredDir;
         for (int i = 0; i < spacesAhead; i++)
         {
-            nextGridPos = GetNextGridPosition(nextGridPos, currentDir, prioritizeUp, prioritizeRight, out currentDir);
+            nextGridPos = GetNextGridPosition(nextGridPos, integeredDir, prioritizeUp, prioritizeRight);
         }
 
         return nextGridPos;
@@ -289,7 +289,7 @@ public class Map : MonoBehaviour
             {
                 nextGridPos = nextGridPos + Vector2Int.right;
             }
-            else if (nextGridPos.y > 0 && map[nextGridPos.x - 1, nextGridPos.y] == GridType.Air)
+            else if (nextGridPos.x > 0 && map[nextGridPos.x - 1, nextGridPos.y] == GridType.Air)
             {
                 nextGridPos = nextGridPos + Vector2Int.left;
             }
@@ -311,21 +311,6 @@ public class Map : MonoBehaviour
 
         return worldPos;
     }
-
-    /*public void CheckForIntersection(Vector2Int gridPosition, Vector2Int direction)
-    {
-        Vector2Int intersections = Vector2Int.zero;
-
-        float angleToUp = Vector2.Dot(direction, Vector2.up);
-        float angleToDown = Vector2.Dot(direction, Vector2.down);
-        float angleToRight = Vector2.Dot(direction, Vector2.right);
-        float angleToLeft = Vector2.Dot(direction, Vector2.left);
-
-        if(SampleGrid(gridPosition + Vector2Int.up) == GridType.Air)
-        {
-            intersections.y = 1;
-        }
-    }*/
 
     /// <summary>
     /// Return the player position intgered on the map grid

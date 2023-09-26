@@ -39,7 +39,12 @@ public class Ghost : MonoBehaviour
     }
 
     protected Mode currentMode;
+    public Mode CurrentMode { get => currentMode; }
 
+    [Header("Debug Settings")]
+    [SerializeField] bool visualizeTargetPosition;
+
+    [Header("References")]
     [SerializeField] protected NavMeshAgent navMesh;
     [SerializeField] protected Map map;
     [SerializeField] protected Transform ghostIcon;
@@ -305,8 +310,8 @@ public class Ghost : MonoBehaviour
 
         if (spriteController)
             spriteController.DeactivateColliders();
-        if (ghostCollider)
-            ghostCollider.enabled = false;
+        /*if (ghostCollider)
+            ghostCollider.enabled = false;*/
 
         navMesh.ResetPath();
         startedRespawnSequence = true;
@@ -352,8 +357,8 @@ public class Ghost : MonoBehaviour
             currentDirection = -currentDirection;
             nextGridPosition = map.GetNextGridPosition(currentGridPosition, currentDirection, true, true);
 
-            if (ghostCollider)
-                ghostCollider.enabled = false;
+            /*if (ghostCollider)
+                ghostCollider.enabled = false;*/
         }
     }
     public virtual void DeactivateScatter()
@@ -401,5 +406,16 @@ public class Ghost : MonoBehaviour
     private void RotateGhostIcons()
     {
         ghostIcon.rotation = Quaternion.Euler(90, player.transform.eulerAngles.y, 0);
+    }
+
+    private void OnDrawGizmos()
+    {
+        if(visualizeTargetPosition)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawCube(map.GetWorldFromGrid(targetGridPosition), Vector3.one);
+
+            Gizmos.color = Color.white;
+        }
     }
 }
