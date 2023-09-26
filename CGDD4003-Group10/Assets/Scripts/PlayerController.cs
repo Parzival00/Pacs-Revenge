@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] float baseSpeed;
     [SerializeField] float sprintMultiplier;
+    [SerializeField] Transform playerSpawnPoint;
     private float speed;
     private float moveSmoothTime = 0.1f;
     private Vector2 currentDirection;
@@ -46,11 +47,19 @@ public class PlayerController : MonoBehaviour
     Slider weaponChargeBar;
 
     private WaitForSeconds gunTimer;
+    
 
     [Header("GameObject Refereneces")]
     [SerializeField] GameObject gun;
     [SerializeField] GameObject hud;
-    
+    [SerializeField] Image fadeImage;
+    [SerializeField] Text LivesText;
+
+    //camera fade variables
+    [SerializeField] float fadeTimeModifier;
+    [SerializeField] int playerLives;
+    private bool hitable;
+    private float hitTimer;
 
     [Header("Player Animator")]
     [SerializeField] Animator animator;
@@ -76,6 +85,10 @@ public class PlayerController : MonoBehaviour
         gun.SetActive(false);
         hud.SetActive(false);
 
+        hitable = true;
+        hitTimer = 0;
+        fadeImage.canvasRenderer.SetAlpha(0.01f);
+
         gunTimer = new WaitForSeconds(gunTimeAmount);
 
         if (animator == null)
@@ -100,6 +113,31 @@ public class PlayerController : MonoBehaviour
             gameIsPaused = !gameIsPaused;
             PauseGame();
         }
+
+        if (!hitable)
+        {
+            hitTimer += Time.deltaTime;
+        }
+        if(hitTimer >= fadeTimeModifier && !hitable)
+        {
+            hitTimer = 0;
+            hitable = true;
+            if (playerLives < 1)
+            {
+                print("Ending Scene");
+                fadeImage.CrossFadeAlpha(0.01f, 1, false);
+                //end game scene
+                SceneManager.LoadScene(2);
+            }
+            else
+            {
+                //reset player and ghosts
+                transform.position = playerSpawnPoint.position;
+                fadeImage.CrossFadeAlpha(0.01f, 1, false);
+
+            }
+        }
+        LivesText.text = "Lives: " + playerLives;
     }
     /// <summary>
     /// This method takes the mouse position and rotates the player and camera accordingly. Using the x position of the mouse for horizontal and the y position for vertical.
@@ -309,16 +347,22 @@ public class PlayerController : MonoBehaviour
             ActivateGun();
         }
 
-        if(other.tag == "Enemy")
-        {
-            Ghost ghost = other.gameObject.transform.root.GetComponent<Ghost>();
+        //if(other.tag == "Enemy")
+        //{
+        //    Ghost ghost = other.gameObject.transform.root.GetComponent<Ghost>();
 
-            if (ghost.CurrentMode == Ghost.Mode.Chase)
-            {
-                print("hit by " + other.gameObject.name);
-                SceneManager.LoadScene(2);
-            }
-        }
+        //    if (ghost.CurrentMode == Ghost.Mode.Chase)
+        //    {
+        //        //fade to black
+        //        if (hitable)
+        //        {
+        //            playerLives--;
+        //            hitable = false;
+        //            fadeImage.CrossFadeAlpha(255, fadeTimeModifier, false);
+        //        }
+                
+        //    }
+        //}
     }
 
     //Accounting for scatter ending when player is touching a ghost
@@ -331,7 +375,19 @@ public class PlayerController : MonoBehaviour
             if (ghost.CurrentMode == Ghost.Mode.Chase)
             {
                 print("hit by " + other.gameObject.name);
-                SceneManager.LoadScene(2);
+
+                //fade to black
+                if (hitable)
+                {
+                    playerLives--;
+                    hitable = false;
+                    fadeImage.canvasRenderer.SetAlpha(0.01f);
+
+                    fadeImage.CrossFadeAlpha(255f, 100f, false);
+
+                }
+
+
             }
         }
     }
@@ -360,4 +416,7 @@ public class PlayerController : MonoBehaviour
             Cursor.visible = false;
         }
     }
+  
+        
+    
 }
