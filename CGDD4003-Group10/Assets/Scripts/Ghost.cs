@@ -418,4 +418,21 @@ public class Ghost : MonoBehaviour
             Gizmos.color = Color.white;
         }
     }
+
+    /// <summary>
+    /// resets the ghost back to its spawn point. Used when player dies
+    /// delete this if it can be used with SetPosition() instead, Im not sure about turning off the navmesh
+    /// -Ben
+    /// </summary>
+    public void ResetGhost()
+    {
+        if(currentMode != Mode.Dormant)
+        {
+            navMesh.enabled = false;
+            this.transform.position = respawnPoint.position;
+            navMesh.enabled = true;
+            currentMode = Mode.Respawn;
+        }
+       
+    }
 }

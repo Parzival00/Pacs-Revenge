@@ -54,6 +54,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject hud;
     [SerializeField] Image fadeImage;
     [SerializeField] Text LivesText;
+    [SerializeField] Ghost blinky;
+    [SerializeField] Ghost inky;
+    [SerializeField] Ghost pinky;
+    [SerializeField] Ghost clyde;
+    List<Ghost> ghosts;
 
     [Header("Death Settings")]
     //camera fade variables
@@ -99,6 +104,8 @@ public class PlayerController : MonoBehaviour
 
         if (animator == null)
             animator = GetComponent<Animator>();
+
+        ghosts = new List<Ghost>() { inky, blinky, pinky, clyde };
     }
 
     // Update is called once per frame
@@ -392,6 +399,11 @@ public class PlayerController : MonoBehaviour
                     fadeImage.canvasRenderer.SetAlpha(0.01f);
 
                     fadeImage.CrossFadeAlpha(255f, 100f, false);
+
+                    foreach(Ghost g in ghosts)
+                    {
+                        g.ResetGhost();
+                    }
 
                 }
 
