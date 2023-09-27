@@ -39,7 +39,7 @@ public class FruitController : MonoBehaviour
     {
         if (availableFruits != null)
         {
-            currentFruit = availableFruits[0];
+            currentFruit = availableFruits[Random.Range(0, availableFruits.Length)];
 
             minimapFruitSpriteRenderer.sprite = currentFruit.sprite;
             fruitSpriteRenderer.sprite = currentFruit.sprite;
