@@ -12,8 +12,8 @@ public class Score : MonoBehaviour
     [SerializeField] TMP_Text scoreUI;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip pelletSound;
-    [SerializeField] GameObject cherryObject;
-    [SerializeField] int cherrySpawn1, cherrySpawn2;
+    //[SerializeField] GameObject cherryObject;
+    //[SerializeField] int cherrySpawn1, cherrySpawn2;
 
     private int totalPellets;
     void Start()
@@ -22,7 +22,7 @@ public class Score : MonoBehaviour
         score = 0;
         GameObject[] pellets = GameObject.FindGameObjectsWithTag("Pellet");
         totalPellets = pellets.Length;
-        cherryObject.SetActive(false);
+        //cherryObject.SetActive(false);
     }
 
 
@@ -60,17 +60,24 @@ public class Score : MonoBehaviour
             {
                 SceneManager.LoadScene(2);
             }
-            else if (pelletsCollected == cherrySpawn1 || pelletsCollected == cherrySpawn2)
+            /*else if (pelletsCollected == cherrySpawn1 || pelletsCollected == cherrySpawn2)
             {
                 cherryObject.SetActive(true);
-            }
+            }*/
         }
 
-        if (other.gameObject.tag == "Cherry")
+        if (other.gameObject.tag == "Fruit")
         {
-            other.gameObject.SetActive(false);
+            //other.gameObject.SetActive(false);
             //Destroy(other.gameObject);
-            score += 1000;
+            //score += 1000;
+
+            FruitController fruitController = other.gameObject.GetComponent<FruitController>();
+
+            if(fruitController)
+            {
+                score += fruitController.CollectFruit();
+            }
         }
     }
 

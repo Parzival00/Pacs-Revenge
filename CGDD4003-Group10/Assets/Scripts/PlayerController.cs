@@ -55,9 +55,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Image fadeImage;
     [SerializeField] Text LivesText;
 
+    [Header("Death Settings")]
     //camera fade variables
-    [SerializeField] float fadeTimeModifier;
-    [SerializeField] int playerLives;
+    [SerializeField] float fadeTimeModifier = 1;
+    [SerializeField] int playerLives = 3;
     private bool hitable;
     private float hitTimer;
 
@@ -69,9 +70,14 @@ public class PlayerController : MonoBehaviour
 
     public static bool gunActivated { get; private set; }
 
+    private float originalY;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        originalY = transform.position.y;
+
         character = this.GetComponent<CharacterController>();
         if (lockCursor)
         {
@@ -105,7 +111,7 @@ public class PlayerController : MonoBehaviour
         {
             Fire();
             OutlineTargetEnemy();
-            updateChargeBar();
+            UpdateChargeBar();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)) 
@@ -146,11 +152,11 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 mousePosition = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
-        cameraPitch -= mousePosition.y * sensitivity;
+        cameraPitch -= mousePosition.y * sensitivity * Time.timeScale;
         cameraPitch = Mathf.Clamp(cameraPitch, -60.0f, 60.0f);
 
         playerCam.localEulerAngles = Vector3.right * cameraPitch;
-        playerT.Rotate(Vector3.up * mousePosition.x * sensitivity);
+        playerT.Rotate(Vector3.up * mousePosition.x * sensitivity * Time.timeScale);
 
     }
     /// <summary>
@@ -174,6 +180,8 @@ public class PlayerController : MonoBehaviour
         velocity = (playerT.forward * currentDirection.y + playerT.right * currentDirection.x) * speed;
         character.enabled = true;
         character.Move(velocity * Time.deltaTime);
+
+        //transform.position = new Vector3(transform.position.x, originalY, transform.position.z); //Ensure character stays on the ground
     }
     /// <summary>
     /// When the left mouse button is pressed this generates a raycast to where the player was aiming.
@@ -232,7 +240,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Updates the size of the charge bar based on current charge
     /// </summary>
-    void updateChargeBar()
+    void UpdateChargeBar()
     {
         weaponChargeBar.value = weaponCharge;
     }

@@ -412,8 +412,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCam: {fileID: 2701049378798147818}
   playerT: {fileID: 743185093512582757}
+  pauseMenu: {fileID: 0}
   baseSpeed: 5
   sprintMultiplier: 1.5
+  playerSpawnPoint: {fileID: 0}
   velocity: {x: 0, y: 0, z: 0}
   lockCursor: 1
   paused: 0
@@ -430,6 +432,10 @@ MonoBehaviour:
   gunTimeAmount: 15
   gun: {fileID: 5000619941810572233}
   hud: {fileID: 0}
+  fadeImage: {fileID: 0}
+  LivesText: {fileID: 0}
+  fadeTimeModifier: 0
+  playerLives: 0
   animator: {fileID: 5504658082635863454}
   targetOutlineController: {fileID: 6717606324952877450}
 --- !u!114 &6532150692148206727
@@ -704,7 +710,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 887
+    m_Bits: 2935
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
