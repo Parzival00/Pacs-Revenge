@@ -83,6 +83,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip gameStart;
     [SerializeField] AudioSource musicPlayer;
 
+    [Header("Debug Settings")]
+    [SerializeField] bool usePlayerPrefsSettings;
+
     public static bool gunActivated { get; private set; }
 
     private float originalY;
@@ -118,7 +121,10 @@ public class PlayerController : MonoBehaviour
         ghosts = new Ghost[4];
         ghosts = FindObjectsOfType<Ghost>();
 
-        applyGameSettings();
+        if (usePlayerPrefsSettings)
+        {
+            applyGameSettings();
+        }
     }
 
     // Update is called once per frame
@@ -496,7 +502,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void ResumeGame()
     {
-        print("Clicked");
         gameIsPaused = false;
         Time.timeScale = 1.0f;
         AudioListener.pause = false;
