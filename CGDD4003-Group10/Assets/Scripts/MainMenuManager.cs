@@ -36,16 +36,16 @@ public class MainMenuManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        screenResolution.onValueChanged.AddListener(delegate {
-            SetResolution(screenResolution.value);
-        });
+
     }
 
-    private void SaveSettings()
+    public void SaveSettings()
     {
         PlayerPrefs.SetFloat("FOV", fov.value);
         PlayerPrefs.SetFloat("Sensitivity", MouseSensitivity.value);
         PlayerPrefs.SetFloat("Volume", volume.value);
+
+
         PlayerPrefs.Save();
 
     }
@@ -87,9 +87,9 @@ public class MainMenuManager : MonoBehaviour
         menu.SetActive(true);
     }
 
-    void SetResolution(int dropDownValue)
+    public void SetResolution()
     {
-        switch (dropDownValue)
+        switch (screenResolution.value)
         {
             case 0:
                 Screen.SetResolution(3840, 2160, fullScreenToggle);

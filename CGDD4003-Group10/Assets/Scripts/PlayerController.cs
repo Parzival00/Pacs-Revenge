@@ -117,6 +117,8 @@ public class PlayerController : MonoBehaviour
 
         ghosts = new Ghost[4];
         ghosts = FindObjectsOfType<Ghost>();
+
+        applyGameSettings();
     }
 
     // Update is called once per frame
@@ -489,6 +491,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Resumes the game
+    /// </summary>
     public void ResumeGame()
     {
         print("Clicked");
@@ -498,5 +503,17 @@ public class PlayerController : MonoBehaviour
         pauseMenu.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    /// <summary>
+    /// gets the players settings from playerprefs and applies them to the player
+    /// will be also used for the pause menu
+    /// </summary>
+    public void applyGameSettings()
+    {
+        print(PlayerPrefs.GetFloat("FOV"));
+        AudioListener.volume = PlayerPrefs.GetFloat("Volume");
+        playerCam.GetComponent<Camera>().fieldOfView = PlayerPrefs.GetFloat("FOV");
+        sensitivity = PlayerPrefs.GetFloat("Sensitivity");
     }
 }
