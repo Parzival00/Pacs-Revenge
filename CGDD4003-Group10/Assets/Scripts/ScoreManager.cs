@@ -7,81 +7,107 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    private int playerRank, playerScore;
-    private string name;
-
-    private List<ScoreManager> highScores;
+    private List<ScoreManagerAsset> highScores = new List<ScoreManagerAsset>();
     StreamReader savedScores;
+    private int tempListIndex;
 
     private string playerIntials;
 
     [Header("UI Components")]
     [SerializeField] TMP_InputField uiInput;
     [SerializeField] TMP_Text highScoreDisplay;
-    public ScoreManager(int rank, string intials, int score) 
+
+    public struct ScoreManagerAsset
     {
-        playerRank = rank;
-        name = intials;
-        playerScore = score;
-    }
-    public override string ToString()
-    {
-        return this.playerRank + " " + this.name + " " + this.playerScore + "\n";
+        private int playerRank, playerScore;
+        private string name;
+
+        public ScoreManagerAsset(int rank, string intials, int score)
+        {
+            playerRank = rank;
+            name = intials;
+            playerScore = score;
+        }
+        public override string ToString()
+        {
+            return this.playerRank + " " + this.name + " " + this.playerScore + "\n";
+        }
     }
 
-    public void StoreScores() 
+
+
+    public void StoreScores()
     {
         string tempLine = "";
         string[] lineSplit;
         int tempRank, tempScore;
-        ScoreManager tempScoreManager;
+        ScoreManagerAsset tempScoreManager;
 
-        using(savedScores = new StreamReader(Application.dataPath + "/Scores.txt")) 
+        using (savedScores = new StreamReader(Application.dataPath + "/Scores.txt"))
         {
-            while (savedScores.ReadLine() != null) 
+            while (savedScores.ReadLine() != null)
             {
                 tempLine = savedScores.ReadLine();
                 lineSplit = tempLine.Split(' ');
 
                 tempRank = Int32.Parse(lineSplit[0]);
                 tempScore = Int32.Parse(lineSplit[2]);
-                tempScoreManager = new ScoreManager(tempRank, lineSplit[1], tempScore);
+
+                tempScoreManager = new ScoreManagerAsset(tempRank, lineSplit[1], tempScore);
                 highScores.Add(tempScoreManager);
+
+                if (Score.score >= tempScore)
+                {
+                    tempListIndex = tempRank;
+                }
+
+                /*tempLine = savedScores.ReadLine();
+                lineSplit = tempLine.Split(' ');
+
+                tempRank = Int32.Parse(lineSplit[0]);
+                tempScore = Int32.Parse(lineSplit[2]);
+                tempScoreManager = new ScoreManagerAsset(tempRank, lineSplit[1], tempScore);
+                highScores.Add(tempScoreManager);*/
             }
         }
     }
-    public void AddPlayerScore() 
+    public void AddPlayerScore()
     {
         StoreScores();
-        if (Input.GetKeyDown(KeyCode.Return)) 
+
+        if (Input.GetKeyDown(KeyCode.Return))
         {
-            if (uiInput.text.Equals("") || uiInput.Equals(null)) 
+            if (uiInput.text.Equals("") || uiInput.Equals(null))
             {
                 playerIntials = "BOO";
-            } 
+            }
             playerIntials = uiInput.text.ToUpper();
+            uiInput.gameObject.SetActive(false);
         }
 
-        highScores.Add(new ScoreManager(11,playerIntials,Score.score));
+        highScores.Insert(tempListIndex, new ScoreManagerAsset(tempListIndex, playerIntials, Score.score));
 
-        SortHighScores();
+        //highScores.Add(new ScoreManagerAsset(11,playerIntials,Score.score));
+
+        //SortHighScores();
 
         DisplayHighScores();
     }
-    public void SortHighScores() 
+    /*public void SortHighScores() 
     {
         highScores.Sort();
         highScores.RemoveAt(11);
-    }
-    public void DisplayHighScores() 
+    }*/
+    public void DisplayHighScores()
     {
-        foreach (ScoreManager highscores in highScores) 
+        
+        foreach (ScoreManagerAsset highscores in highScores)
         {
-            highScoreDisplay.text = highscores.ToString();
+            highScoreDisplay.text += highscores.ToString();
         }
     }
 
-    
 
-    
+
+
 }
