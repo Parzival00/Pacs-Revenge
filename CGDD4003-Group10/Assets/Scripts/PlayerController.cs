@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip gunshot;
     [SerializeField] AudioSource weaponSound;
     [SerializeField] float chargeTime;
+    [SerializeField] float overheatTime;
     [SerializeField] Transform bulletOrigin;
     [SerializeField] Camera fpsCam;
     [SerializeField] WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
@@ -44,7 +45,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float gunTimeAmount = 5f;
     private LineRenderer laserLine;
     private float weaponCharge;
+    private float weaponTemp;
+    private bool overheated;
     Slider weaponChargeBar;
+    Image chargeBarFill;
 
     private WaitForSeconds gunTimer;
     
@@ -87,6 +91,7 @@ public class PlayerController : MonoBehaviour
         speed = baseSpeed;
         laserLine = GetComponent<LineRenderer>();
         this.weaponChargeBar = (Slider)GameObject.FindGameObjectWithTag("ChargeBar").GetComponent("Slider");
+        this.chargeBarFill = (Image)GameObject.FindGameObjectWithTag("ChargeFill").GetComponent("Image");
         gunActivated = false;
         gun.SetActive(false);
         hud.SetActive(false);
@@ -195,9 +200,14 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Fire()
     {
+        if (weaponTemp >= 5f)
+        {
+            overheated = true; 
+            chargeBarFill.color = Color.red;
+        }
         if (Input.GetMouseButtonUp(0) && !paused)
         {
-            if(weaponCharge >= 1)
+            if(weaponCharge >= 1 && !overheated)
             {
                 StartCoroutine(ShotEffect());
                 Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
@@ -226,10 +236,17 @@ public class PlayerController : MonoBehaviour
                 //weaponSound.PlayOneShot(gunshot);
             }
             weaponCharge = 0f;
+            weaponTemp = 0f;
+            overheated = false;
+            chargeBarFill.color = new Color(0, 255, 150, 255);
         }
-        else if (!paused && Input.GetMouseButton(0))
+        else if (!paused && Input.GetMouseButton(0) && !overheated)
         {
-            weaponCharge += (Time.deltaTime * (1 / chargeTime));
+            if (weaponCharge < 1f)
+            {
+                weaponCharge += (Time.deltaTime * (1 / chargeTime));
+            }
+            weaponTemp += (Time.deltaTime * (1 / overheatTime));
         }
         
     }
