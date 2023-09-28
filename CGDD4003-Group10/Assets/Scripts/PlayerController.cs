@@ -32,11 +32,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool paused;
     [SerializeField] float sensitivity;
 
-    [Header("Weapon Settings")]
+    [Header("Weapon Audio")]
     [SerializeField] AudioClip gunshot;
+    [SerializeField] AudioClip overheat;
     [SerializeField] AudioSource weaponSound;
+
+    [Header("Weapon Settings")]
     [SerializeField] float chargeTime;
     [SerializeField] float overheatTime;
+    [SerializeField] float cooldown;
     [SerializeField] Transform bulletOrigin;
     [SerializeField] Camera fpsCam;
     [SerializeField] WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
@@ -72,6 +76,12 @@ public class PlayerController : MonoBehaviour
 
     [Header("Target Outline Controller")]
     [SerializeField] TargetOutlineController targetOutlineController;
+
+    [Header("Music Settings")]
+    [SerializeField] AudioClip powerMusic;
+    [SerializeField] AudioClip bgMusic;
+    [SerializeField] AudioClip gameStart;
+    [SerializeField] AudioSource musicPlayer;
 
     public static bool gunActivated { get; private set; }
 
@@ -120,6 +130,7 @@ public class PlayerController : MonoBehaviour
             Fire();
             OutlineTargetEnemy();
             UpdateChargeBar();
+            checkWeaponTemp();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)) 
@@ -200,14 +211,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Fire()
     {
-        if (weaponTemp >= 5f)
+        if (Input.GetMouseButtonUp(0) && !paused && !overheated)
         {
-            overheated = true; 
-            chargeBarFill.color = Color.red;
-        }
-        if (Input.GetMouseButtonUp(0) && !paused)
-        {
-            if(weaponCharge >= 1 && !overheated)
+            if (weaponCharge >= 1)
             {
                 StartCoroutine(ShotEffect());
                 Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
@@ -233,12 +239,9 @@ public class PlayerController : MonoBehaviour
                 {
                     laserLine.SetPosition(1, rayOrigin + (fpsCam.transform.forward * weaponRange));
                 }
-                //weaponSound.PlayOneShot(gunshot);
             }
             weaponCharge = 0f;
             weaponTemp = 0f;
-            overheated = false;
-            chargeBarFill.color = new Color(0, 255, 150, 255);
         }
         else if (!paused && Input.GetMouseButton(0) && !overheated)
         {
@@ -246,11 +249,9 @@ public class PlayerController : MonoBehaviour
             {
                 weaponCharge += (Time.deltaTime * (1 / chargeTime));
             }
-            weaponTemp += (Time.deltaTime * (1 / overheatTime));
+            weaponTemp += (Time.deltaTime * (overheatTime));
         }
-        
     }
-
     /// <summary>
     /// Plays the weapon sound effect and enables the line render
     /// </summary>
@@ -268,7 +269,31 @@ public class PlayerController : MonoBehaviour
     {
         weaponChargeBar.value = weaponCharge;
     }
-
+    /// <summary>
+    /// Handles the changes to the charge UI and the sound effect for weapon overheating. Also decreases the temperature over time
+    /// </summary>
+    void checkWeaponTemp()
+    {
+        if (weaponTemp >= 5f && !overheated)
+        {
+            overheated = true;
+            chargeBarFill.color = Color.red;
+            weaponSound.volume = .9f;
+            weaponSound.PlayOneShot(overheat);
+            weaponSound.volume = .1f;
+        }
+        else if (weaponTemp <= 0f && overheated)
+        {
+            weaponTemp = 0f;
+            weaponCharge = 0f;
+            overheated = false;
+            chargeBarFill.color = new Color(0f, 255f, 150f);
+        }
+        else if (overheated && !Input.GetMouseButton(0))
+        {
+            weaponTemp -= Time.deltaTime * cooldown;
+        }
+    }
     /// <summary>
     /// Activates the corresponding outline for targeted area
     /// </summary>
@@ -314,7 +339,8 @@ public class PlayerController : MonoBehaviour
     {
         if (gunTimerCoroutine != null)
             StopCoroutine(gunTimerCoroutine);
-
+        musicPlayer.Stop();
+        musicPlayer.PlayOneShot(powerMusic);
         gunActivated = true;
         if(animator == null)
             gun.SetActive(true);
@@ -374,7 +400,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Weapon")
+        if(other.tag == "Weapon" && !gunActivated)
         {
             Destroy(other.gameObject);
             ActivateGun();
@@ -460,7 +486,4 @@ public class PlayerController : MonoBehaviour
             Cursor.visible = false;
         }
     }
-  
-        
-    
 }
