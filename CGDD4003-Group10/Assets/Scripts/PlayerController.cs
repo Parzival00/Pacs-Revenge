@@ -54,11 +54,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject hud;
     [SerializeField] Image fadeImage;
     [SerializeField] Text LivesText;
-    [SerializeField] Ghost blinky;
-    [SerializeField] Ghost inky;
-    [SerializeField] Ghost pinky;
-    [SerializeField] Ghost clyde;
-    List<Ghost> ghosts;
+    Ghost[] ghosts;
 
     [Header("Death Settings")]
     //camera fade variables
@@ -105,7 +101,8 @@ public class PlayerController : MonoBehaviour
         if (animator == null)
             animator = GetComponent<Animator>();
 
-        ghosts = new List<Ghost>() { inky, blinky, pinky, clyde };
+        ghosts = new Ghost[4];
+        ghosts = FindObjectsOfType<Ghost>();
     }
 
     // Update is called once per frame
