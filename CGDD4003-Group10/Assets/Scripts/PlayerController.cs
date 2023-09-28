@@ -100,6 +100,8 @@ public class PlayerController : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            ResumeGame();
         }
         speed = baseSpeed;
         laserLine = GetComponent<LineRenderer>();
@@ -125,6 +127,7 @@ public class PlayerController : MonoBehaviour
         {
             applyGameSettings();
         }
+
     }
 
     // Update is called once per frame
