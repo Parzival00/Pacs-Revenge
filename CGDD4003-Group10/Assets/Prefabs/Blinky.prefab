@@ -1202,7 +1202,7 @@ GameObject:
   - component: {fileID: 587522295791351482}
   - component: {fileID: 4627314672805365358}
   m_Layer: 8
-  m_Name: TargetOutline-RightEye
+  m_Name: TargetOutline-LeftEye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1217,11 +1217,11 @@ Transform:
   m_GameObject: {fileID: 2937551301866763078}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.0000033080573, z: -0, w: 1}
-  m_LocalPosition: {x: -1.98, y: 0.6, z: 0.15}
-  m_LocalScale: {x: 2.1024966, y: 2.1024966, z: 2.1024966}
+  m_LocalPosition: {x: 0.03142065, y: 0.31498092, z: 0.14999935}
+  m_LocalScale: {x: 2.1024964, y: 2.1024964, z: 2.1024964}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7381407554028061080}
+  m_Father: {fileID: 8159126032281908917}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4627314672805365358
 SpriteRenderer:
@@ -1851,7 +1851,7 @@ GameObject:
   - component: {fileID: 8352873331725821697}
   - component: {fileID: 4859114453256224579}
   m_Layer: 8
-  m_Name: TargetOutline-LeftEye
+  m_Name: TargetOutline-RightEye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1866,11 +1866,11 @@ Transform:
   m_GameObject: {fileID: 4398391765679522054}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.0000033080573, z: -0, w: 1}
-  m_LocalPosition: {x: 1.894, y: 0.09, z: 0.15}
-  m_LocalScale: {x: 2.1024966, y: 2.1024966, z: 2.1024966}
+  m_LocalPosition: {x: -0.11742081, y: 0.37501892, z: 0.1500007}
+  m_LocalScale: {x: 2.1024964, y: 2.1024964, z: 2.1024964}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8159126032281908917}
+  m_Father: {fileID: 7381407554028061080}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4859114453256224579
 SpriteRenderer:
@@ -2427,7 +2427,7 @@ Transform:
   m_LocalScale: {x: 0.24559754, y: 0.24559754, z: 0.24559754}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 587522295791351482}
+  - {fileID: 8352873331725821697}
   m_Father: {fileID: 3134094168985349902}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &749838459853832024
@@ -2467,7 +2467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 4775153053850207514}
   targetAreaType: 5
-  outline: {fileID: 4627314672805365358}
+  outline: {fileID: 4859114453256224579}
 --- !u!1 &5923883148424023198
 GameObject:
   m_ObjectHideFlags: 0
@@ -3422,12 +3422,10 @@ MonoBehaviour:
   ghostCollider: {fileID: 4856677005804188932}
   chaseSoundSource: {fileID: 2619138868853787396}
   farPitch: 0.84
-  farVolume: 0.326
   chaseSoundFar: {fileID: 8300000, guid: d4b61b41a92f81741bbe5608667bacea, type: 3}
   closeSoundBlendpadding: 1
   dstToBlendToCloseSound: 2.8
   closePitch: 1.1
-  closeVolume: 0.67
 --- !u!1 &7584621524934008102
 GameObject:
   m_ObjectHideFlags: 0
@@ -3830,7 +3828,7 @@ Transform:
   m_LocalScale: {x: 0.24559754, y: 0.24559754, z: 0.24559754}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8352873331725821697}
+  - {fileID: 587522295791351482}
   m_Father: {fileID: 3134094168985349902}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &8842360040191367055
@@ -3870,7 +3868,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 4775153053850207514}
   targetAreaType: 4
-  outline: {fileID: 4859114453256224579}
+  outline: {fileID: 4627314672805365358}
 --- !u!1 &8062552311425665770
 GameObject:
   m_ObjectHideFlags: 0
