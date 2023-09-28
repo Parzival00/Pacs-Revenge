@@ -68,13 +68,20 @@ public class Ghost : MonoBehaviour
     [Header("Player Dectecting Collider")]
     [SerializeField] Collider ghostCollider;
 
-    [Header("Sound Settings")]
-    [SerializeField] protected AudioSource source;
-    [SerializeField] protected AudioClip chaseSound;
-    [SerializeField] protected AudioClip scatterSound;
-    [SerializeField] protected AudioClip deathSound;
-    [SerializeField] protected AudioClip corpseMoveSound;
-    [SerializeField] protected AudioClip respawnedSound;
+    [Header("Chase Sound Settings")]
+    [SerializeField] protected AudioSource chaseSoundSource;
+    [SerializeField] protected float farPitch = 0.15f;
+    //[SerializeField] protected float farVolume  = 0.15f;
+    [SerializeField] protected AudioClip chaseSoundFar;
+    [SerializeField] protected float closeSoundBlendpadding = 1f;
+    [SerializeField] protected float dstToBlendToCloseSound = 10;
+    [SerializeField] protected float closePitch = 3f;
+    //[SerializeField] protected float closeVolume = 3f;
+    //[SerializeField] protected AudioClip chaseSoundClose;
+    //[SerializeField] protected AudioClip scatterSound;
+    //[SerializeField] protected AudioClip deathSound;
+    //[SerializeField] protected AudioClip corpseMoveSound;
+    //[SerializeField] protected AudioClip respawnedSound;
 
     //AI Variables
     protected Vector3 targetPosition;
@@ -98,6 +105,12 @@ public class Ghost : MonoBehaviour
 
         if (navMesh == null)
             navMesh = GetComponent<NavMeshAgent>();
+
+        if (map == null)
+            map = GameObject.FindObjectOfType<Map>();
+
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
         navMesh.speed = speed;
 
@@ -154,14 +167,43 @@ public class Ghost : MonoBehaviour
         Move();
 
         lastTargetGridPosition = targetGridPosition;
+        PlayChaseSound();
+    }
+
+    protected void PlayChaseSound()
+    {
+        Vector2Int playerGridPosition = map.CheckEdgePositions(transform.position);
+
+        float distToPlayer = Vector2Int.Distance(playerGridPosition, currentGridPosition);
 
         //Play Sound
-        source.loop = true;
-        source.clip = chaseSound;
+        chaseSoundSource.loop = true;
+        chaseSoundSource.clip = chaseSoundFar;
 
-        if(!source.isPlaying || source.clip != chaseSound)
+
+        if (distToPlayer < dstToBlendToCloseSound)
         {
-            source.Play();
+            chaseSoundSource.pitch = closePitch;
+            //chaseSoundSource.volume = closeVolume;
+            //chaseSoundSource.clip = chaseSoundClose;
+        }
+        else if (distToPlayer > dstToBlendToCloseSound + closeSoundBlendpadding)
+        {
+            chaseSoundSource.pitch = farPitch;
+            //chaseSoundSource.volume = farVolume;
+            //chaseSoundSource.clip = chaseSoundFar;
+        }
+
+        if (!chaseSoundSource.isPlaying || (chaseSoundSource.clip != chaseSoundFar /*&& chaseSoundSource.clip != chaseSoundClose*/))
+        {
+            /*if(chaseSoundSource.clip == chaseSoundFar)
+                chaseSoundSource.pitch = farPitch;
+
+            if (chaseSoundSource.clip == chaseSoundClose)
+                chaseSoundSource.pitch = closePitch;*/
+
+
+            chaseSoundSource.Play();
         }
     }
 
@@ -177,9 +219,9 @@ public class Ghost : MonoBehaviour
         lastTargetGridPosition = targetGridPosition;
 
         //Play Sound
-        if (source.isPlaying)
+        if (chaseSoundSource.isPlaying)
         {
-            source.Stop();
+            //chaseSoundSource.pitch = 1.5f;
         }
     }
 
@@ -308,10 +350,10 @@ public class Ghost : MonoBehaviour
     {
         spriteRenderer.color = Color.black;
 
+        chaseSoundSource.Stop();
+
         if (spriteController)
             spriteController.DeactivateColliders();
-        /*if (ghostCollider)
-            ghostCollider.enabled = false;*/
 
         navMesh.ResetPath();
         startedRespawnSequence = true;
@@ -356,9 +398,6 @@ public class Ghost : MonoBehaviour
             currentMode = Mode.Scatter;
             currentDirection = -currentDirection;
             nextGridPosition = map.GetNextGridPosition(currentGridPosition, currentDirection, true, true);
-
-            /*if (ghostCollider)
-                ghostCollider.enabled = false;*/
         }
     }
     public virtual void DeactivateScatter()

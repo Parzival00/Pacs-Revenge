@@ -44,7 +44,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.378
+  m_Volume: 0.107
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -118,7 +118,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.274
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -172,7 +172,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.378
+  m_Volume: 0.02
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -246,7 +246,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.094
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 6532150692148206727}
   - component: {fileID: 6717606324952877450}
   - component: {fileID: 208930143002471842}
-  - component: {fileID: 5504658082635863454}
+  - component: {fileID: 6954913835686620882}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -434,9 +434,9 @@ MonoBehaviour:
   hud: {fileID: 0}
   fadeImage: {fileID: 0}
   LivesText: {fileID: 0}
-  fadeTimeModifier: 0
-  playerLives: 0
-  animator: {fileID: 5504658082635863454}
+  fadeTimeModifier: 1
+  playerLives: 3
+  animator: {fileID: 6954913835686620882}
   targetOutlineController: {fileID: 6717606324952877450}
 --- !u!114 &6532150692148206727
 MonoBehaviour:
@@ -465,9 +465,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c53ece84e3f6e154299219e82ffc8d0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineTarget: {fileID: 1829968095, guid: 868bedb507ca21245944a6e800a9b79f, type: 3}
-  outlineTargetFill: {fileID: 76428728, guid: 868bedb507ca21245944a6e800a9b79f, type: 3}
-  timeBtwBlinks: 0.5
+  outlineTarget: {fileID: 21300000, guid: 7e8e9f66fcc133445bd0d23908e4d51c, type: 3}
+  outlineTargetFill: {fileID: 21300000, guid: 478a037f78b2b1d4dbd5a3df2e959655, type: 3}
+  timeBtwBlinks: 0.35
 --- !u!120 &208930143002471842
 LineRenderer:
   serializedVersion: 2
@@ -581,7 +581,7 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!95 &5504658082635863454
+--- !u!95 &6954913835686620882
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -710,7 +710,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2935
+    m_Bits: 3959
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -801,7 +801,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.667
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -14,6 +14,7 @@ public class FruitController : MonoBehaviour
 
     [Header("Fruit Spawn Alert Settings")]
     [SerializeField] GameObject alertMessage;
+    [SerializeField] ParticleSystem lightningBeam;
     [SerializeField] float alertVisibleTimer = 3;
 
     [Header("Sprite Renderers")]
@@ -75,7 +76,7 @@ public class FruitController : MonoBehaviour
     /// <summary>
     /// Deactivates the fruit by turning off the collider and sprites and disabling the timer
     /// </summary>
-    void DeactivateFruit()
+    public void DeactivateFruit()
     {
         fruitSpriteRenderer.enabled = false;
         minimapFruitSpriteRenderer.enabled = false;
@@ -138,9 +139,13 @@ public class FruitController : MonoBehaviour
     {
         alertMessage.SetActive(true);
 
+        lightningBeam?.Play();
+
         WaitForSeconds timer = new WaitForSeconds(alertVisibleTimer);
 
         yield return timer;
+
+        lightningBeam?.Stop();
 
         alertMessage.SetActive(false);
     }

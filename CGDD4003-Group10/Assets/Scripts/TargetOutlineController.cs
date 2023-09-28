@@ -14,11 +14,11 @@ public class TargetOutlineController : MonoBehaviour
 
     public void SetTargetOutline(SpriteRenderer target)
     {
+        if (currentOutline != target)
+            DeactivateOutline();
+
         if (target != null && target != currentOutline)
         {
-            if (currentOutline)
-                DeactivateOutline();
-
             currentOutline = target;
 
             currentOutline.enabled = true;

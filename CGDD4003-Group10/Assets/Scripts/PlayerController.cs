@@ -73,7 +73,6 @@ public class PlayerController : MonoBehaviour
 
     private float originalY;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -149,6 +148,7 @@ public class PlayerController : MonoBehaviour
         }
         LivesText.text = "Lives: " + playerLives;
     }
+
     /// <summary>
     /// This method takes the mouse position and rotates the player and camera accordingly. Using the x position of the mouse for horizontal and the y position for vertical.
     /// </summary>
@@ -163,6 +163,7 @@ public class PlayerController : MonoBehaviour
         playerT.Rotate(Vector3.up * mousePosition.x * sensitivity * Time.timeScale);
 
     }
+
     /// <summary>
     /// Uses the input axis system to move the player's character controller
     /// Has a sprint ability activated by the L-shift key
@@ -185,8 +186,9 @@ public class PlayerController : MonoBehaviour
         character.enabled = true;
         character.Move(velocity * Time.deltaTime);
 
-        //transform.position = new Vector3(transform.position.x, originalY, transform.position.z); //Ensure character stays on the ground
+        transform.position = new Vector3(transform.position.x, originalY, transform.position.z); //Ensure character stays on the ground
     }
+
     /// <summary>
     /// When the left mouse button is pressed this generates a raycast to where the player was aiming.
     /// A sound effect is played and the raytrace is rendered
@@ -231,6 +233,7 @@ public class PlayerController : MonoBehaviour
         }
         
     }
+
     /// <summary>
     /// Plays the weapon sound effect and enables the line render
     /// </summary>
@@ -248,6 +251,7 @@ public class PlayerController : MonoBehaviour
     {
         weaponChargeBar.value = weaponCharge;
     }
+
     /// <summary>
     /// Activates the corresponding outline for targeted area
     /// </summary>
@@ -402,6 +406,12 @@ public class PlayerController : MonoBehaviour
                         g.ResetGhost();
                     }
 
+                    FruitController fruitController = FindObjectOfType<FruitController>();
+
+                    if(fruitController != null)
+                    {
+                        fruitController.DeactivateFruit();
+                    }
                 }
 
 

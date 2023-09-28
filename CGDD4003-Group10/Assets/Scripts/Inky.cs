@@ -27,14 +27,7 @@ public class Inky : Ghost
 
         lastTargetGridPosition = targetGridPosition;
 
-        //Play Sound
-        source.loop = true;
-        source.clip = chaseSound;
-
-        if (!source.isPlaying || source.clip != chaseSound)
-        {
-            source.Play();
-        }
+        PlayChaseSound();
     }
 
     ///Summary

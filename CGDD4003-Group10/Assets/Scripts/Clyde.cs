@@ -28,5 +28,7 @@ public class Clyde : Ghost
         Move();
 
         lastTargetGridPosition = targetGridPosition;
+
+        PlayChaseSound();
     }
 }

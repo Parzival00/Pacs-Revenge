@@ -70,6 +70,9 @@ public class GhostSpriteController : MonoBehaviour
         if (mainTransform == null)
             mainTransform = transform;
 
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
         animator.runtimeAnimatorController = north;
         orientation = Orientation.North;
 
