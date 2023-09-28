@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public Transform playerT;
     static bool gameIsPaused;
     public GameObject pauseMenu;
+    private bool canMove;
 
     [Header("Movement Settings")]
     [SerializeField] float baseSpeed;
@@ -100,6 +101,8 @@ public class PlayerController : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            ResumeGame();
         }
         speed = baseSpeed;
         laserLine = GetComponent<LineRenderer>();
@@ -125,13 +128,18 @@ public class PlayerController : MonoBehaviour
         {
             applyGameSettings();
         }
+        canMove = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        MouseControl();
-        MovementControl();
+        if (canMove)
+        {
+            MouseControl();
+            MovementControl();
+        }
+        
 
         if (gunActivated)
         {
@@ -167,7 +175,7 @@ public class PlayerController : MonoBehaviour
                 //reset player and ghosts
                 transform.position = playerSpawnPoint.position;
                 fadeImage.CrossFadeAlpha(0.01f, 1, false);
-
+                canMove = true;
             }
         }
         LivesText.text = "Lives: " + playerLives;
@@ -448,6 +456,7 @@ public class PlayerController : MonoBehaviour
                 {
                     playerLives--;
                     hitable = false;
+                    canMove = false;
                     fadeImage.canvasRenderer.SetAlpha(0.01f);
 
                     fadeImage.CrossFadeAlpha(255f, 100f, false);
