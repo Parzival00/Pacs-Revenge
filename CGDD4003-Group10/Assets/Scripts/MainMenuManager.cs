@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Unity.VisualScripting;
 using UnityEngine.UI;
 using TMPro;
 using System.IO;
@@ -79,6 +77,9 @@ public class MainMenuManager : MonoBehaviour
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        options.SetActive(false);
+        menu.SetActive(false);
     }
 
     public void ReturnToMainMenu() 

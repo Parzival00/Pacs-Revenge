@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public Transform playerT;
     static bool gameIsPaused;
     public GameObject pauseMenu;
+    [SerializeField] GameObject optionsMenu;
     private bool canMove;
 
     [Header("Movement Settings")]
@@ -498,11 +499,7 @@ public class PlayerController : MonoBehaviour
         }
         else 
         {
-            Time.timeScale = 1.0f;
-            AudioListener.pause = false;
-            pauseMenu.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            ResumeGame();
         }
     }
 
@@ -515,6 +512,7 @@ public class PlayerController : MonoBehaviour
         Time.timeScale = 1.0f;
         AudioListener.pause = false;
         pauseMenu.SetActive(false);
+        optionsMenu.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }

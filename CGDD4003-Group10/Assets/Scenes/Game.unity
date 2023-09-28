@@ -6883,7 +6883,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &142905057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34376,6 +34376,7 @@ GameObject:
   - component: {fileID: 762463999}
   - component: {fileID: 762464001}
   - component: {fileID: 762464000}
+  - component: {fileID: 762464002}
   m_Layer: 5
   m_Name: FadeToBlackImage
   m_TagString: Untagged
@@ -34440,6 +34441,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 762463998}
   m_CullTransparentMesh: 1
+--- !u!225 &762464002
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762463998}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &764237890
 GameObject:
   m_ObjectHideFlags: 0
@@ -39523,6 +39536,10 @@ PrefabInstance:
       propertyPath: pauseMenu
       value: 
       objectReference: {fileID: 992231765}
+    - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: optionsMenu
+      value: 
+      objectReference: {fileID: 1484978838}
     - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: playerLives
       value: 3
