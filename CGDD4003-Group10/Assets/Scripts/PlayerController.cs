@@ -444,7 +444,9 @@ public class PlayerController : MonoBehaviour
 
                     fadeImage.CrossFadeAlpha(255f, 100f, false);
 
-                    foreach(Ghost g in ghosts)
+                    transform.position = playerSpawnPoint.position;
+
+                    foreach (Ghost g in ghosts)
                     {
                         g.ResetGhost();
                     }
@@ -485,5 +487,16 @@ public class PlayerController : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
+    }
+
+    public void ResumeGame()
+    {
+        print("Clicked");
+        gameIsPaused = false;
+        Time.timeScale = 1.0f;
+        AudioListener.pause = false;
+        pauseMenu.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }

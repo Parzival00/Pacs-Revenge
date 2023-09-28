@@ -21,19 +21,33 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] TMP_Text highScoreDisplay;
 
     [Header("Resolution Settings")]
-    [SerializeField] GameObject screenResolution;
-    [SerializeField] GameObject fOV;
+    [SerializeField] TMP_Dropdown screenResolution;
+    [SerializeField] Slider fov;
+    [SerializeField] Toggle fullScreenToggle;
 
     [Header("Audio Settings")]
-    [SerializeField] GameObject audioPlaceHolder;
+    [SerializeField] Slider volume;
 
     [Header("GamePlay Settings")]
-    [SerializeField] GameObject MouseSensitivity;
+    [SerializeField] Slider MouseSensitivity;
 
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        screenResolution.onValueChanged.AddListener(delegate {
+            SetResolution(screenResolution.value);
+        });
+    }
+
+    private void SaveSettings()
+    {
+        PlayerPrefs.SetFloat("FOV", fov.value);
+        PlayerPrefs.SetFloat("Sensitivity", MouseSensitivity.value);
+        PlayerPrefs.SetFloat("Volume", volume.value);
+        PlayerPrefs.Save();
+
     }
 
     public void LoadGameScene(int sceneIndex) 
@@ -72,11 +86,27 @@ public class MainMenuManager : MonoBehaviour
         options.SetActive(false);
         menu.SetActive(true);
     }
-    /// <summary>
-    /// Using PlayerPrefs || Saves current selection of settings
-    /// </summary>
-    public void SaveSettings() 
+
+    void SetResolution(int dropDownValue)
     {
-        
+        switch (dropDownValue)
+        {
+            case 0:
+                Screen.SetResolution(3840, 2160, fullScreenToggle);
+                break;
+            case 1:
+                Screen.SetResolution(2560, 1440, fullScreenToggle);
+                break; ;
+            case 2:
+                Screen.SetResolution(1920, 1080, fullScreenToggle);
+                break;
+            case 3:
+                Screen.SetResolution(1600, 900, fullScreenToggle);
+                break;
+            case 4:
+                Screen.SetResolution(1280, 720, fullScreenToggle);
+                break;
+
+        }
     }
 }
