@@ -160,6 +160,8 @@ public class Ghost : MonoBehaviour
     //Chase the player
     protected virtual void Chase()
     {
+        spriteRenderer.color = Color.white;
+
         Vector2Int playerGridPosition = map.CheckEdgePositions(transform.position);
 
         targetGridPosition = playerGridPosition;

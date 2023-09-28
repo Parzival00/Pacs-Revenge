@@ -43,9 +43,11 @@ public class ScoreManager : MonoBehaviour
         int tempRank, tempScore;
         ScoreManagerAsset tempScoreManager;
 
+        tempListIndex = 10;
+
         using (savedScores = new StreamReader(Application.dataPath + "/Scores.txt"))
         {
-            while (savedScores.ReadLine() != null)
+            while (!savedScores.EndOfStream)
             {
                 tempLine = savedScores.ReadLine();
                 lineSplit = tempLine.Split(' ');
@@ -85,7 +87,16 @@ public class ScoreManager : MonoBehaviour
             uiInput.gameObject.SetActive(false);
         }
 
-        highScores.Insert(tempListIndex, new ScoreManagerAsset(tempListIndex, playerIntials, Score.score));
+        if (tempListIndex <= 10)
+        {
+            highScores.Insert(tempListIndex, new ScoreManagerAsset(tempListIndex, playerIntials, Score.score));
+        } else
+        {
+            highScores.Add(new ScoreManagerAsset(tempListIndex, playerIntials, Score.score));
+        }
+
+        if (highScores.Count > 10)
+            highScores.RemoveAt(10);
 
         //highScores.Add(new ScoreManagerAsset(11,playerIntials,Score.score));
 
@@ -100,7 +111,6 @@ public class ScoreManager : MonoBehaviour
     }*/
     public void DisplayHighScores()
     {
-        
         foreach (ScoreManagerAsset highscores in highScores)
         {
             highScoreDisplay.text += highscores.ToString();
