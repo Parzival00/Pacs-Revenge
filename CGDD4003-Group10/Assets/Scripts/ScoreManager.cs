@@ -49,6 +49,7 @@ public class ScoreManager : MonoBehaviour
         {
             while (!savedScores.EndOfStream)
             {
+                int counter = 0;
                 tempLine = savedScores.ReadLine();
                 lineSplit = tempLine.Split(' ');
 
@@ -58,9 +59,10 @@ public class ScoreManager : MonoBehaviour
                 tempScoreManager = new ScoreManagerAsset(tempRank, lineSplit[1], tempScore);
                 highScores.Add(tempScoreManager);
 
-                if (Score.score >= tempScore)
+                if (Score.score >= tempScore && counter == 0)
                 {
                     tempListIndex = tempRank;
+                    counter += 1;
                 }
 
                 /*tempLine = savedScores.ReadLine();
