@@ -9,6 +9,7 @@ public class ScoreManager : MonoBehaviour
 {
     private List<ScoreManagerAsset> highScores = new List<ScoreManagerAsset>();
     StreamReader savedScores;
+    StreamWriter editScores;
     private int tempListIndex;
 
     private string playerIntials;
@@ -116,6 +117,18 @@ public class ScoreManager : MonoBehaviour
         foreach (ScoreManagerAsset highscores in highScores)
         {
             highScoreDisplay.text += highscores.ToString();
+        }
+        WriteToScoreFile();
+    }
+
+    public void WriteToScoreFile() 
+    {
+        using (editScores = new StreamWriter(Application.dataPath + "/Scores.txt"))
+        {
+            foreach (ScoreManagerAsset highscores in highScores) 
+            {
+                editScores.WriteLine(highscores.ToString());
+            }
         }
     }
 
