@@ -17,6 +17,7 @@ public class ScoreManager : MonoBehaviour
     [Header("UI Components")]
     [SerializeField] TMP_InputField uiInput;
     [SerializeField] TMP_Text highScoreDisplay;
+    [SerializeField] TMP_Text currentPlayerScore;
 
     public struct ScoreManagerAsset
     {
@@ -33,6 +34,10 @@ public class ScoreManager : MonoBehaviour
         {
             return this.playerRank + " " + this.name + " " + this.playerScore + "\n";
         }
+    }
+    public void Start()
+    {
+        DisplayCurrentScore();
     }
 
 
@@ -88,6 +93,7 @@ public class ScoreManager : MonoBehaviour
             }
             playerIntials = uiInput.text.ToUpper();
             uiInput.gameObject.SetActive(false);
+            currentPlayerScore.gameObject.SetActive(false);
         }
 
         if (tempListIndex <= 10)
@@ -130,6 +136,11 @@ public class ScoreManager : MonoBehaviour
                 editScores.WriteLine(highscores.ToString());
             }
         }
+    }
+    public void DisplayCurrentScore() 
+    {
+        int playerScore = Score.score;
+        currentPlayerScore.text = "Current Score: " + playerScore;
     }
 
 
