@@ -51,7 +51,11 @@ public class ScoreManager : MonoBehaviour
 
         tempListIndex = 10;
 
-        using (savedScores = new StreamReader(Application.dataPath + "/Scores.txt"))
+        if(!File.Exists((Application.persistentDataPath + "/Scores.txt"))){
+            File.WriteAllText(Application.persistentDataPath + "/Scores.txt", "");
+        }
+
+        using (savedScores = new StreamReader(Application.persistentDataPath + "/Scores.txt"))
         {
             while (!savedScores.EndOfStream)
             {
@@ -129,7 +133,11 @@ public class ScoreManager : MonoBehaviour
 
     public void WriteToScoreFile() 
     {
-        using (editScores = new StreamWriter(Application.dataPath + "/Scores.txt"))
+        if (!File.Exists((Application.persistentDataPath + "/Scores.txt")))
+        {
+            File.WriteAllText(Application.persistentDataPath + "/Scores.txt", "");
+        }
+        using (editScores = new StreamWriter(Application.persistentDataPath + "/Scores.txt"))
         {
             foreach (ScoreManagerAsset highscores in highScores) 
             {
