@@ -34,6 +34,7 @@ public class FruitController : MonoBehaviour
     private Fruit currentFruit;
 
     Coroutine fruitTimerCoroutine;
+    Coroutine fruitSpawnAlertCoroutine;
 
     // Start is called before the first frame update
     void Start()
@@ -69,7 +70,7 @@ public class FruitController : MonoBehaviour
             fruitTimerCoroutine = StartCoroutine(FruitTimer());
 
             if (alertMessage != null)
-                StartCoroutine(FruitSpawnAlert());
+                fruitSpawnAlertCoroutine = StartCoroutine(FruitSpawnAlert());
         }
     }
 
@@ -87,6 +88,15 @@ public class FruitController : MonoBehaviour
 
         if (fruitTimerCoroutine != null)
             StopCoroutine(fruitTimerCoroutine);
+
+        if(fruitSpawnAlertCoroutine != null)
+        {
+            StopCoroutine(fruitSpawnAlertCoroutine);
+
+            lightningBeam?.Stop();
+
+            alertMessage.SetActive(false);
+        }
     }
 
     /// <summary>

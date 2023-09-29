@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     static bool gameIsPaused;
     public GameObject pauseMenu;
     [SerializeField] GameObject optionsMenu;
-    private bool canMove;
+    public bool canMove { get; private set; }
 
     [Header("Movement Settings")]
     [SerializeField] float baseSpeed;
@@ -58,20 +58,17 @@ public class PlayerController : MonoBehaviour
 
     private WaitForSeconds gunTimer;
     
-
     [Header("GameObject Refereneces")]
     [SerializeField] GameObject gun;
     [SerializeField] GameObject hud;
     [SerializeField] Image fadeImage;
     [SerializeField] Text LivesText;
+
     Ghost[] ghosts;
 
-    [Header("Death Settings")]
-    //camera fade variables
-    [SerializeField] float fadeTimeModifier = 1;
+    [Header("Player Settings")]
+    [SerializeField] float deathSequenceLength = 1;
     [SerializeField] int playerLives = 3;
-    private bool hitable;
-    private float hitTimer;
 
     [Header("Player Animator")]
     [SerializeField] Animator animator;
@@ -90,14 +87,22 @@ public class PlayerController : MonoBehaviour
 
     public static bool gunActivated { get; private set; }
 
+    private bool inDeathSequence;
+
     private float originalY;
 
     // Start is called before the first frame update
     void Start()
     {
+        Init();
+    }
+
+    private void Init()
+    {
         originalY = transform.position.y;
 
         character = this.GetComponent<CharacterController>();
+
         if (lockCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -105,16 +110,19 @@ public class PlayerController : MonoBehaviour
 
             ResumeGame();
         }
+
         speed = baseSpeed;
+
         laserLine = GetComponent<LineRenderer>();
         this.weaponChargeBar = (Slider)GameObject.FindGameObjectWithTag("ChargeBar").GetComponent("Slider");
         this.chargeBarFill = (Image)GameObject.FindGameObjectWithTag("ChargeFill").GetComponent("Image");
+
         gunActivated = false;
         gun.SetActive(false);
         hud.SetActive(false);
 
-        hitable = true;
-        hitTimer = 0;
+        Time.timeScale = 1;
+
         fadeImage.canvasRenderer.SetAlpha(0.01f);
 
         gunTimer = new WaitForSeconds(gunTimeAmount);
@@ -127,9 +135,12 @@ public class PlayerController : MonoBehaviour
 
         if (usePlayerPrefsSettings)
         {
-            applyGameSettings();
+            ApplyGameSettings();
         }
+
         canMove = true;
+
+        LivesText.text = "Lives: " + playerLives;
     }
 
     // Update is called once per frame
@@ -140,14 +151,13 @@ public class PlayerController : MonoBehaviour
             MouseControl();
             MovementControl();
         }
-        
 
         if (gunActivated)
         {
             Fire();
             OutlineTargetEnemy();
             UpdateChargeBar();
-            checkWeaponTemp();
+            CheckWeaponTemp();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)) 
@@ -155,33 +165,9 @@ public class PlayerController : MonoBehaviour
             gameIsPaused = !gameIsPaused;
             PauseGame();
         }
-
-        if (!hitable)
-        {
-            hitTimer += Time.deltaTime;
-        }
-        if(hitTimer >= fadeTimeModifier && !hitable)
-        {
-            hitTimer = 0;
-            hitable = true;
-            if (playerLives < 1)
-            {
-                print("Ending Scene");
-                fadeImage.CrossFadeAlpha(0.01f, 1, false);
-                //end game scene
-                SceneManager.LoadScene(2);
-            }
-            else
-            {
-                //reset player and ghosts
-                transform.position = playerSpawnPoint.position;
-                fadeImage.CrossFadeAlpha(0.01f, 1, false);
-                canMove = true;
-            }
-        }
-        LivesText.text = "Lives: " + playerLives;
     }
 
+    #region Move and Look
     /// <summary>
     /// This method takes the mouse position and rotates the player and camera accordingly. Using the x position of the mouse for horizontal and the y position for vertical.
     /// </summary>
@@ -189,11 +175,11 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 mousePosition = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
-        cameraPitch -= mousePosition.y * sensitivity * Time.timeScale;
+        cameraPitch -= mousePosition.y * sensitivity * Time.deltaTime * 100f * Time.timeScale;
         cameraPitch = Mathf.Clamp(cameraPitch, -60.0f, 60.0f);
 
         playerCam.localEulerAngles = Vector3.right * cameraPitch;
-        playerT.Rotate(Vector3.up * mousePosition.x * sensitivity * Time.timeScale);
+        playerT.Rotate(Vector3.up * mousePosition.x * sensitivity * Time.deltaTime * 100f * Time.timeScale);
 
     }
 
@@ -221,7 +207,9 @@ public class PlayerController : MonoBehaviour
 
         transform.position = new Vector3(transform.position.x, originalY, transform.position.z); //Ensure character stays on the ground
     }
+    #endregion
 
+    #region Gun Functionality
     /// <summary>
     /// When the left mouse button is pressed this generates a raycast to where the player was aiming.
     /// A sound effect is played and the raytrace is rendered
@@ -269,6 +257,7 @@ public class PlayerController : MonoBehaviour
             weaponTemp += (Time.deltaTime * (overheatTime));
         }
     }
+
     /// <summary>
     /// Plays the weapon sound effect and enables the line render
     /// </summary>
@@ -279,6 +268,7 @@ public class PlayerController : MonoBehaviour
         yield return shotDuration;
         laserLine.enabled = false;
     }
+
     /// <summary>
     /// Updates the size of the charge bar based on current charge
     /// </summary>
@@ -286,10 +276,11 @@ public class PlayerController : MonoBehaviour
     {
         weaponChargeBar.value = weaponCharge;
     }
+
     /// <summary>
     /// Handles the changes to the charge UI and the sound effect for weapon overheating. Also decreases the temperature over time
     /// </summary>
-    void checkWeaponTemp()
+    void CheckWeaponTemp()
     {
         if (weaponTemp >= 5f && !overheated)
         {
@@ -311,6 +302,8 @@ public class PlayerController : MonoBehaviour
             weaponTemp -= Time.deltaTime * cooldown;
         }
     }
+    #endregion
+
     /// <summary>
     /// Activates the corresponding outline for targeted area
     /// </summary>
@@ -339,15 +332,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Disable the character controller temporarily to set the position to given location. (Used in combination with the teleport class) 
-    /// </summary>
-    public void SetPosition(Vector3 pos)
-    {
-        character.enabled = false;
-        transform.position = pos;
-    }
-
+    #region Gun Powerup Functions
     Coroutine gunTimerCoroutine;
     /// <summary>
     /// Activates the gun and any related visuals and start the gun timer coroutine
@@ -356,12 +341,14 @@ public class PlayerController : MonoBehaviour
     {
         if (gunTimerCoroutine != null)
             StopCoroutine(gunTimerCoroutine);
-        musicPlayer.Stop();
-        musicPlayer.PlayOneShot(powerMusic);
+
         gunActivated = true;
         if(animator == null)
             gun.SetActive(true);
         hud.SetActive(true);
+
+        musicPlayer.Stop();
+        musicPlayer.Play();
 
         if (animator != null)
         {
@@ -369,7 +356,6 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger("EquipGun");
         }
 
-        Ghost[] ghosts = FindObjectsOfType<Ghost>();
         foreach(Ghost ghost in ghosts)
         {
             ghost.InitiateScatter();
@@ -403,7 +389,6 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger("UnequipGun");
         }
 
-        Ghost[] ghosts = FindObjectsOfType<Ghost>();
         foreach (Ghost ghost in ghosts)
         {
             ghost.DeactivateScatter();
@@ -414,7 +399,9 @@ public class PlayerController : MonoBehaviour
         //Deactivate any remaining target outline
         targetOutlineController.DeactivateOutline();
     }
+    #endregion
 
+    #region Collision Detection (Weapon, Fruit, Enemy)
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Weapon" && !gunActivated)
@@ -422,23 +409,6 @@ public class PlayerController : MonoBehaviour
             Destroy(other.gameObject);
             ActivateGun();
         }
-
-        //if(other.tag == "Enemy")
-        //{
-        //    Ghost ghost = other.gameObject.transform.root.GetComponent<Ghost>();
-
-        //    if (ghost.CurrentMode == Ghost.Mode.Chase)
-        //    {
-        //        //fade to black
-        //        if (hitable)
-        //        {
-        //            playerLives--;
-        //            hitable = false;
-        //            fadeImage.CrossFadeAlpha(255, fadeTimeModifier, false);
-        //        }
-                
-        //    }
-        //}
     }
 
     //Accounting for scatter ending when player is touching a ghost
@@ -452,40 +422,99 @@ public class PlayerController : MonoBehaviour
             {
                 print("hit by " + other.gameObject.name);
 
-                //fade to black
-                if (hitable)
+                if(!inDeathSequence)
                 {
-                    playerLives--;
-                    hitable = false;
-                    canMove = false;
-                    fadeImage.canvasRenderer.SetAlpha(0.01f);
-
-                    fadeImage.CrossFadeAlpha(255f, 100f, false);
-
-                    transform.position = playerSpawnPoint.position;
-
-                    foreach (Ghost g in ghosts)
-                    {
-                        g.ResetGhost();
-                    }
-
-                    FruitController fruitController = FindObjectOfType<FruitController>();
-
-                    if(fruitController != null)
-                    {
-                        fruitController.DeactivateFruit();
-                    }
+                    StartCoroutine(DeathSequence());
                 }
-
-
             }
         }
     }
+    #endregion
 
+    IEnumerator DeathSequence() 
+    {
+        inDeathSequence = true;
+
+        canMove = false;
+        character.enabled = false;
+
+        //Freeze all of the ghosts' movements
+        foreach (Ghost g in ghosts)
+        {
+            g.FreezeGhost();
+        }
+
+        fadeImage.canvasRenderer.SetAlpha(0f);
+        fadeImage.gameObject.SetActive(true);
+
+        //Play Player death animation
+        animator.SetTrigger("Death");
+
+        WaitForSecondsRealtime deathTimer = new WaitForSecondsRealtime(deathSequenceLength / 2);
+
+        yield return deathTimer;
+
+        fadeImage.CrossFadeAlpha(255f, 100f, false);
+
+        yield return deathTimer;
+
+        //Reset the Ghosts
+        foreach (Ghost g in ghosts)
+        {
+            g.ResetGhost();
+        }
+
+        //Reset the fruit (just in case)
+        FruitController fruitController = FindObjectOfType<FruitController>();
+        if (fruitController != null)
+        {
+            fruitController.DeactivateFruit();
+        }
+
+        transform.position = playerSpawnPoint.position;
+
+        playerLives--;
+
+        if (playerLives <= 0)
+        {
+            print("Ending Scene");
+            //end game scene
+            SceneManager.LoadScene(2);
+        }
+        else
+        {
+            fadeImage.gameObject.SetActive(false);
+
+            animator.ResetTrigger("Death");
+            animator.SetTrigger("Respawn");
+
+            yield return deathTimer;
+
+            character.enabled = true;
+            canMove = true;
+
+            inDeathSequence = false;
+
+            LivesText.text = "Lives: " + playerLives;
+
+            animator.ResetTrigger("Respawn");
+        }
+    }
+
+    /// <summary>
+    /// Disable the character controller temporarily to set the position to given location. (Used in combination with the teleport class) 
+    /// </summary>
+    public void SetPosition(Vector3 pos)
+    {
+        character.enabled = false;
+        transform.position = pos;
+    }
+
+    #region UI Functions
     ///Summary
     ///Pause Game Function
     ///Summary
-    private void PauseGame() 
+    private void PauseGame()
     {
         if (gameIsPaused)
         {
@@ -497,7 +526,7 @@ public class PlayerController : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
-        else 
+        else
         {
             ResumeGame();
         }
@@ -521,11 +550,12 @@ public class PlayerController : MonoBehaviour
     /// gets the players settings from playerprefs and applies them to the player
     /// will be also used for the pause menu
     /// </summary>
-    public void applyGameSettings()
+    public void ApplyGameSettings()
     {
         print(PlayerPrefs.GetFloat("FOV"));
         AudioListener.volume = PlayerPrefs.GetFloat("Volume");
         playerCam.GetComponent<Camera>().fieldOfView = PlayerPrefs.GetFloat("FOV");
         sensitivity = PlayerPrefs.GetFloat("Sensitivity");
     }
+    #endregion
 }

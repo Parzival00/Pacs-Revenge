@@ -25,7 +25,8 @@ public class Ghost : MonoBehaviour
         Exiting,
         Chase,
         Scatter,
-        Respawn
+        Respawn,
+        Freeze
     }
 
     public enum TargetAreaType
@@ -153,6 +154,8 @@ public class Ghost : MonoBehaviour
                 break;
             case Mode.Respawn:
                 Respawn();
+                break;
+            default:
                 break;
         }
     }
@@ -467,13 +470,31 @@ public class Ghost : MonoBehaviour
     /// </summary>
     public void ResetGhost()
     {
-        if(currentMode != Mode.Dormant)
-        {
-            navMesh.enabled = false;
-            this.transform.position = respawnPoint.position;
-            navMesh.enabled = true;
-            currentMode = Mode.Respawn;
-        }
-       
+        if (resetCoroutine != null)
+            StopCoroutine(resetCoroutine);
+
+        resetCoroutine = StartCoroutine(ResetSequence());
+    }
+
+    Coroutine resetCoroutine;
+    IEnumerator ResetSequence()
+    {
+        SetPosition(respawnPoint.position);
+
+        WaitForSeconds wait = new WaitForSeconds(5f);
+
+        yield return wait;
+
+        navMesh.enabled = true;
+
+        currentMode = Mode.Dormant;
+    }
+
+    public void FreezeGhost()
+    {
+        currentMode = Mode.Freeze;
+        navMesh.enabled = false;
+
+        chaseSoundSource.Stop();
     }
 }

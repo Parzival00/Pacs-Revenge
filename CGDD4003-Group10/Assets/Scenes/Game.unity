@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44480124, g: 0.49435037, b: 0.57354444, a: 1}
+  m_IndirectSpecularColor: {r: 0.44480163, g: 0.4943503, b: 0.5735447, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -39556,6 +39556,14 @@ PrefabInstance:
       propertyPath: railgunChargeBar
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: rotationSmoothing
+      value: 0.228
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: deathSequenceLength
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5301077504717036913, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: m_Name
       value: Player
@@ -39582,6 +39590,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7441008017772949912, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7457625705006531473, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 0a98358b7746e4c4abb94912f23ee755, type: 3}
+    - target: {fileID: 7457625705006531473, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
