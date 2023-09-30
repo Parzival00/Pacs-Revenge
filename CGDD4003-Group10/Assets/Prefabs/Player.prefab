@@ -399,7 +399,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 1.6870153
   m_Height: 3.458066
@@ -424,13 +424,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.5
-  m_Radius: 0.5
+  m_Height: 3.458066
+  m_Radius: 1.07
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.6903007, z: 0}
 --- !u!114 &2865670225406934770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,12 +471,12 @@ MonoBehaviour:
   hud: {fileID: 0}
   fadeImage: {fileID: 0}
   LivesText: {fileID: 0}
-  deathSequenceLength: 1
+  deathSequenceLength: 3
   playerLives: 3
   animator: {fileID: 6954913835686620882}
   targetOutlineController: {fileID: 6717606324952877450}
   powerMusic: {fileID: 8300000, guid: 0a98358b7746e4c4abb94912f23ee755, type: 3}
-  bgMusic: {fileID: 0}
+  bgMusic: {fileID: 8300000, guid: 86c586c2ec7091e40b954da8fda4cb52, type: 3}
   gameStart: {fileID: 0}
   musicPlayer: {fileID: 7457625705006531473}
   usePlayerPrefsSettings: 0
@@ -509,7 +509,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineTarget: {fileID: 21300000, guid: 7e8e9f66fcc133445bd0d23908e4d51c, type: 3}
   outlineTargetFill: {fileID: 21300000, guid: 478a037f78b2b1d4dbd5a3df2e959655, type: 3}
-  timeBtwBlinks: 0.35
+  timeBtwBlinks: 0.2
 --- !u!120 &208930143002471842
 LineRenderer:
   serializedVersion: 2
@@ -752,7 +752,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 3959
+    m_Bits: 1911
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -969,8 +969,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 0a98358b7746e4c4abb94912f23ee755, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 0.15
   m_Pitch: 1
   Loop: 0
@@ -1115,14 +1115,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7761223378362722570, guid: 0858e11154f4ee94bb6fb7f945f76d6d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f9ded4ea9b9260c438bf52a82b8235e1, type: 2}
+    - target: {fileID: -7212954070452873132, guid: 0858e11154f4ee94bb6fb7f945f76d6d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d9f24d3c1e2cd5d458cb46909b26a3b6, type: 2}
+    - target: {fileID: -5215299815803115452, guid: 0858e11154f4ee94bb6fb7f945f76d6d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d9f24d3c1e2cd5d458cb46909b26a3b6, type: 2}
     - target: {fileID: 919132149155446097, guid: 0858e11154f4ee94bb6fb7f945f76d6d, type: 3}
       propertyPath: m_Name
       value: FPSPacMan - Railgun
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0858e11154f4ee94bb6fb7f945f76d6d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4540974463050886346, guid: 0858e11154f4ee94bb6fb7f945f76d6d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2f59219bdf013cd42bacf6bda4739a8c, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
