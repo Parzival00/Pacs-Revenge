@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioSource weaponSound;
 
     [Header("Weapon Settings")]
+    [SerializeField] Animator gunAnimator;
     [SerializeField] float chargeTime;
     [SerializeField] float overheatTime;
     [SerializeField] float cooldown;
@@ -343,17 +344,16 @@ public class PlayerController : MonoBehaviour
             StopCoroutine(gunTimerCoroutine);
 
         gunActivated = true;
-        if(animator == null)
-            gun.SetActive(true);
+        gun.SetActive(true);
         hud.SetActive(true);
 
         musicPlayer.Stop();
         musicPlayer.Play();
 
-        if (animator != null)
+        if (gunAnimator != null)
         {
-            animator.ResetTrigger("UnequipGun");
-            animator.SetTrigger("EquipGun");
+            gunAnimator.ResetTrigger("UnequipGun");
+            gunAnimator.SetTrigger("EquipGun");
         }
 
         foreach(Ghost ghost in ghosts)
@@ -379,14 +379,14 @@ public class PlayerController : MonoBehaviour
     void DeactivateGun()
     {
         gunActivated = false;
-        if(animator == null)
-            gun.SetActive(false);
+        //if(animator == null)
+        gun.SetActive(false);
         hud.SetActive(false);
 
-        if (animator != null)
+        if (gunAnimator != null)
         {
-            animator.ResetTrigger("EquipGun");
-            animator.SetTrigger("UnequipGun");
+            gunAnimator.ResetTrigger("EquipGun");
+            gunAnimator.SetTrigger("UnequipGun");
         }
 
         foreach (Ghost ghost in ghosts)

@@ -39448,10 +39448,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 88570481870266847, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 8ffc1dd8e15a73240899efe30a5a6974, type: 2}
     - target: {fileID: 743185093512582757, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.85999966
@@ -39492,10 +39488,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2480287615474165230, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 5cfb9c880c4d9c34a8f837037def6baf, type: 2}
     - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: hud
       value: 
@@ -39513,6 +39505,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 992231765}
     - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: gunAnimator
+      value: 
+      objectReference: {fileID: 879833136}
+    - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: optionsMenu
       value: 
       objectReference: {fileID: 1484978838}
@@ -39520,14 +39516,6 @@ PrefabInstance:
       propertyPath: playerSpawnPoint
       value: 
       objectReference: {fileID: 1692905707}
-    - target: {fileID: 3214412195594379903, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 5cfb9c880c4d9c34a8f837037def6baf, type: 2}
-    - target: {fileID: 3824379446305880995, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 8ffc1dd8e15a73240899efe30a5a6974, type: 2}
     - target: {fileID: 5000619941810572233, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -39540,14 +39528,6 @@ PrefabInstance:
       propertyPath: scoreUI
       value: 
       objectReference: {fileID: 1602883407}
-    - target: {fileID: 7725394037681966624, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 8ffc1dd8e15a73240899efe30a5a6974, type: 2}
-    - target: {fileID: 8181381004017310708, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 5836313decf149e4ba40b6ea797b8ae0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -39556,6 +39536,11 @@ PrefabInstance:
 --- !u!4 &879833135 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 743185093512582757, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+  m_PrefabInstance: {fileID: 879833134}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &879833136 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6221754044492916589, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
   m_PrefabInstance: {fileID: 879833134}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &881608007
