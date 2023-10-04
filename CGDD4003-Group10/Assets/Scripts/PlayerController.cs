@@ -611,10 +611,14 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void ApplyGameSettings()
     {
-        print(PlayerPrefs.GetFloat("FOV"));
-        AudioListener.volume = PlayerPrefs.GetFloat("Volume");
-        playerCam.GetComponent<Camera>().fieldOfView = PlayerPrefs.GetFloat("FOV");
-        sensitivity = PlayerPrefs.GetFloat("Sensitivity");
+        if (PlayerPrefs.HasKey("FOV"))
+            playerCam.GetComponent<Camera>().fieldOfView = PlayerPrefs.GetFloat("FOV");
+        
+        if(PlayerPrefs.HasKey("Volume"))
+            AudioListener.volume = PlayerPrefs.GetFloat("Volume");
+        
+        if (PlayerPrefs.HasKey("Sensitivity"))
+            sensitivity = PlayerPrefs.GetFloat("Sensitivity");
     }
     #endregion
 }
