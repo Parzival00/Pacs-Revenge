@@ -13061,7 +13061,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2781898401820217419, guid: b93ab60570439bc4bbb94536a8b8cbca, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5014022455672222642, guid: b93ab60570439bc4bbb94536a8b8cbca, type: 3}
       propertyPath: m_Pivot.x
@@ -13141,6 +13141,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5014022455672222642, guid: b93ab60570439bc4bbb94536a8b8cbca, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138785646164703251, guid: b93ab60570439bc4bbb94536a8b8cbca, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -39488,6 +39492,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2513131554490278827, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: hud
       value: 
@@ -39509,17 +39517,85 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1484978838}
     - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: dechargeTime
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: cooldownSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: maxWeaponTemp
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: overheatSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: playerSpawnPoint
       value: 
       objectReference: {fileID: 1692905707}
+    - target: {fileID: 4507674535604613185, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: overheatWarningMat
+      value: 
+      objectReference: {fileID: 2100000, guid: ad771835c0f907b4b95f0f8de8a35662, type: 2}
+    - target: {fileID: 4507674535604613185, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: overheatWarningThreshold
+      value: 0.391
+      objectReference: {fileID: 0}
     - target: {fileID: 5000619941810572233, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5278579112907383279, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: gunTimerOffset
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5278579112907383279, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: overheatWarningBlinkColor.b
+      value: 0.08627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 5278579112907383279, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: overheatWarningBlinkColor.g
+      value: 0.007843138
+      objectReference: {fileID: 0}
+    - target: {fileID: 5278579112907383279, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: overheatWarningBlinkColor.r
+      value: 0.9607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 5278579112907383279, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: overheatWarningDefaultColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5278579112907383279, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: overheatWarningDefaultColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5278579112907383279, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: overheatWarningDefaultColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5301077504717036913, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5303204821051126421, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: m_Color.b
+      value: 0.5660378
+      objectReference: {fileID: 0}
+    - target: {fileID: 5303204821051126421, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: m_Color.g
+      value: 0.5660378
+      objectReference: {fileID: 0}
+    - target: {fileID: 5303204821051126421, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: m_Color.r
+      value: 0.5660378
+      objectReference: {fileID: 0}
+    - target: {fileID: 5303204821051126421, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ad771835c0f907b4b95f0f8de8a35662, type: 2}
     - target: {fileID: 6532150692148206727, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: scoreUI
       value: 

@@ -40,24 +40,35 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioSource weaponSound;
 
     [Header("Weapon Settings")]
+    [SerializeField] RailgunVFXController railGunVFX;
     [SerializeField] Animator gunAnimator;
     [SerializeField] float chargeTime;
-    [SerializeField] float overheatTime;
-    [SerializeField] float cooldown;
+    [SerializeField] float maxWeaponTemp = 5;
+    [SerializeField] float overheatSpeed = 1;
+    [SerializeField] float cooldownSpeed = 1;
+    [SerializeField] float dechargeTime = .25f;
+    [SerializeField] float gunTimeAmount = 5f;
     [SerializeField] Transform bulletOrigin;
     [SerializeField] Camera fpsCam;
     [SerializeField] WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
     [SerializeField] float weaponRange;
     [SerializeField] LayerMask targetingMask;
-    [SerializeField] float gunTimeAmount = 5f;
+
     private LineRenderer laserLine;
     private float weaponCharge;
+    private float weaponDecharge;
     private float weaponTemp;
-    private bool overheated;
-    Slider weaponChargeBar;
-    Image chargeBarFill;
+    private bool overheated = false;
+    private bool weaponDecharging = false;
 
-    private WaitForSeconds gunTimer;
+    public float WeaponCharge { get => weaponCharge; }
+    public float WeaponDecharge { get => weaponDecharge; }
+    public float WeaponTemp01 { get => (weaponTemp / maxWeaponTemp); }
+    public bool Overheated { get => overheated; }
+    public bool WeaponDecharging { get => weaponDecharging; }
+
+    private float gunTimer;
+    public float GunTimer01 { get => (gunTimer / gunTimeAmount); }
     
     [Header("GameObject Refereneces")]
     [SerializeField] GameObject gun;
@@ -87,6 +98,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool usePlayerPrefsSettings;
 
     public static bool gunActivated { get; private set; }
+    private bool canFire = true;
 
     private bool inDeathSequence;
 
@@ -115,8 +127,6 @@ public class PlayerController : MonoBehaviour
         speed = baseSpeed;
 
         laserLine = GetComponent<LineRenderer>();
-        this.weaponChargeBar = (Slider)GameObject.FindGameObjectWithTag("ChargeBar").GetComponent("Slider");
-        this.chargeBarFill = (Image)GameObject.FindGameObjectWithTag("ChargeFill").GetComponent("Image");
 
         gunActivated = false;
         gun.SetActive(false);
@@ -125,8 +135,6 @@ public class PlayerController : MonoBehaviour
         Time.timeScale = 1;
 
         fadeImage.canvasRenderer.SetAlpha(0.01f);
-
-        gunTimer = new WaitForSeconds(gunTimeAmount);
 
         if (animator == null)
             animator = GetComponent<Animator>();
@@ -140,6 +148,7 @@ public class PlayerController : MonoBehaviour
         }
 
         canMove = true;
+        canFire = true;
 
         LivesText.text = "Lives: " + playerLives;
     }
@@ -157,7 +166,6 @@ public class PlayerController : MonoBehaviour
         {
             Fire();
             OutlineTargetEnemy();
-            UpdateChargeBar();
             CheckWeaponTemp();
         }
 
@@ -217,6 +225,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Fire()
     {
+        if (canFire == false)
+            return;
+
         if (Input.GetMouseButtonUp(0) && !paused && !overheated)
         {
             if (weaponCharge >= 1)
@@ -245,9 +256,11 @@ public class PlayerController : MonoBehaviour
                 {
                     laserLine.SetPosition(1, rayOrigin + (fpsCam.transform.forward * weaponRange));
                 }
+
+                weaponTemp = 0f;
+
+                StartCoroutine(Decharge());
             }
-            weaponCharge = 0f;
-            weaponTemp = 0f;
         }
         else if (!paused && Input.GetMouseButton(0) && !overheated)
         {
@@ -255,7 +268,18 @@ public class PlayerController : MonoBehaviour
             {
                 weaponCharge += (Time.deltaTime * (1 / chargeTime));
             }
-            weaponTemp += (Time.deltaTime * (overheatTime));
+            weaponTemp += (Time.deltaTime * (overheatSpeed));
+        } else if (!Input.GetMouseButton(0) && !overheated)
+        {
+            if(weaponCharge > 0)
+            {
+                weaponCharge -= (Time.deltaTime * (1 / (chargeTime / 2)));
+                weaponTemp -= Time.deltaTime * (overheatSpeed * 2);
+            } else
+            {
+                weaponTemp = 0;
+                weaponCharge = 0;
+            }
         }
     }
 
@@ -271,11 +295,30 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Updates the size of the charge bar based on current charge
+    /// Decharges the gun and acts as a shot cooldown
     /// </summary>
-    void UpdateChargeBar()
+    /// <returns></returns>
+    private IEnumerator Decharge()
     {
-        weaponChargeBar.value = weaponCharge;
+        canFire = false;
+        weaponCharge = 1;
+        weaponDecharge = 0;
+
+        weaponDecharging = true;
+
+        while (weaponDecharge <= 1)
+        {
+            weaponCharge -= (Time.deltaTime * (1 / dechargeTime));
+            weaponDecharge += (Time.deltaTime * (1 / dechargeTime));
+
+            yield return null;
+        }
+
+        weaponDecharging = false;
+
+        weaponCharge = 0;
+        weaponDecharge = 1;
+        canFire = true;
     }
 
     /// <summary>
@@ -283,10 +326,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void CheckWeaponTemp()
     {
-        if (weaponTemp >= 5f && !overheated)
+        if (weaponTemp >= maxWeaponTemp && !overheated)
         {
             overheated = true;
-            chargeBarFill.color = Color.red;
             weaponSound.volume = .9f;
             weaponSound.PlayOneShot(overheat);
             weaponSound.volume = .1f;
@@ -296,11 +338,10 @@ public class PlayerController : MonoBehaviour
             weaponTemp = 0f;
             weaponCharge = 0f;
             overheated = false;
-            chargeBarFill.color = new Color(0f, 255f, 150f);
         }
         else if (overheated && !Input.GetMouseButton(0))
         {
-            weaponTemp -= Time.deltaTime * cooldown;
+            weaponTemp -= Time.deltaTime * cooldownSpeed;
         }
     }
     #endregion
@@ -356,6 +397,15 @@ public class PlayerController : MonoBehaviour
             gunAnimator.SetTrigger("EquipGun");
         }
 
+        weaponTemp = 0;
+        weaponCharge = 0;
+        weaponDecharge = 0;
+        overheated = false;
+        weaponDecharging = false;
+
+        if (railGunVFX != null)
+            railGunVFX.ActivateEffects();
+
         foreach(Ghost ghost in ghosts)
         {
             ghost.InitiateScatter();
@@ -368,9 +418,18 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     IEnumerator GunTimer()
     {
-        yield return gunTimer;
+
+        gunTimer = gunTimeAmount;
+
+        while(gunTimer >= 0)
+        {
+            gunTimer -= Time.deltaTime;
+            yield return null;
+        }
 
         DeactivateGun();
+
+        gunTimer = gunTimeAmount;
     }
 
     /// <summary>
