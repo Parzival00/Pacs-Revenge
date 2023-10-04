@@ -46,6 +46,9 @@ public class MainMenuManager : MonoBehaviour
 
         PlayerPrefs.Save();
 
+        PlayerController player = GameObject.FindObjectOfType<PlayerController>();
+        if(player!=null)
+            player.ApplyGameSettings();
     }
 
     public void LoadGameScene(int sceneIndex) 
@@ -57,6 +60,10 @@ public class MainMenuManager : MonoBehaviour
         menu.SetActive(false);
         options.SetActive(true);
 
+        fov.value = PlayerPrefs.GetFloat("FOV");
+        MouseSensitivity.value = PlayerPrefs.GetFloat("Sensitivity");
+        volume.value = PlayerPrefs.GetFloat("Volume");
+        fullScreenToggle.isOn = Screen.fullScreen;
     }
     public void DisplayScoreBoard() 
     {
@@ -84,6 +91,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void ReturnToMainMenu() 
     {
+        SaveSettings();
         options.SetActive(false);
         menu.SetActive(true);
     }
