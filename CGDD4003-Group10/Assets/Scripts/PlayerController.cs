@@ -108,6 +108,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         Init();
+        musicPlayer.PlayOneShot(bgMusic);
     }
 
     private void Init()
@@ -428,7 +429,7 @@ public class PlayerController : MonoBehaviour
         }
 
         DeactivateGun();
-
+        musicPlayer.PlayOneShot(bgMusic);
         gunTimer = gunTimeAmount;
     }
 
