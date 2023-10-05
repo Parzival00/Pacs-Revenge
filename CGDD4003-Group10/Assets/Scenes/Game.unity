@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44480124, g: 0.49435037, b: 0.57354444, a: 1}
+  m_IndirectSpecularColor: {r: 0.44480178, g: 0.4943508, b: 0.5735456, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10060,6 +10060,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1105822210}
     - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+      propertyPath: speed
+      value: 5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 879833135}
@@ -10169,7 +10173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4684875502359307331, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5667040492920347072, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
       propertyPath: m_IsActive
@@ -20559,6 +20563,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1741182738611334013, guid: 5159269b8701cb141a3b2d22a2c85db3, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2645439506448191634, guid: 5159269b8701cb141a3b2d22a2c85db3, type: 3}
       propertyPath: player
       value: 
@@ -39545,6 +39553,10 @@ PrefabInstance:
       propertyPath: overheatWarningThreshold
       value: 0.391
       objectReference: {fileID: 0}
+    - target: {fileID: 4648173346818715503, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: m_Volume
+      value: 0.022
+      objectReference: {fileID: 0}
     - target: {fileID: 5000619941810572233, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -39601,6 +39613,10 @@ PrefabInstance:
       propertyPath: scoreUI
       value: 
       objectReference: {fileID: 1602883407}
+    - target: {fileID: 7457625705006531473, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: m_Volume
+      value: 0.025
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -53939,6 +53955,10 @@ PrefabInstance:
     - target: {fileID: 8497039291931120781, guid: 5501a7048ac1601459b76df80fa45743, type: 3}
       propertyPath: m_Name
       value: Pedastal
+      objectReference: {fileID: 0}
+    - target: {fileID: 8554294911076339095, guid: 5501a7048ac1601459b76df80fa45743, type: 3}
+      propertyPath: fruitTimer
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8554294911076339095, guid: 5501a7048ac1601459b76df80fa45743, type: 3}
       propertyPath: alertMessage
@@ -71308,6 +71328,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1105822210}
     - target: {fileID: 1039700990719141375, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
+      propertyPath: speed
+      value: 5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1039700990719141375, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 879833135}
@@ -71337,7 +71361,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1197959491703249952, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1291436568663635271, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
       propertyPath: m_Sprite
@@ -77169,6 +77193,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1105822210}
     - target: {fileID: 4775153053850207514, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
+      propertyPath: speed
+      value: 5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4775153053850207514, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 879833135}
@@ -77342,7 +77370,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7559388939437528121, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7627221127774281008, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -89260,6 +89288,10 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: -8.356338e-16
       objectReference: {fileID: 0}
+    - target: {fileID: 3381151316002771009, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
+      propertyPath: m_Speed
+      value: 5.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3727469663641264310, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -89350,7 +89382,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8174792542383276975, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8403792944336336531, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
       propertyPath: m_Size.z
