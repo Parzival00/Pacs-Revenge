@@ -5,10 +5,10 @@ using UnityEngine;
 public class Clyde : Ghost
 {
     [Header("Clyde Specific Settings")]
-    [SerializeField] int radiusToAvoidPlayer = 8;
+    [SerializeField] int radiusToAvoidPlayer = 4;
     protected override void Chase()
     {
-        Vector2Int playerGridPosition = map.CheckEdgePositions(transform.position);
+        Vector2Int playerGridPosition = map.GetPlayerPosition();
         Vector2Int clydeGridPosition = map.GetGridLocation(transform.position);
 
         Vector2Int newTargetPosition;
@@ -30,5 +30,7 @@ public class Clyde : Ghost
         lastTargetGridPosition = targetGridPosition;
 
         PlayChaseSound();
+
+        spriteRenderer.color = Color.white; //Temporary
     }
 }

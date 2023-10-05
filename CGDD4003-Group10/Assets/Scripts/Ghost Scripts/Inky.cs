@@ -6,6 +6,7 @@ public class Inky : Ghost
 {
     [Header("Inky Specific Settings")]
     [SerializeField] Transform blinkyTransform;
+    [SerializeField] float targetRayMultiplier = 1.5f;
 
     //Temporary Movement to player
     protected override void Chase()
@@ -19,7 +20,9 @@ public class Inky : Ghost
 
         Vector2Int fromBlinkyToPlayerAhead = playerTwoAheadGridPos - blinkyGridPosition;
 
-        Vector2Int newTargetGridPosition = map.GetGridPositionAhead(blinkyGridPosition, fromBlinkyToPlayerAhead * 2, true, true);
+        Vector2Int newRayAhead = new Vector2Int(Mathf.RoundToInt(fromBlinkyToPlayerAhead.x * targetRayMultiplier), Mathf.RoundToInt(fromBlinkyToPlayerAhead.y * targetRayMultiplier));
+
+        Vector2Int newTargetGridPosition = map.GetGridPositionAhead(blinkyGridPosition, newRayAhead, true, true);
 
         targetGridPosition = map.CheckEdgePositions(transform.position, newTargetGridPosition);// + rand;
 
@@ -28,6 +31,8 @@ public class Inky : Ghost
         lastTargetGridPosition = targetGridPosition;
 
         PlayChaseSound();
+
+        spriteRenderer.color = Color.white; //Temporary
     }
 
     ///Summary

@@ -15,7 +15,11 @@ public class FruitController : MonoBehaviour
     [Header("Fruit Spawn Alert Settings")]
     [SerializeField] GameObject alertMessage;
     [SerializeField] ParticleSystem lightningBeam;
-    [SerializeField] float alertVisibleTimer = 3;
+    [SerializeField] AudioSource lightningSoundSource;
+    [SerializeField] float alertVisibleTimerAmount = 3;
+    [SerializeField] float messageDelayTimerAmount = 2;
+    [SerializeField] int numberOfLightningStrikes = 5;
+    [SerializeField] float intervalBtwLightningStrikes = 0.5f;
 
     [Header("Sprite Renderers")]
     [SerializeField] SpriteRenderer minimapFruitSpriteRenderer;
@@ -28,7 +32,7 @@ public class FruitController : MonoBehaviour
     [SerializeField] Fruit[] availableFruits;
     [SerializeField] int firstFruitSpawnThreshold = 70;
     [SerializeField] int secondFruitSpawnThreshold = 170;
-    [SerializeField] float fruitTimer = 15;
+    [SerializeField] float fruitTimer = 40;
 
     private bool fruitActivated;
     private Fruit currentFruit;
@@ -147,13 +151,37 @@ public class FruitController : MonoBehaviour
 
     IEnumerator FruitSpawnAlert()
     {
-        alertMessage.SetActive(true);
+        float messageDelayTimer = Time.time + messageDelayTimerAmount;
+        float lightningStrikeTimer = Time.time + intervalBtwLightningStrikes;
+        float messageTimer = 0;
 
-        lightningBeam?.Play();
+        int i = 0;
+        while(i < numberOfLightningStrikes)
+        {
+            if(lightningStrikeTimer <= Time.time)
+            {
+                i++;
 
-        WaitForSeconds timer = new WaitForSeconds(alertVisibleTimer);
+                lightningBeam?.Stop();
+                lightningBeam?.Play();
 
-        yield return timer;
+                if (lightningSoundSource.clip != null)
+                    lightningSoundSource.Play();
+
+                lightningStrikeTimer = Time.time + intervalBtwLightningStrikes;
+            }
+
+            if(messageDelayTimer <= Time.time && !alertMessage.activeSelf)
+            {
+                messageTimer = Time.time + alertVisibleTimerAmount;
+                alertMessage.SetActive(true);
+            }
+
+            yield return null;
+        }
+
+        while(messageTimer > Time.time)
+            yield return null;
 
         lightningBeam?.Stop();
 

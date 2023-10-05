@@ -36,7 +36,7 @@ public class RevisedRadar : MonoBehaviour
 
         //draw a raycast that returns all objects hit and stores them in an array
         RaycastHit[] hits;
-        hits = Physics.RaycastAll(transform.position, fwd, 10);
+        hits = Physics.RaycastAll(transform.position, fwd, trackingRadius);
         if (hits.Length > 0)
         {
             foreach(RaycastHit hit in hits)

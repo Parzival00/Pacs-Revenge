@@ -8,6 +8,5 @@ public class Blinky : Ghost
     protected override void Chase()
     {
         base.Chase();
-
     }
 }

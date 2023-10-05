@@ -5,6 +5,7 @@ using UnityEngine;
 public class Pinky : Ghost
 {
     [Header("Pinky Specific Settings")]
+    [SerializeField] int spacesAheadOfPlayer = 2;
 
     [Tooltip("Pinky overflow error: (Pinky had a bug in the original game causing an error choosing a target location in specific situations)")]
     [SerializeField] bool originalMode; 
@@ -17,7 +18,7 @@ public class Pinky : Ghost
     {
         Vector2Int playerGridPosition = map.GetPlayerPosition();
         Vector2Int playerGridDir = map.GetGridSpaceDirection(player.forward);
-        Vector2Int pinkyGridTarget = map.GetGridPositionAhead(playerGridPosition, playerGridDir, 4, true, false);
+        Vector2Int pinkyGridTarget = map.GetGridPositionAhead(playerGridPosition, playerGridDir, spacesAheadOfPlayer, true, false);
 
         if (originalMode)
         {
@@ -35,6 +36,8 @@ public class Pinky : Ghost
         lastTargetGridPosition = targetGridPosition;
 
         PlayChaseSound();
+
+        spriteRenderer.color = Color.white; //Temporary
     }
 
     
