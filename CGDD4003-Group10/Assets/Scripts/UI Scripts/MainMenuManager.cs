@@ -15,6 +15,7 @@ public class MainMenuManager : MonoBehaviour
     [Header("Menu Screens")]
     [SerializeField] GameObject menu;
     [SerializeField] GameObject options;
+    [SerializeField] GameObject howToPlayUI;
     [SerializeField] TMP_InputField uiInput;
     [SerializeField] TMP_Text highScoreDisplay;
 
@@ -89,11 +90,25 @@ public class MainMenuManager : MonoBehaviour
         menu.SetActive(false);
     }
 
-    public void ReturnToMainMenu() 
+    public void ReturnToMainMenu(int whichMenu)
     {
-        SaveSettings();
-        options.SetActive(false);
-        menu.SetActive(true);
+        switch (whichMenu)
+        {
+            case 1:
+                SaveSettings();
+                options.SetActive(false);
+                menu.SetActive(true);
+                break;
+            case 2:
+                howToPlayUI.SetActive(false);
+                menu.SetActive(true);
+                break;
+        }
+    }
+    public void DisplayHowToPlayMenu() 
+    {
+        menu.SetActive(false);
+        howToPlayUI.SetActive(true);
     }
 
     public void SetResolution()
