@@ -429,7 +429,6 @@ public class PlayerController : MonoBehaviour
         }
 
         DeactivateGun();
-        musicPlayer.PlayOneShot(bgMusic);
         gunTimer = gunTimeAmount;
     }
 
@@ -438,6 +437,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void DeactivateGun()
     {
+        musicPlayer.Stop();
+        musicPlayer.PlayOneShot(bgMusic);
         gunActivated = false;
         //if(animator == null)
         gun.SetActive(false);

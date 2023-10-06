@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44480163, g: 0.4943503, b: 0.5735447, a: 1}
+  m_IndirectSpecularColor: {r: 0.44480124, g: 0.49435037, b: 0.57354444, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -39598,6 +39598,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1053548517}
     - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: bgMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 37133ffb0afdbd6488ab446661ef24cf, type: 3}
+    - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: LivesText
       value: 
       objectReference: {fileID: 377229793}
@@ -39705,6 +39709,10 @@ PrefabInstance:
       propertyPath: scoreUI
       value: 
       objectReference: {fileID: 1602883407}
+    - target: {fileID: 7457625705006531473, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7457625705006531473, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: m_Volume
       value: 0.025
@@ -54042,6 +54050,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2085435033529456805, guid: 5501a7048ac1601459b76df80fa45743, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7480586399702938232, guid: 5501a7048ac1601459b76df80fa45743, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 523ebf68884d98049942c0866eb29b2c, type: 3}
+    - target: {fileID: 7480586399702938232, guid: 5501a7048ac1601459b76df80fa45743, type: 3}
+      propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8497039291931120781, guid: 5501a7048ac1601459b76df80fa45743, type: 3}
@@ -96294,7 +96310,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4281479730
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_fontColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
