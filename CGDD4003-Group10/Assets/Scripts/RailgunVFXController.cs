@@ -5,6 +5,7 @@ using UnityEngine;
 public class RailgunVFXController : MonoBehaviour
 {
     [SerializeField] PlayerController playerController;
+    [SerializeField] Animator muzzleFlash;
     [SerializeField] float updateInterval = 0.05f;
     [SerializeField] float timerUpdateInterval = 0.5f;
     [SerializeField] float gunTimerOffset = 0.05f;
@@ -51,6 +52,8 @@ public class RailgunVFXController : MonoBehaviour
         overheatWarningMat.SetFloat("_EmissionIntensity", 0);
 
         overheatWarningIsBlinking = false;
+
+        muzzleFlash.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -151,5 +154,11 @@ public class RailgunVFXController : MonoBehaviour
             overheatWarningMat.SetFloat("_EmissionIntensity", 0);
 
         overheatWarningIsBlinking = false;
+    }
+
+    public void Shoot(RaycastHit hitInfo, float range)
+    {
+        muzzleFlash.gameObject.SetActive(true);
+        muzzleFlash.SetTrigger("MuzzleFlash");
     }
 }

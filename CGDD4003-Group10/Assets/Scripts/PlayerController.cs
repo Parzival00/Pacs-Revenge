@@ -260,6 +260,8 @@ public class PlayerController : MonoBehaviour
 
                 weaponTemp = 0f;
 
+                railGunVFX.Shoot(hit, weaponRange);
+
                 StartCoroutine(Decharge());
             }
         }
