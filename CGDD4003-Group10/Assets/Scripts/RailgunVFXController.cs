@@ -7,6 +7,7 @@ public class RailgunVFXController : MonoBehaviour
     [SerializeField] PlayerController playerController;
     [SerializeField] Animator muzzleFlash;
     [SerializeField] float updateInterval = 0.05f;
+    [SerializeField] float chargeBarUpdateInterval = 0.05f;
     [SerializeField] float timerUpdateInterval = 0.5f;
     [SerializeField] float gunTimerOffset = 0.05f;
     [SerializeField] float exhauseEmissionMinIntensity = 0;
@@ -16,6 +17,9 @@ public class RailgunVFXController : MonoBehaviour
     //[SerializeField] Color overheatWarningBlinkColor = new Color(245, 22, 22, 255);
     //[SerializeField] Color overheatWarningDefaultColor = new Color(255, 255, 255, 255);
     [SerializeField] float overheatWarningBlinkEmissionIntensity = 1.11f;
+    [SerializeField] Transform chargeEffectStart;
+    [SerializeField] Transform chargeEffectEnd;
+    [SerializeField] Transform[] chargeEffects;
 
     bool overheatWarningIsBlinking = false;
 
@@ -54,40 +58,30 @@ public class RailgunVFXController : MonoBehaviour
         overheatWarningIsBlinking = false;
 
         muzzleFlash.gameObject.SetActive(false);
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        for (int i = 0; i < chargeEffects.Length; i++)
+        {
+            chargeEffects[i].gameObject.SetActive(false);
+        }
     }
 
     public void ActivateEffects()
     {
         Init();
+
         StartCoroutine(GunActive());
+        StartCoroutine(GunActiveChargeBar());
         StartCoroutine(GunActiveTimer());
     }
 
-    IEnumerator GunActive()
+    IEnumerator GunActiveChargeBar()
     {
-        WaitForSeconds waitInterval = new WaitForSeconds(updateInterval);
+        WaitForSeconds waitInterval = new WaitForSeconds(chargeBarUpdateInterval);
         while (PlayerController.gunActivated)
         {
             if (!playerController.Overheated)
             {
-                if(playerController.WeaponDecharging) 
-                {
-                    chargeBarrelMat.SetFloat("_Decharge", 1);
-                    chargeBarrelMat.SetFloat("_DechargeAmount", playerController.WeaponDecharge);
-                } else
-                {
-                    chargeBarrelMat.SetFloat("_Decharge", 0);
-                }
                 shotChargeBarMat.SetFloat("_ChargeAmount", playerController.WeaponCharge);
-                chasisMat.SetFloat("_EmissionIntensity", exhauseEmissionMinIntensity + playerController.WeaponTemp01 * (exhauseEmissionMaxIntensity - exhauseEmissionMinIntensity));
-
-                chargeBarrelMat.SetFloat("_ChargeAmount", playerController.WeaponCharge);
 
                 if(!overheatWarningIsBlinking && playerController.WeaponTemp01 >= overheatWarningThreshold)
                 {
@@ -99,15 +93,77 @@ public class RailgunVFXController : MonoBehaviour
                 }
             } else
             {
-                chargeBarrelMat.SetFloat("_ChargeAmount", playerController.WeaponTemp01);
                 shotChargeBarMat.SetFloat("_ChargeAmount", playerController.WeaponTemp01);
-
-                chasisMat.SetFloat("_EmissionIntensity", exhauseEmissionMinIntensity + playerController.WeaponTemp01 * (exhauseEmissionMaxIntensity - exhauseEmissionMinIntensity));
-
-                overheatWarningMat.SetFloat("_EmissionIntensity", overheatWarningBlinkEmissionIntensity);
             }
 
             yield return waitInterval;
+        }
+    }
+
+    IEnumerator GunActive()
+    {
+        WaitForSeconds waitInterval = new WaitForSeconds(updateInterval);
+        while (PlayerController.gunActivated)
+        {
+            if (!playerController.Overheated)
+            {
+                if (playerController.WeaponDecharging)
+                {
+                    chargeBarrelMat.SetFloat("_Decharge", 1);
+                    chargeBarrelMat.SetFloat("_DechargeAmount", playerController.WeaponDecharge);
+                    CheckChargeEffects(playerController.WeaponDecharge, true);
+                }
+                else
+                {
+                    chargeBarrelMat.SetFloat("_Decharge", 0);
+
+                    CheckChargeEffects(playerController.WeaponCharge, false);
+                }
+                chargeBarrelMat.SetFloat("_ChargeAmount", playerController.WeaponCharge);
+                chasisMat.SetFloat("_EmissionIntensity",
+                    exhauseEmissionMinIntensity + playerController.WeaponTemp01 * (exhauseEmissionMaxIntensity - exhauseEmissionMinIntensity));
+            }
+            else
+            {
+                chargeBarrelMat.SetFloat("_ChargeAmount", playerController.WeaponTemp01);
+                chasisMat.SetFloat("_EmissionIntensity", 
+                    exhauseEmissionMinIntensity + playerController.WeaponTemp01 * (exhauseEmissionMaxIntensity - exhauseEmissionMinIntensity));
+                CheckChargeEffects(playerController.WeaponTemp01, false);
+            }
+
+            yield return waitInterval;
+        }
+    }
+
+    void CheckChargeEffects(float threshold, bool greaterThan)
+    {
+        float dstBtwStartEnd = chargeEffectEnd.localPosition.z - chargeEffectStart.localPosition.z;
+
+        for (int i = 0; i < chargeEffects.Length; i++)
+        {
+            float posAlongBarrel = (chargeEffects[i].localPosition.z - chargeEffectStart.localPosition.z) / dstBtwStartEnd;
+            if (greaterThan)
+            {
+                if (posAlongBarrel >= threshold)
+                {
+                    chargeEffects[i].gameObject.SetActive(true);
+                }
+                else
+                {
+                    chargeEffects[i].gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                if (posAlongBarrel <= threshold)
+                {
+                    chargeEffects[i].gameObject.SetActive(true);
+                }
+                else
+                {
+                    chargeEffects[i].gameObject.SetActive(false);
+                }
+            }
         }
     }
 
