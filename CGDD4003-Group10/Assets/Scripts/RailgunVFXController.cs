@@ -6,6 +6,8 @@ public class RailgunVFXController : MonoBehaviour
 {
     [SerializeField] PlayerController playerController;
     [SerializeField] Animator muzzleFlash;
+    [SerializeField] ParticleSystem overheatSmoke1;
+    [SerializeField] ParticleSystem overheatSmoke2;
     [SerializeField] float updateInterval = 0.05f;
     [SerializeField] float chargeBarUpdateInterval = 0.05f;
     [SerializeField] float timerUpdateInterval = 0.5f;
@@ -59,6 +61,9 @@ public class RailgunVFXController : MonoBehaviour
 
         muzzleFlash.gameObject.SetActive(false);
 
+        overheatSmoke1.Stop();
+        overheatSmoke2.Stop();
+
         for (int i = 0; i < chargeEffects.Length; i++)
         {
             chargeEffects[i].gameObject.SetActive(false);
@@ -83,7 +88,9 @@ public class RailgunVFXController : MonoBehaviour
             {
                 shotChargeBarMat.SetFloat("_ChargeAmount", playerController.WeaponCharge);
 
-                if(!overheatWarningIsBlinking && playerController.WeaponTemp01 >= overheatWarningThreshold)
+                
+
+                if (!overheatWarningIsBlinking && playerController.WeaponTemp01 >= overheatWarningThreshold)
                 {
                     StartCoroutine(OverheatWarningBlink());
                 } 
@@ -122,6 +129,19 @@ public class RailgunVFXController : MonoBehaviour
                 chargeBarrelMat.SetFloat("_ChargeAmount", playerController.WeaponCharge);
                 chasisMat.SetFloat("_EmissionIntensity",
                     exhauseEmissionMinIntensity + playerController.WeaponTemp01 * (exhauseEmissionMaxIntensity - exhauseEmissionMinIntensity));
+
+                if (overheatSmoke1.isPlaying)
+                {
+                    overheatSmoke1.Stop();
+                    var main = overheatSmoke1.main;
+                    //main.simulationSpeed = 2;
+                }
+                if (overheatSmoke2.isPlaying)
+                {
+                    overheatSmoke2.Stop();
+                    var main = overheatSmoke2.main;
+                   // main.simulationSpeed = 2;
+                }
             }
             else
             {
@@ -129,6 +149,19 @@ public class RailgunVFXController : MonoBehaviour
                 chasisMat.SetFloat("_EmissionIntensity", 
                     exhauseEmissionMinIntensity + playerController.WeaponTemp01 * (exhauseEmissionMaxIntensity - exhauseEmissionMinIntensity));
                 CheckChargeEffects(playerController.WeaponTemp01, false);
+
+                if (!overheatSmoke1.isPlaying)
+                {
+                    overheatSmoke1.Play();
+                    var main = overheatSmoke1.main;
+                    //main.simulationSpeed = 1;
+                }
+                if (!overheatSmoke2.isPlaying)
+                {
+                    overheatSmoke2.Play();
+                    var main = overheatSmoke2.main;
+                    //main.simulationSpeed = 1;
+                }
             }
 
             yield return waitInterval;
