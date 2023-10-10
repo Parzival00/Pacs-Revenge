@@ -258,9 +258,9 @@ public class PlayerController : MonoBehaviour
                     laserLine.SetPosition(1, rayOrigin + (fpsCam.transform.forward * weaponRange));
                 }
 
-                weaponTemp = 0f;
 
                 railGunVFX.Shoot(hit, weaponRange);
+                gunAnimator.SetTrigger("Shoot");
 
                 StartCoroutine(Decharge());
             }
@@ -321,6 +321,7 @@ public class PlayerController : MonoBehaviour
 
         weaponCharge = 0;
         weaponDecharge = 1;
+        weaponTemp = 0f;
         canFire = true;
     }
 
