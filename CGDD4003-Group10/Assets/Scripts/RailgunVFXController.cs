@@ -119,16 +119,21 @@ public class RailgunVFXController : MonoBehaviour
                     chargeBarrelMat.SetFloat("_Decharge", 1);
                     chargeBarrelMat.SetFloat("_DechargeAmount", playerController.WeaponDecharge);
                     CheckChargeEffects(playerController.WeaponDecharge, true);
+
+                    chasisMat.SetFloat("_EmissionIntensity",
+                        exhauseEmissionMinIntensity + Mathf.Min(playerController.WeaponTemp01, playerController.WeaponCharge) * (exhauseEmissionMaxIntensity - exhauseEmissionMinIntensity));
                 }
                 else
                 {
                     chargeBarrelMat.SetFloat("_Decharge", 0);
 
                     CheckChargeEffects(playerController.WeaponCharge, false);
+
+                    chasisMat.SetFloat("_EmissionIntensity",
+                        exhauseEmissionMinIntensity + playerController.WeaponTemp01 * (exhauseEmissionMaxIntensity - exhauseEmissionMinIntensity));
                 }
                 chargeBarrelMat.SetFloat("_ChargeAmount", playerController.WeaponCharge);
-                chasisMat.SetFloat("_EmissionIntensity",
-                    exhauseEmissionMinIntensity + playerController.WeaponTemp01 * (exhauseEmissionMaxIntensity - exhauseEmissionMinIntensity));
+
 
                 if (overheatSmoke1.isPlaying)
                 {
