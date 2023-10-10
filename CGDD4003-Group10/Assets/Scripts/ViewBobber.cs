@@ -8,9 +8,13 @@ public class ViewBobber : MonoBehaviour
     [SerializeField] float walkBobSpeed = 14f;
     [SerializeField] float bobAmount = 0.05f;
     [SerializeField] PlayerController pc;
+    [SerializeField] AudioClip footstep;
+    [SerializeField] AudioSource feet;
+    [SerializeField] float footstepThreshold;
 
     float defaultYpos = 0;
     float timer = 0;
+    bool stepped = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +32,15 @@ public class ViewBobber : MonoBehaviour
                 //player is walking
                 timer += Time.deltaTime * walkBobSpeed;
                 transform.localPosition = new Vector3(transform.localPosition.x, defaultYpos + Mathf.Sin(timer) * bobAmount, transform.localPosition.z);
+                if (Mathf.Sin(timer) < footstepThreshold && !stepped)
+                {
+                    feet.PlayOneShot(footstep);
+                    stepped = true;
+                }
+                else if (Mathf.Sin(timer) >= footstepThreshold && stepped)
+                {
+                    stepped = false;
+                }
             }
             else
             {

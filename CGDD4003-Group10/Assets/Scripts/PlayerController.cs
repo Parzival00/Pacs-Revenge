@@ -108,7 +108,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         Init();
-        musicPlayer.PlayOneShot(bgMusic);
+        musicPlayer.PlayOneShot(gameStart);
+        musicPlayer.PlayDelayed(gameStart.length);
     }
 
     private void Init()
@@ -393,7 +394,7 @@ public class PlayerController : MonoBehaviour
         hud.SetActive(true);
 
         musicPlayer.Stop();
-        musicPlayer.Play();
+        musicPlayer.PlayOneShot(powerMusic);
 
         if (gunAnimator != null)
         {
