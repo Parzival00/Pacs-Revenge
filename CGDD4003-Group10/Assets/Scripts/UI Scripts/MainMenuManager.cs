@@ -30,6 +30,12 @@ public class MainMenuManager : MonoBehaviour
     [Header("GamePlay Settings")]
     [SerializeField] Slider MouseSensitivity;
 
+    [Header("HowTo Screens")]
+    [SerializeField] GameObject movement;
+    [SerializeField] GameObject shooting;
+    [SerializeField] GameObject enemies;
+    [SerializeField] GameObject endConditions;
+
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.None;
@@ -109,6 +115,22 @@ public class MainMenuManager : MonoBehaviour
     {
         menu.SetActive(false);
         howToPlayUI.SetActive(true);
+    }
+    public void ToMovementPage() 
+    {
+    
+    }
+    public void ToShootingPage()
+    {
+        
+    }
+    public void ToEnemiesPage()
+    {
+        
+    }
+    public void ToEndConditionsPage() 
+    {
+    
     }
 
     public void SetResolution()
