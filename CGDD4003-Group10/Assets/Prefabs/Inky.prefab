@@ -2483,6 +2483,7 @@ MonoBehaviour:
   ghostIcon: {fileID: 1800193181519757173}
   spriteController: {fileID: 8618380369410579860}
   spriteRenderer: {fileID: 6129961489518956255}
+  bloodEffect: {fileID: 7818894797380219674, guid: a8030bb0aebe4954cbed7d6cf6f1d485, type: 3}
   exitSpawnToRight: 0
   pelletsNeededToStart: 30
   speed: 4.5
@@ -2511,13 +2512,12 @@ MonoBehaviour:
   ghostCollider: {fileID: 838808124917478586}
   chaseSoundSource: {fileID: 2477394256438052116}
   farPitch: 0.92
-  farVolume: 0.246
   chaseSoundFar: {fileID: 8300000, guid: d4b61b41a92f81741bbe5608667bacea, type: 3}
   closeSoundBlendpadding: 1
   dstToBlendToCloseSound: 2.8
   closePitch: 1.25
-  closeVolume: 0.48
   blinkyTransform: {fileID: 0}
+  targetRayMultiplier: 1.5
 --- !u!1 &4970443601975460288
 GameObject:
   m_ObjectHideFlags: 0

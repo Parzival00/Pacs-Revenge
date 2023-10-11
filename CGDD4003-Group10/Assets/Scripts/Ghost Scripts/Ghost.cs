@@ -17,6 +17,7 @@ public class Ghost : MonoBehaviour
     {
         public TargetArea targetArea;
         public int pointWorth;
+        public GameObject bloodEffect;
     }
 
     public enum Mode
@@ -51,6 +52,7 @@ public class Ghost : MonoBehaviour
     [SerializeField] protected Transform ghostIcon;
     [SerializeField] protected GhostSpriteController spriteController;
     [SerializeField] protected SpriteRenderer spriteRenderer;
+    [SerializeField] protected GameObject bloodEffect;
 
     [Header("Ghost Settings")]
     [SerializeField] protected bool exitSpawnToRight;
@@ -434,6 +436,7 @@ public class Ghost : MonoBehaviour
         HitInformation hit = new HitInformation();
         hit.targetArea = GetTargetArea(type);
         hit.pointWorth = pointWorth;
+        hit.bloodEffect = bloodEffect;
 
         currentHitArea = hit.targetArea;
 
@@ -454,16 +457,6 @@ public class Ghost : MonoBehaviour
         ghostIcon.rotation = Quaternion.Euler(90, player.transform.eulerAngles.y, 0);
     }
 
-    private void OnDrawGizmos()
-    {
-        if(visualizeTargetPosition)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawCube(map.GetWorldFromGrid(targetGridPosition), Vector3.one);
-
-            Gizmos.color = Color.white;
-        }
-    }
 
     /// <summary>
     /// resets the ghost back to its spawn point. Used when player dies
@@ -498,5 +491,18 @@ public class Ghost : MonoBehaviour
         navMesh.enabled = false;
 
         chaseSoundSource.Stop();
+    }
+
+
+    //Debug Function
+    private void OnDrawGizmos()
+    {
+        if (visualizeTargetPosition)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawCube(map.GetWorldFromGrid(targetGridPosition), Vector3.one);
+
+            Gizmos.color = Color.white;
+        }
     }
 }

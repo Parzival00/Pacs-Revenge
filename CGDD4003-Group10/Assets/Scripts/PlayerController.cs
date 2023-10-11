@@ -252,6 +252,9 @@ public class PlayerController : MonoBehaviour
                     {
                         Ghost.HitInformation hitInformation = targetAreaCollider.OnShot();
                         Score.AddToScore(hitInformation.pointWorth + hitInformation.targetArea.pointsAddition);
+
+                        GameObject bloodEffect = hitInformation.bloodEffect;
+                        Instantiate(bloodEffect, hit.point + hit.normal * 0.2f, Quaternion.identity);
                     }
                 }
                 else
