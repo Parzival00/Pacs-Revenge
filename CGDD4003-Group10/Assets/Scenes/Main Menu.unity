@@ -31380,6 +31380,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1039700990719141375, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
+      propertyPath: ghostHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1039700990719141375, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
+      propertyPath: targetAreas.Array.data[0].healthValue
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1039700990719141375, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
+      propertyPath: targetAreas.Array.data[1].healthValue
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1039700990719141375, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
+      propertyPath: targetAreas.Array.data[2].healthValue
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1039700990719141375, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
+      propertyPath: targetAreas.Array.data[3].healthValue
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1039700990719141375, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
+      propertyPath: targetAreas.Array.data[4].healthValue
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 1197959491703249952, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
       propertyPath: m_Name
       value: Clyde
@@ -64300,6 +64324,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+      propertyPath: ghostHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+      propertyPath: targetAreas.Array.data[0].healthValue
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+      propertyPath: targetAreas.Array.data[1].healthValue
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+      propertyPath: targetAreas.Array.data[2].healthValue
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+      propertyPath: targetAreas.Array.data[3].healthValue
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+      propertyPath: targetAreas.Array.data[4].healthValue
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 2569170336096267845, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.195625
@@ -72073,6 +72121,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 882876221}
     - target: {fileID: 4775153053850207514, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
+      propertyPath: ghostHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4775153053850207514, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
       propertyPath: respawnPoint
       value: 
       objectReference: {fileID: 1066572706}
@@ -72080,6 +72132,26 @@ PrefabInstance:
       propertyPath: scatterTarget
       value: 
       objectReference: {fileID: 1522790539}
+    - target: {fileID: 4775153053850207514, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
+      propertyPath: targetAreas.Array.data[0].healthValue
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4775153053850207514, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
+      propertyPath: targetAreas.Array.data[1].healthValue
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 4775153053850207514, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
+      propertyPath: targetAreas.Array.data[2].healthValue
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4775153053850207514, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
+      propertyPath: targetAreas.Array.data[3].healthValue
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4775153053850207514, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
+      propertyPath: targetAreas.Array.data[4].healthValue
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 5444096091577913357, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.31
@@ -91922,6 +91994,26 @@ PrefabInstance:
       propertyPath: spriteRenderer
       value: 
       objectReference: {fileID: 372988256}
+    - target: {fileID: 4249806782968608032, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
+      propertyPath: ghostHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4249806782968608032, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
+      propertyPath: targetAreas.Array.data[0].healthValue
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4249806782968608032, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
+      propertyPath: targetAreas.Array.data[1].healthValue
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4249806782968608032, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
+      propertyPath: targetAreas.Array.data[2].healthValue
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4249806782968608032, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
+      propertyPath: targetAreas.Array.data[3].healthValue
+      value: 35
+      objectReference: {fileID: 0}
     - target: {fileID: 4401153907863694576, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
       propertyPath: m_Enabled
       value: 1

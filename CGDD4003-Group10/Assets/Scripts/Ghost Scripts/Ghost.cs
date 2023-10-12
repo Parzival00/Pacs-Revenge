@@ -11,6 +11,7 @@ public class Ghost : MonoBehaviour
         public float respawnTimeAddition;
         public int pointsAddition;
         public TargetAreaType type;
+        public float healthValue;
     }
 
     public struct HitInformation
@@ -62,6 +63,7 @@ public class Ghost : MonoBehaviour
     [SerializeField] protected float respawnWaitTime = 5f;
     [SerializeField] protected int pointWorth = 20;
     [SerializeField] protected TargetArea[] targetAreas;
+    [SerializeField] protected float ghostHealth;
 
     [Header("Transform Targets")]
     [SerializeField] protected Transform player;
@@ -444,7 +446,7 @@ public class Ghost : MonoBehaviour
     /// </summary>
     public virtual HitInformation GotHit(TargetAreaType type)
     {
-        currentMode = Mode.Respawn;
+        
 
         HitInformation hit = new HitInformation();
         hit.targetArea = GetTargetArea(type);
@@ -452,6 +454,17 @@ public class Ghost : MonoBehaviour
         hit.bloodEffect = bloodEffect;
 
         currentHitArea = hit.targetArea;
+
+        //damage the ghost
+        ghostHealth -= currentHitArea.healthValue;
+        print("subtracted: " + currentHitArea.healthValue + " health: " + ghostHealth);
+        
+        if(ghostHealth <= 0)
+        {
+            print("respawning");
+            ghostHealth = 100;
+            currentMode = Mode.Respawn;
+        }
 
         return hit;
     }

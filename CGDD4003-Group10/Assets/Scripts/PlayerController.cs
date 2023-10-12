@@ -506,6 +506,8 @@ public class PlayerController : MonoBehaviour
 
         canMove = false;
         character.enabled = false;
+        canFire = false;
+        DeactivateGun();
 
         //Freeze all of the ghosts' movements
         foreach (Ghost g in ghosts)

@@ -17,7 +17,7 @@ public class TargetAreaCollider : MonoBehaviour
 
     public Ghost.HitInformation OnShot()
     {
-        ghost.GotHit(targetAreaType);
+        //ghost.GotHit(targetAreaType);
         return ghost.GotHit(targetAreaType);
     }
 
