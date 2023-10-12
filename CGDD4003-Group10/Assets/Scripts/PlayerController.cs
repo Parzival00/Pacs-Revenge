@@ -487,7 +487,7 @@ public class PlayerController : MonoBehaviour
         {
             Ghost ghost = other.gameObject.transform.root.GetComponent<Ghost>();
 
-            if (ghost.CurrentMode == Ghost.Mode.Chase)
+            if (ghost.CurrentMode == Ghost.Mode.Chase || ghost.CurrentMode == Ghost.Mode.Scatter)
             {
                 print("hit by " + other.gameObject.name);
 
