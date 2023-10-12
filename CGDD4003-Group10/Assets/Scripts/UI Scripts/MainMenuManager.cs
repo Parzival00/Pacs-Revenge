@@ -118,19 +118,25 @@ public class MainMenuManager : MonoBehaviour
     }
     public void ToMovementPage() 
     {
-    
+        shooting.SetActive(false);
+        movement.SetActive(true);
     }
     public void ToShootingPage()
     {
-        
+        movement.SetActive(false);
+        shooting.SetActive(true);
+        enemies.SetActive(false);
     }
     public void ToEnemiesPage()
     {
-        
+        shooting.SetActive(false);
+        enemies.SetActive(true);
+        endConditions.SetActive(false);
     }
     public void ToEndConditionsPage() 
     {
-    
+        enemies.SetActive(false);
+        endConditions.SetActive(true);
     }
 
     public void SetResolution()
