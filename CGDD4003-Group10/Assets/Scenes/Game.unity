@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44480163, g: 0.4943503, b: 0.5735447, a: 1}
+  m_IndirectSpecularColor: {r: 0.44480178, g: 0.4943508, b: 0.5735456, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9817,6 +9817,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 54225875}
     - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+      propertyPath: ghostHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
       propertyPath: respawnPoint
       value: 
       objectReference: {fileID: 1622232903}
@@ -9828,6 +9832,30 @@ PrefabInstance:
       propertyPath: blinkyTransform
       value: 
       objectReference: {fileID: 966250933}
+    - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+      propertyPath: pelletsNeededToStart
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+      propertyPath: targetAreas.Array.data[0].healthValue
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+      propertyPath: targetAreas.Array.data[1].healthValue
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+      propertyPath: targetAreas.Array.data[2].healthValue
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+      propertyPath: targetAreas.Array.data[3].healthValue
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+      propertyPath: targetAreas.Array.data[4].healthValue
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 2569170336096267845, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.195625
@@ -71194,6 +71222,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 54225875}
     - target: {fileID: 1039700990719141375, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
+      propertyPath: ghostHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1039700990719141375, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
       propertyPath: respawnPoint
       value: 
       objectReference: {fileID: 1663082612}
@@ -71207,7 +71239,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1039700990719141375, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
       propertyPath: pelletsNeededToStart
-      value: 50
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 1039700990719141375, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
+      propertyPath: targetAreas.Array.data[0].healthValue
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1039700990719141375, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
+      propertyPath: targetAreas.Array.data[1].healthValue
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1039700990719141375, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
+      propertyPath: targetAreas.Array.data[2].healthValue
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1039700990719141375, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
+      propertyPath: targetAreas.Array.data[3].healthValue
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1039700990719141375, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
+      propertyPath: targetAreas.Array.data[4].healthValue
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1197959491703249952, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
       propertyPath: m_Name
@@ -77063,6 +77115,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 3c5c6adc90168eb419c691da63ee8549, type: 3}
     - target: {fileID: 4775153053850207514, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
+      propertyPath: ghostHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4775153053850207514, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
       propertyPath: respawnPoint
       value: 
       objectReference: {fileID: 1277491245}
@@ -77070,6 +77126,26 @@ PrefabInstance:
       propertyPath: scatterTarget
       value: 
       objectReference: {fileID: 387163514}
+    - target: {fileID: 4775153053850207514, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
+      propertyPath: targetAreas.Array.data[0].healthValue
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4775153053850207514, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
+      propertyPath: targetAreas.Array.data[1].healthValue
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 4775153053850207514, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
+      propertyPath: targetAreas.Array.data[2].healthValue
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4775153053850207514, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
+      propertyPath: targetAreas.Array.data[3].healthValue
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4775153053850207514, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
+      propertyPath: targetAreas.Array.data[4].healthValue
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 4945457926611040500, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -89183,6 +89259,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 54225875}
     - target: {fileID: 4249806782968608032, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
+      propertyPath: ghostHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4249806782968608032, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
       propertyPath: respawnPoint
       value: 
       objectReference: {fileID: 271761268}
@@ -89197,6 +89277,22 @@ PrefabInstance:
     - target: {fileID: 4249806782968608032, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
       propertyPath: visualizeTargetPosition
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4249806782968608032, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
+      propertyPath: targetAreas.Array.data[0].healthValue
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4249806782968608032, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
+      propertyPath: targetAreas.Array.data[1].healthValue
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4249806782968608032, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
+      propertyPath: targetAreas.Array.data[2].healthValue
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4249806782968608032, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
+      propertyPath: targetAreas.Array.data[3].healthValue
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 4401153907863694576, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
       propertyPath: m_Enabled
