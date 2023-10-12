@@ -65,6 +65,8 @@ public class GhostSpriteController : MonoBehaviour
     [SerializeField] [Range(-180f, 180f)] float northwestMaxThreshold = 67.5f;
     [SerializeField] [Range(-180f, 180f)] float northwestMinThreshold = 22.5f;
 
+    bool respawning;
+
     private void Start()
     {
         if (mainTransform == null)
@@ -95,69 +97,72 @@ public class GhostSpriteController : MonoBehaviour
         Vector3 dirToPlayer = (new Vector3(player.position.x, 0, player.position.z) - new Vector3(mainTransform.position.x, 0, mainTransform.position.z)).normalized; //to - from
         float angleBtwPlayer = Vector3.SignedAngle(forward, dirToPlayer, mainTransform.up);
 
-        if(angleBtwPlayer < northMaxThreshold - thresholdPadding && angleBtwPlayer > northMinThreshold + thresholdPadding)
+        if (!respawning)
         {
-            animator.runtimeAnimatorController = north;
-            orientation = Orientation.North;
+            if (angleBtwPlayer < northMaxThreshold - thresholdPadding && angleBtwPlayer > northMinThreshold + thresholdPadding)
+            {
+                animator.runtimeAnimatorController = north;
+                orientation = Orientation.North;
 
-            if (collidersActive)
-                northColliders.SetActive(true);
-        }
-        else if (angleBtwPlayer < northeastMaxThreshold - thresholdPadding && angleBtwPlayer > northeastMinThreshold + thresholdPadding)
-        {
-            animator.runtimeAnimatorController = northeast;
-            orientation = Orientation.Northeast;
+                if (collidersActive)
+                    northColliders.SetActive(true);
+            }
+            else if (angleBtwPlayer < northeastMaxThreshold - thresholdPadding && angleBtwPlayer > northeastMinThreshold + thresholdPadding)
+            {
+                animator.runtimeAnimatorController = northeast;
+                orientation = Orientation.Northeast;
 
-            if (collidersActive)
-                northeastColliders.SetActive(true);
-        }
-        else if (angleBtwPlayer < eastMaxThreshold - thresholdPadding && angleBtwPlayer > eastMinThreshold + thresholdPadding)
-        {
-            animator.runtimeAnimatorController = east;
-            orientation = Orientation.East;
+                if (collidersActive)
+                    northeastColliders.SetActive(true);
+            }
+            else if (angleBtwPlayer < eastMaxThreshold - thresholdPadding && angleBtwPlayer > eastMinThreshold + thresholdPadding)
+            {
+                animator.runtimeAnimatorController = east;
+                orientation = Orientation.East;
 
-            if (collidersActive)
-                eastColliders.SetActive(true);
-        }
-        else if (angleBtwPlayer < southeastMaxThreshold - thresholdPadding && angleBtwPlayer > southeastMinThreshold + thresholdPadding)
-        {
-            animator.runtimeAnimatorController = southeast;
-            orientation = Orientation.Southeast;
+                if (collidersActive)
+                    eastColliders.SetActive(true);
+            }
+            else if (angleBtwPlayer < southeastMaxThreshold - thresholdPadding && angleBtwPlayer > southeastMinThreshold + thresholdPadding)
+            {
+                animator.runtimeAnimatorController = southeast;
+                orientation = Orientation.Southeast;
 
-            if (collidersActive)
-                southeastColliders.SetActive(true);
-        }
-        else if (angleBtwPlayer < southMaxThreshold - thresholdPadding || angleBtwPlayer > southMinThreshold + thresholdPadding) //Special case
-        {
-            animator.runtimeAnimatorController = south;
-            orientation = Orientation.South;
+                if (collidersActive)
+                    southeastColliders.SetActive(true);
+            }
+            else if (angleBtwPlayer < southMaxThreshold - thresholdPadding || angleBtwPlayer > southMinThreshold + thresholdPadding) //Special case
+            {
+                animator.runtimeAnimatorController = south;
+                orientation = Orientation.South;
 
-            if (collidersActive)
-                southColliders.SetActive(true);
-        }
-        else if (angleBtwPlayer < southwestMaxThreshold - thresholdPadding && angleBtwPlayer > southwestMinThreshold + thresholdPadding)
-        {
-            animator.runtimeAnimatorController = southwest;
-            orientation = Orientation.Southwest;
+                if (collidersActive)
+                    southColliders.SetActive(true);
+            }
+            else if (angleBtwPlayer < southwestMaxThreshold - thresholdPadding && angleBtwPlayer > southwestMinThreshold + thresholdPadding)
+            {
+                animator.runtimeAnimatorController = southwest;
+                orientation = Orientation.Southwest;
 
-            if (collidersActive)
-                southwestColliders.SetActive(true);
-        }
-        else if (angleBtwPlayer < westMaxThreshold - thresholdPadding && angleBtwPlayer > westMinThreshold + thresholdPadding)
-        {
-            animator.runtimeAnimatorController = west;
-            orientation = Orientation.West;
+                if (collidersActive)
+                    southwestColliders.SetActive(true);
+            }
+            else if (angleBtwPlayer < westMaxThreshold - thresholdPadding && angleBtwPlayer > westMinThreshold + thresholdPadding)
+            {
+                animator.runtimeAnimatorController = west;
+                orientation = Orientation.West;
 
-            if (collidersActive)
-                westColliders.SetActive(true);
-        }
-        else if (angleBtwPlayer < northwestMaxThreshold - thresholdPadding && angleBtwPlayer > northwestMinThreshold + thresholdPadding)
-        {
-            animator.runtimeAnimatorController = northwest;
-            orientation = Orientation.Northwest;
+                if (collidersActive)
+                    westColliders.SetActive(true);
+            }
+            else if (angleBtwPlayer < northwestMaxThreshold - thresholdPadding && angleBtwPlayer > northwestMinThreshold + thresholdPadding)
+            {
+                animator.runtimeAnimatorController = northwest;
+                orientation = Orientation.Northwest;
 
-            if (collidersActive)
-                northwestColliders.SetActive(true);
+                if (collidersActive)
+                    northwestColliders.SetActive(true);
+            }
         }
 
         spriteTransform.transform.LookAt(new Vector3(player.position.x, mainTransform.position.y, player.position.z));
@@ -166,7 +171,10 @@ public class GhostSpriteController : MonoBehaviour
     public void StartDeathAnimation()
     {
         animator.SetTrigger("Death");
-        animator.ResetTrigger("Reform");
+
+        animator.SetBool("Respawning", true);
+
+        respawning = true;
     }
 
     public void StartMovingCorpse()
@@ -181,8 +189,32 @@ public class GhostSpriteController : MonoBehaviour
 
     public void StartReformAnimation()
     {
+        StopMovingCorpse();
         animator.SetTrigger("Reform");
+    }
+
+    public void EndRespawning()
+    {
+        animator.SetBool("Respawning", false);
+        respawning = false;
+
         animator.ResetTrigger("Death");
+        animator.ResetTrigger("Reform");
+        animator.SetBool("TurnWest", false);
+        animator.SetBool("TurnEast", false);
+        animator.SetBool("MoveCorpse", false);
+    }
+
+    public void ResetParameters()
+    {
+        animator.ResetTrigger("Death");
+        animator.ResetTrigger("Reform");
+        animator.SetBool("MoveCorpse", false);
+        animator.SetBool("TurnWest", false);
+        animator.SetBool("TurnEast", false);
+        animator.SetBool("Respawning", false);
+
+        animator.SetTrigger("Reset");
     }
 
     public void ActivateColliders()
@@ -193,5 +225,11 @@ public class GhostSpriteController : MonoBehaviour
     public void DeactivateColliders()
     {
         collidersActive = false;
+    }
+
+    //Debug Function
+    public void PrintParameters()
+    {
+        print("MoveCorpse: " + animator.GetBool("MoveCorpse"));
     }
 }

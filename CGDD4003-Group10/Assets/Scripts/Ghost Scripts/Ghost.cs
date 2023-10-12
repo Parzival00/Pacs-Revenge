@@ -53,6 +53,7 @@ public class Ghost : MonoBehaviour
     [SerializeField] protected GhostSpriteController spriteController;
     [SerializeField] protected SpriteRenderer spriteRenderer;
     [SerializeField] protected GameObject bloodEffect;
+    [SerializeField] protected GameObject corpse;
 
     [Header("Ghost Settings")]
     [SerializeField] protected bool exitSpawnToRight;
@@ -357,7 +358,7 @@ public class Ghost : MonoBehaviour
 
     protected virtual IEnumerator RespawnSequence()
     {
-        spriteRenderer.color = Color.black;
+        //spriteRenderer.color = Color.black;
 
         chaseSoundSource.Stop();
 
@@ -367,9 +368,16 @@ public class Ghost : MonoBehaviour
         navMesh.ResetPath();
         startedRespawnSequence = true;
 
-        WaitForSeconds deathWait = new WaitForSeconds(3f);
+        spriteController.StartDeathAnimation();
+
+        WaitForSeconds deathWait = new WaitForSeconds(1f);
 
         yield return deathWait;
+
+        if (corpse != null)
+            Instantiate(corpse, transform.position, transform.rotation);
+
+        spriteController.StartMovingCorpse();
 
         Vector2Int respawnPointGridPos = map.GetGridLocation(respawnPoint.position);
         navMesh.SetDestination(map.GetWorldFromGrid(respawnPointGridPos));
@@ -378,18 +386,23 @@ public class Ghost : MonoBehaviour
 
         WaitUntil arrivedAtRespawnPoint = new WaitUntil(() => navMesh.remainingDistance <= 0.1f);
 
-        yield return new WaitUntil(() => navMesh.remainingDistance <= 0.1f);
+        yield return arrivedAtRespawnPoint;
+        
+
+        spriteController.StartReformAnimation();
 
         WaitForSeconds respawnWait = new WaitForSeconds(respawnWaitTime + currentHitArea.respawnTimeAddition);
 
         yield return respawnWait;
+
+        spriteController.EndRespawning();
 
         //Reset variables
         startedRespawnSequence = false;
 
         print("Respawned: " + name);
 
-        spriteRenderer.color = Color.white;
+        //spriteRenderer.color = Color.white;
 
         if(spriteController)
             spriteController.ActivateColliders();
@@ -481,6 +494,8 @@ public class Ghost : MonoBehaviour
         yield return wait;
 
         navMesh.enabled = true;
+
+        //spriteController.ResetParameters();
 
         currentMode = Mode.Dormant;
     }
