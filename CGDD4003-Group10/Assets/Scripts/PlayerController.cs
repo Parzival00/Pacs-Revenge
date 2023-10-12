@@ -148,6 +148,7 @@ public class PlayerController : MonoBehaviour
         {
             ApplyGameSettings();
         }
+        else AudioListener.volume = 50;
 
         canMove = true;
         canFire = true;
