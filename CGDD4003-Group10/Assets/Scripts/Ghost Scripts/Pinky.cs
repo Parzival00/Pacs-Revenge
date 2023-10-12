@@ -31,7 +31,7 @@ public class Pinky : Ghost
         
         targetGridPosition = map.CheckEdgePositions(this.transform.position, pinkyGridTarget);
 
-        Move();
+        Move(false);
 
         lastTargetGridPosition = targetGridPosition;
 

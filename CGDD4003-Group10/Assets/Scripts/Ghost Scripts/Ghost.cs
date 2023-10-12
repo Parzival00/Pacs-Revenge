@@ -172,7 +172,7 @@ public class Ghost : MonoBehaviour
 
         targetGridPosition = playerGridPosition;
 
-        Move();
+        Move(false);
 
         lastTargetGridPosition = targetGridPosition;
         PlayChaseSound();
@@ -224,7 +224,7 @@ public class Ghost : MonoBehaviour
 
         targetGridPosition = scatterTargetGridPos;
 
-        Move();
+        Move(false);
 
         lastTargetGridPosition = targetGridPosition;
 
@@ -236,11 +236,13 @@ public class Ghost : MonoBehaviour
     }
 
     /// <summary>
-    /// Moves the Ghost towards the target location following all the rules of Pac-Man's ghosts
+    /// Moves the Ghost towards the target location following all the rules of Pac-Man's ghosts. Takes in whether or not the ghost can turn around and returns whether the ghost did turn around
     /// </summary>
-    protected void Move()
+    protected bool Move(bool canTurnAround)
     {
         navMesh.enabled = true;
+
+        bool turnedAround = false;
 
         if (currentGridPosition != lastGridPosition || navMesh.remainingDistance < 0.1f)
         {
@@ -254,10 +256,10 @@ public class Ghost : MonoBehaviour
             Vector2Int desiredNextGridPosition = currentGridPosition;
             Vector2Int desiredNextDirection = currentDirection;
 
-            if(angleToUp >= -0.1f && map.SampleGrid(currentGridPosition + Vector2Int.up) == Map.GridType.Air)
+            if((canTurnAround || angleToUp >= -0.1f) && map.SampleGrid(currentGridPosition + Vector2Int.up) == Map.GridType.Air)
             {
                 Vector2Int nextGridPosUp = currentGridPosition + Vector2Int.up;
-                float distanceToUp = Vector2Int.Distance(currentGridPosition, targetGridPosition);
+                float distanceToUp = Vector2Int.Distance(nextGridPosUp, targetGridPosition);
                 if(distanceToUp < distToTargetFromNext)
                 {
                     distToTargetFromNext = distanceToUp;
@@ -266,7 +268,7 @@ public class Ghost : MonoBehaviour
                 }
             }
 
-            if (angleToDown >= -0.1f && map.SampleGrid(currentGridPosition + Vector2Int.down) == Map.GridType.Air)
+            if ((canTurnAround || angleToDown >= -0.1f) && map.SampleGrid(currentGridPosition + Vector2Int.down) == Map.GridType.Air)
             {
                 Vector2Int nextGridPosDown = currentGridPosition + Vector2Int.down;
                 float distanceToDown = Vector2Int.Distance(nextGridPosDown, targetGridPosition);
@@ -278,7 +280,7 @@ public class Ghost : MonoBehaviour
                 }
             }
 
-            if (angleToLeft >= -0.1f && map.SampleGrid(currentGridPosition + Vector2Int.left) == Map.GridType.Air)
+            if ((canTurnAround || angleToLeft >= -0.1f) && map.SampleGrid(currentGridPosition + Vector2Int.left) == Map.GridType.Air)
             {
                 Vector2Int nextGridPosLeft = currentGridPosition + Vector2Int.left;
                 float distanceToLeft = Vector2Int.Distance(nextGridPosLeft, targetGridPosition);
@@ -290,7 +292,7 @@ public class Ghost : MonoBehaviour
                 }
             }
 
-            if (angleToRight >= -0.1f && map.SampleGrid(currentGridPosition + Vector2Int.right) == Map.GridType.Air)
+            if ((canTurnAround || angleToRight >= -0.1f) && map.SampleGrid(currentGridPosition + Vector2Int.right) == Map.GridType.Air)
             {
                 Vector2Int nextGridPosRight = currentGridPosition + Vector2Int.right;
                 float distanceToRight = Vector2Int.Distance(nextGridPosRight, targetGridPosition);
@@ -302,10 +304,13 @@ public class Ghost : MonoBehaviour
             }
 
             nextGridPosition = desiredNextGridPosition;
+            turnedAround = Vector2.Dot(currentDirection, desiredNextDirection) < -0.1f;
             currentDirection = desiredNextDirection;
         }
 
         navMesh.SetDestination(map.GetWorldFromGrid(nextGridPosition));
+
+        return turnedAround;
     }
 
     //Mode at the games start to keep ghost unactive until the required pellets are collected
@@ -318,31 +323,47 @@ public class Ghost : MonoBehaviour
     //Mode for exiting the spawn location
     protected virtual void Exiting()
     {
+        if(!startedExiting)
+            StartCoroutine(ExitingSequence());
+    }
+
+    bool startedExiting;
+    protected virtual IEnumerator ExitingSequence()
+    {
+        startedExiting = true;
+
         Vector2Int spawnExitGridPosition = map.GetGridLocation(spawnExit.position);
         navMesh.SetDestination(map.GetWorldFromGrid(spawnExitGridPosition));
 
-        if(Vector2Int.Distance(spawnExitGridPosition, currentGridPosition) < 0.05f)
+        yield return null;
+
+        WaitUntil arrivedAtExitPoint = new WaitUntil(() => navMesh.remainingDistance <= 0.1f);
+
+        yield return arrivedAtExitPoint;
+
+        if (PlayerController.gunActivated)
         {
-            if (PlayerController.gunActivated)
+            currentMode = Mode.Scatter;
+            currentDirection = -currentDirection;
+            nextGridPosition = map.GetNextGridPosition(currentGridPosition, currentDirection, true, true);
+        }
+        else
+        {
+            currentMode = Mode.Chase;
+
+            if (exitSpawnToRight)
             {
-                InitiateScatter();
+                currentDirection = Vector2Int.right;
+                nextGridPosition = spawnExitGridPosition + Vector2Int.right;
             }
             else
             {
-                currentMode = Mode.Chase;
-
-                if (exitSpawnToRight)
-                {
-                    currentDirection = Vector2Int.right;
-                    nextGridPosition = spawnExitGridPosition + Vector2Int.right;
-                }
-                else
-                {
-                    currentDirection = Vector2Int.left;
-                    nextGridPosition = spawnExitGridPosition + Vector2Int.left;
-                }
+                currentDirection = Vector2Int.left;
+                nextGridPosition = spawnExitGridPosition + Vector2Int.left;
             }
         }
+
+        startedExiting = false;
     }
 
     bool startedRespawnSequence = false; //Used in the Respawn mode to check whether the respawn sequence has started

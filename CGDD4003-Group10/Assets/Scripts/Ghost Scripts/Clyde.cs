@@ -25,7 +25,7 @@ public class Clyde : Ghost
         targetGridPosition = map.CheckEdgePositions(transform.position, newTargetPosition);
         
 
-        Move();
+        Move(false);
 
         lastTargetGridPosition = targetGridPosition;
 

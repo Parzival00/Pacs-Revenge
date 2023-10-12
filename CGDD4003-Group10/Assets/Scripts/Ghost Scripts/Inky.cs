@@ -26,7 +26,7 @@ public class Inky : Ghost
 
         targetGridPosition = map.CheckEdgePositions(transform.position, newTargetGridPosition);// + rand;
 
-        Move();
+        Move(false);
 
         lastTargetGridPosition = targetGridPosition;
 
