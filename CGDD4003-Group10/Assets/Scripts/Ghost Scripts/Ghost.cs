@@ -415,7 +415,7 @@ public class Ghost : MonoBehaviour
 
     public virtual void InitiateScatter()
     {
-        if (currentMode != Mode.Dormant)
+        if (currentMode == Mode.Chase)
         {
             currentMode = Mode.Scatter;
             currentDirection = -currentDirection;

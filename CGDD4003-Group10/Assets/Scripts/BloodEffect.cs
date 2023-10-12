@@ -36,7 +36,7 @@ public class BloodEffect : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         rb.useGravity = false;
-        spriteRenderer.sprite = bloodStage3;
+        //spriteRenderer.sprite = bloodStage3;
         Destroy(gameObject, lifeTime);
     }
 }
