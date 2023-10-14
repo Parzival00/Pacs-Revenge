@@ -563,7 +563,7 @@ public class PlayerController : MonoBehaviour
 
             character.enabled = true;
             canMove = true;
-
+            canFire = true;
             inDeathSequence = false;
 
             LivesText.text = "Lives: " + playerLives;
