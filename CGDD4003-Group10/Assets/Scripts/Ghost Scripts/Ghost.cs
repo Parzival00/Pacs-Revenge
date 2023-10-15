@@ -42,6 +42,7 @@ public class Ghost : MonoBehaviour
     }
 
     protected Mode currentMode;
+    protected Mode previousMode;
     public Mode CurrentMode { get => currentMode; }
 
     [Header("Debug Settings")]
@@ -61,6 +62,8 @@ public class Ghost : MonoBehaviour
     [SerializeField] protected int pelletsNeededToStart = 10;
     [SerializeField] protected float speed = 2f;
     [SerializeField] protected float respawnWaitTime = 5f;
+    [SerializeField] protected float freezeTime;
+    protected float freezeTimer;
     [SerializeField] protected int pointWorth = 20;
     [SerializeField] protected TargetArea[] targetAreas;
     [SerializeField] protected float ghostHealth;
@@ -162,6 +165,9 @@ public class Ghost : MonoBehaviour
                 break;
             case Mode.Respawn:
                 Respawn();
+                break;
+            case Mode.Freeze:
+                Freeze();
                 break;
             default:
                 break;
@@ -563,13 +569,50 @@ public class Ghost : MonoBehaviour
 
     public void FreezeGhost()
     {
+        freezeTimer = freezeTime;
+        previousMode = currentMode;
         currentMode = Mode.Freeze;
         navMesh.enabled = false;
-
         chaseSoundSource.Stop();
     }
-
-
+    /// <summary>
+    /// Takes the previous mode of the ghost and switches it from freeze back to the previous mode
+    /// </summary>
+    /// <param name="p">Previous mode</param>
+    public void UnFreezeGhost()
+    {
+        navMesh.enabled = true;
+        chaseSoundSource.Play();
+        currentMode = previousMode;
+        freezeTimer = freezeTime;
+    }
+    void Freeze()
+    {
+        if (FreezeCoroutine != null)
+        {
+            StopCoroutine(FreezeCoroutine);
+        }
+        FreezeCoroutine = StartCoroutine(FreezeC());
+    }
+    Coroutine FreezeCoroutine;
+    IEnumerator FreezeC()
+    {
+        while (freezeTimer >= 0)
+        {
+            freezeTimer -= Time.deltaTime;
+            yield return null;
+        }
+        UnFreezeGhost();
+    }
+    public void OnTriggerEnter(Collider c)
+    {
+        if(c.gameObject.tag == "Stun")
+        {
+            Destroy(c.gameObject);
+            FreezeGhost();
+            
+        }
+    }
     //Debug Function
     private void OnDrawGizmos()
     {

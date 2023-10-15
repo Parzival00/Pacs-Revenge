@@ -12,6 +12,7 @@ public class Score : MonoBehaviour
     [SerializeField] TMP_Text scoreUI;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip pelletSound;
+    [SerializeField] int pelletsPerAmmo;
     //[SerializeField] GameObject cherryObject;
     //[SerializeField] int cherrySpawn1, cherrySpawn2;
 
@@ -59,6 +60,11 @@ public class Score : MonoBehaviour
             if (pelletsCollected >= totalPellets)
             {
                 SceneManager.LoadScene(2);
+            }
+            else if (pelletsCollected % pelletsPerAmmo == 0)
+            {
+                PlayerController pc = this.gameObject.GetComponent<PlayerController>();
+                pc.addAmmo();
             }
             /*else if (pelletsCollected == cherrySpawn1 || pelletsCollected == cherrySpawn2)
             {

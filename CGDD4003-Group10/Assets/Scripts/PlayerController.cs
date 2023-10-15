@@ -5,6 +5,7 @@ using UnityEngine.TextCore.Text;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using TMPro;
 //using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerController : MonoBehaviour
@@ -36,10 +37,11 @@ public class PlayerController : MonoBehaviour
 
     [Header("Weapon Audio")]
     [SerializeField] AudioClip gunshot;
+    [SerializeField] AudioClip stunShotSound;
     [SerializeField] AudioClip overheat;
     [SerializeField] AudioSource weaponSound;
 
-    [Header("Weapon Settings")]
+    [Header("Railgun Settings")]
     [SerializeField] RailgunVFXController railGunVFX;
     [SerializeField] Animator gunAnimator;
     [SerializeField] float chargeTime;
@@ -48,11 +50,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float cooldownSpeed = 1;
     [SerializeField] float dechargeTime = .25f;
     [SerializeField] float gunTimeAmount = 5f;
-    [SerializeField] Transform bulletOrigin;
     [SerializeField] Camera fpsCam;
     [SerializeField] WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
     [SerializeField] float weaponRange;
     [SerializeField] LayerMask targetingMask;
+
+    [Header("Stun-Gun Settings")]
+    [SerializeField] float fireRate;
+    [SerializeField] Transform bulletOrigin;
+    [SerializeField] GameObject stunGun;
+    [SerializeField] int ammoCount;
+    //The amount of pellets per ammo is set in the score script
+    private float stunFireTimer;
 
     private LineRenderer laserLine;
     private float weaponCharge;
@@ -75,6 +84,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject hud;
     [SerializeField] Image fadeImage;
     [SerializeField] Text LivesText;
+    [SerializeField] TMP_Text ammoText;
 
     Ghost[] ghosts;
 
@@ -167,9 +177,13 @@ public class PlayerController : MonoBehaviour
 
         if (gunActivated)
         {
-            Fire();
+            railgunFire();
             OutlineTargetEnemy();
             CheckWeaponTemp();
+        }
+        else
+        {
+            stungunFire();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)) 
@@ -226,7 +240,7 @@ public class PlayerController : MonoBehaviour
     /// When the left mouse button is pressed this generates a raycast to where the player was aiming.
     /// A sound effect is played and the raytrace is rendered
     /// </summary>
-    void Fire()
+    void railgunFire()
     {
         if (canFire == false)
             return;
@@ -355,6 +369,34 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    #region Stun-Gun Functionality
+    /// <summary>
+    /// Handles the firing of the stungun, spawning the projectile and initializing it's motion.
+    /// </summary>
+    void stungunFire()
+    {
+        if(stunFireTimer <= 0 && Input.GetMouseButtonDown(0) && ammoCount > 0)
+        {
+            Projectile stunShot = Instantiate(Resources.Load<Projectile>("StunShot"), bulletOrigin, false);
+            stunShot.transform.localEulerAngles = Vector3.up * -cameraPitch;
+            stunShot.transform.localPosition += Vector3.forward * 1.5f;
+            stunShot.transform.parent = null;
+            stunFireTimer = fireRate;
+            weaponSound.PlayOneShot(stunShotSound);
+            ammoCount--;
+            ammoText.text = "Ammo: " + ammoCount;
+        }
+        else if (stunFireTimer > 0)
+        {
+            stunFireTimer -= Time.deltaTime;
+        }
+    }
+    public void addAmmo()
+    {
+        ammoCount++;
+        ammoText.text = "Ammo: " + ammoCount;
+    }
+    #endregion
     /// <summary>
     /// Activates the corresponding outline for targeted area
     /// </summary>
@@ -450,6 +492,8 @@ public class PlayerController : MonoBehaviour
         gunActivated = false;
         gun.SetActive(false);
         hud.SetActive(false);
+        //Activates Stun-Gun again
+        stunGun.SetActive(true);
 
         if (gunTimerCoroutine != null)
         {

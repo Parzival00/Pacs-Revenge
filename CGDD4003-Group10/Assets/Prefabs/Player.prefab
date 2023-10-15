@@ -5777,7 +5777,6 @@ Transform:
   - {fileID: 8812064379245579278}
   - {fileID: 5633464352253858163}
   - {fileID: 6047616742139084682}
-  - {fileID: 3381070145667223872}
   - {fileID: 8202568028837257124}
   m_Father: {fileID: 5802968209847089425}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6987,6 +6986,7 @@ MonoBehaviour:
   paused: 0
   sensitivity: 4
   gunshot: {fileID: 8300000, guid: 7d12aadad7324e54cb0527a4aa37974c, type: 3}
+  stunShotSound: {fileID: 0}
   overheat: {fileID: 8300000, guid: d7b88653a125e3f448e614ee531e815d, type: 3}
   weaponSound: {fileID: 4648173346818715503}
   railGunVFX: {fileID: 4507674535604613185}
@@ -6997,16 +6997,20 @@ MonoBehaviour:
   cooldownSpeed: 1
   dechargeTime: 0.25
   gunTimeAmount: 31
-  bulletOrigin: {fileID: 3381070145667223872}
   fpsCam: {fileID: 7004879224189848639}
   weaponRange: 50
   targetingMask:
     serializedVersion: 2
     m_Bits: 256
+  fireRate: 2
+  bulletOrigin: {fileID: 4904277085903038529}
+  stunGun: {fileID: 6704805296735850020}
+  ammoCount: 0
   gun: {fileID: 6266200704116831796}
   hud: {fileID: 0}
   fadeImage: {fileID: 0}
   LivesText: {fileID: 0}
+  ammoText: {fileID: 0}
   deathSequenceLength: 3
   playerLives: 3
   animator: {fileID: 6954913835686620882}
@@ -7031,6 +7035,7 @@ MonoBehaviour:
   scoreUI: {fileID: 0}
   audioSource: {fileID: 7337700370802506642}
   pelletSound: {fileID: 8300000, guid: 9712f941024d00b41a68bda490f240cc, type: 3}
+  pelletsPerAmmo: 4
 --- !u!114 &6717606324952877450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7422,37 +7427,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &6406911599230392056
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3381070145667223872}
-  m_Layer: 0
-  m_Name: Origin
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3381070145667223872
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6406911599230392056}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.081, y: 0.101, z: 1.158}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3250980994337835122}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6633127615583808094
 GameObject:
   m_ObjectHideFlags: 0
@@ -7556,7 +7530,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &547570625388888621
 Transform:
   m_ObjectHideFlags: 0
