@@ -213,6 +213,7 @@ public class GhostSpriteController : MonoBehaviour
         animator.SetBool("TurnWest", false);
         animator.SetBool("TurnEast", false);
         animator.SetBool("Respawning", false);
+        respawning = false;
 
         animator.SetTrigger("Reset");
     }

@@ -658,9 +658,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 10
+  m_Acceleration: 20
   avoidancePriority: 50
-  m_AngularSpeed: 300
+  m_AngularSpeed: 100
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -668,7 +668,7 @@ NavMeshAgent:
   m_Height: 1.75
   m_BaseOffset: 0.88
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0
 --- !u!114 &1039700990719141375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -689,27 +689,33 @@ MonoBehaviour:
   spriteRenderer: {fileID: 8712162020836028657}
   bloodEffect: {fileID: 7818894797380219674, guid: a77dc77f255981b43bc4995f4f43b5bb, type: 3}
   corpse: {fileID: 5929986532211604704, guid: 4a494b1ec8e343443b2f8831b0795403, type: 3}
-  exitSpawnToRight: 0
-  pelletsNeededToStart: 75
-  speed: 4.5
+  exitSpawnToRight: 1
+  pelletsNeededToStart: 65
+  speed: 5.5
   respawnWaitTime: 5
   pointWorth: 200
   targetAreas:
   - respawnTimeAddition: 0
     pointsAddition: 0
     type: 2
+    healthValue: 25
   - respawnTimeAddition: 5
     pointsAddition: 50
     type: 1
+    healthValue: 35
   - respawnTimeAddition: 8
     pointsAddition: 100
     type: 3
+    healthValue: 75
   - respawnTimeAddition: 12
     pointsAddition: 125
     type: 4
+    healthValue: 100
   - respawnTimeAddition: 12
     pointsAddition: 125
     type: 5
+    healthValue: 100
+  ghostHealth: 100
   player: {fileID: 0}
   scatterTarget: {fileID: 0}
   respawnPoint: {fileID: 0}

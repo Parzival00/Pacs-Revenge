@@ -238,12 +238,12 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(ShotEffect());
                 Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
                 RaycastHit hit;
-                laserLine.SetPosition(0, bulletOrigin.position);
+                //laserLine.SetPosition(0, bulletOrigin.position);
 
                 //Detect hit on enemy
                 if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange, targetingMask))
                 {
-                    laserLine.SetPosition(1, hit.point);
+                    //laserLine.SetPosition(1, hit.point);
 
                     print("Hit: " + hit.collider.gameObject.name);
 
@@ -260,7 +260,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    laserLine.SetPosition(1, rayOrigin + (fpsCam.transform.forward * weaponRange));
+                    //laserLine.SetPosition(1, rayOrigin + (fpsCam.transform.forward * weaponRange));
                 }
 
 
@@ -297,9 +297,9 @@ public class PlayerController : MonoBehaviour
     private IEnumerator ShotEffect()
     {
         weaponSound.PlayOneShot(gunshot);
-        laserLine.enabled = true;
+        //laserLine.enabled = true;
         yield return shotDuration;
-        laserLine.enabled = false;
+       // laserLine.enabled = false;
     }
 
     /// <summary>
@@ -448,9 +448,13 @@ public class PlayerController : MonoBehaviour
         musicPlayer.Stop();
         musicPlayer.PlayOneShot(bgMusic);
         gunActivated = false;
-        //if(animator == null)
         gun.SetActive(false);
         hud.SetActive(false);
+
+        if (gunTimerCoroutine != null)
+        {
+            StopCoroutine(gunTimerCoroutine);
+        }
 
         if (gunAnimator != null)
         {
@@ -558,6 +562,8 @@ public class PlayerController : MonoBehaviour
 
             animator.ResetTrigger("Death");
             animator.SetTrigger("Respawn");
+
+
 
             yield return deathTimer;
 

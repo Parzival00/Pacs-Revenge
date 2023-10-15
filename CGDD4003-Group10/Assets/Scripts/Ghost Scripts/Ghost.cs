@@ -118,6 +118,9 @@ public class Ghost : MonoBehaviour
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
+        if (spriteController == null)
+            spriteController = GetComponentInChildren<GhostSpriteController>();
+
         navMesh.speed = speed;
 
         targetAreaDirectory = new Dictionary<TargetAreaType, TargetArea>();
@@ -126,8 +129,8 @@ public class Ghost : MonoBehaviour
             targetAreaDirectory.Add(area.type, area);
         }
 
-        if (ghostCollider)
-            ghostCollider.enabled = true;
+        //if (ghostCollider)
+         //   ghostCollider.enabled = true;
     }
 
     // Update is called once per frame
@@ -168,7 +171,7 @@ public class Ghost : MonoBehaviour
     //Chase the player
     protected virtual void Chase()
     {
-        spriteRenderer.color = Color.white; //Temporary
+        //spriteRenderer.color = Color.white; //Temporary
 
         Vector2Int playerGridPosition = map.CheckEdgePositions(transform.position);
 
@@ -220,7 +223,7 @@ public class Ghost : MonoBehaviour
     //Scatter and move to the provided transforms location
     protected virtual void Scatter()
     {
-        spriteRenderer.color = Color.white; //Temporary
+        //spriteRenderer.color = Color.white; //Temporary
 
         Vector2Int scatterTargetGridPos = map.GetGridLocation(scatterTarget.position);
 
@@ -242,6 +245,9 @@ public class Ghost : MonoBehaviour
     /// </summary>
     protected bool Move(bool canTurnAround)
     {
+        if (currentMode != Mode.Chase && currentMode != Mode.Scatter)
+            return false;
+
         navMesh.enabled = true;
 
         bool turnedAround = false;
@@ -318,6 +324,8 @@ public class Ghost : MonoBehaviour
     //Mode at the games start to keep ghost unactive until the required pellets are collected
     protected virtual void Dormant()
     {
+        spriteController.DeactivateColliders();
+
         if(Score.pelletsCollected >= pelletsNeededToStart)
             currentMode = Mode.Exiting;
     }
@@ -326,9 +334,10 @@ public class Ghost : MonoBehaviour
     protected virtual void Exiting()
     {
         if(!startedExiting)
-            StartCoroutine(ExitingSequence());
+            exitingCoroutine = StartCoroutine(ExitingSequence());
     }
 
+    Coroutine exitingCoroutine;
     bool startedExiting;
     protected virtual IEnumerator ExitingSequence()
     {
@@ -339,9 +348,11 @@ public class Ghost : MonoBehaviour
 
         yield return null;
 
-        WaitUntil arrivedAtExitPoint = new WaitUntil(() => navMesh.remainingDistance <= 0.1f);
+        WaitUntil arrivedAtExitPoint = new WaitUntil(() => currentMode != Mode.Exiting || Vector2Int.Distance(spawnExitGridPosition, currentGridPosition) <= 0.1f);
 
         yield return arrivedAtExitPoint;
+
+        print("Exited");
 
         if (PlayerController.gunActivated)
         {
@@ -366,6 +377,8 @@ public class Ghost : MonoBehaviour
         }
 
         startedExiting = false;
+
+        spriteController.ActivateColliders();
     }
 
     bool startedRespawnSequence = false; //Used in the Respawn mode to check whether the respawn sequence has started
@@ -375,20 +388,21 @@ public class Ghost : MonoBehaviour
     {
         if (!startedRespawnSequence)
         {
-            StartCoroutine(RespawnSequence());
+            respawnCoroutine = StartCoroutine(RespawnSequence());
         }
     }
 
+    Coroutine respawnCoroutine;
     protected virtual IEnumerator RespawnSequence()
     {
         //spriteRenderer.color = Color.black;
 
         chaseSoundSource.Stop();
 
-        if (spriteController)
-            spriteController.DeactivateColliders();
+        spriteController.DeactivateColliders();
 
-        navMesh.ResetPath();
+        navMesh.enabled = false;
+
         startedRespawnSequence = true;
 
         spriteController.StartDeathAnimation();
@@ -402,14 +416,17 @@ public class Ghost : MonoBehaviour
 
         spriteController.StartMovingCorpse();
 
+        navMesh.enabled = true;
+
         Vector2Int respawnPointGridPos = map.GetGridLocation(respawnPoint.position);
         navMesh.SetDestination(map.GetWorldFromGrid(respawnPointGridPos));
 
         yield return null;
 
-        WaitUntil arrivedAtRespawnPoint = new WaitUntil(() => navMesh.remainingDistance <= 0.1f);
+        WaitUntil arrivedAtRespawnPoint = new WaitUntil(() => currentMode != Mode.Respawn || Vector2Int.Distance(respawnPointGridPos, currentGridPosition) <= 0.1f);
 
         yield return arrivedAtRespawnPoint;
+        print("Arrived at Respawn Point");
         
 
         spriteController.StartReformAnimation();
@@ -427,12 +444,12 @@ public class Ghost : MonoBehaviour
 
         //spriteRenderer.color = Color.white;
 
-        if(spriteController)
-            spriteController.ActivateColliders();
-        if(ghostCollider)
-            ghostCollider.enabled = true;
+        spriteController.ActivateColliders();
+        //if(ghostCollider)
+        //    ghostCollider.enabled = true;
 
-        currentMode = Mode.Exiting;
+        if(currentMode == Mode.Respawn)
+            currentMode = Mode.Exiting;
         lastTargetGridPosition = new Vector2Int(-1, -1);
     }
 
@@ -451,8 +468,8 @@ public class Ghost : MonoBehaviour
         {
             currentMode = Mode.Chase;
 
-            if (ghostCollider)
-                ghostCollider.enabled = true;
+            //if (ghostCollider)
+            //    ghostCollider.enabled = true;
         }
     }
 
@@ -467,8 +484,6 @@ public class Ghost : MonoBehaviour
     /// </summary>
     public virtual HitInformation GotHit(TargetAreaType type)
     {
-        
-
         HitInformation hit = new HitInformation();
         hit.targetArea = GetTargetArea(type);
         hit.pointWorth = pointWorth;
@@ -515,6 +530,18 @@ public class Ghost : MonoBehaviour
         if (resetCoroutine != null)
             StopCoroutine(resetCoroutine);
 
+        if (startedRespawnSequence && respawnCoroutine != null)
+        {
+            startedRespawnSequence = false;
+            StopCoroutine(respawnCoroutine);
+        }
+
+        if (startedExiting && exitingCoroutine != null)
+        {
+            startedExiting = false;
+            StopCoroutine(exitingCoroutine);
+        }
+
         resetCoroutine = StartCoroutine(ResetSequence());
     }
 
@@ -529,7 +556,7 @@ public class Ghost : MonoBehaviour
 
         navMesh.enabled = true;
 
-        //spriteController.ResetParameters();
+        spriteController.ResetParameters();
 
         currentMode = Mode.Dormant;
     }
