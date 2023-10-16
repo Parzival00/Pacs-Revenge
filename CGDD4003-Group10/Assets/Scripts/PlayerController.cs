@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform bulletOrigin;
     [SerializeField] GameObject stunGun;
     [SerializeField] int ammoCount;
+    [SerializeField] int maxAmmoCount = 1;
     //The amount of pellets per ammo is set in the score script
     private float stunFireTimer;
 
@@ -114,6 +115,8 @@ public class PlayerController : MonoBehaviour
 
     private float originalY;
 
+    Projectile stunProjectile;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -139,6 +142,8 @@ public class PlayerController : MonoBehaviour
         speed = baseSpeed;
 
         laserLine = GetComponent<LineRenderer>();
+
+        stunProjectile = Resources.Load<Projectile>("StunShot");
 
         gunActivated = false;
         gun.SetActive(false);
@@ -177,13 +182,13 @@ public class PlayerController : MonoBehaviour
 
         if (gunActivated)
         {
-            railgunFire();
+            RailgunFire();
             OutlineTargetEnemy();
             CheckWeaponTemp();
         }
         else
         {
-            stungunFire();
+            StungunFire();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)) 
@@ -240,7 +245,7 @@ public class PlayerController : MonoBehaviour
     /// When the left mouse button is pressed this generates a raycast to where the player was aiming.
     /// A sound effect is played and the raytrace is rendered
     /// </summary>
-    void railgunFire()
+    void RailgunFire()
     {
         if (canFire == false)
             return;
@@ -373,14 +378,14 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Handles the firing of the stungun, spawning the projectile and initializing it's motion.
     /// </summary>
-    void stungunFire()
+    void StungunFire()
     {
         if(stunFireTimer <= 0 && Input.GetMouseButtonDown(0) && ammoCount > 0)
         {
-            Projectile stunShot = Instantiate(Resources.Load<Projectile>("StunShot"), bulletOrigin, false);
-            stunShot.transform.localEulerAngles = Vector3.up * -cameraPitch;
-            stunShot.transform.localPosition += Vector3.forward * 1.5f;
-            stunShot.transform.parent = null;
+            Projectile stunShot = Instantiate(stunProjectile, bulletOrigin.position + bulletOrigin.forward * 0.5f, bulletOrigin.rotation);
+            //stunShot.transform.localEulerAngles = Vector3.up * -cameraPitch;
+            //stunShot.transform.localPosition += Vector3.forward * 1.5f;
+            //stunShot.transform.parent = null;
             stunFireTimer = fireRate;
             weaponSound.PlayOneShot(stunShotSound);
             ammoCount--;
@@ -391,12 +396,14 @@ public class PlayerController : MonoBehaviour
             stunFireTimer -= Time.deltaTime;
         }
     }
-    public void addAmmo()
+    public void AddAmmo()
     {
-        ammoCount++;
+        if(ammoCount < maxAmmoCount)
+            ammoCount++;
         ammoText.text = "Ammo: " + ammoCount;
     }
     #endregion
+
     /// <summary>
     /// Activates the corresponding outline for targeted area
     /// </summary>
@@ -438,6 +445,9 @@ public class PlayerController : MonoBehaviour
         gunActivated = true;
         gun.SetActive(true);
         hud.SetActive(true);
+
+        //Deactivate stun gun
+        stunGun.SetActive(false);
 
         musicPlayer.Stop();
         musicPlayer.PlayOneShot(powerMusic);
@@ -492,6 +502,7 @@ public class PlayerController : MonoBehaviour
         gunActivated = false;
         gun.SetActive(false);
         hud.SetActive(false);
+
         //Activates Stun-Gun again
         stunGun.SetActive(true);
 
@@ -557,10 +568,10 @@ public class PlayerController : MonoBehaviour
         canFire = false;
         DeactivateGun();
 
-        //Freeze all of the ghosts' movements
+        //Stop all of the ghosts' movements
         foreach (Ghost g in ghosts)
         {
-            g.FreezeGhost();
+            g.StopGhost();
         }
 
         fadeImage.canvasRenderer.SetAlpha(0f);

@@ -5295,7 +5295,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.383763, y: 1.75, z: 1.383763}
+  m_Size: {x: 1.383763, y: 1.75, z: 0.97924507}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1845509663136603989
 Rigidbody:
@@ -5390,6 +5390,7 @@ MonoBehaviour:
     type: 1
     healthValue: 35
   ghostHealth: 75
+  flinchLength: 0.5
   player: {fileID: 0}
   scatterTarget: {fileID: 0}
   respawnPoint: {fileID: 0}

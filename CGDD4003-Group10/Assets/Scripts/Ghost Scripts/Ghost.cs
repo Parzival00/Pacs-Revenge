@@ -23,12 +23,14 @@ public class Ghost : MonoBehaviour
 
     public enum Mode
     {
-        Dormant,
-        Exiting,
-        Chase,
-        Scatter,
-        Respawn,
-        Freeze
+        Dormant, //Start mode when ghosts hasnt left spawn
+        Exiting, //Ghost is exiting spawn
+        Chase, //Ghost is chasing player
+        Scatter, //Ghost is scattering because player has the railgun
+        Respawn, //Ghost is respawning
+        Freeze, //Ghost is stunned
+        Flinch, //Ghost got hit by the railgun but didnt die
+        Reseting //Ghost is getting reset because player got killed
     }
 
     public enum TargetAreaType
@@ -67,6 +69,7 @@ public class Ghost : MonoBehaviour
     [SerializeField] protected int pointWorth = 20;
     [SerializeField] protected TargetArea[] targetAreas;
     [SerializeField] protected float ghostHealth;
+    [SerializeField] protected float flinchLength = 0.5f;
 
     [Header("Transform Targets")]
     [SerializeField] protected Transform player;
@@ -168,6 +171,9 @@ public class Ghost : MonoBehaviour
                 break;
             case Mode.Freeze:
                 Freeze();
+                break;
+            case Mode.Flinch:
+                Flinch();
                 break;
             default:
                 break;
@@ -336,6 +342,26 @@ public class Ghost : MonoBehaviour
             currentMode = Mode.Exiting;
     }
 
+    bool isFlinching = false;
+    float flinchTimer;
+    protected virtual void Flinch()
+    {
+        navMesh.enabled = false;
+
+        if(!isFlinching)
+        {
+            isFlinching = true;
+            flinchTimer = Time.time + flinchLength;
+        }
+
+        if(isFlinching && Time.time >= flinchTimer)
+        {
+            isFlinching = false;
+            currentMode = previousMode;
+        }
+    }
+
+    #region Exiting Spawn
     //Mode for exiting the spawn location
     protected virtual void Exiting()
     {
@@ -387,6 +413,9 @@ public class Ghost : MonoBehaviour
         spriteController.ActivateColliders();
     }
 
+    #endregion
+
+    #region Respawn
     bool startedRespawnSequence = false; //Used in the Respawn mode to check whether the respawn sequence has started
 
     //Mode activated when a ghost is shot. Ghost moves to provided respawn location and wants specified amount of time before shifting to Chase mode
@@ -459,6 +488,8 @@ public class Ghost : MonoBehaviour
         lastTargetGridPosition = new Vector2Int(-1, -1);
     }
 
+    #endregion
+
     public virtual void InitiateScatter()
     {
         if (currentMode == Mode.Chase)
@@ -479,52 +510,14 @@ public class Ghost : MonoBehaviour
         }
     }
 
-    //Gets the target area from the directory using the target area type
-    public TargetArea GetTargetArea(TargetAreaType type)
+
+    #region Reseting Ghosts
+    public void StopGhost()
     {
-        return targetAreaDirectory[type];
-    }
-
-    /// <summary>
-    /// Called when ghost is hit with the gun and sets the mode to respawn and returns a hit information struct which includes points to add and target area hit benefits
-    /// </summary>
-    public virtual HitInformation GotHit(TargetAreaType type)
-    {
-        HitInformation hit = new HitInformation();
-        hit.targetArea = GetTargetArea(type);
-        hit.pointWorth = pointWorth;
-        hit.bloodEffect = bloodEffect;
-
-        currentHitArea = hit.targetArea;
-
-        //damage the ghost
-        ghostHealth -= currentHitArea.healthValue;
-        print("subtracted: " + currentHitArea.healthValue + " health: " + ghostHealth);
-        
-        if(ghostHealth <= 0)
-        {
-            print("respawning");
-            ghostHealth = 100;
-            currentMode = Mode.Respawn;
-        }
-
-        return hit;
-    }
-
-    /// <summary>
-    /// Disable the nav mesh temporarily to set the position to given location. (Used in combination with the teleport class) 
-    /// </summary>
-    public void SetPosition(Vector3 pos)
-    {
+        currentMode = Mode.Reseting;
         navMesh.enabled = false;
-        transform.position = pos;
+        chaseSoundSource.Stop();
     }
-
-    private void RotateGhostIcons()
-    {
-        ghostIcon.rotation = Quaternion.Euler(90, player.transform.eulerAngles.y, 0);
-    }
-
 
     /// <summary>
     /// resets the ghost back to its spawn point. Used when player dies
@@ -548,6 +541,8 @@ public class Ghost : MonoBehaviour
             StopCoroutine(exitingCoroutine);
         }
 
+        isFlinching = false; //Accounts for the rare case of the ghost flinching right when the player dies
+
         resetCoroutine = StartCoroutine(ResetSequence());
     }
 
@@ -566,36 +561,47 @@ public class Ghost : MonoBehaviour
 
         currentMode = Mode.Dormant;
     }
+    #endregion
 
+    #region Freeze/Stun Ghosts
     public void FreezeGhost()
     {
-        freezeTimer = freezeTime;
-        previousMode = currentMode;
-        currentMode = Mode.Freeze;
-        navMesh.enabled = false;
-        chaseSoundSource.Stop();
+        if (currentMode == Mode.Scatter || currentMode == Mode.Chase)
+        {
+            freezeTimer = freezeTime;
+            previousMode = currentMode;
+            currentMode = Mode.Freeze;
+            navMesh.enabled = false;
+            chaseSoundSource.Stop();
+        }
     }
+
     /// <summary>
     /// Takes the previous mode of the ghost and switches it from freeze back to the previous mode
     /// </summary>
     /// <param name="p">Previous mode</param>
     public void UnFreezeGhost()
     {
-        navMesh.enabled = true;
-        chaseSoundSource.Play();
-        currentMode = previousMode;
+        if (currentMode == Mode.Freeze)
+        {
+            navMesh.enabled = true;
+            chaseSoundSource.Play();
+            currentMode = previousMode;
+        }
         freezeTimer = freezeTime;
     }
+
     void Freeze()
     {
         if (FreezeCoroutine != null)
         {
             StopCoroutine(FreezeCoroutine);
         }
-        FreezeCoroutine = StartCoroutine(FreezeC());
+        FreezeCoroutine = StartCoroutine(FreezeTimer());
     }
+
     Coroutine FreezeCoroutine;
-    IEnumerator FreezeC()
+    IEnumerator FreezeTimer()
     {
         while (freezeTimer >= 0)
         {
@@ -610,9 +616,63 @@ public class Ghost : MonoBehaviour
         {
             Destroy(c.gameObject);
             FreezeGhost();
-            
         }
     }
+    #endregion
+
+
+    //Gets the target area from the directory using the target area type
+    public TargetArea GetTargetArea(TargetAreaType type)
+    {
+        return targetAreaDirectory[type];
+    }
+
+    /// <summary>
+    /// Called when ghost is hit with the gun and sets the mode to respawn and returns a hit information struct which includes points to add and target area hit benefits
+    /// </summary>
+    public virtual HitInformation GotHit(TargetAreaType type)
+    {
+        HitInformation hit = new HitInformation();
+        hit.targetArea = GetTargetArea(type);
+        hit.pointWorth = pointWorth;
+        hit.bloodEffect = bloodEffect;
+
+        currentHitArea = hit.targetArea;
+
+        //damage the ghost
+        ghostHealth -= currentHitArea.healthValue;
+        print("subtracted: " + currentHitArea.healthValue + " health: " + ghostHealth);
+
+        if (ghostHealth <= 0)
+        {
+            print("respawning");
+            ghostHealth = 100;
+            currentMode = Mode.Respawn;
+        }
+        else
+        {
+            previousMode = currentMode;
+            currentMode = Mode.Flinch;
+        }
+
+        return hit;
+    }
+
+
+    /// <summary>
+    /// Disable the nav mesh temporarily to set the position to given location. (Used in combination with the teleport class) 
+    /// </summary>
+    public void SetPosition(Vector3 pos)
+    {
+        navMesh.enabled = false;
+        transform.position = pos;
+    }
+
+    private void RotateGhostIcons()
+    {
+        ghostIcon.rotation = Quaternion.Euler(90, player.transform.eulerAngles.y, 0);
+    }
+
     //Debug Function
     private void OnDrawGizmos()
     {

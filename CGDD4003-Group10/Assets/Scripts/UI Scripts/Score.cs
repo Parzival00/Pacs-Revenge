@@ -55,7 +55,6 @@ public class Score : MonoBehaviour
             other.gameObject.SetActive(false);
             audioSource.PlayOneShot(pelletSound);
             pelletsCollected += 1;
-            //Destroy(other.gameObject);
             score += 50;
             if (pelletsCollected >= totalPellets)
             {
@@ -64,20 +63,12 @@ public class Score : MonoBehaviour
             else if (pelletsCollected % pelletsPerAmmo == 0)
             {
                 PlayerController pc = this.gameObject.GetComponent<PlayerController>();
-                pc.addAmmo();
+                pc.AddAmmo();
             }
-            /*else if (pelletsCollected == cherrySpawn1 || pelletsCollected == cherrySpawn2)
-            {
-                cherryObject.SetActive(true);
-            }*/
         }
 
         if (other.gameObject.tag == "Fruit")
         {
-            //other.gameObject.SetActive(false);
-            //Destroy(other.gameObject);
-            //score += 1000;
-
             FruitController fruitController = other.gameObject.GetComponent<FruitController>();
 
             if(fruitController)
