@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip gunshot;
     [SerializeField] AudioClip stunShotSound;
     [SerializeField] AudioClip overheat;
+    [SerializeField] AudioClip chargeup;
     [SerializeField] AudioSource weaponSound;
 
     [Header("Railgun Settings")]
@@ -122,7 +123,6 @@ public class PlayerController : MonoBehaviour
     {
         Init();
         musicPlayer.PlayOneShot(gameStart);
-        musicPlayer.PlayDelayed(gameStart.length);
     }
 
     private void Init()
@@ -196,6 +196,13 @@ public class PlayerController : MonoBehaviour
             gameIsPaused = !gameIsPaused;
             PauseGame();
         }
+
+        if (!musicPlayer.isPlaying)
+        {
+            musicPlayer.Play();
+            musicPlayer.loop = true;
+        }
+            
     }
 
     #region Move and Look
@@ -288,6 +295,15 @@ public class PlayerController : MonoBehaviour
 
                 StartCoroutine(Decharge());
             }
+            else
+            {
+                weaponSound.Stop();
+            }
+        }
+        else if(!paused && Input.GetMouseButtonDown(0) && !overheated)
+        {
+            weaponSound.Stop();
+            weaponSound.PlayOneShot(chargeup);
         }
         else if (!paused && Input.GetMouseButton(0) && !overheated)
         {
@@ -296,7 +312,8 @@ public class PlayerController : MonoBehaviour
                 weaponCharge += (Time.deltaTime * (1 / chargeTime));
             }
             weaponTemp += (Time.deltaTime * (overheatSpeed));
-        } else if (!Input.GetMouseButton(0) && !overheated)
+        }
+        else if (!Input.GetMouseButton(0) && !overheated)
         {
             if(weaponCharge > 0)
             {
@@ -315,6 +332,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private IEnumerator ShotEffect()
     {
+        weaponSound.Stop();
         weaponSound.PlayOneShot(gunshot);
         //laserLine.enabled = true;
         yield return shotDuration;
@@ -496,9 +514,7 @@ public class PlayerController : MonoBehaviour
     /// Deactivates the gun and any related visuals
     /// </summary>
     void DeactivateGun()
-    {
-        musicPlayer.Stop();
-        musicPlayer.PlayOneShot(bgMusic);
+    {    
         gunActivated = false;
         gun.SetActive(false);
         hud.SetActive(false);
