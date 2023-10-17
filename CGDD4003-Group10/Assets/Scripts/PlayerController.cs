@@ -519,6 +519,9 @@ public class PlayerController : MonoBehaviour
         gun.SetActive(false);
         hud.SetActive(false);
 
+        musicPlayer.Stop();
+        musicPlayer.Play();
+
         //Activates Stun-Gun again
         stunGun.SetActive(true);
 
