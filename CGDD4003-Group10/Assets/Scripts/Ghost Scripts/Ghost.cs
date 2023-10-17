@@ -447,7 +447,9 @@ public class Ghost : MonoBehaviour
         yield return deathWait;
 
         if (corpse != null)
+        {
             Instantiate(corpse, transform.position, transform.rotation);
+        }
 
         spriteController.StartMovingCorpse();
 

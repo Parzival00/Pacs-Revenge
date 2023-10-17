@@ -158,9 +158,10 @@ public class ScoreManager : MonoBehaviour
 
     public void DisplayHighScores()
     {
-        foreach (ScoreEntry highscores in highScores)
+        highScoreDisplay.text = "";
+        foreach (ScoreEntry highscore in highScores)
         {
-            highScoreDisplay.text += highscores.ToString() + "\n";
+            highScoreDisplay.text += highscore.ToString() + "\n";
         }
 
         WriteToScoreFile();

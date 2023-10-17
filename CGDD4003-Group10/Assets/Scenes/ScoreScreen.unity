@@ -2420,6 +2420,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 1248785196}
   options: {fileID: 1601444659}
+  howToPlayUI: {fileID: 0}
   uiInput: {fileID: 0}
   highScoreDisplay: {fileID: 0}
   screenResolution: {fileID: 1803170153}
@@ -2427,6 +2428,10 @@ MonoBehaviour:
   fullScreenToggle: {fileID: 0}
   volume: {fileID: 0}
   MouseSensitivity: {fileID: 0}
+  movement: {fileID: 0}
+  shooting: {fileID: 0}
+  enemies: {fileID: 0}
+  endConditions: {fileID: 0}
 --- !u!1 &60419351
 GameObject:
   m_ObjectHideFlags: 0
@@ -38622,6 +38627,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 0}
   options: {fileID: 0}
+  howToPlayUI: {fileID: 0}
   uiInput: {fileID: 1838415620}
   highScoreDisplay: {fileID: 0}
   screenResolution: {fileID: 0}
@@ -38629,6 +38635,10 @@ MonoBehaviour:
   fullScreenToggle: {fileID: 0}
   volume: {fileID: 0}
   MouseSensitivity: {fileID: 0}
+  movement: {fileID: 0}
+  shooting: {fileID: 0}
+  enemies: {fileID: 0}
+  endConditions: {fileID: 0}
 --- !u!1 &882876220
 GameObject:
   m_ObjectHideFlags: 0
@@ -54799,6 +54809,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 0}
   options: {fileID: 0}
+  howToPlayUI: {fileID: 0}
   uiInput: {fileID: 0}
   highScoreDisplay: {fileID: 0}
   screenResolution: {fileID: 0}
@@ -54806,6 +54817,10 @@ MonoBehaviour:
   fullScreenToggle: {fileID: 0}
   volume: {fileID: 0}
   MouseSensitivity: {fileID: 0}
+  movement: {fileID: 0}
+  shooting: {fileID: 0}
+  enemies: {fileID: 0}
+  endConditions: {fileID: 0}
 --- !u!1001 &1250204329
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -71042,6 +71057,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 0}
   options: {fileID: 0}
+  howToPlayUI: {fileID: 0}
   uiInput: {fileID: 0}
   highScoreDisplay: {fileID: 0}
   screenResolution: {fileID: 0}
@@ -71049,6 +71065,10 @@ MonoBehaviour:
   fullScreenToggle: {fileID: 0}
   volume: {fileID: 0}
   MouseSensitivity: {fileID: 0}
+  movement: {fileID: 0}
+  shooting: {fileID: 0}
+  enemies: {fileID: 0}
+  endConditions: {fileID: 0}
 --- !u!1 &1602702306
 GameObject:
   m_ObjectHideFlags: 0
@@ -82373,6 +82393,7 @@ MonoBehaviour:
   scoreUI: {fileID: 361582237}
   audioSource: {fileID: 0}
   pelletSound: {fileID: 0}
+  pelletsPerAmmo: 0
 --- !u!95 &1862071256
 Animator:
   serializedVersion: 5
