@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44480163, g: 0.4943503, b: 0.5735447, a: 1}
+  m_IndirectSpecularColor: {r: 0.44480178, g: 0.4943508, b: 0.5735456, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9804,9 +9804,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 879833135}
     - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+      propertyPath: dashTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
       propertyPath: spawnExit
       value: 
       objectReference: {fileID: 54225875}
+    - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+      propertyPath: dashCooldown
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
       propertyPath: respawnPoint
       value: 
@@ -9819,6 +9827,10 @@ PrefabInstance:
       propertyPath: blinkyTransform
       value: 
       objectReference: {fileID: 966250933}
+    - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+      propertyPath: dashSpeedMultiplier
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2569170336096267845, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.195625
