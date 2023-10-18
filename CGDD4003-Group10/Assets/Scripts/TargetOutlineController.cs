@@ -1,28 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TargetOutlineController : MonoBehaviour
 {
     [SerializeField] Sprite outlineTarget;
     [SerializeField] float timeBtwBlinks;
+    [SerializeField] Color targetDifficultyEasy = Color.yellow;
+    [SerializeField] Color targetDifficultyMedium;
+    [SerializeField] Color targetDifficultyHard = Color.red;
 
-    SpriteRenderer currentOutline;
+    public Color TargetDifficultyEasy { get => targetDifficultyEasy; }
+    public Color TargetDifficultyMedium { get => targetDifficultyMedium; }
+    public Color TargetDifficultyHard { get => targetDifficultyHard; }
 
-    Coroutine activeCoroutine;
+    TargetAreaCollider.TargetInfo currentTarget;
 
-    public void SetTargetOutline(SpriteRenderer target)
+    //Coroutine activeCoroutine;
+
+    public void SetTargetOutline(TargetAreaCollider.TargetInfo target)
     {
-        if (currentOutline != target)
+        if (currentTarget.outline != target.outline)
             DeactivateOutline();
 
-        if (target != null && target != currentOutline)
+        if (target.outline != null && target.outline != currentTarget.outline)
         {
-            currentOutline = target;
+            currentTarget = target;
 
-            currentOutline.enabled = true;
-            currentOutline.sprite = outlineTarget;
+            currentTarget.outline.enabled = true;
+            currentTarget.outline.sprite = outlineTarget;
 
+            switch (target.areaDifficulty)
+            {
+                case Ghost.TargetAreaDifficulty.Easy:
+                    currentTarget.outline.color = targetDifficultyEasy;
+                    break;
+                case Ghost.TargetAreaDifficulty.Medium:
+                    currentTarget.outline.color = targetDifficultyMedium;
+                    break;
+                case Ghost.TargetAreaDifficulty.Hard:
+                    currentTarget.outline.color = targetDifficultyHard;
+                    break;
+            }
             ///if (activeCoroutine == null)
              //   activeCoroutine = StartCoroutine(Blink());
         }
@@ -43,13 +63,13 @@ public class TargetOutlineController : MonoBehaviour
 
     public void DeactivateOutline()
     {
-        if(activeCoroutine != null)
-            StopCoroutine(activeCoroutine);
+        //if(activeCoroutine != null)
+        //    StopCoroutine(activeCoroutine);
 
-        if (currentOutline != null)
-            currentOutline.enabled = false;
+        if (currentTarget.outline != null)
+            currentTarget.outline.enabled = false;
 
-        currentOutline = null;
-        activeCoroutine = null;
+        currentTarget.outline = null;
+        //activeCoroutine = null;
     }
 }

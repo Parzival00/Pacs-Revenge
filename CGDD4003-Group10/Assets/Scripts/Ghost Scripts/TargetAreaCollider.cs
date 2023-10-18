@@ -5,6 +5,13 @@ using UnityEngine.EventSystems;
 
 public class TargetAreaCollider : MonoBehaviour
 {
+    public struct TargetInfo
+    {
+        public SpriteRenderer outline;
+        public Ghost.TargetAreaType areaType;
+        public Ghost.TargetAreaDifficulty areaDifficulty;
+    }
+
     [SerializeField] Ghost ghost;
     [SerializeField] Ghost.TargetAreaType targetAreaType;
     [SerializeField] SpriteRenderer outline;
@@ -21,8 +28,12 @@ public class TargetAreaCollider : MonoBehaviour
         return ghost.GotHit(targetAreaType);
     }
 
-    public SpriteRenderer OnTarget()
+    public TargetInfo OnTarget()
     {
-        return outline;
+        TargetInfo targetInfo;
+        targetInfo.outline = outline;
+        targetInfo.areaType = targetAreaType;
+        targetInfo.areaDifficulty = ghost.GetDifficulty(targetAreaType);
+        return targetInfo;
     }
 }

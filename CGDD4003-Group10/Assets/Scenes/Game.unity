@@ -23697,6 +23697,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7465043686356946606, guid: 5d8988313b2408b4fbc3bb6102082b93, type: 3}
   m_PrefabInstance: {fileID: 551110946}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &552626917 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4003256178928821854, guid: b93ab60570439bc4bbb94536a8b8cbca, type: 3}
+  m_PrefabInstance: {fileID: 301193985}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &558309403
 GameObject:
   m_ObjectHideFlags: 0
@@ -39401,6 +39412,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 377229793}
     - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: crosshair
+      value: 
+      objectReference: {fileID: 552626917}
+    - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: fadeImage
       value: 
       objectReference: {fileID: 762464000}
@@ -39503,6 +39518,46 @@ PrefabInstance:
     - target: {fileID: 6532150692148206727, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: pelletsPerAmmo
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6717606324952877450, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: targetDifficultyEasy.b
+      value: 0.4943396
+      objectReference: {fileID: 0}
+    - target: {fileID: 6717606324952877450, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: targetDifficultyEasy.g
+      value: 0.9909704
+      objectReference: {fileID: 0}
+    - target: {fileID: 6717606324952877450, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: targetDifficultyEasy.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6717606324952877450, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: targetDifficultyHard.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6717606324952877450, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: targetDifficultyHard.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6717606324952877450, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: targetDifficultyHard.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6717606324952877450, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: targetDifficultyMedium.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6717606324952877450, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: targetDifficultyMedium.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6717606324952877450, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: targetDifficultyMedium.g
+      value: 0.73905575
+      objectReference: {fileID: 0}
+    - target: {fileID: 6717606324952877450, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: targetDifficultyMedium.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7457625705006531473, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: Loop

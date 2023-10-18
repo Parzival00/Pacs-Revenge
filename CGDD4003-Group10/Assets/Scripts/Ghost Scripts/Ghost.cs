@@ -11,6 +11,7 @@ public class Ghost : MonoBehaviour
         public float respawnTimeAddition;
         public int pointsAddition;
         public TargetAreaType type;
+        public TargetAreaDifficulty difficulty;
         public float healthValue;
     }
 
@@ -41,6 +42,13 @@ public class Ghost : MonoBehaviour
         Mouth,
         LeftEye,
         RightEye
+    }
+
+    public enum TargetAreaDifficulty
+    {
+        Easy,
+        Medium,
+        Hard
     }
 
     protected Mode currentMode;
@@ -663,6 +671,16 @@ public class Ghost : MonoBehaviour
         return hit;
     }
 
+    public virtual TargetAreaDifficulty GetDifficulty(TargetAreaType targetAreaType)
+    {
+        if(targetAreaDirectory.ContainsKey(targetAreaType))
+        {
+            return targetAreaDirectory[targetAreaType].difficulty;
+        } else
+        {
+            return TargetAreaDifficulty.Easy;
+        }
+    }
 
     /// <summary>
     /// Disable the nav mesh temporarily to set the position to given location. (Used in combination with the teleport class) 

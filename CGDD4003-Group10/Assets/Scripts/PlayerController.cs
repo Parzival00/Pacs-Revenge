@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Unity.VisualScripting;
 using TMPro;
 //using static UnityEditor.Experimental.GraphView.GraphView;
 
@@ -99,6 +97,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Target Outline Controller")]
     [SerializeField] TargetOutlineController targetOutlineController;
+    [SerializeField] Image crosshair;
 
     [Header("Music Settings")]
     [SerializeField] AudioClip powerMusic;
@@ -155,6 +154,9 @@ public class PlayerController : MonoBehaviour
 
         if (animator == null)
             animator = GetComponent<Animator>();
+
+        if (crosshair == null)
+            crosshair = GameObject.FindGameObjectWithTag("Crosshair")?.GetComponent<Image>();
 
         ghosts = new Ghost[4];
         ghosts = FindObjectsOfType<Ghost>();
@@ -439,13 +441,27 @@ public class PlayerController : MonoBehaviour
 
             if (targetAreaCollider != null)
             {
-                SpriteRenderer outline = targetAreaCollider.OnTarget();
-                targetOutlineController.SetTargetOutline(outline);
+                TargetAreaCollider.TargetInfo target = targetAreaCollider.OnTarget();
+                targetOutlineController.SetTargetOutline(target);
+
+                switch (target.areaDifficulty)
+                {
+                    case Ghost.TargetAreaDifficulty.Easy:
+                        crosshair.color = targetOutlineController.TargetDifficultyEasy;
+                        break;
+                    case Ghost.TargetAreaDifficulty.Medium:
+                        crosshair.color = targetOutlineController.TargetDifficultyMedium;
+                        break;
+                    case Ghost.TargetAreaDifficulty.Hard:
+                        crosshair.color = targetOutlineController.TargetDifficultyHard;
+                        break;
+                }
             }
         } 
         else
         {
             //print("Not Targetting Anything");
+            crosshair.color = Color.white;
             targetOutlineController.DeactivateOutline();
         }
     }

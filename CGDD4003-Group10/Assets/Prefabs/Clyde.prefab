@@ -699,25 +699,31 @@ MonoBehaviour:
   - respawnTimeAddition: 0
     pointsAddition: 0
     type: 2
+    difficulty: 0
     healthValue: 25
   - respawnTimeAddition: 5
     pointsAddition: 50
     type: 1
-    healthValue: 35
+    difficulty: 1
+    healthValue: 40
   - respawnTimeAddition: 8
     pointsAddition: 100
     type: 3
-    healthValue: 75
+    difficulty: 1
+    healthValue: 40
   - respawnTimeAddition: 12
     pointsAddition: 125
     type: 4
+    difficulty: 2
     healthValue: 100
   - respawnTimeAddition: 12
     pointsAddition: 125
     type: 5
+    difficulty: 2
     healthValue: 100
   ghostHealth: 100
   flinchLength: 0.5
+  faceForwardForDeath: 1
   player: {fileID: 0}
   scatterTarget: {fileID: 0}
   respawnPoint: {fileID: 0}
