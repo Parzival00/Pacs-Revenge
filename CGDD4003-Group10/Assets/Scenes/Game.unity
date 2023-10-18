@@ -12723,14 +12723,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
-    - target: {fileID: 455589255414934659, guid: b93ab60570439bc4bbb94536a8b8cbca, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2781898401820217419, guid: b93ab60570439bc4bbb94536a8b8cbca, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5014022455672222642, guid: b93ab60570439bc4bbb94536a8b8cbca, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -12809,10 +12801,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5014022455672222642, guid: b93ab60570439bc4bbb94536a8b8cbca, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5138785646164703251, guid: b93ab60570439bc4bbb94536a8b8cbca, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -14924,8 +14912,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 795, y: -465}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 767.57996, y: -465}
+  m_SizeDelta: {x: 254.8401, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &350979239
 MonoBehaviour:
@@ -14947,7 +14935,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Ammo:'
+  m_text: 'Stun Ammo: 0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

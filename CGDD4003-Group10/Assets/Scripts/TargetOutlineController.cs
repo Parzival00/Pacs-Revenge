@@ -5,7 +5,6 @@ using UnityEngine;
 public class TargetOutlineController : MonoBehaviour
 {
     [SerializeField] Sprite outlineTarget;
-    [SerializeField] Sprite outlineTargetFill;
     [SerializeField] float timeBtwBlinks;
 
     SpriteRenderer currentOutline;
@@ -22,13 +21,14 @@ public class TargetOutlineController : MonoBehaviour
             currentOutline = target;
 
             currentOutline.enabled = true;
+            currentOutline.sprite = outlineTarget;
 
-            if (activeCoroutine == null)
-                activeCoroutine = StartCoroutine(Blink());
+            ///if (activeCoroutine == null)
+             //   activeCoroutine = StartCoroutine(Blink());
         }
     }
 
-    IEnumerator Blink()
+   /* IEnumerator Blink()
     {
         WaitForSeconds wait = new WaitForSeconds(timeBtwBlinks);
 
@@ -39,7 +39,7 @@ public class TargetOutlineController : MonoBehaviour
             currentOutline.sprite = outlineTargetFill;
             yield return wait;
         }
-    }
+    }*/
 
     public void DeactivateOutline()
     {

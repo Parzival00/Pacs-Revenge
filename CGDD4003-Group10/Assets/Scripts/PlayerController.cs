@@ -407,7 +407,7 @@ public class PlayerController : MonoBehaviour
             stunFireTimer = fireRate;
             weaponSound.PlayOneShot(stunShotSound);
             ammoCount--;
-            ammoText.text = "Ammo: " + ammoCount;
+            ammoText.text = "Stun Ammo: " + ammoCount;
         }
         else if (stunFireTimer > 0)
         {
@@ -418,7 +418,7 @@ public class PlayerController : MonoBehaviour
     {
         if(ammoCount < maxAmmoCount)
             ammoCount++;
-        ammoText.text = "Ammo: " + ammoCount;
+        ammoText.text = "Stun Ammo: " + ammoCount;
     }
     #endregion
 
@@ -636,8 +636,6 @@ public class PlayerController : MonoBehaviour
 
             animator.ResetTrigger("Death");
             animator.SetTrigger("Respawn");
-
-
 
             yield return deathTimer;
 
