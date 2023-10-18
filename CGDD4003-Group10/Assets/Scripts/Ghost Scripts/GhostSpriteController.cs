@@ -168,9 +168,44 @@ public class GhostSpriteController : MonoBehaviour
         spriteTransform.transform.LookAt(new Vector3(player.position.x, mainTransform.position.y, player.position.z));
     }
 
-    public void StartDeathAnimation()
+    public void StartDeathAnimation(bool faceForward)
     {
         animator.SetTrigger("Death");
+
+        if(faceForward)
+        {
+            switch(orientation)
+            {
+                case Orientation.Southeast:
+                    animator.SetBool("TurnEast", true);
+                    break;
+                case Orientation.Southwest:
+                    animator.SetBool("TurnWest", true);
+                    break;
+                case Orientation.South:
+                    if (Random.Range(0, 2) == 1)
+                        animator.SetBool("TurnEast", true);
+                    else
+                        animator.SetBool("TurnWest", true);
+                    break;
+            }
+        } else
+        {
+            switch (orientation) {
+                case Orientation.Northeast:
+                    animator.SetBool("TurnEast", true);
+                    break;
+                case Orientation.Northwest:
+                    animator.SetBool("TurnWest", true);
+                    break;
+                case Orientation.North:
+                    if (Random.Range(0, 2) == 1)
+                        animator.SetBool("TurnEast", true);
+                    else
+                        animator.SetBool("TurnWest", true);
+                    break;
+            }
+        }
 
         animator.SetBool("Respawning", true);
 

@@ -70,6 +70,7 @@ public class Ghost : MonoBehaviour
     [SerializeField] protected TargetArea[] targetAreas;
     [SerializeField] protected float ghostHealth;
     [SerializeField] protected float flinchLength = 0.5f;
+    [SerializeField] protected bool faceForwardForDeath = true;
 
     [Header("Transform Targets")]
     [SerializeField] protected Transform player;
@@ -440,9 +441,9 @@ public class Ghost : MonoBehaviour
 
         startedRespawnSequence = true;
 
-        spriteController.StartDeathAnimation();
+        spriteController.StartDeathAnimation(faceForwardForDeath);
 
-        WaitForSeconds deathWait = new WaitForSeconds(1f);
+        WaitForSeconds deathWait = new WaitForSeconds(3f);
 
         yield return deathWait;
 
@@ -452,6 +453,8 @@ public class Ghost : MonoBehaviour
         }
 
         spriteController.StartMovingCorpse();
+
+        yield return new WaitForSeconds(0.5f);
 
         navMesh.enabled = true;
 
