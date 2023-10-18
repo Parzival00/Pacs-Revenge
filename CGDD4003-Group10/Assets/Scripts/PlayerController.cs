@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject gun;
     [SerializeField] GameObject hud;
     [SerializeField] Image fadeImage;
-    [SerializeField] Text LivesText;
+    [SerializeField] TMP_Text LivesText;
     [SerializeField] TMP_Text ammoText;
 
     Ghost[] ghosts;
@@ -409,7 +409,7 @@ public class PlayerController : MonoBehaviour
             stunFireTimer = fireRate;
             weaponSound.PlayOneShot(stunShotSound);
             ammoCount--;
-            ammoText.text = "Stun Ammo: " + ammoCount;
+            ammoText.text = "" + ammoCount;
         }
         else if (stunFireTimer > 0)
         {
@@ -420,7 +420,7 @@ public class PlayerController : MonoBehaviour
     {
         if(ammoCount < maxAmmoCount)
             ammoCount++;
-        ammoText.text = "Stun Ammo: " + ammoCount;
+        ammoText.text = "" + ammoCount;
     }
     #endregion
 
@@ -660,7 +660,7 @@ public class PlayerController : MonoBehaviour
             canFire = true;
             inDeathSequence = false;
 
-            LivesText.text = "Lives: " + playerLives;
+            LivesText.text = "" + playerLives;
 
             animator.ResetTrigger("Respawn");
         }

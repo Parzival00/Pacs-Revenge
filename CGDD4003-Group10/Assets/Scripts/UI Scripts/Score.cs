@@ -9,7 +9,10 @@ public class Score : MonoBehaviour
     public static int score { get; private set; }
     public static int pelletsCollected {get; private set; }
 
+    public static int pelletsLeft;
+
     [SerializeField] TMP_Text scoreUI;
+    [SerializeField] TMP_Text pelletRemaining;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip pelletSound;
     [SerializeField] int pelletsPerAmmo;
@@ -23,31 +26,17 @@ public class Score : MonoBehaviour
         score = 0;
         GameObject[] pellets = GameObject.FindGameObjectsWithTag("Pellet");
         totalPellets = pellets.Length;
-        //cherryObject.SetActive(false);
+        
     }
 
 
     void Update()
     {
         UpdateScore();
+        UpdatePelletsRemaining();
     }
 
-    /*private void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.tag == "powerPellet") 
-        {
-            other.gameObject.SetActive(false);
-            //Destroy(other.gameObject);
-            score += 50;
-        }
-
-        if (other.gameObject.tag == "Cherry") 
-        {
-            other.gameObject.SetActive(false);
-            //Destroy(other.gameObject);
-            score += 100;
-        }
-    }*/
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Pellet")
@@ -81,11 +70,17 @@ public class Score : MonoBehaviour
 
     void UpdateScore() 
     {
-        scoreUI.text = "Score: " + score;
+        scoreUI.text = "" + score;
     }
 
     public static void AddToScore(int amount)
     {
         score += amount;
+    }
+
+    public void UpdatePelletsRemaining() 
+    {
+         pelletsLeft = totalPellets - pelletsCollected;
+         pelletRemaining.text = "" + pelletsLeft;
     }
 }
