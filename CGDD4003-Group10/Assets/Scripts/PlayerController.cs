@@ -78,6 +78,9 @@ public class PlayerController : MonoBehaviour
 
     private float gunTimer;
     public float GunTimer01 { get => (gunTimer / gunTimeAmount); }
+
+    //shield settings
+    int shieldsRemaining;
     
     [Header("GameObject Refereneces")]
     [SerializeField] GameObject gun;
@@ -124,6 +127,7 @@ public class PlayerController : MonoBehaviour
     {
         Init();
         musicPlayer.PlayOneShot(gameStart);
+        shieldsRemaining = 0;
     }
 
     private void Init()
@@ -504,7 +508,10 @@ public class PlayerController : MonoBehaviour
         }
         gunTimerCoroutine = StartCoroutine(GunTimer());
 
-        if(shieldAnimator != null)
+
+        shieldsRemaining++;
+        print("shilds: " + shieldsRemaining);
+        if (shieldAnimator != null)
             shieldAnimator.PlayShieldUp();
     }
 
@@ -562,8 +569,13 @@ public class PlayerController : MonoBehaviour
         //Deactivate any remaining target outline
         targetOutlineController.DeactivateOutline();
 
-        if (shieldAnimator != null)
-            shieldAnimator.PlayShieldDown();
+        if (shieldsRemaining > 0)
+        {
+            shieldsRemaining--;
+            print("shilds: " + shieldsRemaining);
+            if (shieldAnimator != null)
+                shieldAnimator.PlayShieldDown();
+        }
     }
     #endregion
 
@@ -588,9 +600,28 @@ public class PlayerController : MonoBehaviour
             {
                 print("hit by " + other.gameObject.name);
 
-                if(!inDeathSequence)
+                if(shieldsRemaining <=0)
                 {
-                    StartCoroutine(DeathSequence());
+                    if (!inDeathSequence)
+                    {
+                        StartCoroutine(DeathSequence());
+                    }
+                }
+                else
+                {
+                    
+                    if(shieldAnimator != null && shieldsRemaining > 0)
+                    {
+                        shieldsRemaining--;
+                        print("shilds: " + shieldsRemaining);
+
+                        //stun ghost
+                        other.SendMessage("FreezeGhost");
+
+                        shieldAnimator.PlayShieldBreak();
+                    }
+
+                    
                 }
             }
         }
@@ -618,7 +649,7 @@ public class PlayerController : MonoBehaviour
         fadeImage.gameObject.SetActive(true);
 
         //Play Player death animation
-        animator.SetTrigger("Death");
+        //animator.SetTrigger("Death");
 
         WaitForSecondsRealtime deathTimer = new WaitForSecondsRealtime(deathSequenceLength / 2);
 
@@ -642,6 +673,7 @@ public class PlayerController : MonoBehaviour
         }
 
         transform.position = playerSpawnPoint.position;
+        
 
         playerLives--;
 
@@ -655,8 +687,8 @@ public class PlayerController : MonoBehaviour
         {
             fadeImage.gameObject.SetActive(false);
 
-            animator.ResetTrigger("Death");
-            animator.SetTrigger("Respawn");
+            //animator.ResetTrigger("Death");
+            //animator.SetTrigger("Respawn");
 
             yield return deathTimer;
 
@@ -667,7 +699,7 @@ public class PlayerController : MonoBehaviour
 
             LivesText.text = "" + playerLives;
 
-            animator.ResetTrigger("Respawn");
+            //animator.ResetTrigger("Respawn");
         }
     }
 
