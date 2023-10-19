@@ -85,6 +85,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Image fadeImage;
     [SerializeField] TMP_Text LivesText;
     [SerializeField] TMP_Text ammoText;
+    [SerializeField] ShieldEffectAnimator shieldAnimator;
 
     Ghost[] ghosts;
 
@@ -98,6 +99,7 @@ public class PlayerController : MonoBehaviour
     [Header("Target Outline Controller")]
     [SerializeField] TargetOutlineController targetOutlineController;
     [SerializeField] Image crosshair;
+    [SerializeField] Color targetingColor = Color.yellow;
 
     [Header("Music Settings")]
     [SerializeField] AudioClip powerMusic;
@@ -144,6 +146,12 @@ public class PlayerController : MonoBehaviour
 
         stunProjectile = Resources.Load<Projectile>("StunShot");
 
+        if (hud == null)
+            hud = GameObject.FindGameObjectWithTag("HUD");
+
+        if (crosshair == null)
+            crosshair = GameObject.FindGameObjectWithTag("Crosshair").GetComponent<Image>();
+
         gunActivated = false;
         gun.SetActive(false);
         hud.SetActive(false);
@@ -155,8 +163,9 @@ public class PlayerController : MonoBehaviour
         if (animator == null)
             animator = GetComponent<Animator>();
 
-        if (crosshair == null)
-            crosshair = GameObject.FindGameObjectWithTag("Crosshair")?.GetComponent<Image>();
+
+        if(shieldAnimator == null)
+            shieldAnimator = FindObjectOfType<ShieldEffectAnimator>();
 
         ghosts = new Ghost[4];
         ghosts = FindObjectsOfType<Ghost>();
@@ -443,19 +452,7 @@ public class PlayerController : MonoBehaviour
             {
                 TargetAreaCollider.TargetInfo target = targetAreaCollider.OnTarget();
                 targetOutlineController.SetTargetOutline(target);
-
-                switch (target.areaDifficulty)
-                {
-                    case Ghost.TargetAreaDifficulty.Easy:
-                        crosshair.color = targetOutlineController.TargetDifficultyEasy;
-                        break;
-                    case Ghost.TargetAreaDifficulty.Medium:
-                        crosshair.color = targetOutlineController.TargetDifficultyMedium;
-                        break;
-                    case Ghost.TargetAreaDifficulty.Hard:
-                        crosshair.color = targetOutlineController.TargetDifficultyHard;
-                        break;
-                }
+                crosshair.color = targetingColor;
             }
         } 
         else
@@ -506,6 +503,9 @@ public class PlayerController : MonoBehaviour
             ghost.InitiateScatter();
         }
         gunTimerCoroutine = StartCoroutine(GunTimer());
+
+        if(shieldAnimator != null)
+            shieldAnimator.PlayShieldUp();
     }
 
     /// <summary>
@@ -561,6 +561,9 @@ public class PlayerController : MonoBehaviour
 
         //Deactivate any remaining target outline
         targetOutlineController.DeactivateOutline();
+
+        if (shieldAnimator != null)
+            shieldAnimator.PlaySheildDown();
     }
     #endregion
 
