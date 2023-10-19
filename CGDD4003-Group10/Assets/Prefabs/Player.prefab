@@ -837,8 +837,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.55
-      minScalar: 0.7
+      scalar: 1.2
+      minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -6978,8 +6978,9 @@ MonoBehaviour:
   playerT: {fileID: 743185093512582757}
   pauseMenu: {fileID: 0}
   optionsMenu: {fileID: 0}
-  baseSpeed: 5
-  sprintMultiplier: 1.25
+  baseSpeed: 5.4
+  sprintMultiplier: 1
+  gunSpeedMultiplier: 1.25
   playerSpawnPoint: {fileID: 0}
   velocity: {x: 0, y: 0, z: 0}
   lockCursor: 1
@@ -7014,7 +7015,7 @@ MonoBehaviour:
   LivesText: {fileID: 0}
   ammoText: {fileID: 0}
   shieldAnimator: {fileID: 0}
-  deathSequenceLength: 3
+  deathSequenceLength: 1
   playerLives: 3
   animator: {fileID: 6954913835686620882}
   targetOutlineController: {fileID: 6717606324952877450}
@@ -7548,8 +7549,8 @@ Transform:
   m_GameObject: {fileID: 6704805296735850020}
   serializedVersion: 2
   m_LocalRotation: {x: 0.70622456, y: -0.03531211, z: 0.035312112, w: 0.70622456}
-  m_LocalPosition: {x: 0.525, y: -0.66700006, z: 0.664}
-  m_LocalScale: {x: 0.20000002, y: 0.5, z: 0.20000002}
+  m_LocalPosition: {x: 0.53, y: -0.46, z: 0.58}
+  m_LocalScale: {x: 0.21768002, y: 0.5442, z: 0.21768002}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4904277085903038529}
@@ -8648,8 +8649,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 0.8
+      scalar: 1.2
+      minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:

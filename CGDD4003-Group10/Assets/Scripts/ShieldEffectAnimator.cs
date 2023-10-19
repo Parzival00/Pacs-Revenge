@@ -51,7 +51,7 @@ public class ShieldEffectAnimator : MonoBehaviour
         {
             shieldEffect.SetFloat("_ActivateProgress", progress);
 
-            shieldEffect.SetFloat("_ShieldVignetteSmoothness", Mathf.Clamp(progress, vignetteMin, vignetteMax));
+            //shieldEffect.SetFloat("_ShieldVignetteSmoothness", Mathf.Clamp(progress, vignetteMin, vignetteMax));
 
             yield return progressWait;
 
@@ -61,9 +61,9 @@ public class ShieldEffectAnimator : MonoBehaviour
         progress = 1;
 
         shieldEffect.SetFloat("_ActivateProgress", progress);
-        shieldEffect.SetFloat("_ShieldVignetteSmoothness", vignetteMax);
+        //shieldEffect.SetFloat("_ShieldVignetteSmoothness", vignetteMax);
 
-        /*progress = vignetteMin;
+        progress = vignetteMin;
 
         while(progress < vignetteMax)
         {
@@ -74,7 +74,7 @@ public class ShieldEffectAnimator : MonoBehaviour
             progress += activateSpeed * activateStepSize * 0.1f;
         }
 
-        shieldEffect.SetFloat("_ShieldVignetteSmoothness", vignetteMax);*/
+        shieldEffect.SetFloat("_ShieldVignetteSmoothness", vignetteMax);
 
         isAnimating = false;
     }
