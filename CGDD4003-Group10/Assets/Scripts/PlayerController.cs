@@ -184,7 +184,7 @@ public class PlayerController : MonoBehaviour
         canMove = true;
         canFire = true;
 
-        LivesText.text = "Lives: " + playerLives;
+        LivesText.text = "" + playerLives;
     }
 
     // Update is called once per frame
