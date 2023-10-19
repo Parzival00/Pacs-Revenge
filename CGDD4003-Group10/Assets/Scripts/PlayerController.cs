@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] float baseSpeed;
     [SerializeField] float sprintMultiplier;
+    [SerializeField] float gunSpeedMultiplier;
     [SerializeField] Transform playerSpawnPoint;
     private float speed;
     private float moveSmoothTime = 0.1f;
@@ -510,6 +511,7 @@ public class PlayerController : MonoBehaviour
 
 
         shieldsRemaining++;
+        baseSpeed += gunSpeedMultiplier;
         print("shilds: " + shieldsRemaining);
         if (shieldAnimator != null)
             shieldAnimator.PlayShieldUp();
@@ -574,7 +576,11 @@ public class PlayerController : MonoBehaviour
             shieldsRemaining--;
             print("shilds: " + shieldsRemaining);
             if (shieldAnimator != null)
+            {
                 shieldAnimator.PlayShieldDown();
+                baseSpeed -= gunSpeedMultiplier;
+            }
+                
         }
     }
     #endregion
@@ -618,7 +624,12 @@ public class PlayerController : MonoBehaviour
                         //stun ghost
                         other.SendMessage("FreezeGhost");
 
-                        shieldAnimator.PlayShieldBreak();
+                        if (shieldsRemaining <= 0)
+                        {
+                            baseSpeed -= gunSpeedMultiplier;
+                            shieldAnimator.PlayShieldBreak();
+                        }
+                        
                     }
 
                     
