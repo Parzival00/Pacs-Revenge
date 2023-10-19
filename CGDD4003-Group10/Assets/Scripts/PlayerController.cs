@@ -563,7 +563,7 @@ public class PlayerController : MonoBehaviour
         targetOutlineController.DeactivateOutline();
 
         if (shieldAnimator != null)
-            shieldAnimator.PlaySheildDown();
+            shieldAnimator.PlayShieldDown();
     }
     #endregion
 
@@ -604,7 +604,9 @@ public class PlayerController : MonoBehaviour
         canMove = false;
         character.enabled = false;
         canFire = false;
-        DeactivateGun();
+
+        if(gunActivated)
+            DeactivateGun();
 
         //Stop all of the ghosts' movements
         foreach (Ghost g in ghosts)

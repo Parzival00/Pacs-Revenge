@@ -36,6 +36,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Animation_Tex:
+        m_Texture: {fileID: 2800000, guid: cf113fe7ca9d5cb4692c00bce75f1a5c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -102,16 +106,20 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _ActivateProgress: 0
     - _Active: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
+    - _BreakProgress: 0
+    - _Break_Progress: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
+    - _DeactivateProgress: 0
     - _DecalMeshBiasType: 0
     - _DecalMeshDepthBias: 0
     - _DecalMeshViewBias: 0
@@ -124,6 +132,9 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _Gradient_Line_Intensity: 0.61
+    - _Gradient_Line_Speed: 0.2
+    - _Gradient_Line_Step_Size: 2
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -131,8 +142,9 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Scroll_Step_Size: 1
-    - _Shield_Vignette: 0.83
-    - _Shield_Vignette_Smoothness: 0.68
+    - _ShieldVignetteSmoothness: 0.65
+    - _Shield_Vignette: 0.91
+    - _Shield_Vignette_Smoothness: 0.65
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -143,13 +155,13 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.6924528, g: 0.9902461, b: 1, a: 0.7372549}
+    - _Color: {r: 0.6924528, g: 0.9902461, b: 1, a: 0.6901961}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Emission_Color: {r: 0.45660377, g: 0.94850856, b: 1, a: 0.28235295}
+    - _Emission_Color: {r: 0.45660377, g: 0.94850856, b: 1, a: 0.3137255}
     - _Emission_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _Emission_Tiling: {r: 1, g: 1, b: 0, a: 0}
     - _Offset: {r: 0, g: 0, b: 0, a: 0}
-    - _Scroll_Speed: {r: -0.01, g: 0.03, b: 0, a: 0}
+    - _Scroll_Speed: {r: -0.005, g: 0.03, b: 0, a: 0}
     - _Shield_Vignette_Size: {r: 1.67, g: 0.76, b: 0, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _Tiling: {r: 1.5, g: 1, b: 0, a: 0}
