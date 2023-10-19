@@ -6,6 +6,10 @@ public class Pinky : Ghost
 {
     [Header("Pinky Specific Settings")]
     [SerializeField] int spacesAheadOfPlayer = 2;
+    [SerializeField] float radiusToAvoidPlayer;
+    [SerializeField] float turnCooldown;
+    protected float cooldownTimer;
+    protected bool flipped;
 
     [Tooltip("Pinky overflow error: (Pinky had a bug in the original game causing an error choosing a target location in specific situations)")]
     [SerializeField] bool originalMode; 
@@ -40,5 +44,38 @@ public class Pinky : Ghost
         spriteRenderer.color = Color.white; //Temporary
     }
 
-    
+    protected override void Scatter()
+    {
+        scatterTimer();
+        Vector2Int playerGridPosition = map.GetPlayerPosition();
+        Vector2Int clydeGridPosition = map.GetGridLocation(transform.position);
+
+        if (Vector2Int.Distance(playerGridPosition, clydeGridPosition) < radiusToAvoidPlayer && !flipped)
+        {
+            currentDirection = -currentDirection;
+            nextGridPosition = map.GetNextGridPosition(currentGridPosition, currentDirection, true, true);
+            flipped = true;
+            cooldownTimer = turnCooldown;
+            targetGridPosition = nextGridPosition;
+        }
+        else
+        {
+            Vector2Int scatterTargetGridPos = map.GetGridLocation(scatterTarget.position);
+            targetGridPosition = scatterTargetGridPos;
+        }
+        Move(false);
+        lastTargetGridPosition = targetGridPosition;
+    }
+    protected void scatterTimer()
+    {
+        if(cooldownTimer > 0)
+        {
+            cooldownTimer -= Time.deltaTime;
+        }
+        else
+        {
+            flipped = false;
+        }
+    }
+
 }
