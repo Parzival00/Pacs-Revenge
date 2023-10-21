@@ -508,11 +508,8 @@ public class PlayerController : MonoBehaviour
         gunTimerCoroutine = StartCoroutine(GunTimer());
 
 
-        shieldsRemaining++;
         baseSpeed += gunSpeedMultiplier;
-        print("shilds: " + shieldsRemaining);
-        if (shieldAnimator != null)
-            shieldAnimator.PlayShieldUp();
+        addShields();
     }
 
     /// <summary>
@@ -617,7 +614,7 @@ public class PlayerController : MonoBehaviour
                     if(shieldAnimator != null && shieldsRemaining > 0)
                     {
                         shieldsRemaining--;
-                        print("shilds: " + shieldsRemaining);
+                        print("shields: " + shieldsRemaining);
 
                         //stun ghost
                         other.SendMessage("FreezeGhost");
@@ -712,6 +709,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void addShields()
+    {
+        shieldsRemaining++;
+        print("shields: " + shieldsRemaining);
+        if (shieldAnimator != null)
+            shieldAnimator.PlayShieldUp();
+    }
     /// <summary>
     /// Disable the character controller temporarily to set the position to given location. (Used in combination with the teleport class) 
     /// </summary>
