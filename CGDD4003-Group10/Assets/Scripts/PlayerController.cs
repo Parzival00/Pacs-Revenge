@@ -416,10 +416,8 @@ public class PlayerController : MonoBehaviour
     {
         if(stunFireTimer <= 0 && Input.GetMouseButtonDown(0) && ammoCount > 0)
         {
-            Projectile stunShot = Instantiate(stunProjectile, bulletOrigin.position + bulletOrigin.forward * 0.5f, bulletOrigin.rotation);
-            //stunShot.transform.localEulerAngles = Vector3.up * -cameraPitch;
-            //stunShot.transform.localPosition += Vector3.forward * 1.5f;
-            //stunShot.transform.parent = null;
+            Instantiate(stunProjectile, bulletOrigin.position, bulletOrigin.rotation);
+
             stunFireTimer = fireRate;
             weaponSound.PlayOneShot(stunShotSound);
             ammoCount--;
