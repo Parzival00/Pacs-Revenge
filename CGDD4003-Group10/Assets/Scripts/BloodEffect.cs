@@ -7,7 +7,6 @@ public class BloodEffect : MonoBehaviour
 {
     [SerializeField] Sprite bloodStage1;
     [SerializeField] Sprite bloodStage2;
-    [SerializeField] Sprite bloodStage3;
     [SerializeField] float timeTillStage2 = 0.2f;
     [SerializeField] float lifeTime = 10;
     [SerializeField] Vector3 startVelocity = new Vector3(0, 0.5f, 0);
@@ -36,7 +35,6 @@ public class BloodEffect : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         rb.useGravity = false;
-        //spriteRenderer.sprite = bloodStage3;
         Destroy(gameObject, lifeTime);
     }
 }

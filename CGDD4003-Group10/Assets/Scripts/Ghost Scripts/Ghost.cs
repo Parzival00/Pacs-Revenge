@@ -19,7 +19,8 @@ public class Ghost : MonoBehaviour
     {
         public TargetArea targetArea;
         public int pointWorth;
-        public GameObject bloodEffect;
+        public GameObject bigBlood;
+        public GameObject smallBlood;
     }
 
     public enum Mode
@@ -64,7 +65,8 @@ public class Ghost : MonoBehaviour
     [SerializeField] protected Transform ghostIcon;
     [SerializeField] protected GhostSpriteController spriteController;
     [SerializeField] protected SpriteRenderer spriteRenderer;
-    [SerializeField] protected GameObject bloodEffect;
+    [SerializeField] protected GameObject bigBlood;
+    [SerializeField] protected GameObject smallBlood;
     [SerializeField] protected GameObject corpse;
 
     [Header("Ghost Settings")]
@@ -648,7 +650,8 @@ public class Ghost : MonoBehaviour
         HitInformation hit = new HitInformation();
         hit.targetArea = GetTargetArea(type);
         hit.pointWorth = pointWorth;
-        hit.bloodEffect = bloodEffect;
+        hit.bigBlood = bigBlood;
+        hit.smallBlood = smallBlood;
 
         currentHitArea = hit.targetArea;
 

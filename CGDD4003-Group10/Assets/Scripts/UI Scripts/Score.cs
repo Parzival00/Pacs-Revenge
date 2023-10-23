@@ -65,7 +65,7 @@ public class Score : MonoBehaviour
                 score += fruitController.CollectFruit();
                 if(fruitController.GetCurrentFruit().name.Equals("Cherry"))
                 {
-                    this.gameObject.GetComponent<PlayerController>().addShields();
+                    this.gameObject.GetComponent<PlayerController>().AddShields();
                 }
             }
         }

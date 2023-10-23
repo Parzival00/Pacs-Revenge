@@ -296,8 +296,7 @@ public class PlayerController : MonoBehaviour
                         Ghost.HitInformation hitInformation = targetAreaCollider.OnShot();
                         Score.AddToScore(hitInformation.pointWorth + hitInformation.targetArea.pointsAddition);
 
-                        GameObject bloodEffect = hitInformation.bloodEffect;
-                        Instantiate(bloodEffect, hit.point + hit.normal * 0.2f, Quaternion.identity);
+                        SpawnBlood(hitInformation.bigBlood, hitInformation.smallBlood, hitInformation.targetArea.difficulty, hit);
                     }
                 }
                 else
@@ -406,6 +405,53 @@ public class PlayerController : MonoBehaviour
             weaponTemp -= Time.deltaTime * cooldownSpeed;
         }
     }
+
+    void SpawnBlood(GameObject bigBlood, GameObject smallBlood, Ghost.TargetAreaDifficulty difficulty, RaycastHit hit)
+    {
+        float spawnRadius = 0.5f;
+        if(difficulty == Ghost.TargetAreaDifficulty.Easy)
+        {
+            spawnRadius = 0.2f;
+            GameObject blood = smallBlood;
+            for (int i = 0; i < 2; i++)
+            {
+                Instantiate(blood, hit.point + 
+                    hit.transform.right * Random.Range(-spawnRadius, spawnRadius) + hit.transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2), Quaternion.identity);
+            }
+        } 
+        else if (difficulty == Ghost.TargetAreaDifficulty.Medium)
+        {
+            GameObject blood = smallBlood;
+            for (int i = 0; i < 3; i++)
+            {
+                Instantiate(blood, hit.point +
+                    hit.transform.right * Random.Range(-spawnRadius, spawnRadius) + hit.transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2), Quaternion.identity);
+            }
+
+            blood = bigBlood;
+            for (int i = 0; i < 1; i++)
+            {
+                Instantiate(blood, hit.point +
+                    hit.transform.right * Random.Range(-spawnRadius, spawnRadius) + hit.transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2), Quaternion.identity);
+            }
+        } 
+        else
+        {
+            GameObject blood = smallBlood;
+            for (int i = 0; i < 4; i++)
+            {
+                Instantiate(blood, hit.point +
+                    hit.transform.right * Random.Range(-spawnRadius, spawnRadius) + hit.transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2), Quaternion.identity);
+            }
+
+            blood = bigBlood;
+            for (int i = 0; i < 3; i++)
+            {
+                Instantiate(blood, hit.point +
+                    hit.transform.right * Random.Range(-spawnRadius, spawnRadius) + hit.transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2), Quaternion.identity);
+            }
+        }
+    }
     #endregion
 
     #region Stun-Gun Functionality
@@ -509,7 +555,7 @@ public class PlayerController : MonoBehaviour
 
 
         baseSpeed += gunSpeedMultiplier;
-        addShields();
+        AddShields();
     }
 
     /// <summary>
@@ -654,9 +700,6 @@ public class PlayerController : MonoBehaviour
         fadeImage.canvasRenderer.SetAlpha(0f);
         fadeImage.gameObject.SetActive(true);
 
-        //Play Player death animation
-        //animator.SetTrigger("Death");
-
         WaitForSecondsRealtime deathTimer = new WaitForSecondsRealtime(deathSequenceLength / 2);
 
         yield return deathTimer;
@@ -679,7 +722,6 @@ public class PlayerController : MonoBehaviour
         }
 
         transform.position = playerSpawnPoint.position;
-        
 
         playerLives--;
 
@@ -693,9 +735,6 @@ public class PlayerController : MonoBehaviour
         {
             fadeImage.gameObject.SetActive(false);
 
-            //animator.ResetTrigger("Death");
-            //animator.SetTrigger("Respawn");
-
             yield return deathTimer;
 
             character.enabled = true;
@@ -704,12 +743,10 @@ public class PlayerController : MonoBehaviour
             inDeathSequence = false;
 
             LivesText.text = "" + playerLives;
-
-            //animator.ResetTrigger("Respawn");
         }
     }
 
-    public void addShields()
+    public void AddShields()
     {
         shieldsRemaining++;
         print("shields: " + shieldsRemaining);

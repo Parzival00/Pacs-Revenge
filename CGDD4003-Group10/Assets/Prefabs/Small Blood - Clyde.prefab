@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6789755332814126832}
   - component: {fileID: 2069473149776378285}
   m_Layer: 13
-  m_Name: BloodEffect - Clyde
+  m_Name: Small Blood - Clyde
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.118, y: 1.333, z: 12.39}
-  m_LocalScale: {x: 2.2, y: 2.2, z: 2.2}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -82,8 +82,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.32, y: 0.16, z: 0.08}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.21555203, y: 0.078834996, z: 0.08}
+  m_Center: {x: 0.0013222342, y: -0.0036069748, z: 0}
 --- !u!212 &1625201144006556938
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -125,7 +125,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1633537190, guid: c8ade2f278183814fbb266a797f56504, type: 3}
+  m_Sprite: {fileID: 741242134, guid: eda2d98ab6e364a46b01071092f11b28, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -148,9 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edda2b51a009eaa44a1978263662eac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bloodStage1: {fileID: -1633537190, guid: c8ade2f278183814fbb266a797f56504, type: 3}
-  bloodStage2: {fileID: 918949943, guid: c8ade2f278183814fbb266a797f56504, type: 3}
-  bloodStage3: {fileID: -1150818744, guid: c8ade2f278183814fbb266a797f56504, type: 3}
+  bloodStage1: {fileID: 741242134, guid: eda2d98ab6e364a46b01071092f11b28, type: 3}
+  bloodStage2: {fileID: -739047339, guid: eda2d98ab6e364a46b01071092f11b28, type: 3}
   timeTillStage2: 0.4
   lifeTime: 2
   startVelocity: {x: 0, y: 0.5, z: 0}
