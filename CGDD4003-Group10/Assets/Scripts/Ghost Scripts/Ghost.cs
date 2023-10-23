@@ -68,6 +68,7 @@ public class Ghost : MonoBehaviour
     [SerializeField] protected GameObject bigBlood;
     [SerializeField] protected GameObject smallBlood;
     [SerializeField] protected GameObject corpse;
+    [SerializeField] protected GameObject minimapIcon;
 
     [Header("Ghost Settings")]
     [SerializeField] protected bool exitSpawnToRight;
@@ -453,6 +454,9 @@ public class Ghost : MonoBehaviour
 
         spriteController.StartDeathAnimation(faceForwardForDeath);
 
+        minimapIcon.SetActive(false);
+        
+
         WaitForSeconds deathWait = new WaitForSeconds(3f);
 
         yield return deathWait;
@@ -491,6 +495,7 @@ public class Ghost : MonoBehaviour
         startedRespawnSequence = false;
 
         print("Respawned: " + name);
+        minimapIcon.SetActive(true);
 
         //spriteRenderer.color = Color.white;
 

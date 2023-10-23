@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44480163, g: 0.4943503, b: 0.5735447, a: 1}
+  m_IndirectSpecularColor: {r: 0.44480178, g: 0.4943508, b: 0.5735456, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9464,6 +9464,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 197793900}
   m_Mesh: {fileID: 7060269505630729018, guid: fe5b1acd4ffece44d988b3003ba75795, type: 3}
+--- !u!1 &203145861 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6203385613228050135, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
+  m_PrefabInstance: {fileID: 1970699791}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &206719927
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9822,6 +9827,10 @@ PrefabInstance:
       propertyPath: spawnExit
       value: 
       objectReference: {fileID: 54225875}
+    - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+      propertyPath: minimapIcon
+      value: 
+      objectReference: {fileID: 1861414321}
     - target: {fileID: 2517130048074021212, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
       propertyPath: dashCooldown
       value: 5
@@ -22296,6 +22305,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 513797426}
   m_CullTransparentMesh: 1
+--- !u!1 &514557512 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 971424926678157357, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
+  m_PrefabInstance: {fileID: 1577960914}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &515426398
 GameObject:
   m_ObjectHideFlags: 0
@@ -71607,6 +71621,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 54225875}
     - target: {fileID: 1039700990719141375, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
+      propertyPath: minimapIcon
+      value: 
+      objectReference: {fileID: 514557512}
+    - target: {fileID: 1039700990719141375, guid: 2e41959caaad6074a8c441ed13fb87bc, type: 3}
       propertyPath: respawnPoint
       value: 
       objectReference: {fileID: 1663082612}
@@ -71902,6 +71920,11 @@ Transform:
   - {fileID: 1075343683}
   m_Father: {fileID: 1105822209}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1587079782 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 785863062986361225, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
+  m_PrefabInstance: {fileID: 1718795330}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1591821717
 GameObject:
   m_ObjectHideFlags: 0
@@ -77314,6 +77337,10 @@ PrefabInstance:
       propertyPath: spawnExit
       value: 
       objectReference: {fileID: 54225875}
+    - target: {fileID: 4775153053850207514, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
+      propertyPath: minimapIcon
+      value: 
+      objectReference: {fileID: 1587079782}
     - target: {fileID: 4775153053850207514, guid: 1ea16e94f65873848852d427acfb91f9, type: 3}
       propertyPath: respawnPoint
       value: 
@@ -83920,6 +83947,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7465043686356946606, guid: 5d8988313b2408b4fbc3bb6102082b93, type: 3}
   m_PrefabInstance: {fileID: 1857955447}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1861414321 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5929181813537319491, guid: 5f458048d34d42a46ab9312c9d269b2c, type: 3}
+  m_PrefabInstance: {fileID: 217045693}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1861524843
 GameObject:
   m_ObjectHideFlags: 0
@@ -89312,6 +89344,10 @@ PrefabInstance:
       propertyPath: spawnExit
       value: 
       objectReference: {fileID: 54225875}
+    - target: {fileID: 4249806782968608032, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
+      propertyPath: minimapIcon
+      value: 
+      objectReference: {fileID: 203145861}
     - target: {fileID: 4249806782968608032, guid: 186f85af0fd20f446854fa0b586d4d84, type: 3}
       propertyPath: respawnPoint
       value: 
