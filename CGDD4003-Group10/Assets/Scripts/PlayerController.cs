@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask targetingMask;
 
     [Header("Stun-Gun Settings")]
+    [SerializeField] SpriteRenderer stunMuzzleFlash;
     [SerializeField] float fireRate;
     [SerializeField] Transform bulletOrigin;
     [SerializeField] GameObject stunGun;
@@ -160,6 +161,8 @@ public class PlayerController : MonoBehaviour
         gunActivated = false;
         gun.SetActive(false);
         hud.SetActive(false);
+
+        stunMuzzleFlash.gameObject.SetActive(false);
 
         Time.timeScale = 1;
 
@@ -464,6 +467,8 @@ public class PlayerController : MonoBehaviour
         {
             Instantiate(stunProjectile, bulletOrigin.position, bulletOrigin.rotation);
 
+            StartCoroutine(StunMuzzleFlash());
+
             stunFireTimer = fireRate;
             weaponSound.PlayOneShot(stunShotSound);
             ammoCount--;
@@ -479,6 +484,17 @@ public class PlayerController : MonoBehaviour
         if(ammoCount < maxAmmoCount)
             ammoCount++;
         ammoText.text = "" + ammoCount;
+    }
+
+    public IEnumerator StunMuzzleFlash()
+    {
+        stunMuzzleFlash.gameObject.SetActive(true);
+        stunMuzzleFlash.flipX = Random.Range(0, 2) == 1 ? true : false;
+        stunMuzzleFlash.flipY = Random.Range(0, 2) == 1 ? true : false;
+
+        yield return new WaitForSeconds(0.2f);
+
+        stunMuzzleFlash.gameObject.SetActive(false);
     }
     #endregion
 
