@@ -68,6 +68,7 @@ public class Ghost : MonoBehaviour
     [SerializeField] protected GameObject bigBlood;
     [SerializeField] protected GameObject smallBlood;
     [SerializeField] protected GameObject corpse;
+    [SerializeField] protected GameObject stunEffect;
     [SerializeField] protected GameObject minimapIcon;
     [SerializeField] protected GameObject deadMinimapIcon;
 
@@ -141,6 +142,8 @@ public class Ghost : MonoBehaviour
             spriteController = GetComponentInChildren<GhostSpriteController>();
 
         navMesh.speed = speed;
+
+        stunEffect.SetActive(false);
 
         targetAreaDirectory = new Dictionary<TargetAreaType, TargetArea>();
         foreach(TargetArea area in targetAreas)
@@ -451,6 +454,8 @@ public class Ghost : MonoBehaviour
 
         navMesh.enabled = false;
 
+        stunEffect.SetActive(false);
+
         startedRespawnSequence = true;
 
         spriteController.StartDeathAnimation(faceForwardForDeath);
@@ -580,6 +585,8 @@ public class Ghost : MonoBehaviour
 
         navMesh.enabled = true;
 
+        stunEffect.SetActive(false);
+
         spriteController.ResetParameters();
 
         currentMode = Mode.Dormant;
@@ -595,6 +602,7 @@ public class Ghost : MonoBehaviour
             previousMode = currentMode;
             currentMode = Mode.Freeze;
             navMesh.enabled = false;
+            stunEffect.SetActive(true);
             chaseSoundSource.Stop();
         }
     }
@@ -609,6 +617,7 @@ public class Ghost : MonoBehaviour
         {
             navMesh.enabled = true;
             chaseSoundSource.Play();
+            stunEffect.SetActive(false);
             currentMode = previousMode;
         }
         freezeTimer = freezeTime;
