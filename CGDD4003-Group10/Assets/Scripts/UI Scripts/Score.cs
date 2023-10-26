@@ -47,7 +47,7 @@ public class Score : MonoBehaviour
             score += 50;
             if (pelletsCollected >= totalPellets)
             {
-                SceneManager.LoadScene(2);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
             else if (pelletsCollected % pelletsPerAmmo == 0)
             {

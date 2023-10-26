@@ -746,7 +746,7 @@ public class PlayerController : MonoBehaviour
         {
             print("Ending Scene");
             //end game scene
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene("GameOverScene");
         }
         else
         {
