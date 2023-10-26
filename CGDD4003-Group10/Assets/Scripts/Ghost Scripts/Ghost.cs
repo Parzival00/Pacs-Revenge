@@ -32,6 +32,7 @@ public class Ghost : MonoBehaviour
         Respawn, //Ghost is respawning
         Freeze, //Ghost is stunned
         Flinch, //Ghost got hit by the railgun but didnt die
+        InvisibilityPowerUp, //Player has the invisibility powerup
         Reseting //Ghost is getting reset because player got killed
     }
 
@@ -190,6 +191,9 @@ public class Ghost : MonoBehaviour
                 break;
             case Mode.Flinch:
                 Flinch();
+                break;
+            case Mode.InvisibilityPowerUp:
+                InvisibilityPowerUp();
                 break;
             default:
                 break;
@@ -651,6 +655,29 @@ public class Ghost : MonoBehaviour
         }
     }
     #endregion
+
+    public void ActivatedInvisibilityPowerUp()
+    {
+        //currentMode = Mode.InvisibilityPowerUp;
+    }
+
+    public void InvisibilityPowerUp()
+    {
+        Vector2Int scatterTargetGridPos = map.GetGridLocation(scatterTarget.position);
+
+        targetGridPosition = scatterTargetGridPos;
+
+        Move(false);
+
+        lastTargetGridPosition = targetGridPosition;
+
+        PlayChaseSound();
+
+        if(!PlayerController.invisibilityActivated)
+        {
+            currentMode = Mode.Chase;
+        }
+    }
 
 
     //Gets the target area from the directory using the target area type
