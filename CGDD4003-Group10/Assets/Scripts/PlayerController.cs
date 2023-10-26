@@ -107,6 +107,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Color targetingColor = Color.yellow;
 
     [Header("Music Settings")]
+    [SerializeField] float powerMusicVolBoost;
     [SerializeField] AudioClip powerMusic;
     [SerializeField] AudioClip bgMusic;
     [SerializeField] AudioClip gameStart;
@@ -547,6 +548,7 @@ public class PlayerController : MonoBehaviour
 
         musicPlayer.Stop();
         musicPlayer.PlayOneShot(powerMusic);
+        musicPlayer.volume = musicPlayer.volume * powerMusicVolBoost;
 
         if (gunAnimator != null)
         {
@@ -601,8 +603,7 @@ public class PlayerController : MonoBehaviour
         gun.SetActive(false);
         hud.SetActive(false);
 
-        musicPlayer.Stop();
-        musicPlayer.Play();
+        musicPlayer.volume = musicPlayer.volume / powerMusicVolBoost;
 
         //Activates Stun-Gun again
         stunGun.SetActive(true);
