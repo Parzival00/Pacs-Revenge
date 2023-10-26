@@ -106,6 +106,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Image crosshair;
     [SerializeField] Color targetingColor = Color.yellow;
 
+    [Header("Invisibility Settings")]
+    [SerializeField] float invisibilityLength = 30;
+
     [Header("Music Settings")]
     [SerializeField] float powerMusicVolBoost;
     [SerializeField] AudioClip powerMusic;
@@ -117,6 +120,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool usePlayerPrefsSettings;
 
     public static bool gunActivated { get; private set; }
+    public static bool invisibilityActivated { get; private set; }
     private bool canFire = true;
 
     private bool inDeathSequence;
@@ -770,6 +774,32 @@ public class PlayerController : MonoBehaviour
         if (shieldAnimator != null)
             shieldAnimator.PlayShieldUp();
     }
+
+    #region Invisibility Power-Up
+    public void ActivateInvisibility()
+    {
+        foreach(Ghost ghost in ghosts)
+        {
+            ghost.ActivatedInvisibilityPowerUp();
+        }
+
+        StartCoroutine(InvisibilityPowerUp());
+    }
+
+    IEnumerator InvisibilityPowerUp()
+    {
+        invisibilityActivated = true;
+
+        yield return new WaitForSeconds(invisibilityLength);
+
+        DeactivateInvisibility();
+    }
+    public void DeactivateInvisibility()
+    {
+        invisibilityActivated = false;
+    }
+    #endregion
+
     /// <summary>
     /// Disable the character controller temporarily to set the position to given location. (Used in combination with the teleport class) 
     /// </summary>
