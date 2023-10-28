@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Custom_RadarShader
+  m_Name: Radar
   m_Shader: {fileID: 4800000, guid: d0cef8417440a5144aa7e5f86faae218, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -33,11 +33,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _LineAngle: 1.7662394
-    - _LineWidth: 0.28
-    - _TrailWidth: 3.19
+    - _IndicatorAngle: 0
+    - _IndicatorLength: 5.56
+    - _IndicatorWidth: 1.5
+    - _LineAngle: 31.481335
+    - _LineWidth: 0.58
+    - _TrailWidth: 6.07
     m_Colors:
-    - _Color: {r: 0.990566, g: 0, b: 0, a: 1}
-    - _LineColor: {r: 0, g: 1, b: 0, a: 0.5254902}
-    - _TrailColor: {r: 0.24905658, g: 1, b: 0.24905658, a: 0.33333334}
+    - _Color: {r: 0, g: 0.16898394, b: 1, a: 1}
+    - _LineColor: {r: 0.09224129, g: 0, b: 1, a: 0.94509804}
+    - _TrailColor: {r: 0, g: 0.726841, b: 1, a: 0.33333334}
   m_BuildTextureStacks: []

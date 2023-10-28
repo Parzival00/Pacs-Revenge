@@ -11,15 +11,21 @@ public class Score : MonoBehaviour
 
     public static int pelletsLeft;
 
+    public static bool indicatorActive = false;
+
     [SerializeField] TMP_Text scoreUI;
     [SerializeField] TMP_Text pelletRemaining;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip pelletSound;
     [SerializeField] int pelletsPerAmmo;
+    [SerializeField] float indicatorTimerThreshold = 10;
     //[SerializeField] GameObject cherryObject;
     //[SerializeField] int cherrySpawn1, cherrySpawn2;
 
     private int totalPellets;
+
+    float timeSinceLastPellet;
+
     void Start()
     {
         pelletsCollected = 0;
@@ -34,6 +40,10 @@ public class Score : MonoBehaviour
     {
         UpdateScore();
         UpdatePelletsRemaining();
+
+        timeSinceLastPellet += Time.deltaTime;
+
+        indicatorActive = timeSinceLastPellet >= indicatorTimerThreshold;
     }
 
     
@@ -44,6 +54,7 @@ public class Score : MonoBehaviour
             other.gameObject.SetActive(false);
             audioSource.PlayOneShot(pelletSound);
             pelletsCollected += 1;
+            timeSinceLastPellet = 0;
             score += 50;
             if (pelletsCollected >= totalPellets)
             {
