@@ -9,7 +9,31 @@ public class FruitController : MonoBehaviour
     {
         public string name;
         public Sprite sprite;
+        public int levelAppearance;
         public int pointsWorth;
+    }
+
+    public struct FruitInfo
+    {
+        public int pointsWorth;
+        public PowerUpType powerUp;
+    }
+
+    public enum PowerUpType
+    {
+        Shield,
+        Invisibility,
+        Speed,
+        EnhancedRadar,
+        ExtraLife,
+        None
+    }
+
+    [System.Serializable]
+    public struct PowerUp
+    {
+        public PowerUpType type;
+        [Range(0,100)] public int[] weights;
     }
 
     [Header("Fruit Spawn Alert Settings")]
@@ -34,6 +58,9 @@ public class FruitController : MonoBehaviour
     [SerializeField] int secondFruitSpawnThreshold = 170;
     [SerializeField] float fruitTimer = 40;
 
+    [Header("Power Up Spawn Settings")]
+    [SerializeField] PowerUp[] powerUps;
+
     private bool fruitActivated;
     private Fruit currentFruit;
 
@@ -45,7 +72,15 @@ public class FruitController : MonoBehaviour
     {
         if (availableFruits != null)
         {
-            currentFruit = availableFruits[Random.Range(0, availableFruits.Length)];
+            currentFruit = availableFruits[0];
+            for (int i = 0; i < availableFruits.Length; i++)
+            {
+                if(availableFruits[i].levelAppearance == Score.currentLevel)
+                {
+                    currentFruit = availableFruits[i];
+                    break;
+                }
+            }
 
             minimapFruitSpriteRenderer.sprite = currentFruit.sprite;
             fruitSpriteRenderer.sprite = currentFruit.sprite;
@@ -106,18 +141,22 @@ public class FruitController : MonoBehaviour
     /// <summary>
     /// Deactivates the fruit and returns the point worth of the current fruit
     /// </summary>
-    public int CollectFruit()
+    public FruitInfo CollectFruit()
     {
-        int pointsToReturn = 0;
+
+        FruitInfo fruitInfo;
+        fruitInfo.pointsWorth = 0;
+        fruitInfo.powerUp = PowerUpType.None;
 
         if (fruitActivated)
         {
-            pointsToReturn = currentFruit.pointsWorth;
+            fruitInfo.pointsWorth = currentFruit.pointsWorth;
+            fruitInfo.powerUp = SelectPowerUp(Score.currentLevel);
         }
 
         DeactivateFruit();
 
-        return pointsToReturn;
+        return fruitInfo;
     }
 
     /// <summary>
@@ -132,7 +171,6 @@ public class FruitController : MonoBehaviour
         {
             DeactivateFruit();
         }
-
     }
 
     public Fruit GetCurrentFruit()
@@ -147,6 +185,37 @@ public class FruitController : MonoBehaviour
         {
             ActivateFruit();
         }
+    }
+
+    PowerUpType SelectPowerUp(int currentLevel)
+    {
+        print("Current Level: " + currentLevel);
+        int total = 0;
+        for (int i = 0; i < powerUps.Length; i++)
+        {
+            if (currentLevel - 1 < powerUps[i].weights.Length)
+            {
+                total += powerUps[i].weights[currentLevel - 1];
+            }
+        }
+
+        int value = Random.Range(0, total + 1);
+        print("Total: " + total);
+        print("Value: " + value);
+        int min = 0;
+        for (int i = 0; i < powerUps.Length; i++)
+        {
+            if (currentLevel < powerUps[i].weights.Length)
+            {
+                if (value > min && value <= min + powerUps[i].weights[currentLevel - 1])
+                {
+                    return powerUps[i].type;
+                }
+                min = min + powerUps[i].weights[currentLevel - 1];
+            }
+        }
+
+        return PowerUpType.Shield;
     }
 
     IEnumerator FruitSpawnAlert()

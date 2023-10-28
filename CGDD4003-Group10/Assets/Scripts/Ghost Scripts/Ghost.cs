@@ -277,7 +277,7 @@ public class Ghost : MonoBehaviour
     /// </summary>
     protected bool Move(bool canTurnAround)
     {
-        if (currentMode != Mode.Chase && currentMode != Mode.Scatter)
+        if (currentMode != Mode.Chase && currentMode != Mode.Scatter && currentMode != Mode.InvisibilityPowerUp)
             return false;
 
         navMesh.enabled = true;
@@ -412,6 +412,10 @@ public class Ghost : MonoBehaviour
             currentDirection = -currentDirection;
             nextGridPosition = map.GetNextGridPosition(currentGridPosition, currentDirection, true, true);
         }
+        else if (PlayerController.invisibilityActivated)
+        {
+            currentMode = Mode.InvisibilityPowerUp;
+        }
         else
         {
             currentMode = Mode.Chase;
@@ -536,9 +540,6 @@ public class Ghost : MonoBehaviour
         if (currentMode == Mode.Scatter)
         {
             currentMode = Mode.Chase;
-
-            //if (ghostCollider)
-            //    ghostCollider.enabled = true;
         }
     }
 
@@ -600,7 +601,7 @@ public class Ghost : MonoBehaviour
     #region Freeze/Stun Ghosts
     public void FreezeGhost()
     {
-        if (currentMode == Mode.Scatter || currentMode == Mode.Chase)
+        if (currentMode == Mode.Scatter || currentMode == Mode.Chase || currentMode == Mode.InvisibilityPowerUp)
         {
             freezeTimer = freezeTime;
             previousMode = currentMode;
@@ -622,7 +623,15 @@ public class Ghost : MonoBehaviour
             navMesh.enabled = true;
             chaseSoundSource.Play();
             stunEffect.SetActive(false);
-            currentMode = previousMode;
+
+            if (PlayerController.gunActivated)
+                currentMode = Mode.Scatter;
+            else if (PlayerController.invisibilityActivated)
+                currentMode = Mode.InvisibilityPowerUp;
+            else
+                currentMode = Mode.Chase;
+            
+            //currentMode = previousMode;
         }
         freezeTimer = freezeTime;
     }
@@ -658,7 +667,8 @@ public class Ghost : MonoBehaviour
 
     public void ActivatedInvisibilityPowerUp()
     {
-        //currentMode = Mode.InvisibilityPowerUp;
+        if(currentMode == Mode.Scatter || currentMode == Mode.Chase)
+            currentMode = Mode.InvisibilityPowerUp;
     }
 
     public void InvisibilityPowerUp()

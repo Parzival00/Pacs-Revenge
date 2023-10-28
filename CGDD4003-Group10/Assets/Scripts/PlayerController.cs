@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioSource weaponSound;
 
     [Header("Railgun Settings")]
-    [SerializeField] RailgunVFXController railGunVFX;
+    [SerializeField] RailgunVFX railGunVFX;
     [SerializeField] Animator gunAnimator;
     [SerializeField] float chargeTime;
     [SerializeField] float maxWeaponTemp = 5;
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask targetingMask;
 
     [Header("Stun-Gun Settings")]
-    [SerializeField] SpriteRenderer stunMuzzleFlash;
+    [SerializeField] StungunVFX stungunVFX;
     [SerializeField] float fireRate;
     [SerializeField] Transform bulletOrigin;
     [SerializeField] GameObject stunGun;
@@ -166,8 +166,6 @@ public class PlayerController : MonoBehaviour
         gunActivated = false;
         gun.SetActive(false);
         hud.SetActive(false);
-
-        stunMuzzleFlash.gameObject.SetActive(false);
 
         Time.timeScale = 1;
 
@@ -472,7 +470,7 @@ public class PlayerController : MonoBehaviour
         {
             Instantiate(stunProjectile, bulletOrigin.position, bulletOrigin.rotation);
 
-            StartCoroutine(StunMuzzleFlash());
+            stungunVFX.Shoot();
 
             stunFireTimer = fireRate;
             weaponSound.PlayOneShot(stunShotSound);
@@ -489,17 +487,6 @@ public class PlayerController : MonoBehaviour
         if(ammoCount < maxAmmoCount)
             ammoCount++;
         ammoText.text = "" + ammoCount;
-    }
-
-    public IEnumerator StunMuzzleFlash()
-    {
-        stunMuzzleFlash.gameObject.SetActive(true);
-        stunMuzzleFlash.flipX = Random.Range(0, 2) == 1 ? true : false;
-        stunMuzzleFlash.flipY = Random.Range(0, 2) == 1 ? true : false;
-
-        yield return new WaitForSeconds(0.2f);
-
-        stunMuzzleFlash.gameObject.SetActive(false);
     }
     #endregion
 
@@ -637,12 +624,11 @@ public class PlayerController : MonoBehaviour
         {
             shieldsRemaining--;
             print("shilds: " + shieldsRemaining);
-            if (shieldAnimator != null)
+            if (shieldAnimator != null && shieldsRemaining == 0)
             {
                 shieldAnimator.PlayShieldDown();
-                baseSpeed -= gunSpeedMultiplier;
             }
-                
+            baseSpeed -= gunSpeedMultiplier;
         }
     }
     #endregion
@@ -664,7 +650,7 @@ public class PlayerController : MonoBehaviour
         {
             Ghost ghost = other.gameObject.transform.root.GetComponent<Ghost>();
 
-            if (ghost.CurrentMode == Ghost.Mode.Chase || ghost.CurrentMode == Ghost.Mode.Scatter)
+            if (ghost.CurrentMode == Ghost.Mode.Chase || ghost.CurrentMode == Ghost.Mode.Scatter || ghost.CurrentMode == Ghost.Mode.InvisibilityPowerUp)
             {
                 print("hit by " + other.gameObject.name);
 
@@ -711,6 +697,9 @@ public class PlayerController : MonoBehaviour
 
         if(gunActivated)
             DeactivateGun();
+
+        if (invisibilityActivated)
+            DeactivateInvisibility();
 
         //Stop all of the ghosts' movements
         foreach (Ghost g in ghosts)
@@ -771,11 +760,12 @@ public class PlayerController : MonoBehaviour
     {
         shieldsRemaining++;
         print("shields: " + shieldsRemaining);
-        if (shieldAnimator != null)
+        if (shieldAnimator != null && shieldsRemaining == 1)
             shieldAnimator.PlayShieldUp();
     }
 
     #region Invisibility Power-Up
+    Coroutine invisibilityPowerUpCoroutine;
     public void ActivateInvisibility()
     {
         foreach(Ghost ghost in ghosts)
@@ -783,7 +773,8 @@ public class PlayerController : MonoBehaviour
             ghost.ActivatedInvisibilityPowerUp();
         }
 
-        StartCoroutine(InvisibilityPowerUp());
+        if(invisibilityPowerUpCoroutine == null)
+            invisibilityPowerUpCoroutine = StartCoroutine(InvisibilityPowerUp());
     }
 
     IEnumerator InvisibilityPowerUp()
@@ -796,6 +787,9 @@ public class PlayerController : MonoBehaviour
     }
     public void DeactivateInvisibility()
     {
+        if (invisibilityPowerUpCoroutine != null)
+            StopCoroutine(invisibilityPowerUpCoroutine);
+
         invisibilityActivated = false;
     }
     #endregion

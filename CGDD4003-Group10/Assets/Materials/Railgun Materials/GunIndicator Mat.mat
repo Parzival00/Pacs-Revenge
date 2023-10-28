@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3135690635471138275
+--- !u!114 &-998356835646629140
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shield Effect
-  m_Shader: {fileID: -6465566751694194690, guid: 18639f339ab1ab64b950a1172b5ff538, type: 3}
+  m_Name: GunIndicator Mat
+  m_Shader: {fileID: -6465566751694194690, guid: ade0274e241b89648aa78bec558f948f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -36,10 +36,6 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _Animation_Tex:
-        m_Texture: {fileID: 2800000, guid: cf113fe7ca9d5cb4692c00bce75f1a5c, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -64,16 +60,8 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Emission_Tex:
-        m_Texture: {fileID: 2800000, guid: cf0fb52ff38ec2c4086fb6e17fffbe9e, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Main_Tex:
-        m_Texture: {fileID: 2800000, guid: 8bf90d3dfe5d5c348b1c386dfeaf3e5f, type: 3}
+        m_Texture: {fileID: 2800000, guid: 313cecd95439eb842a9e1f507916ba45, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -106,64 +94,46 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _ActivateProgress: 1
-    - _ActivateSmoothness: 1.22
-    - _Active: 0
+    - _Alpha: 1
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
-    - _BreakProgress: 1
-    - _Break_Progress: 0
     - _BumpScale: 1
+    - _ChargeAmount: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DeactivateProgress: 0
-    - _DecalMeshBiasType: 0
-    - _DecalMeshDepthBias: 0
-    - _DecalMeshViewBias: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DrawOrder: 0
     - _DstBlend: 0
     - _DstBlendAlpha: 0
+    - _EmissionIntensity: 2.43
+    - _EmissionStrength: 1
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Gradient_Line_Intensity: 0.61
-    - _Gradient_Line_Speed: 0.2
-    - _Gradient_Line_Step_Size: 2
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
-    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Scroll_Step_Size: 1
-    - _ShieldVignetteSmoothness: 0.65
-    - _Shield_Vignette: 0.91
-    - _Shield_Vignette_Smoothness: 0.65
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
+    - _UVOffset: 0
+    - _UVScale: 1
+    - _VerticalUVs: 1
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.6924528, g: 0.9902461, b: 1, a: 0.6901961}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Emission_Color: {r: 0.45660377, g: 0.94850856, b: 1, a: 0.3137255}
-    - _Emission_Offset: {r: 0, g: 0, b: 0, a: 0}
-    - _Emission_Tiling: {r: 1, g: 1, b: 0, a: 0}
-    - _Offset: {r: 0, g: 0, b: 0, a: 0}
-    - _Scroll_Speed: {r: -0.005, g: 0.03, b: 0, a: 0}
-    - _Shield_Vignette_Size: {r: 1.67, g: 0.76, b: 0, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-    - _Tiling: {r: 1.5, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []

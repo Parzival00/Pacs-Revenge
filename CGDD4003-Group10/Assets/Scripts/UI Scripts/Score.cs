@@ -8,10 +8,9 @@ public class Score : MonoBehaviour
 {
     public static int score { get; private set; }
     public static int pelletsCollected {get; private set; }
-
-    public static int pelletsLeft;
-
-    public static bool indicatorActive = false;
+    public static int pelletsLeft { get; private set; }
+    public static bool indicatorActive { get; private set; }
+    public static int currentLevel { get; private set; }
 
     [SerializeField] TMP_Text scoreUI;
     [SerializeField] TMP_Text pelletRemaining;
@@ -26,13 +25,18 @@ public class Score : MonoBehaviour
 
     float timeSinceLastPellet;
 
-    void Start()
+    PlayerController playerController;
+
+    void Awake()
     {
         pelletsCollected = 0;
         score = 0;
         GameObject[] pellets = GameObject.FindGameObjectsWithTag("Pellet");
         totalPellets = pellets.Length;
-        
+
+        currentLevel = SceneManager.GetActiveScene().buildIndex; //in the build settings, the game levels come right after the main menu so the build index corresponds with the level number
+
+        playerController = this.gameObject.GetComponent<PlayerController>();
     }
 
 
@@ -62,8 +66,7 @@ public class Score : MonoBehaviour
             }
             else if (pelletsCollected % pelletsPerAmmo == 0)
             {
-                PlayerController pc = this.gameObject.GetComponent<PlayerController>();
-                pc.AddAmmo();
+                playerController.AddAmmo();
             }
         }
 
@@ -73,10 +76,18 @@ public class Score : MonoBehaviour
 
             if(fruitController)
             {
-                score += fruitController.CollectFruit();
-                if(fruitController.GetCurrentFruit().name.Equals("Cherry"))
+                FruitController.FruitInfo fruitInfo = fruitController.CollectFruit();
+                score += fruitInfo.pointsWorth;
+                switch(fruitInfo.powerUp)
                 {
-                    this.gameObject.GetComponent<PlayerController>().AddShields();
+                    case FruitController.PowerUpType.Shield:
+                        playerController.AddShields();
+                        break;
+                    case FruitController.PowerUpType.Invisibility:
+                        playerController.ActivateInvisibility();
+                        break;
+                    default:
+                        break;
                 }
             }
         }

@@ -10226,13 +10226,20 @@ MonoBehaviour:
   availableFruits:
   - name: Cherry
     sprite: {fileID: 21300000, guid: 9877ffd276909b84f8545de12f13c2dc, type: 3}
+    levelAppearance: 1
     pointsWorth: 500
   - name: Strawberry
     sprite: {fileID: 21300000, guid: ec62a211047119c4eaf49b2dc92687fb, type: 3}
+    levelAppearance: 2
     pointsWorth: 800
   firstFruitSpawnThreshold: 70
   secondFruitSpawnThreshold: 170
   fruitTimer: 30
+  powerUps:
+  - type: 0
+    weights: 00000000550000004b000000
+  - type: 1
+    weights: 640000002300000028000000
 --- !u!1 &9213692965577662632
 GameObject:
   m_ObjectHideFlags: 0
