@@ -87,10 +87,10 @@ public class PlayerController : MonoBehaviour
     [Header("GameObject Refereneces")]
     [SerializeField] GameObject gun;
     [SerializeField] GameObject hud;
-    [SerializeField] Image fadeImage;
     [SerializeField] TMP_Text LivesText;
     [SerializeField] TMP_Text ammoText;
     [SerializeField] ShieldEffectAnimator shieldAnimator;
+    [SerializeField] Animator deathAnimator;
 
     Ghost[] ghosts;
 
@@ -169,10 +169,10 @@ public class PlayerController : MonoBehaviour
 
         Time.timeScale = 1;
 
-        fadeImage.canvasRenderer.SetAlpha(0.01f);
-
         if (animator == null)
             animator = GetComponent<Animator>();
+        if (deathAnimator == null)
+            deathAnimator = GameObject.FindGameObjectWithTag("DeathAnimator").GetComponent<Animator>();
 
 
         if(shieldAnimator == null)
@@ -707,14 +707,13 @@ public class PlayerController : MonoBehaviour
             g.StopGhost();
         }
 
-        fadeImage.canvasRenderer.SetAlpha(0f);
-        fadeImage.gameObject.SetActive(true);
-
         WaitForSecondsRealtime deathTimer = new WaitForSecondsRealtime(deathSequenceLength / 2);
+
+        deathAnimator.SetTrigger("Death");
 
         yield return deathTimer;
 
-        fadeImage.CrossFadeAlpha(255f, 100f, false);
+        //fadeImage.CrossFadeAlpha(255f, 100f, false);
 
         yield return deathTimer;
 
@@ -743,7 +742,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            fadeImage.gameObject.SetActive(false);
+            deathAnimator.SetTrigger("FadeOut");
 
             yield return deathTimer;
 
