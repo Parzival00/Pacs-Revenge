@@ -113,7 +113,6 @@ public class PlayerController : MonoBehaviour
     [Header("Music Settings")]
     [SerializeField] float powerMusicVolBoost;
     [SerializeField] AudioClip powerMusic;
-    [SerializeField] AudioClip bgMusic;
     [SerializeField] AudioClip gameStart;
     [SerializeField] AudioSource musicPlayer;
 
@@ -859,9 +858,6 @@ public class PlayerController : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("FOV"))
             playerCam.GetComponent<Camera>().fieldOfView = PlayerPrefs.GetFloat("FOV");
-        
-        if(PlayerPrefs.HasKey("Volume"))
-            AudioListener.volume = PlayerPrefs.GetFloat("Volume");
         
         if (PlayerPrefs.HasKey("Sensitivity"))
             sensitivity = PlayerPrefs.GetFloat("Sensitivity");

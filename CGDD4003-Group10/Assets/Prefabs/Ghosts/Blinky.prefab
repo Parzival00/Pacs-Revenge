@@ -2393,7 +2393,7 @@ AudioSource:
   m_GameObject: {fileID: 5704426052499218383}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 8391643240759406789, guid: 28f800679063ee84fb2e3c41fee59bc0, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.326
@@ -3568,6 +3568,8 @@ MonoBehaviour:
   closeSoundBlendpadding: 1
   dstToBlendToCloseSound: 2.8
   closePitch: 1.1
+  deathSound: {fileID: 8300000, guid: 39a8e5fedf7d9e04eb0511f9b5014f6d, type: 3}
+  hitSound: {fileID: 8300000, guid: 7bb66be5c12615442921560caa29fc92, type: 3}
   cooldownTime: 5
 --- !u!1 &7584621524934008102
 GameObject:

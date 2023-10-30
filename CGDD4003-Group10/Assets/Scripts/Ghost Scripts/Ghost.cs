@@ -106,7 +106,9 @@ public class Ghost : MonoBehaviour
     //[SerializeField] protected float closeVolume = 3f;
     //[SerializeField] protected AudioClip chaseSoundClose;
     //[SerializeField] protected AudioClip scatterSound;
-    //[SerializeField] protected AudioClip deathSound;
+    [Header("Other Sound Settings")]
+    [SerializeField] protected AudioClip deathSound;
+    [SerializeField] protected AudioClip hitSound;
     //[SerializeField] protected AudioClip corpseMoveSound;
     //[SerializeField] protected AudioClip respawnedSound;
 
@@ -457,7 +459,7 @@ public class Ghost : MonoBehaviour
         //spriteRenderer.color = Color.black;
 
         chaseSoundSource.Stop();
-
+        chaseSoundSource.PlayOneShot(deathSound);
         spriteController.DeactivateColliders();
 
         navMesh.enabled = false;
@@ -717,11 +719,13 @@ public class Ghost : MonoBehaviour
         {
             print("respawning");
             ghostHealth = 100;
+
             currentMode = Mode.Respawn;
         }
         else
         {
             previousMode = currentMode;
+            chaseSoundSource.PlayOneShot(hitSound);
             currentMode = Mode.Flinch;
         }
 

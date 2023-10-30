@@ -861,6 +861,8 @@ MonoBehaviour:
   closeSoundBlendpadding: 1
   dstToBlendToCloseSound: 2.8
   closePitch: 0.96
+  deathSound: {fileID: 8300000, guid: 39a8e5fedf7d9e04eb0511f9b5014f6d, type: 3}
+  hitSound: {fileID: 8300000, guid: 7bb66be5c12615442921560caa29fc92, type: 3}
   radiusToAvoidPlayer: 4
   randomTurnRange: 10
   randomCooldown: 5
@@ -1303,7 +1305,7 @@ AudioSource:
   m_GameObject: {fileID: 1910898983810789402}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 8391643240759406789, guid: 28f800679063ee84fb2e3c41fee59bc0, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.36

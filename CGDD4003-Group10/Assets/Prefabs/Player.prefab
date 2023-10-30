@@ -140,7 +140,7 @@ AudioSource:
   m_GameObject: {fileID: 1573818468627485014}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4906052917739341744, guid: 28f800679063ee84fb2e3c41fee59bc0, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.107
@@ -5189,7 +5189,7 @@ AudioSource:
   m_GameObject: {fileID: 2153855370591917489}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4902643752776861183, guid: 28f800679063ee84fb2e3c41fee59bc0, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.015
@@ -5947,7 +5947,7 @@ AudioSource:
   m_GameObject: {fileID: 4552041144137350135}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4902643752776861183, guid: 28f800679063ee84fb2e3c41fee59bc0, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.02
@@ -6261,20 +6261,19 @@ MonoBehaviour:
   maxAmmoCount: 3
   gun: {fileID: 8243696478966758294}
   hud: {fileID: 0}
-  fadeImage: {fileID: 0}
   LivesText: {fileID: 0}
   ammoText: {fileID: 0}
   shieldAnimator: {fileID: 0}
+  deathAnimator: {fileID: 0}
   deathSequenceLength: 1
-  playerLives: 3
+  maxPlayerLives: 3
   animator: {fileID: 6954913835686620882}
   targetOutlineController: {fileID: 6717606324952877450}
   crosshair: {fileID: 0}
   targetingColor: {r: 1, g: 0.9583559, b: 0, a: 1}
   invisibilityLength: 30
-  powerMusicVolBoost: 1.5
+  powerMusicVolBoost: 1
   powerMusic: {fileID: 8300000, guid: 5e8142d0c3b9d984ab3e2d1649eaa786, type: 3}
-  bgMusic: {fileID: 8300000, guid: 86c586c2ec7091e40b954da8fda4cb52, type: 3}
   gameStart: {fileID: 8300000, guid: 6bf9ad10f11168d4ba5d6ded08e08be9, type: 3}
   musicPlayer: {fileID: 7457625705006531473}
   usePlayerPrefsSettings: 0
@@ -6293,7 +6292,7 @@ MonoBehaviour:
   scoreUI: {fileID: 0}
   pelletRemaining: {fileID: 0}
   audioSource: {fileID: 7337700370802506642}
-  pelletSound: {fileID: 8300000, guid: 9712f941024d00b41a68bda490f240cc, type: 3}
+  pelletSound: {fileID: 8300000, guid: 390b72579c63df34d8cfead757aab8ff, type: 3}
   pelletsPerAmmo: 15
   indicatorTimerThreshold: 20
 --- !u!114 &6717606324952877450
@@ -7001,7 +7000,7 @@ AudioSource:
   m_GameObject: {fileID: 7708878422642251469}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 9152574423911532920, guid: 28f800679063ee84fb2e3c41fee59bc0, type: 2}
   m_audioClip: {fileID: 8300000, guid: 37133ffb0afdbd6488ab446661ef24cf, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.25

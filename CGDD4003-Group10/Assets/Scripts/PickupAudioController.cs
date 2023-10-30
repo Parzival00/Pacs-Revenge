@@ -20,9 +20,9 @@ public class PickupAudioController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Vector3.Distance(this.transform.position, playerPosition) <= rolloffStartDistance / 2 && !PlayerController.gunActivated)
+        if(Vector3.Distance(this.transform.position, playerPosition) <= rolloffStartDistance && !PlayerController.gunActivated)
         {
-            playerMusic.volume = originalVol * Mathf.Log(Vector3.Distance(this.transform.position, playerPosition), rolloffStartDistance);
+            playerMusic.volume = originalVol * Mathf.Log(Vector3.Distance(this.transform.position, playerPosition), rolloffStartDistance * 3);
         }
     }
 }

@@ -25,7 +25,12 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Toggle fullScreenToggle;
 
     [Header("Audio Settings")]
-    [SerializeField] Slider volume;
+    [SerializeField] Slider masterVolume;
+    [SerializeField] Slider musicVolume;
+    [SerializeField] Slider weaponVolume;
+    [SerializeField] Slider enemyVolume;
+    [SerializeField] Slider playerVolume;
+    [SerializeField] Slider pickupVolume;
 
     [Header("GamePlay Settings")]
     [SerializeField] Slider MouseSensitivity;
@@ -40,22 +45,27 @@ public class MainMenuManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-
-
     }
 
     public void SaveSettings()
     {
         PlayerPrefs.SetFloat("FOV", fov.value);
         PlayerPrefs.SetFloat("Sensitivity", MouseSensitivity.value);
-        PlayerPrefs.SetFloat("Volume", volume.value);
-
+        PlayerPrefs.SetFloat("MastVolume", masterVolume.value);
+        PlayerPrefs.SetFloat("MusVolume", musicVolume.value);
+        PlayerPrefs.SetFloat("WVolume", weaponVolume.value);
+        PlayerPrefs.SetFloat("EVolume", enemyVolume.value);
+        PlayerPrefs.SetFloat("PlVolume", playerVolume.value);
+        PlayerPrefs.SetFloat("PiVolume", pickupVolume.value);
 
         PlayerPrefs.Save();
 
         PlayerController player = GameObject.FindObjectOfType<PlayerController>();
+        GlobalAudioController audio = GameObject.FindObjectOfType<GlobalAudioController>();
         if(player!=null)
             player.ApplyGameSettings();
+        if (audio != null)
+            audio.ApplyAudioSettings();
     }
 
     public void LoadGameScene(int sceneIndex) 
@@ -73,7 +83,12 @@ public class MainMenuManager : MonoBehaviour
 
         fov.value = PlayerPrefs.GetFloat("FOV");
         MouseSensitivity.value = PlayerPrefs.GetFloat("Sensitivity");
-        volume.value = PlayerPrefs.GetFloat("Volume");
+        masterVolume.value = PlayerPrefs.GetFloat("MastVolume", masterVolume.value);
+        musicVolume.value = PlayerPrefs.GetFloat("MusVolume", musicVolume.value);
+        weaponVolume.value = PlayerPrefs.GetFloat("WVolume", weaponVolume.value);
+        enemyVolume.value = PlayerPrefs.GetFloat("EVolume", enemyVolume.value);
+        playerVolume.value = PlayerPrefs.GetFloat("PlVolume", playerVolume.value);
+        pickupVolume.value = PlayerPrefs.GetFloat("PiVolume", pickupVolume.value);
         fullScreenToggle.isOn = Screen.fullScreen;
     }
     public void DisplayScoreBoard() 
