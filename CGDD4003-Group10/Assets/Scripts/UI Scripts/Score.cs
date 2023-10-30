@@ -34,6 +34,8 @@ public class Score : MonoBehaviour
         GameObject[] pellets = GameObject.FindGameObjectsWithTag("Pellet");
         totalPellets = pellets.Length;
 
+        pelletsLeft = totalPellets - pelletsCollected;
+
         currentLevel = SceneManager.GetActiveScene().buildIndex; //in the build settings, the game levels come right after the main menu so the build index corresponds with the level number
 
         playerController = this.gameObject.GetComponent<PlayerController>();
@@ -55,6 +57,8 @@ public class Score : MonoBehaviour
     {
         if (other.gameObject.tag == "Pellet")
         {
+            playerController.faceController.EatPellet();
+
             other.gameObject.SetActive(false);
             audioSource.PlayOneShot(pelletSound);
             pelletsCollected += 1;
@@ -76,6 +80,8 @@ public class Score : MonoBehaviour
 
             if(fruitController)
             {
+                playerController.faceController.EatFruit();
+
                 FruitController.FruitInfo fruitInfo = fruitController.CollectFruit();
                 score += fruitInfo.pointsWorth;
                 switch(fruitInfo.powerUp)

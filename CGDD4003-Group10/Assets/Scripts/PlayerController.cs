@@ -65,7 +65,6 @@ public class PlayerController : MonoBehaviour
     //The amount of pellets per ammo is set in the score script
     private float stunFireTimer;
 
-    private LineRenderer laserLine;
     private float weaponCharge;
     private float weaponDecharge;
     private float weaponTemp;
@@ -92,12 +91,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] ShieldEffectAnimator shieldAnimator;
     [SerializeField] Animator deathAnimator;
 
+    public FaceController faceController { get; private set; }
+
     Ghost[] ghosts;
 
     [Header("Player Settings")]
     [SerializeField] float deathSequenceLength = 1;
-    [SerializeField] int playerLives = 3;
-
+    [SerializeField] int maxPlayerLives = 3;
+     
     [Header("Player Animator")]
     [SerializeField] Animator animator;
 
@@ -121,6 +122,8 @@ public class PlayerController : MonoBehaviour
 
     public static bool gunActivated { get; private set; }
     public static bool invisibilityActivated { get; private set; }
+    public static int playerLives { get; private set; }
+
     private bool canFire = true;
 
     private bool inDeathSequence;
@@ -153,9 +156,9 @@ public class PlayerController : MonoBehaviour
 
         speed = baseSpeed;
 
-        laserLine = GetComponent<LineRenderer>();
-
         stunProjectile = Resources.Load<Projectile>("StunShot");
+
+        faceController = FindObjectOfType<FaceController>();
 
         if (hud == null)
             hud = GameObject.FindGameObjectWithTag("HUD");
@@ -189,6 +192,8 @@ public class PlayerController : MonoBehaviour
 
         canMove = true;
         canFire = true;
+
+        playerLives = maxPlayerLives;
 
         LivesText.text = "" + playerLives;
     }
@@ -537,6 +542,9 @@ public class PlayerController : MonoBehaviour
         //Deactivate stun gun
         stunGun.SetActive(false);
 
+        if (faceController)
+            faceController.RailgunPickup();
+
         musicPlayer.Stop();
         musicPlayer.PlayOneShot(powerMusic);
         musicPlayer.volume = musicPlayer.volume * powerMusicVolBoost;
@@ -561,7 +569,6 @@ public class PlayerController : MonoBehaviour
             ghost.InitiateScatter();
         }
         gunTimerCoroutine = StartCoroutine(GunTimer());
-
 
         baseSpeed += gunSpeedMultiplier;
         AddShields();
@@ -628,8 +635,8 @@ public class PlayerController : MonoBehaviour
             {
                 shieldAnimator.PlayShieldDown();
             }
-            baseSpeed -= gunSpeedMultiplier;
         }
+        baseSpeed -= gunSpeedMultiplier;
     }
     #endregion
 
@@ -674,7 +681,7 @@ public class PlayerController : MonoBehaviour
 
                         if (shieldsRemaining <= 0)
                         {
-                            baseSpeed -= gunSpeedMultiplier;
+                            //baseSpeed -= gunSpeedMultiplier;
                             shieldAnimator.PlayShieldBreak();
                         }
                         
@@ -711,6 +718,9 @@ public class PlayerController : MonoBehaviour
 
         deathAnimator.SetTrigger("Death");
 
+        if (faceController)
+            faceController.Die();
+
         yield return deathTimer;
 
         //fadeImage.CrossFadeAlpha(255f, 100f, false);
@@ -743,6 +753,9 @@ public class PlayerController : MonoBehaviour
         else
         {
             deathAnimator.SetTrigger("FadeOut");
+
+            if (faceController)
+                faceController.Respawn();
 
             yield return deathTimer;
 

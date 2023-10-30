@@ -106,7 +106,7 @@ public class FruitController : MonoBehaviour
 
             fruitActivated = true;
 
-            fruitTimerCoroutine = StartCoroutine(FruitTimer());
+            //fruitTimerCoroutine = StartCoroutine(FruitTimer());
 
             if (alertMessage != null)
                 fruitSpawnAlertCoroutine = StartCoroutine(FruitSpawnAlert());
@@ -167,7 +167,7 @@ public class FruitController : MonoBehaviour
         WaitForSeconds timer = new WaitForSeconds(fruitTimer);
         yield return timer;
 
-        if(fruitActivated)
+        if (fruitActivated)
         {
             DeactivateFruit();
         }
@@ -189,7 +189,7 @@ public class FruitController : MonoBehaviour
 
     PowerUpType SelectPowerUp(int currentLevel)
     {
-        print("Current Level: " + currentLevel);
+        //print("Current Level: " + currentLevel);
         int total = 0;
         for (int i = 0; i < powerUps.Length; i++)
         {
@@ -200,8 +200,8 @@ public class FruitController : MonoBehaviour
         }
 
         int value = Random.Range(0, total + 1);
-        print("Total: " + total);
-        print("Value: " + value);
+        //print("Total: " + total);
+        //print("Value: " + value);
         int min = 0;
         for (int i = 0; i < powerUps.Length; i++)
         {
