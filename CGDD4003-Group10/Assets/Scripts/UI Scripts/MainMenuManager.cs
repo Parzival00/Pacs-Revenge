@@ -62,6 +62,10 @@ public class MainMenuManager : MonoBehaviour
     {
         SceneManager.LoadScene(sceneIndex);
     }
+    public void LoadGameScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
     public void DisplayOptions() 
     {
         menu.SetActive(false);
