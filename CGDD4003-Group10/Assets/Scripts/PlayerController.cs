@@ -10,9 +10,9 @@ public class PlayerController : MonoBehaviour
 {
     public Transform playerCam;
     public Transform playerT;
-    static bool gameIsPaused;
-    public GameObject pauseMenu;
-    [SerializeField] GameObject optionsMenu;
+
+    MainMenuManager mainMenuManager;
+
     public bool canMove { get; private set; }
 
     [Header("Movement Settings")]
@@ -145,12 +145,11 @@ public class PlayerController : MonoBehaviour
 
         character = this.GetComponent<CharacterController>();
 
+        mainMenuManager = FindObjectOfType<MainMenuManager>();
+
         if (lockCursor)
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-
-            ResumeGame();
+            mainMenuManager.ResumeGame();
         }
 
         speed = baseSpeed;
@@ -200,26 +199,28 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canMove)
+        if (!MainMenuManager.isGamePaused)
         {
-            MouseControl();
-            MovementControl();
-        }
+            if (canMove)
+            {
+                MouseControl();
+                MovementControl();
+            }
 
-        if (gunActivated)
-        {
-            RailgunFire();
-            OutlineTargetEnemy();
-            CheckWeaponTemp();
-        }
-        else
-        {
-            StungunFire();
+            if (gunActivated)
+            {
+                RailgunFire();
+                OutlineTargetEnemy();
+                CheckWeaponTemp();
+            }
+            else
+            {
+                StungunFire();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)) 
         {
-            gameIsPaused = !gameIsPaused;
             PauseGame();
         }
 
@@ -400,9 +401,9 @@ public class PlayerController : MonoBehaviour
         if (weaponTemp >= maxWeaponTemp && !overheated)
         {
             overheated = true;
-            weaponSound.volume = .9f;
+            //weaponSound.volume = .9f;
             weaponSound.PlayOneShot(overheat);
-            weaponSound.volume = .1f;
+            //weaponSound.volume = .1f;
         }
         else if (weaponTemp <= 0f && overheated)
         {
@@ -820,34 +821,14 @@ public class PlayerController : MonoBehaviour
     ///Summary
     private void PauseGame()
     {
-        if (gameIsPaused)
+        if (!MainMenuManager.isGamePaused)
         {
-            Time.timeScale = 0.0f;
-            AudioListener.pause = true;
-
-            pauseMenu.SetActive(true);
-
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            mainMenuManager.PauseGame();
         }
         else
         {
-            ResumeGame();
+            mainMenuManager.ResumeGame();
         }
-    }
-
-    /// <summary>
-    /// Resumes the game
-    /// </summary>
-    public void ResumeGame()
-    {
-        gameIsPaused = false;
-        Time.timeScale = 1.0f;
-        AudioListener.pause = false;
-        pauseMenu.SetActive(false);
-        optionsMenu.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     /// <summary>

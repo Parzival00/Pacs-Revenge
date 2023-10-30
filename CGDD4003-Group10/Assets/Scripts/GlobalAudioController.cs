@@ -14,6 +14,8 @@ public class GlobalAudioController : MonoBehaviour
 
     public void ApplyAudioSettings()
     {
+        print("Applied Audio Settings");
+
         if (PlayerPrefs.HasKey("MastVolume"))
             mix.SetFloat( "MasterVol", PlayerPrefs.GetFloat("MastVolume"));
 

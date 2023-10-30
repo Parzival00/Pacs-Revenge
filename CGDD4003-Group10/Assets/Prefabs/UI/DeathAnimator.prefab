@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5211221695430865745}
   - component: {fileID: 4907041298291812491}
   - component: {fileID: 3285554628969460190}
+  - component: {fileID: 6452901776909398084}
   m_Layer: 5
   m_Name: BloodDrip
   m_TagString: Untagged
@@ -75,6 +76,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &6452901776909398084
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426181885484535258}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &9165605799730877790
 GameObject:
   m_ObjectHideFlags: 0

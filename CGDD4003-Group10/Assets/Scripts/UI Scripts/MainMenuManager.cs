@@ -12,6 +12,8 @@ public class MainMenuManager : MonoBehaviour
     private string playerInput;
     private StreamReader scoresForScoreBoard;
 
+    public static bool isGamePaused;
+
     [Header("Menu Screens")]
     [SerializeField] GameObject menu;
     [SerializeField] GameObject options;
@@ -62,6 +64,7 @@ public class MainMenuManager : MonoBehaviour
 
         PlayerController player = GameObject.FindObjectOfType<PlayerController>();
         GlobalAudioController audio = GameObject.FindObjectOfType<GlobalAudioController>();
+        
         if(player!=null)
             player.ApplyGameSettings();
         if (audio != null)
@@ -105,14 +108,29 @@ public class MainMenuManager : MonoBehaviour
         EditorApplication.ExitPlaymode();
         #endif
     }
+    public void PauseGame()
+    {
+        Time.timeScale = 0.0f;
+
+        menu.SetActive(true);
+
+        isGamePaused = true;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
     public void ResumeGame() 
     {
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        isGamePaused = false;
+
         options.SetActive(false);
         menu.SetActive(false);
+
+        SaveSettings();
     }
 
     public void ReturnToMainMenu(int whichMenu)
