@@ -25,7 +25,7 @@ public class ViewBobber : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (pc.canMove == true)
+        if (pc.canMove == true && PlayerPrefs.GetInt("HeadBob") == 1)
         {
             if (Mathf.Abs(pc.velocity.x) > 0.1f || Mathf.Abs(pc.velocity.z) > 0.1f)
             {

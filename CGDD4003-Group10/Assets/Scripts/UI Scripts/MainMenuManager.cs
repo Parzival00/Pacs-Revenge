@@ -36,6 +36,7 @@ public class MainMenuManager : MonoBehaviour
 
     [Header("GamePlay Settings")]
     [SerializeField] Slider MouseSensitivity;
+    [SerializeField] Toggle viewBobbingToggle;
 
     [Header("HowTo Screens")]
     [SerializeField] GameObject movement;
@@ -59,6 +60,10 @@ public class MainMenuManager : MonoBehaviour
         PlayerPrefs.SetFloat("EVolume", enemyVolume.value);
         PlayerPrefs.SetFloat("PlVolume", playerVolume.value);
         PlayerPrefs.SetFloat("PiVolume", pickupVolume.value);
+        if (viewBobbingToggle.isOn)
+            PlayerPrefs.SetInt("HeadBob", 1);
+        else
+            PlayerPrefs.SetInt("HeadBob", 0);
 
         PlayerPrefs.Save();
 
