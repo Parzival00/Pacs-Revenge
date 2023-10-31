@@ -811,6 +811,22 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    #region Speed Power-Up
+    public void ActivateSpeed()
+    {
+        StartCoroutine(SpeedBoost());
+    }
+
+    IEnumerator SpeedBoost()
+    {
+        speed +=  sprintMultiplier;
+
+        yield return new WaitForSeconds(10f);
+
+        speed -= sprintMultiplier;
+    }
+    #endregion
+
     /// <summary>
     /// Disable the character controller temporarily to set the position to given location. (Used in combination with the teleport class) 
     /// </summary>

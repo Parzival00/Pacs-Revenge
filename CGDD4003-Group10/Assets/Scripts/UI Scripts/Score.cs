@@ -93,12 +93,23 @@ public class Score : MonoBehaviour
                     case FruitController.PowerUpType.Invisibility:
                         playerController.ActivateInvisibility();
                         break;
+                    case FruitController.PowerUpType.Speed:
+                        playerController.ActivateSpeed();
+                        break;
+                    case FruitController.PowerUpType.EnhancedRadar:
+                        Radar radar = GameObject.Find("Radar").GetComponent<Radar>();
+                        radar.StartEnhancedRadar();
+                        break;
+                    case FruitController.PowerUpType.ExtraLife:
+                        playerController.AddLives();
+                        break;
                     default:
                         break;
                 }
             }
         }
     }
+
 
 
     void UpdateScore() 

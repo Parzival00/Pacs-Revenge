@@ -18,6 +18,7 @@ public class Radar : MonoBehaviour
     [SerializeField] Material radarIndicatorMat;
 
     float degreeRotations = 0;
+    bool enhancedRadarOn = false;
 
     GameObject closestPellet;
     private void Start()
@@ -67,6 +68,10 @@ public class Radar : MonoBehaviour
 
                 if (objectHit.tag == "MinimapPellet" || objectHit.tag == "MinimapFruit" || objectHit.tag == "MinimapObject")
                 {
+
+                    objectHit.GetComponentInChildren<FadeIconOut>().enhanced = enhancedRadarOn;
+                    
+
                     SpriteRenderer hitSprite = objectHit.GetComponent<SpriteRenderer>();
                     Color color = hitSprite.color;
                     hitSprite.color = new Color(color.r, color.g, color.b, 1);
@@ -103,5 +108,21 @@ public class Radar : MonoBehaviour
         radarIndicatorMat.SetFloat("_IndicatorAngle", (Mathf.Deg2Rad * (720 - angleToClosestPellet + radarIndicatorAngleOffset + 90)) / (Mathf.PI * 2));
         radarIndicatorMat.SetFloat("_IndicatorActive", 1);
 
+    }
+
+    public void StartEnhancedRadar()
+    {
+        StartCoroutine(EnhancedRadar());
+    }
+
+    IEnumerator EnhancedRadar()
+    {
+        minimapCam.orthographicSize += 5;
+        enhancedRadarOn = true;
+
+        yield return new WaitForSeconds(10);
+
+        minimapCam.orthographicSize -= 5;
+        enhancedRadarOn = false;
     }
 }
