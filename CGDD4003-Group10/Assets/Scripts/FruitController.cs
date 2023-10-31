@@ -207,7 +207,7 @@ public class FruitController : MonoBehaviour
         {
             if (currentLevel < powerUps[i].weights.Length)
             {
-                if (value > min && value <= min + powerUps[i].weights[currentLevel - 1])
+                if (powerUps[i].weights[currentLevel - 1] > 0 && value > min && value <= min + powerUps[i].weights[currentLevel - 1])
                 {
                     return powerUps[i].type;
                 }
