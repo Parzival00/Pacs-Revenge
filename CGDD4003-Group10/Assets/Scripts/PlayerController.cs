@@ -776,6 +776,11 @@ public class PlayerController : MonoBehaviour
             shieldAnimator.PlayShieldUp();
     }
 
+    public void AddLives()
+    {
+        playerLives++;
+    }
+
     #region Invisibility Power-Up
     Coroutine invisibilityPowerUpCoroutine;
     public void ActivateInvisibility()

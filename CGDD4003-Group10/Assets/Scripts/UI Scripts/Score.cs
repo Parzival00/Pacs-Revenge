@@ -66,6 +66,7 @@ public class Score : MonoBehaviour
             score += 50;
             if (pelletsCollected >= totalPellets)
             {
+                playerController.AddLives();
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
             else if (pelletsCollected % pelletsPerAmmo == 0)
