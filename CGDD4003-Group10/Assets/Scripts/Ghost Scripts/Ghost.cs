@@ -109,6 +109,7 @@ public class Ghost : MonoBehaviour
     [Header("Other Sound Settings")]
     [SerializeField] protected AudioClip deathSound;
     [SerializeField] protected AudioClip hitSound;
+    [SerializeField] protected AudioClip stunnedSound;
     //[SerializeField] protected AudioClip corpseMoveSound;
     //[SerializeField] protected AudioClip respawnedSound;
 
@@ -611,6 +612,7 @@ public class Ghost : MonoBehaviour
             navMesh.enabled = false;
             stunEffect.SetActive(true);
             chaseSoundSource.Stop();
+            chaseSoundSource.PlayOneShot(stunnedSound);
         }
     }
 
