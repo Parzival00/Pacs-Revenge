@@ -41,6 +41,12 @@ public class Map : MonoBehaviour
             }
         }
 
+        if (leftEdge == null)
+            leftEdge = GameObject.FindGameObjectWithTag("LeftEdge")?.transform;
+
+        if (rightEdge == null)
+            rightEdge = GameObject.FindGameObjectWithTag("RightEdge")?.transform;
+
         //Gather all walls in the scene
         GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
 
