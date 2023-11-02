@@ -258,8 +258,6 @@ public class Ghost : MonoBehaviour
     //Scatter and move to the provided transforms location
     protected virtual void Scatter()
     {
-        //spriteRenderer.color = Color.white; //Temporary
-
         Vector2Int scatterTargetGridPos = map.GetGridLocation(scatterTarget.position);
 
         targetGridPosition = scatterTargetGridPos;
@@ -634,8 +632,6 @@ public class Ghost : MonoBehaviour
                 currentMode = Mode.InvisibilityPowerUp;
             else
                 currentMode = Mode.Chase;
-            
-            //currentMode = previousMode;
         }
         freezeTimer = freezeTime;
     }

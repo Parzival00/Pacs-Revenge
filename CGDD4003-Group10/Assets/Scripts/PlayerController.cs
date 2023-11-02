@@ -30,7 +30,6 @@ public class PlayerController : MonoBehaviour
 
     float cameraPitch;
     [Header("Mouse Settings")]
-    [SerializeField] bool lockCursor = true;
     [SerializeField] bool paused;
     [SerializeField] float sensitivity;
 
@@ -97,7 +96,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Player Settings")]
     [SerializeField] float deathSequenceLength = 1;
-    [SerializeField] int maxPlayerLives = 3;
+    [SerializeField] int defaultPlayerLives = 3;
      
     [Header("Player Animator")]
     [SerializeField] Animator animator;
@@ -109,6 +108,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Invisibility Settings")]
     [SerializeField] float invisibilityLength = 30;
+    [SerializeField] AudioSource invisibilitySource;
+    [SerializeField] AudioClip invisibilityActivate;
+    [SerializeField] AudioClip invisibilityDeactivate;
 
     [Header("Music Settings")]
     [SerializeField] float powerMusicVolBoost;
@@ -146,11 +148,6 @@ public class PlayerController : MonoBehaviour
         character = this.GetComponent<CharacterController>();
 
         mainMenuManager = FindObjectOfType<MainMenuManager>();
-
-        if (lockCursor)
-        {
-            mainMenuManager.ResumeGame();
-        }
 
         speed = baseSpeed;
 
@@ -191,7 +188,30 @@ public class PlayerController : MonoBehaviour
         canMove = true;
         canFire = true;
 
-        playerLives = maxPlayerLives;
+        if (Score.currentLevel == 1)
+        {
+            playerLives = defaultPlayerLives;
+        } else
+        {
+            playerLives = PlayerPrefs.GetInt("Lives");
+            switch (Score.difficulty)
+            {
+                case 0:
+                    if (playerLives < defaultPlayerLives)
+                    {
+                        playerLives = defaultPlayerLives;
+                    }
+                    break;
+                case 1:
+                    if (playerLives < defaultPlayerLives)
+                    {
+                        playerLives++;
+                    }
+                    break;
+                case 2:
+                    break;
+            }
+        }
 
         LivesText.text = "" + playerLives;
     }
@@ -207,15 +227,18 @@ public class PlayerController : MonoBehaviour
                 MovementControl();
             }
 
-            if (gunActivated)
+            if (canFire)
             {
-                RailgunFire();
-                OutlineTargetEnemy();
-                CheckWeaponTemp();
-            }
-            else
-            {
-                StungunFire();
+                if (gunActivated)
+                {
+                    RailgunFire();
+                    OutlineTargetEnemy();
+                    CheckWeaponTemp();
+                }
+                else
+                {
+                    StungunFire();
+                }
             }
         }
 
@@ -291,7 +314,6 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(ShotEffect());
                 Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
                 RaycastHit hit;
-                //laserLine.SetPosition(0, bulletOrigin.position);
 
                 //Detect hit on enemy
                 if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange, targetingMask))
@@ -312,7 +334,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    //laserLine.SetPosition(1, rayOrigin + (fpsCam.transform.forward * weaponRange));
+
                 }
 
 
@@ -547,7 +569,7 @@ public class PlayerController : MonoBehaviour
 
         musicPlayer.Stop();
         musicPlayer.PlayOneShot(powerMusic);
-        musicPlayer.volume = musicPlayer.volume * powerMusicVolBoost;
+        //musicPlayer.volume = musicPlayer.volume * powerMusicVolBoost;
 
         if (gunAnimator != null)
         {
@@ -601,7 +623,7 @@ public class PlayerController : MonoBehaviour
         gun.SetActive(false);
         hud.SetActive(false);
 
-        musicPlayer.volume = musicPlayer.volume / powerMusicVolBoost;
+        //musicPlayer.volume = musicPlayer.volume / powerMusicVolBoost;
 
         //Activates Stun-Gun again
         stunGun.SetActive(true);
@@ -723,7 +745,7 @@ public class PlayerController : MonoBehaviour
 
         yield return deathTimer;
 
-        //fadeImage.CrossFadeAlpha(255f, 100f, false);
+        yield return deathTimer;
 
         yield return deathTimer;
 
@@ -747,6 +769,7 @@ public class PlayerController : MonoBehaviour
         if (playerLives <= 0)
         {
             print("Ending Scene");
+            SaveLives();
             //end game scene
             SceneManager.LoadScene("GameOverScene");
         }
@@ -792,6 +815,9 @@ public class PlayerController : MonoBehaviour
 
         if(invisibilityPowerUpCoroutine == null)
             invisibilityPowerUpCoroutine = StartCoroutine(InvisibilityPowerUp());
+
+        if (invisibilitySource != null)
+            invisibilitySource.PlayOneShot(invisibilityActivate);
     }
 
     IEnumerator InvisibilityPowerUp()
@@ -808,6 +834,9 @@ public class PlayerController : MonoBehaviour
             StopCoroutine(invisibilityPowerUpCoroutine);
 
         invisibilityActivated = false;
+
+        if (invisibilitySource != null)
+            invisibilitySource.PlayOneShot(invisibilityDeactivate);
     }
     #endregion
 
@@ -865,4 +894,9 @@ public class PlayerController : MonoBehaviour
             sensitivity = PlayerPrefs.GetFloat("Sensitivity");
     }
     #endregion
+
+    public void SaveLives()
+    {
+        PlayerPrefs.SetInt("Lives", playerLives);
+    }
 }

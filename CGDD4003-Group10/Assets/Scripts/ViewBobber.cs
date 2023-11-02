@@ -25,19 +25,28 @@ public class ViewBobber : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (pc.canMove == true && PlayerPrefs.GetInt("HeadBob") == 1)
+        if (pc.canMove == true)
         {
             if (Mathf.Abs(pc.velocity.x) > 0.1f || Mathf.Abs(pc.velocity.z) > 0.1f)
             {
                 //player is walking
                 timer += Time.deltaTime * walkBobSpeed;
-                transform.localPosition = new Vector3(transform.localPosition.x, defaultYpos + Mathf.Sin(timer) * bobAmount, transform.localPosition.z);
-                if (Mathf.Sin(timer) < footstepThreshold && !stepped)
+                float sinedTimer = Mathf.Sin(timer);
+
+                if (PlayerPrefs.GetInt("HeadBob") == 1)
+                {
+                    transform.localPosition = new Vector3(transform.localPosition.x, defaultYpos + sinedTimer * bobAmount, transform.localPosition.z);
+                } else
+                {
+                    transform.localPosition = new Vector3(transform.localPosition.x, Mathf.Lerp(transform.localPosition.y, defaultYpos, Time.deltaTime * walkBobSpeed), transform.localPosition.z);
+                }
+
+                if (sinedTimer < footstepThreshold && !stepped)
                 {
                     feet.PlayOneShot(footstep);
                     stepped = true;
                 }
-                else if (Mathf.Sin(timer) >= footstepThreshold && stepped)
+                else if (sinedTimer >= footstepThreshold && stepped)
                 {
                     stepped = false;
                 }

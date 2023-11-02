@@ -17,6 +17,7 @@ public class MainMenuManager : MonoBehaviour
     [Header("Menu Screens")]
     [SerializeField] GameObject menu;
     [SerializeField] GameObject options;
+    [SerializeField] GameObject difficultyScreen;
     [SerializeField] GameObject howToPlayUI;
     [SerializeField] TMP_InputField uiInput;
     [SerializeField] TMP_Text highScoreDisplay;
@@ -33,6 +34,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Slider enemyVolume;
     [SerializeField] Slider playerVolume;
     [SerializeField] Slider pickupVolume;
+    [SerializeField] Slider miscVolume;
 
     [Header("GamePlay Settings")]
     [SerializeField] Slider MouseSensitivity;
@@ -46,20 +48,36 @@ public class MainMenuManager : MonoBehaviour
 
     private void Awake()
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "GameOverScene" || SceneManager.GetActiveScene().name == "ScoreScreen")
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        } else
+        {
+            Time.timeScale = 1;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            isGamePaused = false;
+
+            options?.SetActive(false);
+            menu?.SetActive(false);
+        }
+
     }
 
     public void SaveSettings()
     {
         PlayerPrefs.SetFloat("FOV", fov.value);
         PlayerPrefs.SetFloat("Sensitivity", MouseSensitivity.value);
-        PlayerPrefs.SetFloat("MastVolume", masterVolume.value);
-        PlayerPrefs.SetFloat("MusVolume", musicVolume.value);
-        PlayerPrefs.SetFloat("WVolume", weaponVolume.value);
-        PlayerPrefs.SetFloat("EVolume", enemyVolume.value);
-        PlayerPrefs.SetFloat("PlVolume", playerVolume.value);
-        PlayerPrefs.SetFloat("PiVolume", pickupVolume.value);
+        PlayerPrefs.SetFloat("MastVolume", masterVolume.value / 4);
+        PlayerPrefs.SetFloat("MusVolume", musicVolume.value / 4);
+        PlayerPrefs.SetFloat("WVolume", weaponVolume.value / 4);
+        PlayerPrefs.SetFloat("EVolume", enemyVolume.value / 4);
+        PlayerPrefs.SetFloat("PlVolume", playerVolume.value / 4);
+        PlayerPrefs.SetFloat("PiVolume", pickupVolume.value / 4);
+        PlayerPrefs.SetFloat("MiscVolume", miscVolume.value / 4);
+
         if (viewBobbingToggle.isOn)
             PlayerPrefs.SetInt("HeadBob", 1);
         else
@@ -91,13 +109,19 @@ public class MainMenuManager : MonoBehaviour
 
         fov.value = PlayerPrefs.GetFloat("FOV");
         MouseSensitivity.value = PlayerPrefs.GetFloat("Sensitivity");
-        masterVolume.value = PlayerPrefs.GetFloat("MastVolume", masterVolume.value);
-        musicVolume.value = PlayerPrefs.GetFloat("MusVolume", musicVolume.value);
-        weaponVolume.value = PlayerPrefs.GetFloat("WVolume", weaponVolume.value);
-        enemyVolume.value = PlayerPrefs.GetFloat("EVolume", enemyVolume.value);
-        playerVolume.value = PlayerPrefs.GetFloat("PlVolume", playerVolume.value);
-        pickupVolume.value = PlayerPrefs.GetFloat("PiVolume", pickupVolume.value);
+        masterVolume.value = PlayerPrefs.GetFloat("MastVolume", masterVolume.value / 4) * 4;
+        musicVolume.value = PlayerPrefs.GetFloat("MusVolume", musicVolume.value / 4) * 4;
+        weaponVolume.value = PlayerPrefs.GetFloat("WVolume", weaponVolume.value / 4) * 4;
+        enemyVolume.value = PlayerPrefs.GetFloat("EVolume", enemyVolume.value / 4) * 4;
+        playerVolume.value = PlayerPrefs.GetFloat("PlVolume", playerVolume.value / 4) * 4;
+        pickupVolume.value = PlayerPrefs.GetFloat("PiVolume", pickupVolume.value / 4) * 4;
+        miscVolume.value = PlayerPrefs.GetFloat("MiscVolume", miscVolume.value / 4) * 4;
         fullScreenToggle.isOn = Screen.fullScreen;
+
+        if (PlayerPrefs.GetInt("HeadBob") == 1)
+            viewBobbingToggle.isOn = true;
+        else
+            viewBobbingToggle.isOn = false;
     }
     public void DisplayScoreBoard() 
     {
@@ -146,9 +170,11 @@ public class MainMenuManager : MonoBehaviour
                 SaveSettings();
                 options.SetActive(false);
                 menu.SetActive(true);
+                difficultyScreen?.SetActive(false);
                 break;
             case 2:
                 howToPlayUI.SetActive(false);
+                difficultyScreen?.SetActive(false);
                 menu.SetActive(true);
                 break;
         }
@@ -180,6 +206,13 @@ public class MainMenuManager : MonoBehaviour
         enemies.SetActive(false);
         endConditions.SetActive(true);
     }
+    public void DisplayDifficultyScreen()
+    {
+        menu.SetActive(false);
+        howToPlayUI.SetActive(false);
+        options.SetActive(false);
+        difficultyScreen.SetActive(true);
+    }
 
     public void SetResolution()
     {
@@ -202,5 +235,10 @@ public class MainMenuManager : MonoBehaviour
                 break;
 
         }
+    }
+
+    public void SetDifficulty(int value)
+    {
+        Score.SetDifficulty(value);
     }
 }

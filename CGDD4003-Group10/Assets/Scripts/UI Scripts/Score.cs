@@ -11,6 +11,8 @@ public class Score : MonoBehaviour
     public static int pelletsLeft { get; private set; }
     public static bool indicatorActive { get; private set; }
     public static int currentLevel { get; private set; }
+    public static int difficulty { get; private set; }
+    public static bool won { get; private set; }
 
     [SerializeField] TMP_Text scoreUI;
     [SerializeField] TMP_Text pelletRemaining;
@@ -18,19 +20,18 @@ public class Score : MonoBehaviour
     [SerializeField] AudioClip pelletSound;
     [SerializeField] int pelletsPerAmmo;
     [SerializeField] float indicatorTimerThreshold = 10;
-    //[SerializeField] GameObject cherryObject;
-    //[SerializeField] int cherrySpawn1, cherrySpawn2;
+    [SerializeField] RenderTexture gameSceneRenderTex;
 
     private int totalPellets;
 
     float timeSinceLastPellet;
 
     PlayerController playerController;
+    Camera gameSceneCamera;
 
     void Awake()
     {
         pelletsCollected = 0;
-        score = 0;
         GameObject[] pellets = GameObject.FindGameObjectsWithTag("Pellet");
         totalPellets = pellets.Length;
 
@@ -38,7 +39,15 @@ public class Score : MonoBehaviour
 
         currentLevel = SceneManager.GetActiveScene().buildIndex; //in the build settings, the game levels come right after the main menu so the build index corresponds with the level number
 
+        difficulty = PlayerPrefs.GetInt("Difficulty");
+
+        if (currentLevel == 1)
+            score = 0;
+
         playerController = this.gameObject.GetComponent<PlayerController>();
+        gameSceneCamera = Camera.main;// GameObject.FindGameObjectWithTag("GameSceneCamera")?.GetComponent<Camera>();
+
+        won = false;
     }
 
 
@@ -66,8 +75,8 @@ public class Score : MonoBehaviour
             score += 50;
             if (pelletsCollected >= totalPellets)
             {
-                playerController.AddLives();
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                playerController.SaveLives();
+                StartCoroutine(SceneEnd());
             }
             else if (pelletsCollected % pelletsPerAmmo == 0)
             {
@@ -110,8 +119,6 @@ public class Score : MonoBehaviour
         }
     }
 
-
-
     void UpdateScore() 
     {
         scoreUI.text = "" + score;
@@ -126,5 +133,34 @@ public class Score : MonoBehaviour
     {
          pelletsLeft = totalPellets - pelletsCollected;
          pelletRemaining.text = "" + pelletsLeft;
+    }
+
+    public static void SetDifficulty(int value)
+    {
+        difficulty = value;
+    }
+
+    public IEnumerator SceneEnd()
+    {
+        gameSceneRenderTex.Release();
+        gameSceneRenderTex.DiscardContents();
+
+        gameSceneRenderTex.width = Screen.width;
+        gameSceneRenderTex.height = Screen.height;
+
+        yield return null;
+
+        //gameSceneCamera.gameObject.SetActive(true);
+
+        //gameSceneCamera.fieldOfView = PlayerPrefs.GetFloat("FOV");
+
+        gameSceneCamera.targetTexture = gameSceneRenderTex;
+        gameSceneCamera.Render();
+        gameSceneCamera.targetTexture = null;
+        won = true;
+
+        gameSceneRenderTex.Create();
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
