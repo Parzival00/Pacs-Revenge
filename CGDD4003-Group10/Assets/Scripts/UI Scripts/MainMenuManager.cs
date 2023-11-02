@@ -170,12 +170,14 @@ public class MainMenuManager : MonoBehaviour
                 SaveSettings();
                 options.SetActive(false);
                 menu.SetActive(true);
-                difficultyScreen?.SetActive(false);
+                if(difficultyScreen)
+                    difficultyScreen?.SetActive(false);
                 break;
             case 2:
                 howToPlayUI.SetActive(false);
-                difficultyScreen?.SetActive(false);
                 menu.SetActive(true);
+                if (difficultyScreen)
+                    difficultyScreen?.SetActive(false);
                 break;
         }
     }

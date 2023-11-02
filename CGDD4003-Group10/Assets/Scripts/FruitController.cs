@@ -37,7 +37,7 @@ public class FruitController : MonoBehaviour
     }
 
     [Header("Fruit Spawn Alert Settings")]
-    [SerializeField] GameObject alertMessage;
+    [SerializeField] string alertMessage = "Fruit Offering Detected";
     [SerializeField] ParticleSystem lightningBeam;
     [SerializeField] AudioSource lightningSoundSource;
     [SerializeField] float alertVisibleTimerAmount = 3;
@@ -67,6 +67,8 @@ public class FruitController : MonoBehaviour
     Coroutine fruitTimerCoroutine;
     Coroutine fruitSpawnAlertCoroutine;
 
+    HUDMessenger hudMessenger;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -85,9 +87,7 @@ public class FruitController : MonoBehaviour
             minimapFruitSpriteRenderer.sprite = currentFruit.sprite;
             fruitSpriteRenderer.sprite = currentFruit.sprite;
         }
-
-        if(alertMessage != null)
-            alertMessage.SetActive(false);
+        hudMessenger = FindObjectOfType<HUDMessenger>();
 
         DeactivateFruit();
     }
@@ -134,7 +134,7 @@ public class FruitController : MonoBehaviour
 
             lightningBeam?.Stop();
 
-            alertMessage.SetActive(false);
+            //alertMessage.SetActive(false);
         }
     }
 
@@ -224,6 +224,8 @@ public class FruitController : MonoBehaviour
         float lightningStrikeTimer = Time.time + intervalBtwLightningStrikes;
         float messageTimer = 0;
 
+        bool alertMessegeSent = false;
+
         int i = 0;
         while(i < numberOfLightningStrikes)
         {
@@ -240,10 +242,11 @@ public class FruitController : MonoBehaviour
                 lightningStrikeTimer = Time.time + intervalBtwLightningStrikes;
             }
 
-            if(messageDelayTimer <= Time.time && !alertMessage.activeSelf)
+            if(messageDelayTimer <= Time.time && !alertMessegeSent)
             {
+                hudMessenger?.Display(alertMessage, alertVisibleTimerAmount);
+                alertMessegeSent = true;
                 messageTimer = Time.time + alertVisibleTimerAmount;
-                alertMessage.SetActive(true);
             }
 
             yield return null;
@@ -253,7 +256,5 @@ public class FruitController : MonoBehaviour
             yield return null;
 
         lightningBeam?.Stop();
-
-        alertMessage.SetActive(false);
     }
 }

@@ -271,7 +271,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 4906052917739341744, guid: 28f800679063ee84fb2e3c41fee59bc0, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.107
+  m_Volume: 0.022
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -6210,7 +6210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCam: {fileID: 2701049378798147818}
   playerT: {fileID: 743185093512582757}
-  baseSpeed: 5.4
+  baseSpeed: 6
   sprintMultiplier: 1
   gunSpeedMultiplier: 1.25
   playerSpawnPoint: {fileID: 0}
@@ -6222,12 +6222,14 @@ MonoBehaviour:
   overheat: {fileID: 8300000, guid: d7b88653a125e3f448e614ee531e815d, type: 3}
   chargeup: {fileID: 8300000, guid: 27e053d7820d30a4daa607d7f3cf2882, type: 3}
   weaponSound: {fileID: 4648173346818715503}
+  railgunAlertMessage: Advanced Targeting System Activated
+  railgunAlertLength: 1.5
   railGunVFX: {fileID: 4507674535604613185}
   gunAnimator: {fileID: 6221754044492916589}
   chargeTime: 0.5
-  maxWeaponTemp: 5
-  overheatSpeed: 1
-  cooldownSpeed: 1
+  maxWeaponTemp: 7
+  overheatSpeed: 4
+  cooldownSpeed: 3
   dechargeTime: 0.25
   gunTimeAmount: 31
   fpsCam: {fileID: 7004879224189848639}
@@ -6247,7 +6249,7 @@ MonoBehaviour:
   ammoText: {fileID: 0}
   shieldAnimator: {fileID: 0}
   deathAnimator: {fileID: 0}
-  deathSequenceLength: 1
+  deathSequenceLength: 2
   defaultPlayerLives: 3
   animator: {fileID: 6954913835686620882}
   targetOutlineController: {fileID: 6717606324952877450}
@@ -6261,7 +6263,7 @@ MonoBehaviour:
   powerMusic: {fileID: 8300000, guid: 5e8142d0c3b9d984ab3e2d1649eaa786, type: 3}
   gameStart: {fileID: 8300000, guid: 6bf9ad10f11168d4ba5d6ded08e08be9, type: 3}
   musicPlayer: {fileID: 7457625705006531473}
-  usePlayerPrefsSettings: 0
+  usePlayerPrefsSettings: 1
 --- !u!114 &6532150692148206727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6278,8 +6280,8 @@ MonoBehaviour:
   pelletRemaining: {fileID: 0}
   audioSource: {fileID: 7337700370802506642}
   pelletSound: {fileID: 8300000, guid: 390b72579c63df34d8cfead757aab8ff, type: 3}
-  pelletsPerAmmo: 15
-  indicatorTimerThreshold: 20
+  pelletsPerAmmo: 10
+  indicatorTimerThreshold: 15
   gameSceneRenderTex: {fileID: 8400000, guid: 1fbbf88530324554bbc10d8e0b318019, type: 2}
 --- !u!114 &6717606324952877450
 MonoBehaviour:
@@ -6320,7 +6322,7 @@ MonoBehaviour:
   gunTimerOffset: 0.05
   exhauseEmissionMinIntensity: 0
   exhauseEmissionMaxIntensity: 22
-  overheatWarningThreshold: 1
+  overheatWarningThreshold: 0.391
   overheatWarningBlinkInterval: 0.2
   overheatWarningBlinkEmissionIntensity: 15
   chargeEffectStart: {fileID: 6232015556247727719}
@@ -6987,9 +6989,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 9152574423911532920, guid: 28f800679063ee84fb2e3c41fee59bc0, type: 2}
   m_audioClip: {fileID: 8300000, guid: 37133ffb0afdbd6488ab446661ef24cf, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.25
+  m_Volume: 0.025
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

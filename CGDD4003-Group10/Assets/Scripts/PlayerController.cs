@@ -41,6 +41,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioSource weaponSound;
 
     [Header("Railgun Settings")]
+    [SerializeField] string railgunAlertMessage = "Advanced Targeting System Activated";
+    [SerializeField] float railgunAlertLength = 2;
     [SerializeField] RailgunVFX railGunVFX;
     [SerializeField] Animator gunAnimator;
     [SerializeField] float chargeTime;
@@ -133,6 +135,8 @@ public class PlayerController : MonoBehaviour
 
     Projectile stunProjectile;
 
+    HUDMessenger hudMessenger;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -148,6 +152,8 @@ public class PlayerController : MonoBehaviour
         character = this.GetComponent<CharacterController>();
 
         mainMenuManager = FindObjectOfType<MainMenuManager>();
+
+        hudMessenger = FindObjectOfType<HUDMessenger>();
 
         speed = baseSpeed;
 
@@ -566,6 +572,9 @@ public class PlayerController : MonoBehaviour
 
         if (faceController)
             faceController.RailgunPickup();
+
+        if (hudMessenger)
+            hudMessenger.Display(railgunAlertMessage, railgunAlertLength);
 
         musicPlayer.Stop();
         musicPlayer.PlayOneShot(powerMusic);

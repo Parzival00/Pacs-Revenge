@@ -60,7 +60,9 @@ public class DisplayGameScene : MonoBehaviour
         currentTransitionalMat.SetFloat("_TransitionProgress", 1);
         yield return null;
         gameSceneTexture.SetActive(false);
-        deathSceneTexture?.SetActive(false);
+
+        if(deathSceneTexture)
+            deathSceneTexture?.SetActive(false);
         currentTransitionalMat.SetFloat("_TransitionProgress", 0);
     }
 
