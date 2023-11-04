@@ -75,7 +75,7 @@ public class Inky : Ghost
             cooldownTimer = 0;
         }
 
-        Chase();
+        base.Chase();
     }
     public override void InitiateScatter()
     {

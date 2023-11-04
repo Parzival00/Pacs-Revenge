@@ -309,15 +309,7 @@ public class PlayerController : MonoBehaviour
         currentDirection = Vector2.SmoothDamp(currentDirection, targetDirection, ref currentVelocity, moveSmoothTime);
 
         speed = baseSpeed;
-        /*
-                if (Input.GetKey("left shift"))
-                {
-                    speed = baseSpeed * sprintMultiplier;
-                }
-                else
-                {
-                    speed = baseSpeed;
-                }*/
+
         velocity = (playerT.forward * currentDirection.y + playerT.right * currentDirection.x) * speed;
         character.enabled = true;
         character.Move(velocity * Time.deltaTime);
@@ -768,7 +760,7 @@ public class PlayerController : MonoBehaviour
             g.StopGhost();
         }
 
-        WaitForSecondsRealtime deathTimer = new WaitForSecondsRealtime(deathSequenceLength / 2);
+        WaitForSeconds deathTimer = new WaitForSeconds(deathSequenceLength / 2);
 
         deathAnimator.SetTrigger("Death");
 
