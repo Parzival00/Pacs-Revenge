@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Threading;
+using UnityEngine.InputSystem.Android;
 
 public class Score : MonoBehaviour
 {
@@ -16,6 +18,7 @@ public class Score : MonoBehaviour
 
     [SerializeField] TMP_Text scoreUI;
     [SerializeField] TMP_Text pelletRemaining;
+    [SerializeField] TMP_Text pointValueIndicator;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip pelletSound;
     [SerializeField] int pelletsPerAmmo;
@@ -23,6 +26,12 @@ public class Score : MonoBehaviour
     [SerializeField] RenderTexture gameSceneRenderTex;
 
     private int totalPellets;
+    private static int amountedAdded;
+    private static Color currentTarget = Color.yellow;
+    public float timeToWait = 2;
+    private bool hasScoreIncrease = false;
+    private static int previousScore;
+    
 
     float timeSinceLastPellet;
 
@@ -76,6 +85,8 @@ public class Score : MonoBehaviour
     {
         UpdateScore();
         UpdatePelletsRemaining();
+        CheckIfScoreChanged();
+        UpdatePointIndicator();
 
         timeSinceLastPellet += Time.deltaTime;
 
@@ -93,7 +104,7 @@ public class Score : MonoBehaviour
             audioSource.PlayOneShot(pelletSound);
             pelletsCollected += 1;
             timeSinceLastPellet = 0;
-            AddToScore(50);
+            AddToScore(Color.white, 50);
             if (pelletsCollected >= totalPellets)
             {
                 playerController.SaveLives();
@@ -114,8 +125,7 @@ public class Score : MonoBehaviour
                 playerController.faceController.EatFruit();
 
                 FruitController.FruitInfo fruitInfo = fruitController.CollectFruit();
-
-                AddToScore(fruitInfo.pointsWorth);
+                AddToScore(Color.white, fruitInfo.pointsWorth);
                 switch (fruitInfo.powerUp)
                 {
                     case FruitController.PowerUpType.Shield:
@@ -148,12 +158,50 @@ public class Score : MonoBehaviour
     void UpdateScore() 
     {
         scoreUI.text = "" + score;
+        pointValueIndicator.text = "" + amountedAdded;
     }
 
-    public static void AddToScore(int amount)
+    public static void AddToScore(Color targetColor, int amount)
     {
+        currentTarget = targetColor;
+        amountedAdded = (int)(amount * scoreMultiplier);
+        previousScore = score;
         score += (int)(amount * scoreMultiplier);
     }
+
+    public void UpdatePointIndicator()
+    {
+        if (hasScoreIncrease == true) 
+        {
+            pointValueIndicator.gameObject.SetActive(true);
+        }
+
+        pointValueIndicator.color = currentTarget;
+        pointValueIndicator.text = "+" + amountedAdded;
+
+        //Time to wait
+        timeToWait -= Time.deltaTime;
+        if (timeToWait <= 0)
+        {
+            pointValueIndicator.gameObject.SetActive(false);
+            timeToWait = 2;
+            hasScoreIncrease = false;
+        }
+    }
+
+    public void CheckIfScoreChanged()
+    {
+        if (previousScore != score)
+        {
+            hasScoreIncrease = true;
+            previousScore = score;
+        }
+        else 
+        {
+            hasScoreIncrease = false;
+        }
+    }
+
 
     public void UpdatePelletsRemaining() 
     {

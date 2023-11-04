@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using static UnityEngine.GraphicsBuffer;
 //using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerController : MonoBehaviour
@@ -90,6 +91,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject hud;
     [SerializeField] TMP_Text LivesText;
     [SerializeField] TMP_Text ammoText;
+    [SerializeField] TMP_Text shieldText;
     [SerializeField] ShieldEffectAnimator shieldAnimator;
     [SerializeField] Animator deathAnimator;
 
@@ -108,6 +110,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] TargetOutlineController targetOutlineController;
     [SerializeField] Image crosshair;
     [SerializeField] Color targetingColor = Color.yellow;
+    private Color tempColorSave = Color.grey;
 
     [Header("Invisibility Settings")]
     [SerializeField] float invisibilityLength = 30;
@@ -280,7 +283,7 @@ public class PlayerController : MonoBehaviour
             musicPlayer.Play();
             musicPlayer.loop = true;
         }
-            
+        DisplayPLayerShields(); 
     }
 
     #region Move and Look
@@ -349,7 +352,7 @@ public class PlayerController : MonoBehaviour
                     if (targetAreaCollider != null)
                     {
                         Ghost.HitInformation hitInformation = targetAreaCollider.OnShot();
-                        Score.AddToScore(hitInformation.pointWorth + hitInformation.targetArea.pointsAddition);
+                        Score.AddToScore(tempColorSave,(hitInformation.pointWorth + hitInformation.targetArea.pointsAddition));
 
                         SpawnBlood(hitInformation.bigBlood, hitInformation.smallBlood, hitInformation.targetArea.difficulty, hit);
                     }
@@ -561,12 +564,16 @@ public class PlayerController : MonoBehaviour
                 TargetAreaCollider.TargetInfo target = targetAreaCollider.OnTarget();
                 targetOutlineController.SetTargetOutline(target);
                 crosshair.color = targetingColor;
+
+                //Set TempColorSave Variable for Score method
+                tempColorSave = targetOutlineController.GetOutlineColor(target);
             }
         } 
         else
         {
             //print("Not Targetting Anything");
             crosshair.color = Color.white;
+            tempColorSave = Color.white;
             targetOutlineController.DeactivateOutline();
         }
     }
@@ -898,7 +905,13 @@ public class PlayerController : MonoBehaviour
 
         extraLifeFlash.gameObject.SetActive(false);
     }
+    public void DisplayPLayerShields()
+    {
+        shieldText.text = "" + shieldsRemaining;
+    }
     #endregion
+
+    
 
     #region Invisibility Power-Up
     Coroutine invisibilityPowerUpCoroutine;

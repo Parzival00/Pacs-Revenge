@@ -17,6 +17,8 @@ public class TargetOutlineController : MonoBehaviour
 
     TargetAreaCollider.TargetInfo currentTarget;
 
+    public Color tempColorSave;
+
     //Coroutine activeCoroutine;
 
     public void SetTargetOutline(TargetAreaCollider.TargetInfo target)
@@ -35,17 +37,24 @@ public class TargetOutlineController : MonoBehaviour
             {
                 case Ghost.TargetAreaDifficulty.Easy:
                     currentTarget.outline.color = targetDifficultyEasy;
+                    tempColorSave = currentTarget.outline.color;
                     break;
                 case Ghost.TargetAreaDifficulty.Medium:
                     currentTarget.outline.color = targetDifficultyMedium;
+                    tempColorSave = currentTarget.outline.color;
                     break;
                 case Ghost.TargetAreaDifficulty.Hard:
                     currentTarget.outline.color = targetDifficultyHard;
+                    tempColorSave = currentTarget.outline.color;
                     break;
             }
             ///if (activeCoroutine == null)
              //   activeCoroutine = StartCoroutine(Blink());
         }
+    }
+    public Color GetOutlineColor(TargetAreaCollider.TargetInfo target) 
+    {
+        return tempColorSave;
     }
 
    /* IEnumerator Blink()

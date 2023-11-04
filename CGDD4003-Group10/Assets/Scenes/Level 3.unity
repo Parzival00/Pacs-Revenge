@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -15944,6 +15944,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7465043686356946606, guid: 5d8988313b2408b4fbc3bb6102082b93, type: 3}
   m_PrefabInstance: {fileID: 373727740}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &379881961 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7192041595190586304, guid: 5c2ae3947f92f2148b8d62a5f205cb67, type: 3}
+  m_PrefabInstance: {fileID: 1917215864}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &379881962 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2900638022773996503, guid: 5c2ae3947f92f2148b8d62a5f205cb67, type: 3}
+  m_PrefabInstance: {fileID: 1917215864}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &387163513
 GameObject:
   m_ObjectHideFlags: 0
@@ -37561,6 +37583,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1917215870}
     - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: shieldText
+      value: 
+      objectReference: {fileID: 379881962}
+    - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: deathAnimator
       value: 
       objectReference: {fileID: 1917215865}
@@ -37584,6 +37610,10 @@ PrefabInstance:
       propertyPath: pelletRemaining
       value: 
       objectReference: {fileID: 1917215867}
+    - target: {fileID: 6532150692148206727, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: pointValueIndicator
+      value: 
+      objectReference: {fileID: 379881961}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
