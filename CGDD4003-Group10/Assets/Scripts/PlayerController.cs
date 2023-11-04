@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] string railgunAlertMessage = "Advanced Targeting System Activated";
     [SerializeField] float railgunAlertLength = 2;
     [SerializeField] RailgunVFX railGunVFX;
-    [SerializeField] Animator gunAnimator;
+    [SerializeField] Animator railgunAnimator;
     [SerializeField] float chargeTime;
     [SerializeField] float maxWeaponTemp = 5;
     [SerializeField] float overheatSpeed = 1;
@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Stun-Gun Settings")]
     [SerializeField] StungunVFX stungunVFX;
+    [SerializeField] Animator stungunAnimator;
     [SerializeField] float fireRate;
     [SerializeField] Transform bulletOrigin;
     [SerializeField] GameObject stunGun;
@@ -360,7 +361,7 @@ public class PlayerController : MonoBehaviour
 
 
                 railGunVFX.Shoot(hit, weaponRange);
-                gunAnimator.SetTrigger("Shoot");
+                railgunAnimator.SetTrigger("Shoot");
 
                 StartCoroutine(Decharge());
             }
@@ -519,6 +520,8 @@ public class PlayerController : MonoBehaviour
             Instantiate(stunProjectile, bulletOrigin.position, bulletOrigin.rotation);
 
             stungunVFX.Shoot();
+            if (stungunAnimator != null)
+                stungunAnimator.SetTrigger("Shoot");
 
             stunFireTimer = fireRate;
             weaponSound.PlayOneShot(stunShotSound);
@@ -573,17 +576,23 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Activates the gun and any related visuals and start the gun timer coroutine
     /// </summary>
-    public void ActivateGun()
+    IEnumerator ActivateGun()
     {
         if (gunTimerCoroutine != null)
             StopCoroutine(gunTimerCoroutine);
+
+        if(stungunAnimator != null)
+        {
+            stungunAnimator.SetTrigger("Unequip");
+            yield return new WaitForSeconds(0.2f);
+        }
 
         gunActivated = true;
         gun.SetActive(true);
         hud.SetActive(true);
 
         //Deactivate stun gun
-        stunGun.SetActive(false);
+        //stunGun.SetActive(false);
 
         if (faceController)
             faceController.RailgunPickup();
@@ -595,10 +604,10 @@ public class PlayerController : MonoBehaviour
         musicPlayer.PlayOneShot(powerMusic);
         //musicPlayer.volume = musicPlayer.volume * powerMusicVolBoost;
 
-        if (gunAnimator != null)
+        if (railgunAnimator != null)
         {
-            gunAnimator.ResetTrigger("UnequipGun");
-            gunAnimator.SetTrigger("EquipGun");
+            railgunAnimator.ResetTrigger("UnequipGun");
+            railgunAnimator.SetTrigger("EquipGun");
         }
 
         weaponTemp = 0;
@@ -634,33 +643,37 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
 
-        DeactivateGun();
+        StartCoroutine(DeactivateGun());
         gunTimer = gunTimeAmount;
     }
 
     /// <summary>
     /// Deactivates the gun and any related visuals
     /// </summary>
-    void DeactivateGun()
+    IEnumerator DeactivateGun()
     {    
         gunActivated = false;
         gun.SetActive(false);
         hud.SetActive(false);
 
+        musicPlayer.Stop();
+
         //musicPlayer.volume = musicPlayer.volume / powerMusicVolBoost;
 
         //Activates Stun-Gun again
-        stunGun.SetActive(true);
+        //stunGun.SetActive(true);
 
         if (gunTimerCoroutine != null)
         {
             StopCoroutine(gunTimerCoroutine);
         }
 
-        if (gunAnimator != null)
+        if (railgunAnimator != null)
         {
-            gunAnimator.ResetTrigger("EquipGun");
-            gunAnimator.SetTrigger("UnequipGun");
+            railgunAnimator.ResetTrigger("EquipGun");
+            railgunAnimator.SetTrigger("UnequipGun");
+
+            yield return new WaitForSeconds(0.2f);
         }
 
         foreach (Ghost ghost in ghosts)
@@ -683,6 +696,12 @@ public class PlayerController : MonoBehaviour
             }
         }
         baseSpeed -= gunSpeedMultiplier;
+
+        if (!inDeathSequence && stungunAnimator != null)
+        {
+            stungunAnimator.SetTrigger("Equip");
+            //yield return new WaitForSeconds(0.2f);
+        }
     }
     #endregion
 
@@ -692,7 +711,7 @@ public class PlayerController : MonoBehaviour
         if(other.tag == "Weapon" && !gunActivated)
         {
             Destroy(other.gameObject);
-            ActivateGun();
+            StartCoroutine(ActivateGun());
         }
     }
 
@@ -749,10 +768,13 @@ public class PlayerController : MonoBehaviour
         canFire = false;
 
         if(gunActivated)
-            DeactivateGun();
+            StartCoroutine(DeactivateGun());
 
         if (invisibilityActivated)
             DeactivateInvisibility();
+
+        if (speedBoostActivated)
+            DeactivateSpeed();
 
         //Stop all of the ghosts' movements
         foreach (Ghost g in ghosts)

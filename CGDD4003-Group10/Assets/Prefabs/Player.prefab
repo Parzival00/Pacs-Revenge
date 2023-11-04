@@ -6483,7 +6483,7 @@ MonoBehaviour:
   railgunAlertMessage: Advanced Targeting System Activated
   railgunAlertLength: 1.5
   railGunVFX: {fileID: 4507674535604613185}
-  gunAnimator: {fileID: 6221754044492916589}
+  railgunAnimator: {fileID: 6221754044492916589}
   chargeTime: 0.5
   maxWeaponTemp: 7
   overheatSpeed: 4
@@ -6496,6 +6496,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   stungunVFX: {fileID: 59560998165607546}
+  stungunAnimator: {fileID: 3176158172579412883}
   fireRate: 2
   bulletOrigin: {fileID: 4904277085903038529}
   stunGun: {fileID: 1216297462127043291}
@@ -6863,6 +6864,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 547570625388888621}
+  - component: {fileID: 3176158172579412883}
   m_Layer: 0
   m_Name: StunGun Pivot
   m_TagString: Untagged
@@ -6887,6 +6889,27 @@ Transform:
   - {fileID: 4904277085903038529}
   m_Father: {fileID: 5802968209847089425}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &3176158172579412883
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6704805296735850020}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 98f00521f9c45184a84c099310ea4181, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6821514254823661221
 GameObject:
   m_ObjectHideFlags: 0
