@@ -5494,9 +5494,24 @@ MonoBehaviour:
   stunEffect: {fileID: 6374710953820316676}
   minimapIcon: {fileID: 6203385613228050135}
   deadMinimapIcon: {fileID: 7924509799558485418}
+  difficultySettings:
+  - difficultyLevel: 0
+    health: 50
+    baseSpeed: 5
+    respawnTimeDampener: 0
+    levelSpeedIncrease: 0.01
+  - difficultyLevel: 1
+    health: 75
+    baseSpeed: 5.75
+    respawnTimeDampener: 0.3
+    levelSpeedIncrease: 0.03
+  - difficultyLevel: 2
+    health: 75
+    baseSpeed: 6
+    respawnTimeDampener: 0.6
+    levelSpeedIncrease: 0.07
   exitSpawnToRight: 0
   pelletsNeededToStart: 25
-  speed: 4.5
   respawnWaitTime: 5
   freezeTime: 2.5
   pointWorth: 200
@@ -5521,7 +5536,6 @@ MonoBehaviour:
     type: 1
     difficulty: 1
     healthValue: 40
-  ghostHealth: 75
   flinchLength: 0.5
   faceForwardForDeath: 0
   player: {fileID: 0}

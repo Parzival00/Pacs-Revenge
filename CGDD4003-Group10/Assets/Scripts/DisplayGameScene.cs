@@ -24,12 +24,14 @@ public class DisplayGameScene : MonoBehaviour
             if(PlayerPrefs.GetInt("Lives") == 0)
             {
                 currentTransitionalMat = deathTransitionMat;
+                deathSceneTexture.SetActive(true);
             } else
             {
                 currentTransitionalMat = transitionMat;
+                gameSceneTexture.SetActive(true);
+                deathSceneTexture.SetActive(false);
             }
 
-            deathSceneTexture?.SetActive(true);
             currentTransitionalMat.SetFloat("_TransitionProgress", 0);
             StartCoroutine(Transition());
         } 
@@ -38,7 +40,7 @@ public class DisplayGameScene : MonoBehaviour
             currentTransitionalMat = transitionMat;
             gameSceneTexture.SetActive(true);
             if(deathSceneTexture)
-                deathSceneTexture?.SetActive(false);
+                deathSceneTexture.SetActive(false);
             currentTransitionalMat.SetFloat("_TransitionProgress", 0);
             StartCoroutine(Transition());
         }

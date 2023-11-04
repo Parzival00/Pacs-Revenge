@@ -23,6 +23,16 @@ public class Ghost : MonoBehaviour
         public GameObject smallBlood;
     }
 
+    [System.Serializable]
+    public struct DifficultySettings
+    {
+        public int difficultyLevel;
+        public int health;
+        public float baseSpeed;
+        [Range(0, 1)] public float respawnTimeDampener;
+        [Range(0, 1)] public float levelSpeedIncrease;
+    }
+
     public enum Mode
     {
         Dormant, //Start mode when ghosts hasnt left spawn
@@ -74,17 +84,22 @@ public class Ghost : MonoBehaviour
     [SerializeField] protected GameObject deadMinimapIcon;
 
     [Header("Ghost Settings")]
+    [SerializeField] protected DifficultySettings[] difficultySettings = new DifficultySettings[3];
     [SerializeField] protected bool exitSpawnToRight;
     [SerializeField] protected int pelletsNeededToStart = 10;
-    [SerializeField] protected float speed = 2f;
     [SerializeField] protected float respawnWaitTime = 5f;
     [SerializeField] protected float freezeTime;
     protected float freezeTimer;
     [SerializeField] protected int pointWorth = 20;
     [SerializeField] protected TargetArea[] targetAreas;
-    [SerializeField] protected float ghostHealth;
     [SerializeField] protected float flinchLength = 0.5f;
     [SerializeField] protected bool faceForwardForDeath = true;
+    protected float ghostHealth;
+    protected float levelSpeedIncrease = 0.03f;
+    protected float speed = 2f;
+    protected float respawnTimeDampener;
+
+    protected DifficultySettings currentDifficultySettings;
 
     [Header("Transform Targets")]
     [SerializeField] protected Transform player;
@@ -98,20 +113,15 @@ public class Ghost : MonoBehaviour
     [Header("Chase Sound Settings")]
     [SerializeField] protected AudioSource chaseSoundSource;
     [SerializeField] protected float farPitch = 0.15f;
-    //[SerializeField] protected float farVolume  = 0.15f;
     [SerializeField] protected AudioClip chaseSoundFar;
     [SerializeField] protected float closeSoundBlendpadding = 1f;
     [SerializeField] protected float dstToBlendToCloseSound = 10;
     [SerializeField] protected float closePitch = 3f;
-    //[SerializeField] protected float closeVolume = 3f;
-    //[SerializeField] protected AudioClip chaseSoundClose;
-    //[SerializeField] protected AudioClip scatterSound;
+
     [Header("Other Sound Settings")]
     [SerializeField] protected AudioClip deathSound;
     [SerializeField] protected AudioClip hitSound;
     [SerializeField] protected AudioClip stunnedSound;
-    //[SerializeField] protected AudioClip corpseMoveSound;
-    //[SerializeField] protected AudioClip respawnedSound;
 
     //AI Variables
     protected Vector3 targetPosition;
@@ -145,6 +155,20 @@ public class Ghost : MonoBehaviour
         if (spriteController == null)
             spriteController = GetComponentInChildren<GhostSpriteController>();
 
+        if (Score.difficulty < difficultySettings.Length)
+        {
+            currentDifficultySettings = difficultySettings[Score.difficulty];
+        } else
+        {
+            currentDifficultySettings = difficultySettings[0];
+        }
+
+        speed = currentDifficultySettings.baseSpeed;
+        levelSpeedIncrease = currentDifficultySettings.levelSpeedIncrease;
+        respawnTimeDampener = currentDifficultySettings.respawnTimeDampener;
+        ghostHealth = currentDifficultySettings.health;
+
+        speed *= 1 + levelSpeedIncrease * (Score.currentLevel - 1);
         navMesh.speed = speed;
 
         stunEffect.SetActive(false);
@@ -154,9 +178,6 @@ public class Ghost : MonoBehaviour
         {
             targetAreaDirectory.Add(area.type, area);
         }
-
-        //if (ghostCollider)
-         //   ghostCollider.enabled = true;
     }
 
     // Update is called once per frame
@@ -206,8 +227,6 @@ public class Ghost : MonoBehaviour
     //Chase the player
     protected virtual void Chase()
     {
-        //spriteRenderer.color = Color.white; //Temporary
-
         Vector2Int playerGridPosition = map.CheckEdgePositions(transform.position);
 
         targetGridPosition = playerGridPosition;
@@ -232,25 +251,14 @@ public class Ghost : MonoBehaviour
         if (distToPlayer < dstToBlendToCloseSound)
         {
             chaseSoundSource.pitch = closePitch;
-            //chaseSoundSource.volume = closeVolume;
-            //chaseSoundSource.clip = chaseSoundClose;
         }
         else if (distToPlayer > dstToBlendToCloseSound + closeSoundBlendpadding)
         {
             chaseSoundSource.pitch = farPitch;
-            //chaseSoundSource.volume = farVolume;
-            //chaseSoundSource.clip = chaseSoundFar;
         }
 
-        if (!chaseSoundSource.isPlaying || (chaseSoundSource.clip != chaseSoundFar /*&& chaseSoundSource.clip != chaseSoundClose*/))
+        if (!chaseSoundSource.isPlaying || (chaseSoundSource.clip != chaseSoundFar))
         {
-            /*if(chaseSoundSource.clip == chaseSoundFar)
-                chaseSoundSource.pitch = farPitch;
-
-            if (chaseSoundSource.clip == chaseSoundClose)
-                chaseSoundSource.pitch = closePitch;*/
-
-
             chaseSoundSource.Play();
         }
     }
@@ -267,10 +275,7 @@ public class Ghost : MonoBehaviour
         lastTargetGridPosition = targetGridPosition;
 
         //Play Sound
-        if (chaseSoundSource.isPlaying)
-        {
-            //chaseSoundSource.pitch = 1.5f;
-        }
+        PlayChaseSound();
     }
 
     /// <summary>
@@ -501,7 +506,7 @@ public class Ghost : MonoBehaviour
 
         spriteController.StartReformAnimation();
 
-        WaitForSeconds respawnWait = new WaitForSeconds(respawnWaitTime + currentHitArea.respawnTimeAddition);
+        WaitForSeconds respawnWait = new WaitForSeconds((respawnWaitTime + currentHitArea.respawnTimeAddition) * (1 - respawnTimeDampener));
 
         yield return respawnWait;
 
