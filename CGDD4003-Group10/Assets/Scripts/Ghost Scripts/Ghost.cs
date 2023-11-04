@@ -43,7 +43,8 @@ public class Ghost : MonoBehaviour
         Freeze, //Ghost is stunned
         Flinch, //Ghost got hit by the railgun but didnt die
         InvisibilityPowerUp, //Player has the invisibility powerup
-        Reseting //Ghost is getting reset because player got killed
+        Reseting, //Ghost is getting reset because player got killed
+        Bossfight //Ghost is attacking the player using the bossfight movement 
     }
 
     public enum TargetAreaType
@@ -94,6 +95,8 @@ public class Ghost : MonoBehaviour
     [SerializeField] protected TargetArea[] targetAreas;
     [SerializeField] protected float flinchLength = 0.5f;
     [SerializeField] protected bool faceForwardForDeath = true;
+    [SerializeField] protected bool BosssfightMode = false;
+    protected bool forceRespawn = false;
     protected float ghostHealth;
     protected float levelSpeedIncrease = 0.03f;
     protected float speed = 2f;
@@ -216,6 +219,9 @@ public class Ghost : MonoBehaviour
             case Mode.Flinch:
                 Flinch();
                 break;
+            case Mode.Bossfight:
+                Bossfight();
+                break;
             case Mode.InvisibilityPowerUp:
                 InvisibilityPowerUp();
                 break;
@@ -283,7 +289,7 @@ public class Ghost : MonoBehaviour
     /// </summary>
     protected bool Move(bool canTurnAround)
     {
-        if (currentMode != Mode.Chase && currentMode != Mode.Scatter && currentMode != Mode.InvisibilityPowerUp)
+        if (currentMode != Mode.Chase && currentMode != Mode.Scatter && currentMode != Mode.InvisibilityPowerUp && currentMode != Mode.Bossfight)
             return false;
 
         navMesh.enabled = true;
@@ -386,7 +392,19 @@ public class Ghost : MonoBehaviour
             currentMode = previousMode;
         }
     }
+    /// <summary>
+    /// Alters the ghosts movement pattern to fit the boss fight 
+    /// </summary>
+    protected virtual void Bossfight()
+    {
+        Vector2Int playerGridPosition = map.CheckEdgePositions(transform.position);
 
+        targetGridPosition = playerGridPosition;
+        Move(true);
+
+        lastTargetGridPosition = targetGridPosition;
+        PlayChaseSound();
+    }
     #region Exiting Spawn
     //Mode for exiting the spawn location
     protected virtual void Exiting()
@@ -422,10 +440,25 @@ public class Ghost : MonoBehaviour
         {
             currentMode = Mode.InvisibilityPowerUp;
         }
-        else
+        else if(!BosssfightMode)
         {
             currentMode = Mode.Chase;
 
+            if (exitSpawnToRight)
+            {
+                currentDirection = Vector2Int.right;
+                nextGridPosition = spawnExitGridPosition + Vector2Int.right;
+            }
+            else
+            {
+                currentDirection = Vector2Int.left;
+                nextGridPosition = spawnExitGridPosition + Vector2Int.left;
+            }
+        }
+        else
+        {
+            currentMode = Mode.Bossfight;
+            print("bossfight Mode");
             if (exitSpawnToRight)
             {
                 currentDirection = Vector2Int.right;
@@ -526,7 +559,17 @@ public class Ghost : MonoBehaviour
         //    ghostCollider.enabled = true;
 
         if(currentMode == Mode.Respawn)
-            currentMode = Mode.Exiting;
+        {
+            if(BosssfightMode)
+            {
+                currentMode = Mode.Dormant;
+            }
+            else
+            {
+                currentMode = Mode.Exiting;
+            }
+        }
+            
         lastTargetGridPosition = new Vector2Int(-1, -1);
     }
 
@@ -760,6 +803,10 @@ public class Ghost : MonoBehaviour
         ghostIcon.rotation = Quaternion.Euler(90, player.transform.eulerAngles.y, 0);
     }
 
+    public void allowRespawn()
+    {
+        forceRespawn = true;
+    }
     //Debug Function
     private void OnDrawGizmos()
     {

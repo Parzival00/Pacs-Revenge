@@ -13,6 +13,11 @@ public class Blinky : Ghost
     {
         base.Chase();
     }
+    //Blinky's bossfight will just be the default (The same as his chase)
+    protected override void Bossfight()
+    {
+        base.Bossfight();
+    }
 
     protected override void Scatter()
     {
