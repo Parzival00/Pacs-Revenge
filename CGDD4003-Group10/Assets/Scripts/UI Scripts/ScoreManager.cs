@@ -21,6 +21,8 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] TMP_Text highScoreDisplay;
     [SerializeField] TMP_Text currentPlayerScore;
 
+    bool wroteToFile = false;
+
     public struct ScoreEntry
     {
         public int playerRank, playerScore;
@@ -40,6 +42,8 @@ public class ScoreManager : MonoBehaviour
 
     public void Start()
     {
+        wroteToFile = false;
+
         if (deleteHighScoreFile)
         {
             if (File.Exists((Application.persistentDataPath + "/Scores.txt")))
@@ -164,11 +168,14 @@ public class ScoreManager : MonoBehaviour
             highScoreDisplay.text += highscore.ToString() + "\n";
         }
 
-        WriteToScoreFile();
+        if(!wroteToFile)
+            WriteToScoreFile();
     }
 
     public void WriteToScoreFile() 
     {
+        wroteToFile = true;
+
         if (!File.Exists((Application.persistentDataPath + "/Scores.txt")))
         {
             File.WriteAllText(Application.persistentDataPath + "/Scores.txt", "");
@@ -187,8 +194,4 @@ public class ScoreManager : MonoBehaviour
         int playerScore = Score.score;
         currentPlayerScore.text = "Score: " + playerScore;
     }
-
-
-
-
 }

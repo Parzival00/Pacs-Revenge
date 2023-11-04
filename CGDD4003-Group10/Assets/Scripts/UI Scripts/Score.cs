@@ -29,6 +29,10 @@ public class Score : MonoBehaviour
     PlayerController playerController;
     Camera gameSceneCamera;
 
+    HUDMessenger hudMessenger;
+
+    static float scoreMultiplier;
+
     void Awake()
     {
         pelletsCollected = 0;
@@ -41,11 +45,28 @@ public class Score : MonoBehaviour
 
         difficulty = PlayerPrefs.GetInt("Difficulty");
 
+        switch(difficulty)
+        {
+            case 0:
+                scoreMultiplier = 0.5f;
+                break;
+            case 1:
+                scoreMultiplier = 1;
+                break;
+            case 2:
+                scoreMultiplier = 2;
+                break;
+            default:
+                scoreMultiplier = 1;
+                break;
+        }
+
         if (currentLevel == 1)
             score = 0;
 
         playerController = this.gameObject.GetComponent<PlayerController>();
         gameSceneCamera = Camera.main;// GameObject.FindGameObjectWithTag("GameSceneCamera")?.GetComponent<Camera>();
+        hudMessenger = FindObjectOfType<HUDMessenger>();
 
         won = false;
     }
@@ -72,7 +93,7 @@ public class Score : MonoBehaviour
             audioSource.PlayOneShot(pelletSound);
             pelletsCollected += 1;
             timeSinceLastPellet = 0;
-            score += 50;
+            AddToScore(50);
             if (pelletsCollected >= totalPellets)
             {
                 playerController.SaveLives();
@@ -93,19 +114,24 @@ public class Score : MonoBehaviour
                 playerController.faceController.EatFruit();
 
                 FruitController.FruitInfo fruitInfo = fruitController.CollectFruit();
-                score += fruitInfo.pointsWorth;
-                switch(fruitInfo.powerUp)
+
+                AddToScore(fruitInfo.pointsWorth);
+                switch (fruitInfo.powerUp)
                 {
                     case FruitController.PowerUpType.Shield:
                         playerController.AddShields();
+                        hudMessenger.Display("Shield Obtained", 1);
                         break;
                     case FruitController.PowerUpType.Invisibility:
+                        hudMessenger.Display("Invisibility Activated", 1);
                         playerController.ActivateInvisibility();
                         break;
                     case FruitController.PowerUpType.Speed:
+                        hudMessenger.Display("Speed Boost Activated", 1);
                         playerController.ActivateSpeed();
                         break;
                     case FruitController.PowerUpType.EnhancedRadar:
+                        hudMessenger.Display("Enhanced Radar Activated", 1);
                         Radar radar = GameObject.Find("Radar").GetComponent<Radar>();
                         radar.StartEnhancedRadar();
                         break;
@@ -126,7 +152,7 @@ public class Score : MonoBehaviour
 
     public static void AddToScore(int amount)
     {
-        score += amount;
+        score += (int)(amount * scoreMultiplier);
     }
 
     public void UpdatePelletsRemaining() 
@@ -138,6 +164,7 @@ public class Score : MonoBehaviour
     public static void SetDifficulty(int value)
     {
         difficulty = value;
+        PlayerPrefs.SetInt("Difficulty", difficulty);
     }
 
     public IEnumerator SceneEnd()

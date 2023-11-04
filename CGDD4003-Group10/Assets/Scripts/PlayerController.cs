@@ -114,6 +114,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip invisibilityActivate;
     [SerializeField] AudioClip invisibilityDeactivate;
 
+    [Header("Speed PowerUp Settings")]
+    [SerializeField] float speedPowerUpLength = 15;
+    [SerializeField] float speedIncrease = 1.5f;
+    [SerializeField] AudioSource speedPowerUpSource;
+    [SerializeField] AudioClip speedActivate;
+    [SerializeField] AudioClip speedDeactivate;
+
+    [Header("Extra Life Settings")]
+    [SerializeField] Image extraLifeFlash;
+    [SerializeField] float flashSpeed = 0.5f;
+    [SerializeField] AudioSource extraLifeSource;
+    [SerializeField] AudioClip extraLifeSound;
+
     [Header("Music Settings")]
     [SerializeField] float powerMusicVolBoost;
     [SerializeField] AudioClip powerMusic;
@@ -126,6 +139,8 @@ public class PlayerController : MonoBehaviour
     public static bool gunActivated { get; private set; }
     public static bool invisibilityActivated { get; private set; }
     public static int playerLives { get; private set; }
+
+    private bool speedBoostActivated = false;
 
     private bool canFire = true;
 
@@ -154,6 +169,12 @@ public class PlayerController : MonoBehaviour
         mainMenuManager = FindObjectOfType<MainMenuManager>();
 
         hudMessenger = FindObjectOfType<HUDMessenger>();
+
+        if(extraLifeFlash == null)
+            extraLifeFlash = GameObject.FindGameObjectWithTag("ExtraLifeFlash")?.GetComponent<Image>();
+
+        if (extraLifeFlash != null)
+            extraLifeFlash.gameObject.SetActive(false);
 
         speed = baseSpeed;
 
@@ -287,14 +308,16 @@ public class PlayerController : MonoBehaviour
         targetDirection.Normalize();
         currentDirection = Vector2.SmoothDamp(currentDirection, targetDirection, ref currentVelocity, moveSmoothTime);
 
-        if (Input.GetKey("left shift"))
-        {
-            speed = baseSpeed * sprintMultiplier;
-        }
-        else
-        {
-            speed = baseSpeed;
-        }
+        speed = baseSpeed;
+        /*
+                if (Input.GetKey("left shift"))
+                {
+                    speed = baseSpeed * sprintMultiplier;
+                }
+                else
+                {
+                    speed = baseSpeed;
+                }*/
         velocity = (playerT.forward * currentDirection.y + playerT.right * currentDirection.x) * speed;
         character.enabled = true;
         character.Move(velocity * Time.deltaTime);
@@ -808,10 +831,60 @@ public class PlayerController : MonoBehaviour
             shieldAnimator.PlayShieldUp();
     }
 
+    #region Extra Life
     public void AddLives()
     {
+        if(extraLifeSource != null)
+            extraLifeSource.PlayOneShot(extraLifeSound);
+
+        if (extraLifeFlash != null)
+            StartCoroutine(ExtraLifeFlash());
+
         playerLives++;
+        LivesText.text = "" + playerLives;
     }
+    IEnumerator ExtraLifeFlash()
+    {
+        extraLifeFlash.gameObject.SetActive(true);
+
+        float alpha = 0;
+        Color color = extraLifeFlash.color;
+        color.a = alpha;
+        extraLifeFlash.color = color;
+
+        float change = 1 / (flashSpeed / 2);
+        while (alpha < .75f)
+        {
+            alpha += change * Time.deltaTime;
+            print(alpha);
+            color = extraLifeFlash.color;
+            color.a = alpha;
+            extraLifeFlash.color = color;
+            yield return null;
+        }
+
+        alpha = 0.75f;
+        color = extraLifeFlash.color;
+        color.a = alpha;
+        extraLifeFlash.color = color;
+
+        while (alpha > 0)
+        {
+            alpha -= change * Time.deltaTime;
+            color = extraLifeFlash.color;
+            color.a = alpha;
+            extraLifeFlash.color = color;
+            yield return null;
+        }
+
+        alpha = 0;
+        color = extraLifeFlash.color;
+        color.a = alpha;
+        extraLifeFlash.color = color;
+
+        extraLifeFlash.gameObject.SetActive(false);
+    }
+    #endregion
 
     #region Invisibility Power-Up
     Coroutine invisibilityPowerUpCoroutine;
@@ -822,8 +895,10 @@ public class PlayerController : MonoBehaviour
             ghost.ActivatedInvisibilityPowerUp();
         }
 
-        if(invisibilityPowerUpCoroutine == null)
-            invisibilityPowerUpCoroutine = StartCoroutine(InvisibilityPowerUp());
+        if (invisibilityPowerUpCoroutine != null)
+            StopCoroutine(invisibilityPowerUpCoroutine);
+
+        invisibilityPowerUpCoroutine = StartCoroutine(InvisibilityPowerUp());
 
         if (invisibilitySource != null)
             invisibilitySource.PlayOneShot(invisibilityActivate);
@@ -850,18 +925,41 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Speed Power-Up
+    Coroutine speedPowerUp;
     public void ActivateSpeed()
     {
-        StartCoroutine(SpeedBoost());
+        if (speedPowerUpSource != null)
+            speedPowerUpSource.PlayOneShot(speedActivate);
+
+        if (speedBoostActivated)
+            DeactivateSpeed();
+
+        if (speedPowerUp != null)
+            StopCoroutine(speedPowerUp);
+
+        speedPowerUp = StartCoroutine(SpeedBoost());
     }
 
     IEnumerator SpeedBoost()
     {
-        speed +=  sprintMultiplier;
+        speedBoostActivated = true;
 
-        yield return new WaitForSeconds(10f);
+        baseSpeed += speedIncrease;
 
-        speed -= sprintMultiplier;
+        yield return new WaitForSeconds(speedPowerUpLength);
+
+        if (speedBoostActivated)
+        {
+            if (speedPowerUpSource != null)
+                speedPowerUpSource.PlayOneShot(speedDeactivate);
+
+            DeactivateSpeed();
+        }
+    }
+    public void DeactivateSpeed()
+    {
+        speedBoostActivated = false;
+        baseSpeed -= speedIncrease;
     }
     #endregion
 

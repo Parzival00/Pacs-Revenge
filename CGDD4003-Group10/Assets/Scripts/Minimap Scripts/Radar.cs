@@ -12,12 +12,15 @@ public class Radar : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField] float rotationSpeed;
     [SerializeField] float trackingRadius;
+    [SerializeField] float enhancedRadarSizeChange = 5;
+    [SerializeField] float enhancedRadarLength = 15;
     [SerializeField] float radarLineAngleOffset = 95;
     [SerializeField] float radarIndicatorAngleOffset = 45;
     [SerializeField] Material radarMaterial;
     [SerializeField] Material radarIndicatorMat;
 
     float degreeRotations = 0;
+    
     bool enhancedRadarOn = false;
 
     GameObject closestPellet;
@@ -76,7 +79,7 @@ public class Radar : MonoBehaviour
                     Color color = hitSprite.color;
                     hitSprite.color = new Color(color.r, color.g, color.b, 1);
 
-                    if (objectHit.tag == "MinimapPellet" && (closestPellet == null || closestPellet.transform.root.gameObject.activeSelf == false || hitSprite.enabled == false ||
+                    if (objectHit.tag == "MinimapPellet" && (closestPellet == null || closestPellet.transform.parent.gameObject.activeSelf == false || hitSprite.enabled == false ||
                         hit.distance < Vector2.Distance(new Vector2(closestPellet.transform.position.x, closestPellet.transform.position.z), new Vector2(player.position.x, player.position.z))))
                     {
                         closestPellet = objectHit;
@@ -97,7 +100,7 @@ public class Radar : MonoBehaviour
 
     void RadarIndicator()
     {
-        if (closestPellet == null || closestPellet.transform.root.gameObject.activeSelf == false)
+        if (closestPellet == null || closestPellet.transform.parent.gameObject.activeSelf == false)
             return;
 
         Vector2 dirToClosestPellet = (new Vector2(closestPellet.transform.position.x, closestPellet.transform.position.z) - new Vector2(player.position.x, player.position.z)).normalized;
@@ -117,12 +120,24 @@ public class Radar : MonoBehaviour
 
     IEnumerator EnhancedRadar()
     {
-        minimapCam.orthographicSize += 5;
+        minimapCam.orthographicSize += enhancedRadarSizeChange;
         enhancedRadarOn = true;
 
-        yield return new WaitForSeconds(10);
+        if (radarLine && minimapCam)
+            radarLine.transform.localScale = Vector3.one * minimapCam.orthographicSize * 2;
 
-        minimapCam.orthographicSize -= 5;
+        if (indicator && minimapCam)
+            indicator.transform.localScale = Vector3.one * minimapCam.orthographicSize * 2;
+
+        yield return new WaitForSeconds(enhancedRadarLength);
+
+        minimapCam.orthographicSize -= enhancedRadarSizeChange;
         enhancedRadarOn = false;
+
+        if (radarLine && minimapCam)
+            radarLine.transform.localScale = Vector3.one * minimapCam.orthographicSize * 2;
+
+        if (indicator && minimapCam)
+            indicator.transform.localScale = Vector3.one * minimapCam.orthographicSize * 2;
     }
 }

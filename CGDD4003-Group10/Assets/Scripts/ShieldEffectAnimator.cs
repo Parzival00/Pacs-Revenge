@@ -14,6 +14,12 @@ public class ShieldEffectAnimator : MonoBehaviour
     [SerializeField] float breakSpeed = 10;
     [SerializeField] float breakStepSize = 0.1f;
 
+    [Header("Shield Audio Settings")]
+    [SerializeField] AudioSource shieldSource;
+    [SerializeField] AudioClip shieldActivate;
+    [SerializeField] AudioClip shieldDeactivate;
+    [SerializeField] AudioClip shieldBreak;
+
     bool isAnimating = false;
 
     // Start is called before the first frame update
@@ -33,6 +39,9 @@ public class ShieldEffectAnimator : MonoBehaviour
     IEnumerator ShieldUpAnimation()
     {
         yield return new WaitUntil(() => isAnimating == false);
+
+        if (shieldSource != null)
+            shieldSource.PlayOneShot(shieldActivate);
 
         isAnimating = true;
 
@@ -87,6 +96,9 @@ public class ShieldEffectAnimator : MonoBehaviour
     {
         yield return new WaitUntil(() => isAnimating == false);
 
+        if (shieldSource != null)
+            shieldSource.PlayOneShot(shieldDeactivate);
+
         isAnimating = true;
 
         float progress = 1;
@@ -126,6 +138,9 @@ public class ShieldEffectAnimator : MonoBehaviour
     IEnumerator ShieldBreakAnimation()
     {
         yield return new WaitUntil(() => isAnimating == false);
+
+        if (shieldSource != null)
+            shieldSource.PlayOneShot(shieldBreak);
 
         isAnimating = true;
 

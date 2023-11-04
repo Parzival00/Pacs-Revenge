@@ -109,6 +109,10 @@ public class FaceController : MonoBehaviour
                     case 1:
                         pacManFace.sprite = mouthClosedFace_d3;
                         break;
+                    default:
+                        pacManFace.sprite = mouthClosedFace_d1;
+                        break;
+
                 }
             }
 
@@ -128,6 +132,9 @@ public class FaceController : MonoBehaviour
                         break;
                     case 1:
                         pacManFace.sprite = mouthOpenFace_d3;
+                        break;
+                    default:
+                        pacManFace.sprite = mouthOpenFace_d1;
                         break;
                 }
             }
@@ -155,6 +162,9 @@ public class FaceController : MonoBehaviour
                     case 1:
                         pacManFace.sprite = happyFace_d3;
                         break;
+                    default:
+                        pacManFace.sprite = happyFace_d1;
+                        break;
                 }
             }
 
@@ -174,6 +184,9 @@ public class FaceController : MonoBehaviour
                         break;
                     case 1:
                         pacManFace.sprite = mouthOpenFace_d3;
+                        break;
+                    default:
+                        pacManFace.sprite = mouthOpenFace_d1;
                         break;
                 }
             }
@@ -201,6 +214,9 @@ public class FaceController : MonoBehaviour
                     case 1:
                         pacManFace.sprite = mouthClosedFace_d3;
                         break;
+                    default:
+                        pacManFace.sprite = mouthClosedFace_d1;
+                        break;
                 }
             }
 
@@ -218,6 +234,9 @@ public class FaceController : MonoBehaviour
                         break;
                     case 1:
                         pacManFace.sprite = happyFace_d3;
+                        break;
+                    default:
+                        pacManFace.sprite = happyFace_d1;
                         break;
                 }
             }
@@ -238,6 +257,9 @@ public class FaceController : MonoBehaviour
                         break;
                     case 1:
                         pacManFace.sprite = mouthOpenFace_d3;
+                        break;
+                    default:
+                        pacManFace.sprite = mouthOpenFace_d1;
                         break;
                 }
             }
