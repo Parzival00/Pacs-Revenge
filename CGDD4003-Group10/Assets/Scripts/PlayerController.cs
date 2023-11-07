@@ -203,8 +203,16 @@ public class PlayerController : MonoBehaviour
         if (deathAnimator == null)
             deathAnimator = GameObject.FindGameObjectWithTag("DeathAnimator").GetComponent<Animator>();
 
+        if (stungunAnimator != null)
+        {
+            stungunAnimator.SetBool("Equipped", true);
+        }
+        else
+        {
+            stunGun.SetActive(true);
+        }
 
-        if(shieldAnimator == null)
+        if (shieldAnimator == null)
             shieldAnimator = FindObjectOfType<ShieldEffectAnimator>();
 
         ghosts = new Ghost[4];
@@ -590,8 +598,11 @@ public class PlayerController : MonoBehaviour
 
         if(stungunAnimator != null)
         {
-            stungunAnimator.SetTrigger("Unequip");
+            stungunAnimator.SetBool("Equipped", false);
             yield return new WaitForSeconds(0.2f);
+        } else
+        {
+            stunGun.SetActive(false);
         }
 
         gunActivated = true;
@@ -706,8 +717,11 @@ public class PlayerController : MonoBehaviour
 
         if (!inDeathSequence && stungunAnimator != null)
         {
-            stungunAnimator.SetTrigger("Equip");
+            stungunAnimator.SetBool("Equipped", true);
             //yield return new WaitForSeconds(0.2f);
+        } else
+        {
+            stunGun.SetActive(true);
         }
     }
     #endregion
@@ -774,8 +788,21 @@ public class PlayerController : MonoBehaviour
         character.enabled = false;
         canFire = false;
 
-        if(gunActivated)
+        if (gunActivated)
+        {
             StartCoroutine(DeactivateGun());
+        }
+        else
+        {
+            if (stungunAnimator != null)
+            {
+                stungunAnimator.SetBool("Equipped", false);
+            }
+            else
+            {
+                stunGun.SetActive(false);
+            }
+        }
 
         if (invisibilityActivated)
             DeactivateInvisibility();
@@ -837,7 +864,10 @@ public class PlayerController : MonoBehaviour
 
             if (stungunAnimator != null)
             {
-                stungunAnimator.SetTrigger("Equip");
+                stungunAnimator.SetBool("Equipped", true);
+            } else
+            {
+                stunGun.SetActive(true);
             }
 
             character.enabled = true;

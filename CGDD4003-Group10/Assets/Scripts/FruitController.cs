@@ -64,6 +64,9 @@ public class FruitController : MonoBehaviour
     private bool fruitActivated;
     private Fruit currentFruit;
 
+    private bool firstFruitActivated;
+    private bool secondFruitActivated;
+
     Coroutine fruitTimerCoroutine;
     Coroutine fruitSpawnAlertCoroutine;
 
@@ -72,6 +75,7 @@ public class FruitController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         if (availableFruits != null)
         {
             currentFruit = availableFruits[0];
@@ -89,6 +93,9 @@ public class FruitController : MonoBehaviour
         }
         hudMessenger = FindObjectOfType<HUDMessenger>();
 
+        firstFruitActivated = false;
+        secondFruitActivated = false;
+
         DeactivateFruit();
     }
 
@@ -105,8 +112,6 @@ public class FruitController : MonoBehaviour
             fruitCollectionCollider.enabled = true;
 
             fruitActivated = true;
-
-            //fruitTimerCoroutine = StartCoroutine(FruitTimer());
 
             if (alertMessage != null)
                 fruitSpawnAlertCoroutine = StartCoroutine(FruitSpawnAlert());
@@ -133,8 +138,6 @@ public class FruitController : MonoBehaviour
             StopCoroutine(fruitSpawnAlertCoroutine);
 
             lightningBeam?.Stop();
-
-            //alertMessage.SetActive(false);
         }
     }
 
@@ -181,8 +184,14 @@ public class FruitController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!fruitActivated && (Score.pelletsCollected == firstFruitSpawnThreshold || Score.pelletsCollected == secondFruitSpawnThreshold))
+        if (!fruitActivated && ((Score.pelletsCollected == firstFruitSpawnThreshold && !firstFruitActivated) || (Score.pelletsCollected == secondFruitSpawnThreshold && !secondFruitActivated)))
         {
+            if (Score.pelletsCollected == firstFruitSpawnThreshold)
+                firstFruitActivated = true;
+
+            if (Score.pelletsCollected == secondFruitSpawnThreshold)
+                secondFruitActivated = true;
+
             ActivateFruit();
         }
     }

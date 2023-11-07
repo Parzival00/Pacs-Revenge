@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44480178, g: 0.4943508, b: 0.5735456, a: 1}
+  m_IndirectSpecularColor: {r: 0.44480163, g: 0.4943503, b: 0.5735447, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9017,6 +9017,10 @@ PrefabInstance:
     - target: {fileID: 3799092519243194410, guid: 8feee5add1d593348858ed83ff5f3651, type: 3}
       propertyPath: m_Name
       value: TeleportDestinations
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799092519243194410, guid: 8feee5add1d593348858ed83ff5f3651, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5610687496183527769, guid: 8feee5add1d593348858ed83ff5f3651, type: 3}
       propertyPath: m_Enabled

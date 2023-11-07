@@ -11,6 +11,7 @@ public class Score : MonoBehaviour
     public static int pelletsCollected {get; private set; }
     public static int pelletsLeft { get; private set; }
     public static bool indicatorActive { get; private set; }
+    public static int fruitsCollected { get; private set; }
     public static int currentLevel { get; private set; }
     public static int difficulty { get; private set; }
     public static bool won { get; private set; }
@@ -72,6 +73,16 @@ public class Score : MonoBehaviour
         if (currentLevel == 1)
             score = 0;
 
+        if (currentLevel == 1)
+        {
+            fruitsCollected = 0;
+            PlayerPrefs.SetInt("FruitsCollected", fruitsCollected);
+        }
+        else
+        {
+            fruitsCollected = PlayerPrefs.GetInt("FruitsCollected");
+        }
+
         playerController = this.gameObject.GetComponent<PlayerController>();
         gameSceneCamera = Camera.main;// GameObject.FindGameObjectWithTag("GameSceneCamera")?.GetComponent<Camera>();
         hudMessenger = FindObjectOfType<HUDMessenger>();
@@ -130,22 +141,27 @@ public class Score : MonoBehaviour
                     case FruitController.PowerUpType.Shield:
                         playerController.AddShields();
                         hudMessenger.Display("Shield Obtained", 1);
+                        fruitsCollected++;
                         break;
                     case FruitController.PowerUpType.Invisibility:
                         hudMessenger.Display("Invisibility Activated", 1);
                         playerController.ActivateInvisibility();
+                        fruitsCollected++;
                         break;
                     case FruitController.PowerUpType.Speed:
                         hudMessenger.Display("Speed Boost Activated", 1);
                         playerController.ActivateSpeed();
+                        fruitsCollected++;
                         break;
                     case FruitController.PowerUpType.EnhancedRadar:
                         hudMessenger.Display("Enhanced Radar Activated", 1);
                         Radar radar = GameObject.Find("Radar").GetComponent<Radar>();
                         radar.StartEnhancedRadar();
+                        fruitsCollected++;
                         break;
                     case FruitController.PowerUpType.ExtraLife:
                         playerController.AddLives();
+                        fruitsCollected++;
                         break;
                     default:
                         break;
@@ -214,6 +230,11 @@ public class Score : MonoBehaviour
         PlayerPrefs.SetInt("Difficulty", difficulty);
     }
 
+    public void SaveFruitsCollected()
+    {
+        PlayerPrefs.SetInt("FruitsCollected", fruitsCollected);
+    }
+
     public IEnumerator SceneEnd()
     {
         gameSceneRenderTex.Release();
@@ -234,6 +255,8 @@ public class Score : MonoBehaviour
         won = true;
 
         gameSceneRenderTex.Create();
+
+        SaveFruitsCollected();
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
