@@ -64,6 +64,10 @@ public class MainMenuManager : MonoBehaviour
             menu?.SetActive(false);
         }
 
+        screenResolution.onValueChanged.AddListener(delegate {
+            SetResolution(screenResolution.value);
+        });
+
     }
 
     public void SaveSettings()
@@ -216,24 +220,30 @@ public class MainMenuManager : MonoBehaviour
         difficultyScreen.SetActive(true);
     }
 
-    public void SetResolution()
+    public void SetResolution(int res)
     {
-        switch (screenResolution.value)
+        
+        switch (res)
         {
             case 0:
                 Screen.SetResolution(3840, 2160, fullScreenToggle);
+                print("1Resolution after at least a frame is " + Screen.width + "x" + Screen.height);
                 break;
             case 1:
                 Screen.SetResolution(2560, 1440, fullScreenToggle);
+                print("2Resolution after at least a frame is " + Screen.width + "x" + Screen.height);
                 break; ;
             case 2:
                 Screen.SetResolution(1920, 1080, fullScreenToggle);
+                print("3Resolution after at least a frame is " + Screen.width + "x" + Screen.height);
                 break;
             case 3:
                 Screen.SetResolution(1600, 900, fullScreenToggle);
+                print("4Resolution after at least a frame is " + Screen.width + "x" + Screen.height);
                 break;
             case 4:
                 Screen.SetResolution(1280, 720, fullScreenToggle);
+                print("5Resolution after at least a frame is " + Screen.width + "x" + Screen.height);
                 break;
 
         }
