@@ -835,6 +835,11 @@ public class PlayerController : MonoBehaviour
 
             yield return deathTimer;
 
+            if (stungunAnimator != null)
+            {
+                stungunAnimator.SetTrigger("Equip");
+            }
+
             character.enabled = true;
             canMove = true;
             canFire = true;
