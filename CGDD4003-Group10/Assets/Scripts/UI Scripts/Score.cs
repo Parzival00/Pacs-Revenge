@@ -4,7 +4,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Threading;
-using UnityEngine.InputSystem.Android;
 
 public class Score : MonoBehaviour
 {
