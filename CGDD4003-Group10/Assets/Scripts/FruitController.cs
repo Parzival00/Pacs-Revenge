@@ -38,6 +38,7 @@ public class FruitController : MonoBehaviour
 
     [Header("Fruit Spawn Alert Settings")]
     [SerializeField] string alertMessage = "Fruit Offering Detected";
+    [SerializeField] string corruptionEndingMessage = "Final Offering Detected";
     [SerializeField] ParticleSystem lightningBeam;
     [SerializeField] AudioSource lightningSoundSource;
     [SerializeField] float alertVisibleTimerAmount = 3;
@@ -96,7 +97,14 @@ public class FruitController : MonoBehaviour
         firstFruitActivated = false;
         secondFruitActivated = false;
 
-        DeactivateFruit();
+        if (Score.corruptionEnding)
+        {
+            ActivateFruit();
+        }
+        else
+        {
+            DeactivateFruit();
+        }
     }
 
     /// <summary>
@@ -253,7 +261,14 @@ public class FruitController : MonoBehaviour
 
             if(messageDelayTimer <= Time.time && !alertMessegeSent)
             {
-                hudMessenger?.Display(alertMessage, alertVisibleTimerAmount);
+                if (Score.corruptionEnding)
+                {
+                    hudMessenger?.Display(corruptionEndingMessage, alertVisibleTimerAmount);
+                }
+                else
+                {
+                    hudMessenger?.Display(alertMessage, alertVisibleTimerAmount);
+                }
                 alertMessegeSent = true;
                 messageTimer = Time.time + alertVisibleTimerAmount;
             }

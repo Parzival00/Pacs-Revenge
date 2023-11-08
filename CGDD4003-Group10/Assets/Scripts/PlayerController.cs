@@ -137,6 +137,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip gameStart;
     [SerializeField] AudioSource musicPlayer;
 
+    [Header("Corruption Ending Settings")]
+    [SerializeField] Material corruptedView;
+
     [Header("Debug Settings")]
     [SerializeField] bool usePlayerPrefsSettings;
 
@@ -159,9 +162,33 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Init();
-        musicPlayer.PlayOneShot(gameStart);
-        shieldsRemaining = 0;
+        if (corruptedView != null)
+            corruptedView.SetFloat("_Strength", 0);
+
+        if (!Score.corruptionEnding)
+        {
+            Init();
+        } else
+        {
+            originalY = transform.position.y;
+
+            character = this.GetComponent<CharacterController>();
+
+            canFire = false;
+            speed = baseSpeed;
+
+            canMove = true;
+
+            mainMenuManager = FindObjectOfType<MainMenuManager>();
+
+            hudMessenger = FindObjectOfType<HUDMessenger>();
+
+            if (usePlayerPrefsSettings)
+            {
+                ApplyGameSettings();
+            }
+            else AudioListener.volume = 50;
+        }
     }
 
     private void Init()
@@ -196,10 +223,9 @@ public class PlayerController : MonoBehaviour
         gun.SetActive(false);
         hud.SetActive(false);
 
-        Time.timeScale = 1;
-
         if (animator == null)
             animator = GetComponent<Animator>();
+
         if (deathAnimator == null)
             deathAnimator = GameObject.FindGameObjectWithTag("DeathAnimator").GetComponent<Animator>();
 
@@ -252,6 +278,10 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        shieldsRemaining = 0;
+
+        musicPlayer.PlayOneShot(gameStart);
+
         LivesText.text = "" + playerLives;
     }
 
@@ -286,12 +316,14 @@ public class PlayerController : MonoBehaviour
             PauseGame();
         }
 
-        if (!musicPlayer.isPlaying)
+        if (!musicPlayer.isPlaying && !Score.corruptionEnding)
         {
             musicPlayer.Play();
             musicPlayer.loop = true;
         }
-        DisplayPLayerShields(); 
+
+        if(!Score.corruptionEnding)
+            DisplayPLayerShields(); 
     }
 
     #region Move and Look
@@ -743,7 +775,7 @@ public class PlayerController : MonoBehaviour
         {
             Ghost ghost = other.gameObject.transform.root.GetComponent<Ghost>();
 
-            if (ghost.CurrentMode == Ghost.Mode.Chase || ghost.CurrentMode == Ghost.Mode.Scatter || ghost.CurrentMode == Ghost.Mode.InvisibilityPowerUp)
+            if (ghost.CurrentMode == Ghost.Mode.Chase || ghost.CurrentMode == Ghost.Mode.Scatter || ghost.CurrentMode == Ghost.Mode.InvisibilityPowerUp || Score.bossEnding)
             {
                 print("hit by " + other.gameObject.name);
 
@@ -775,6 +807,11 @@ public class PlayerController : MonoBehaviour
 
                     
                 }
+            } else if (Score.corruptionEnding)
+            {
+                ghost.PermenantDeath();
+                baseSpeed += sprintMultiplier;
+                corruptedView.SetFloat("_Strength", corruptedView.GetFloat("_Strength") + 0.2f);
             }
         }
     }
@@ -851,7 +888,8 @@ public class PlayerController : MonoBehaviour
             print("Ending Scene");
             SaveLives();
             //end game scene
-            SceneManager.LoadScene("GameOverScene");
+            //corruptedView.SetFloat("_Strength", 0);
+            Score.GameEnd();
         }
         else
         {
@@ -945,8 +983,6 @@ public class PlayerController : MonoBehaviour
         shieldText.text = "" + shieldsRemaining;
     }
     #endregion
-
-    
 
     #region Invisibility Power-Up
     Coroutine invisibilityPowerUpCoroutine;
@@ -1067,5 +1103,11 @@ public class PlayerController : MonoBehaviour
     public void SaveLives()
     {
         PlayerPrefs.SetInt("Lives", playerLives);
+    }
+
+    public void EnableCorruptionEnding()
+    {
+        baseSpeed += sprintMultiplier * 2;
+        corruptedView.SetFloat("_Strength", 0.1f);
     }
 }

@@ -6506,6 +6506,7 @@ MonoBehaviour:
   hud: {fileID: 0}
   LivesText: {fileID: 0}
   ammoText: {fileID: 0}
+  shieldText: {fileID: 0}
   shieldAnimator: {fileID: 0}
   deathAnimator: {fileID: 0}
   deathSequenceLength: 2
@@ -6531,6 +6532,7 @@ MonoBehaviour:
   powerMusic: {fileID: 8300000, guid: 5e8142d0c3b9d984ab3e2d1649eaa786, type: 3}
   gameStart: {fileID: 8300000, guid: 6bf9ad10f11168d4ba5d6ded08e08be9, type: 3}
   musicPlayer: {fileID: 7457625705006531473}
+  corruptedView: {fileID: 2100000, guid: 55efb060c2d541b409a1eb0fdc2d7d94, type: 2}
   usePlayerPrefsSettings: 1
 --- !u!114 &6532150692148206727
 MonoBehaviour:
@@ -6546,11 +6548,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreUI: {fileID: 0}
   pelletRemaining: {fileID: 0}
+  pointValueIndicator: {fileID: 0}
   audioSource: {fileID: 7337700370802506642}
   pelletSound: {fileID: 8300000, guid: 390b72579c63df34d8cfead757aab8ff, type: 3}
   pelletsPerAmmo: 12
   indicatorTimerThreshold: 15
   gameSceneRenderTex: {fileID: 8400000, guid: 1fbbf88530324554bbc10d8e0b318019, type: 2}
+  corruptedView: {fileID: 2100000, guid: 55efb060c2d541b409a1eb0fdc2d7d94, type: 2}
+  timeToWait: 2
 --- !u!114 &6717606324952877450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6568,6 +6573,7 @@ MonoBehaviour:
   targetDifficultyEasy: {r: 0.4716981, g: 0.4716981, b: 0.4716981, a: 1}
   targetDifficultyMedium: {r: 1, g: 1, b: 1, a: 1}
   targetDifficultyHard: {r: 1, g: 0.91437024, b: 0, a: 1}
+  tempColorSave: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &4507674535604613185
 MonoBehaviour:
   m_ObjectHideFlags: 0

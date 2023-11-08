@@ -44,7 +44,8 @@ public class Ghost : MonoBehaviour
         Flinch, //Ghost got hit by the railgun but didnt die
         InvisibilityPowerUp, //Player has the invisibility powerup
         Reseting, //Ghost is getting reset because player got killed
-        Bossfight //Ghost is attacking the player using the bossfight movement 
+        Bossfight, //Ghost is attacking the player using the bossfight movement 
+        CorruptionEnding
     }
 
     public enum TargetAreaType
@@ -225,6 +226,9 @@ public class Ghost : MonoBehaviour
             case Mode.InvisibilityPowerUp:
                 InvisibilityPowerUp();
                 break;
+            case Mode.CorruptionEnding:
+                CorruptionEnding();
+                break;
             default:
                 break;
         }
@@ -289,7 +293,7 @@ public class Ghost : MonoBehaviour
     /// </summary>
     protected bool Move(bool canTurnAround)
     {
-        if (currentMode != Mode.Chase && currentMode != Mode.Scatter && currentMode != Mode.InvisibilityPowerUp && currentMode != Mode.Bossfight)
+        if (currentMode != Mode.Chase && currentMode != Mode.Scatter && currentMode != Mode.InvisibilityPowerUp && currentMode != Mode.Bossfight && currentMode != Mode.CorruptionEnding)
             return false;
 
         navMesh.enabled = true;
@@ -370,7 +374,7 @@ public class Ghost : MonoBehaviour
     {
         spriteController.DeactivateColliders();
 
-        if(Score.pelletsCollected >= pelletsNeededToStart)
+        if(Score.pelletsCollected >= pelletsNeededToStart && !Score.corruptionEnding)
             currentMode = Mode.Exiting;
     }
 
@@ -392,6 +396,7 @@ public class Ghost : MonoBehaviour
             currentMode = previousMode;
         }
     }
+
     /// <summary>
     /// Alters the ghosts movement pattern to fit the boss fight 
     /// </summary>
@@ -405,6 +410,30 @@ public class Ghost : MonoBehaviour
         lastTargetGridPosition = targetGridPosition;
         PlayChaseSound();
     }
+
+    public void EnableCorruptionEnding()
+    {
+        currentMode = Mode.Exiting;
+    }
+    protected virtual void CorruptionEnding()
+    {
+        Vector2Int playerGridPosition = map.GetPlayerPosition();
+
+        if (Vector2Int.Distance(playerGridPosition, currentGridPosition) < 5 && spriteController.orientation == GhostSpriteController.Orientation.North)
+        {
+            currentDirection = -currentDirection;
+            nextGridPosition = map.GetNextGridPosition(currentGridPosition, currentDirection, true, true);
+            targetGridPosition = nextGridPosition;
+        }
+        else
+        {
+            Vector2Int scatterTargetGridPos = map.GetGridLocation(scatterTarget.position);
+            targetGridPosition = scatterTargetGridPos;
+        }
+        Move(false);
+        lastTargetGridPosition = targetGridPosition;
+    }
+
     #region Exiting Spawn
     //Mode for exiting the spawn location
     protected virtual void Exiting()
@@ -440,10 +469,10 @@ public class Ghost : MonoBehaviour
         {
             currentMode = Mode.InvisibilityPowerUp;
         }
-        else if(!BosssfightMode)
+        else if(Score.bossEnding)
         {
-            currentMode = Mode.Chase;
-
+            currentMode = Mode.Bossfight;
+            print("bossfight Mode");
             if (exitSpawnToRight)
             {
                 currentDirection = Vector2Int.right;
@@ -454,11 +483,24 @@ public class Ghost : MonoBehaviour
                 currentDirection = Vector2Int.left;
                 nextGridPosition = spawnExitGridPosition + Vector2Int.left;
             }
-        }
-        else
+        } else if (Score.corruptionEnding)
         {
-            currentMode = Mode.Bossfight;
-            print("bossfight Mode");
+            currentMode = Mode.CorruptionEnding;
+            print("Corruption Ending");
+            if (exitSpawnToRight)
+            {
+                currentDirection = Vector2Int.right;
+                nextGridPosition = spawnExitGridPosition + Vector2Int.right;
+            }
+            else
+            {
+                currentDirection = Vector2Int.left;
+                nextGridPosition = spawnExitGridPosition + Vector2Int.left;
+            }
+        } else
+        {
+            currentMode = Mode.Chase;
+
             if (exitSpawnToRight)
             {
                 currentDirection = Vector2Int.right;
@@ -475,7 +517,6 @@ public class Ghost : MonoBehaviour
 
         spriteController.ActivateColliders();
     }
-
     #endregion
 
     #region Respawn
@@ -713,6 +754,7 @@ public class Ghost : MonoBehaviour
     }
     #endregion
 
+    #region Invisibility Power-Up
     public void ActivatedInvisibilityPowerUp()
     {
         if(currentMode == Mode.Scatter || currentMode == Mode.Chase)
@@ -736,7 +778,7 @@ public class Ghost : MonoBehaviour
             currentMode = Mode.Chase;
         }
     }
-
+    #endregion
 
     //Gets the target area from the directory using the target area type
     public TargetArea GetTargetArea(TargetAreaType type)
@@ -803,10 +845,29 @@ public class Ghost : MonoBehaviour
         ghostIcon.rotation = Quaternion.Euler(90, player.transform.eulerAngles.y, 0);
     }
 
-    public void allowRespawn()
+    public void AllowRespawn()
     {
         forceRespawn = true;
     }
+
+    public virtual void PermenantDeath()
+    {
+        navMesh.enabled = false;
+
+        float spawnRadius = 0.6f;
+
+        for(int i = 0; i < 50; i++)
+        {
+            Instantiate(bigBlood, transform.position +
+                    transform.right * Random.Range(-spawnRadius, spawnRadius) + 
+                    transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2) + 
+                    transform.forward * Random.Range(-spawnRadius / 2, spawnRadius / 2), 
+                    Quaternion.identity);
+        }
+
+        Destroy(gameObject);
+    }
+
     //Debug Function
     private void OnDrawGizmos()
     {

@@ -14,7 +14,9 @@ public class Score : MonoBehaviour
     public static int fruitsCollected { get; private set; }
     public static int currentLevel { get; private set; }
     public static int difficulty { get; private set; }
-    public static bool won { get; private set; }
+    public static bool wonLevel { get; private set; }
+    public static bool corruptionEnding { get; private set; }
+    public static bool bossEnding { get; private set; }
 
     [SerializeField] TMP_Text scoreUI;
     [SerializeField] TMP_Text pelletRemaining;
@@ -25,14 +27,16 @@ public class Score : MonoBehaviour
     [SerializeField] float indicatorTimerThreshold = 10;
     [SerializeField] RenderTexture gameSceneRenderTex;
 
+    [Header("Corruption Ending Settings")]
+    [SerializeField] Material corruptedView;
+
     private int totalPellets;
     private static int amountedAdded;
     private static Color currentTarget = Color.yellow;
-    public float timeToWait = 2;
+    private float timeToWait = 2;
     private bool hasScoreIncrease = false;
     private static int previousScore;
     
-
     float timeSinceLastPellet;
 
     PlayerController playerController;
@@ -44,6 +48,8 @@ public class Score : MonoBehaviour
 
     void Awake()
     {
+        corruptedView.SetFloat("_Strength", 0);
+
         pelletsCollected = 0;
         GameObject[] pellets = GameObject.FindGameObjectsWithTag("Pellet");
         totalPellets = pellets.Length;
@@ -83,30 +89,36 @@ public class Score : MonoBehaviour
             fruitsCollected = PlayerPrefs.GetInt("FruitsCollected");
         }
 
+        corruptionEnding = currentLevel == 9;
+        bossEnding = currentLevel == 10;
+
         playerController = this.gameObject.GetComponent<PlayerController>();
         gameSceneCamera = Camera.main;// GameObject.FindGameObjectWithTag("GameSceneCamera")?.GetComponent<Camera>();
         hudMessenger = FindObjectOfType<HUDMessenger>();
 
-        won = false;
+        wonLevel = false;
     }
 
 
     void Update()
     {
-        UpdateScore();
-        UpdatePelletsRemaining();
-        CheckIfScoreChanged();
-        UpdatePointIndicator();
+        if (!corruptionEnding)
+        {
+            UpdateScore();
+            UpdatePelletsRemaining();
+            CheckIfScoreChanged();
+            UpdatePointIndicator();
 
-        timeSinceLastPellet += Time.deltaTime;
+            timeSinceLastPellet += Time.deltaTime;
 
-        indicatorActive = timeSinceLastPellet >= indicatorTimerThreshold;
+            indicatorActive = timeSinceLastPellet >= indicatorTimerThreshold;
+        }
     }
 
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Pellet")
+        if (other.gameObject.tag == "Pellet" && !corruptionEnding)
         {
             playerController.faceController.EatPellet();
 
@@ -132,39 +144,56 @@ public class Score : MonoBehaviour
 
             if(fruitController)
             {
-                playerController.faceController.EatFruit();
-
-                FruitController.FruitInfo fruitInfo = fruitController.CollectFruit();
-                AddToScore(Color.white, fruitInfo.pointsWorth);
-                switch (fruitInfo.powerUp)
+                if (corruptionEnding)
                 {
-                    case FruitController.PowerUpType.Shield:
-                        playerController.AddShields();
-                        hudMessenger.Display("Shield Obtained", 1);
-                        fruitsCollected++;
-                        break;
-                    case FruitController.PowerUpType.Invisibility:
-                        hudMessenger.Display("Invisibility Activated", 1);
-                        playerController.ActivateInvisibility();
-                        fruitsCollected++;
-                        break;
-                    case FruitController.PowerUpType.Speed:
-                        hudMessenger.Display("Speed Boost Activated", 1);
-                        playerController.ActivateSpeed();
-                        fruitsCollected++;
-                        break;
-                    case FruitController.PowerUpType.EnhancedRadar:
-                        hudMessenger.Display("Enhanced Radar Activated", 1);
-                        Radar radar = GameObject.Find("Radar").GetComponent<Radar>();
-                        radar.StartEnhancedRadar();
-                        fruitsCollected++;
-                        break;
-                    case FruitController.PowerUpType.ExtraLife:
-                        playerController.AddLives();
-                        fruitsCollected++;
-                        break;
-                    default:
-                        break;
+                    Ghost[] ghosts = new Ghost[4];
+                    ghosts = FindObjectsOfType<Ghost>();
+
+                    for (int i = 0; i < ghosts.Length; i++)
+                    {
+                        ghosts[i].EnableCorruptionEnding();
+                    }
+
+                    playerController.EnableCorruptionEnding();
+
+                    fruitController.CollectFruit();
+                }
+                else
+                {
+                    playerController.faceController.EatFruit();
+
+                    FruitController.FruitInfo fruitInfo = fruitController.CollectFruit();
+                    AddToScore(Color.white, fruitInfo.pointsWorth);
+                    switch (fruitInfo.powerUp)
+                    {
+                        case FruitController.PowerUpType.Shield:
+                            playerController.AddShields();
+                            hudMessenger.Display("Shield Obtained", 1);
+                            fruitsCollected++;
+                            break;
+                        case FruitController.PowerUpType.Invisibility:
+                            hudMessenger.Display("Invisibility Activated", 1);
+                            playerController.ActivateInvisibility();
+                            fruitsCollected++;
+                            break;
+                        case FruitController.PowerUpType.Speed:
+                            hudMessenger.Display("Speed Boost Activated", 1);
+                            playerController.ActivateSpeed();
+                            fruitsCollected++;
+                            break;
+                        case FruitController.PowerUpType.EnhancedRadar:
+                            hudMessenger.Display("Enhanced Radar Activated", 1);
+                            Radar radar = GameObject.Find("Radar").GetComponent<Radar>();
+                            radar.StartEnhancedRadar();
+                            fruitsCollected++;
+                            break;
+                        case FruitController.PowerUpType.ExtraLife:
+                            playerController.AddLives();
+                            fruitsCollected++;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
@@ -252,12 +281,22 @@ public class Score : MonoBehaviour
         gameSceneCamera.targetTexture = gameSceneRenderTex;
         gameSceneCamera.Render();
         gameSceneCamera.targetTexture = null;
-        won = true;
+        wonLevel = true;
 
         gameSceneRenderTex.Create();
 
         SaveFruitsCollected();
 
+        corruptedView.SetFloat("_Strength", 0);
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    /// <summary>
+    /// End of the game so switch to gameover scene
+    /// </summary>
+    public static void GameEnd()
+    {
+        SceneManager.LoadScene("GameOverScene");
     }
 }

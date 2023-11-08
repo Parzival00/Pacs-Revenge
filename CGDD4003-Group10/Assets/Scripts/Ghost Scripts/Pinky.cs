@@ -46,11 +46,11 @@ public class Pinky : Ghost
 
     protected override void Scatter()
     {
-        scatterTimer();
+        ScatterTimer();
         Vector2Int playerGridPosition = map.GetPlayerPosition();
-        Vector2Int clydeGridPosition = map.GetGridLocation(transform.position);
+        Vector2Int pinkyGridPosition = map.GetGridLocation(transform.position);
 
-        if (Vector2Int.Distance(playerGridPosition, clydeGridPosition) < radiusToAvoidPlayer && !flipped)
+        if (Vector2Int.Distance(playerGridPosition, pinkyGridPosition) < radiusToAvoidPlayer && !flipped)
         {
             currentDirection = -currentDirection;
             nextGridPosition = map.GetNextGridPosition(currentGridPosition, currentDirection, true, true);
@@ -66,7 +66,7 @@ public class Pinky : Ghost
         Move(false);
         lastTargetGridPosition = targetGridPosition;
     }
-    protected void scatterTimer()
+    protected void ScatterTimer()
     {
         if(cooldownTimer > 0)
         {
