@@ -140,6 +140,9 @@ public class PlayerController : MonoBehaviour
     [Header("Corruption Ending Settings")]
     [SerializeField] Material corruptedView;
 
+    [Header("Boss Ending Settings")]
+    [SerializeField] bool bossFight = false;
+
     [Header("Debug Settings")]
     [SerializeField] bool usePlayerPrefsSettings;
 
@@ -636,7 +639,11 @@ public class PlayerController : MonoBehaviour
         {
             stunGun.SetActive(false);
         }
-
+        if(bossFight)
+        {
+            WeaponSpawner ws = FindObjectOfType<WeaponSpawner>();
+            ws.Reset();
+        }
         gunActivated = true;
         gun.SetActive(true);
         hud.SetActive(true);
