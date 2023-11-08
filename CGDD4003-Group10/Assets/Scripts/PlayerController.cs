@@ -766,6 +766,10 @@ public class PlayerController : MonoBehaviour
             Destroy(other.gameObject);
             StartCoroutine(ActivateGun());
         }
+        else if (other.tag == "Enemy")
+        {
+            other.GetComponent<Ghost>().playBiteSound();
+        }
     }
 
     //Accounting for scatter ending when player is touching a ghost

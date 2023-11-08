@@ -6146,6 +6146,134 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6622275217034872740}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3830099978605199799
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1604274739235493686}
+  - component: {fileID: 1280984969820592023}
+  m_Layer: 0
+  m_Name: RadarPowerUp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1604274739235493686
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3830099978605199799}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000005960464}
+  m_LocalPosition: {x: -1.7200308, y: -1.04, z: 26.399998}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 743185093512582757}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1280984969820592023
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3830099978605199799}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 7131999003614377871, guid: 28f800679063ee84fb2e3c41fee59bc0, type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &4552041144137350135
 GameObject:
   m_ObjectHideFlags: 0
@@ -6353,6 +6481,7 @@ Transform:
   - {fileID: 7230149740429334907}
   - {fileID: 7414469905039157798}
   - {fileID: 9058233579328976135}
+  - {fileID: 1604274739235493686}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7913088612209654388
@@ -6549,13 +6678,14 @@ MonoBehaviour:
   scoreUI: {fileID: 0}
   pelletRemaining: {fileID: 0}
   pointValueIndicator: {fileID: 0}
-  audioSource: {fileID: 7337700370802506642}
+  munchAudioSource: {fileID: 7337700370802506642}
+  radarAudioSource: {fileID: 1280984969820592023}
   pelletSound: {fileID: 8300000, guid: 390b72579c63df34d8cfead757aab8ff, type: 3}
+  radarPing: {fileID: 8300000, guid: b497797476fe5a84b923353b5215e407, type: 3}
   pelletsPerAmmo: 12
   indicatorTimerThreshold: 15
   gameSceneRenderTex: {fileID: 8400000, guid: 1fbbf88530324554bbc10d8e0b318019, type: 2}
   corruptedView: {fileID: 2100000, guid: 55efb060c2d541b409a1eb0fdc2d7d94, type: 2}
-  timeToWait: 2
 --- !u!114 &6717606324952877450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7285,7 +7415,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 9152574423911532920, guid: 28f800679063ee84fb2e3c41fee59bc0, type: 2}
   m_audioClip: {fileID: 8300000, guid: 37133ffb0afdbd6488ab446661ef24cf, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.025
+  m_Volume: 0.059
   m_Pitch: 1
   Loop: 1
   Mute: 0

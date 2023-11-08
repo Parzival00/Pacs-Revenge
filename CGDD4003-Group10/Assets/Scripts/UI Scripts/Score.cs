@@ -21,8 +21,10 @@ public class Score : MonoBehaviour
     [SerializeField] TMP_Text scoreUI;
     [SerializeField] TMP_Text pelletRemaining;
     [SerializeField] TMP_Text pointValueIndicator;
-    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioSource munchAudioSource;
+    [SerializeField] AudioSource radarAudioSource;
     [SerializeField] AudioClip pelletSound;
+    [SerializeField] AudioClip radarPing;
     [SerializeField] int pelletsPerAmmo;
     [SerializeField] float indicatorTimerThreshold = 10;
     [SerializeField] RenderTexture gameSceneRenderTex;
@@ -123,7 +125,7 @@ public class Score : MonoBehaviour
             playerController.faceController.EatPellet();
 
             other.gameObject.SetActive(false);
-            audioSource.PlayOneShot(pelletSound);
+            munchAudioSource.PlayOneShot(pelletSound);
             pelletsCollected += 1;
             timeSinceLastPellet = 0;
             AddToScore(Color.white, 50);
@@ -182,6 +184,7 @@ public class Score : MonoBehaviour
                             fruitsCollected++;
                             break;
                         case FruitController.PowerUpType.EnhancedRadar:
+                            radarAudioSource.PlayOneShot(radarPing);
                             hudMessenger.Display("Enhanced Radar Activated", 1);
                             Radar radar = GameObject.Find("Radar").GetComponent<Radar>();
                             radar.StartEnhancedRadar();

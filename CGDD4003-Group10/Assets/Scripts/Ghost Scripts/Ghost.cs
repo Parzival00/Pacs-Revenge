@@ -123,9 +123,13 @@ public class Ghost : MonoBehaviour
     [SerializeField] protected float closePitch = 3f;
 
     [Header("Other Sound Settings")]
+    [SerializeField] protected AudioSource hitSoundSource;
+    [SerializeField] protected AudioSource biteSoundSource;
+    [SerializeField] protected AudioSource zapSoundSource;
     [SerializeField] protected AudioClip deathSound;
     [SerializeField] protected AudioClip hitSound;
     [SerializeField] protected AudioClip stunnedSound;
+    [SerializeField] protected AudioClip biteSound;
 
     //AI Variables
     protected Vector3 targetPosition;
@@ -536,8 +540,7 @@ public class Ghost : MonoBehaviour
     {
         //spriteRenderer.color = Color.black;
 
-        chaseSoundSource.Stop();
-        chaseSoundSource.PlayOneShot(deathSound);
+        hitSoundSource.PlayOneShot(deathSound);
         spriteController.DeactivateColliders();
 
         navMesh.enabled = false;
@@ -639,7 +642,7 @@ public class Ghost : MonoBehaviour
     {
         currentMode = Mode.Reseting;
         navMesh.enabled = false;
-        chaseSoundSource.Stop();
+        
     }
 
     /// <summary>
@@ -683,6 +686,7 @@ public class Ghost : MonoBehaviour
         stunEffect.SetActive(false);
 
         spriteController.ResetParameters();
+        chaseSoundSource.Stop();
 
         currentMode = Mode.Dormant;
     }
@@ -699,7 +703,7 @@ public class Ghost : MonoBehaviour
             navMesh.enabled = false;
             stunEffect.SetActive(true);
             chaseSoundSource.Stop();
-            chaseSoundSource.PlayOneShot(stunnedSound);
+            zapSoundSource.PlayOneShot(stunnedSound);
         }
     }
 
@@ -813,7 +817,7 @@ public class Ghost : MonoBehaviour
         else
         {
             previousMode = currentMode;
-            chaseSoundSource.PlayOneShot(hitSound);
+            hitSoundSource.PlayOneShot(hitSound);
             currentMode = Mode.Flinch;
         }
 
@@ -848,6 +852,11 @@ public class Ghost : MonoBehaviour
     public void AllowRespawn()
     {
         forceRespawn = true;
+    }
+    public void playBiteSound()
+    {
+        chaseSoundSource.Stop();
+        biteSoundSource.PlayOneShot(biteSound);
     }
 
     public virtual void PermenantDeath()

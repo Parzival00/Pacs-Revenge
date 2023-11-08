@@ -22,7 +22,7 @@ public class PickupAudioController : MonoBehaviour
     {
         if(Vector3.Distance(this.transform.position, playerPosition) <= rolloffStartDistance && !PlayerController.gunActivated)
         {
-            playerMusic.volume = originalVol * Mathf.Log(Vector3.Distance(this.transform.position, playerPosition), rolloffStartDistance * 3);
+            playerMusic.volume = originalVol * Mathf.Log(Vector3.Distance(this.transform.position, playerPosition), rolloffStartDistance * 5);
         }
     }
 }
