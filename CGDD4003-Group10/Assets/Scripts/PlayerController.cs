@@ -137,8 +137,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip gameStart;
     [SerializeField] AudioSource musicPlayer;
 
-    [Header("Corruption Ending Settings")]
+    [Header("Insanity Ending Settings")]
     [SerializeField] Material corruptedView;
+    [SerializeField] AudioSource eatSoundSource;
+    [SerializeField] AudioClip eatSound;
 
     [Header("Boss Ending Settings")]
     [SerializeField] bool bossFight = false;
@@ -162,17 +164,22 @@ public class PlayerController : MonoBehaviour
 
     HUDMessenger hudMessenger;
 
+    int permenantGhostsKilled = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         if (corruptedView != null)
             corruptedView.SetFloat("_Strength", 0);
 
-        if (!Score.corruptionEnding)
+        if (!Score.insanityEnding)
         {
             Init();
-        } else
+        }
+        else
         {
+            permenantGhostsKilled = 0;
+
             originalY = transform.position.y;
 
             character = this.GetComponent<CharacterController>();
@@ -319,13 +326,13 @@ public class PlayerController : MonoBehaviour
             PauseGame();
         }
 
-        if (!musicPlayer.isPlaying && !Score.corruptionEnding)
+        if (!musicPlayer.isPlaying)
         {
             musicPlayer.Play();
             musicPlayer.loop = true;
         }
 
-        if(!Score.corruptionEnding)
+        if(!Score.insanityEnding)
             DisplayPLayerShields(); 
     }
 
@@ -773,10 +780,6 @@ public class PlayerController : MonoBehaviour
             Destroy(other.gameObject);
             StartCoroutine(ActivateGun());
         }
-        else if (other.tag == "Enemy")
-        {
-            other.GetComponent<Ghost>().playBiteSound();
-        }
     }
 
     //Accounting for scatter ending when player is touching a ghost
@@ -794,6 +797,7 @@ public class PlayerController : MonoBehaviour
                 {
                     if (!inDeathSequence)
                     {
+                        ghost.PlayBiteSound();
                         StartCoroutine(DeathSequence());
                     }
                 }
@@ -818,11 +822,19 @@ public class PlayerController : MonoBehaviour
 
                     
                 }
-            } else if (Score.corruptionEnding)
+            } else if (Score.insanityEnding)
             {
                 ghost.PermenantDeath();
                 baseSpeed += sprintMultiplier;
+                permenantGhostsKilled++;
                 corruptedView.SetFloat("_Strength", corruptedView.GetFloat("_Strength") + 0.2f);
+
+                eatSoundSource.PlayOneShot(eatSound);
+
+                if (permenantGhostsKilled == 4)
+                {
+                    Score.GameEnd();
+                }
             }
         }
     }

@@ -21,7 +21,7 @@ public class DisplayGameScene : MonoBehaviour
 
         if(SceneManager.GetActiveScene().name == "GameOverScene")
         {
-            if(PlayerPrefs.GetInt("Lives") == 0)
+            if(PlayerPrefs.GetInt("Lives") == 0 || Score.insanityEnding)
             {
                 currentTransitionalMat = deathTransitionMat;
                 deathSceneTexture.SetActive(true);

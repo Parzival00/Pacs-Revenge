@@ -23,6 +23,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: fc3ac2eead90ad04ca27db5b7c6328ba, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Overlay:
         m_Texture: {fileID: 2800000, guid: fc3ac2eead90ad04ca27db5b7c6328ba, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -41,12 +45,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _OverlayStrength: 0.76
-    - _Strength: 0
+    - _DecalMeshBiasType: 0
+    - _DecalMeshDepthBias: 0
+    - _DecalMeshViewBias: 0
+    - _DrawOrder: 0
+    - _OverlayStrength: 3.42
+    - _Strength: 0.9
     m_Colors:
     - _BaseResolution: {r: 1920, g: 1080, b: 0, a: 0}
-    - _Color: {r: 1, g: 0, b: 0, a: 0}
-    - _OverlayColor: {r: 1, g: 0.6823575, b: 0.3339622, a: 0}
+    - _Color: {r: 1, g: 0, b: 0, a: 1}
+    - _OverlayColor: {r: 1, g: 0.25638226, b: 0.0603773, a: 1}
     - _OverlayOffset: {r: 0.62, g: -0.91, b: 0, a: 0}
-    - _OverlayTiling: {r: 0.81, g: 0.44, b: 0, a: 0}
+    - _OverlayTiling: {r: 1.32, g: 0.94, b: 0, a: 0}
   m_BuildTextureStacks: []

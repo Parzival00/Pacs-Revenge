@@ -378,7 +378,7 @@ public class Ghost : MonoBehaviour
     {
         spriteController.DeactivateColliders();
 
-        if(Score.pelletsCollected >= pelletsNeededToStart && !Score.corruptionEnding)
+        if(Score.pelletsCollected >= pelletsNeededToStart && !Score.insanityEnding)
             currentMode = Mode.Exiting;
     }
 
@@ -487,7 +487,7 @@ public class Ghost : MonoBehaviour
                 currentDirection = Vector2Int.left;
                 nextGridPosition = spawnExitGridPosition + Vector2Int.left;
             }
-        } else if (Score.corruptionEnding)
+        } else if (Score.insanityEnding)
         {
             currentMode = Mode.CorruptionEnding;
             print("Corruption Ending");
@@ -853,7 +853,7 @@ public class Ghost : MonoBehaviour
     {
         forceRespawn = true;
     }
-    public void playBiteSound()
+    public void PlayBiteSound()
     {
         chaseSoundSource.Stop();
         biteSoundSource.PlayOneShot(biteSound);

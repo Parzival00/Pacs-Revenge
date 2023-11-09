@@ -15,7 +15,7 @@ public class Score : MonoBehaviour
     public static int currentLevel { get; private set; }
     public static int difficulty { get; private set; }
     public static bool wonLevel { get; private set; }
-    public static bool corruptionEnding { get; private set; }
+    public static bool insanityEnding { get; private set; }
     public static bool bossEnding { get; private set; }
 
     [SerializeField] TMP_Text scoreUI;
@@ -29,7 +29,7 @@ public class Score : MonoBehaviour
     [SerializeField] float indicatorTimerThreshold = 10;
     [SerializeField] RenderTexture gameSceneRenderTex;
 
-    [Header("Corruption Ending Settings")]
+    [Header("Insanity Ending Settings")]
     [SerializeField] Material corruptedView;
 
     private int totalPellets;
@@ -91,7 +91,7 @@ public class Score : MonoBehaviour
             fruitsCollected = PlayerPrefs.GetInt("FruitsCollected");
         }
 
-        corruptionEnding = currentLevel == 9;
+        insanityEnding = currentLevel == 9;
         bossEnding = currentLevel == 10;
 
         playerController = this.gameObject.GetComponent<PlayerController>();
@@ -104,7 +104,7 @@ public class Score : MonoBehaviour
 
     void Update()
     {
-        if (!corruptionEnding)
+        if (!insanityEnding)
         {
             UpdateScore();
             UpdatePelletsRemaining();
@@ -120,7 +120,7 @@ public class Score : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Pellet" && !corruptionEnding)
+        if (other.gameObject.tag == "Pellet" && !insanityEnding)
         {
             playerController.faceController.EatPellet();
 
@@ -146,7 +146,7 @@ public class Score : MonoBehaviour
 
             if(fruitController)
             {
-                if (corruptionEnding)
+                if (insanityEnding)
                 {
                     Ghost[] ghosts = new Ghost[4];
                     ghosts = FindObjectsOfType<Ghost>();
@@ -159,6 +159,7 @@ public class Score : MonoBehaviour
                     playerController.EnableCorruptionEnding();
 
                     fruitController.CollectFruit();
+                    hudMessenger.CorruptedDisplay("Devour Them All!", 2);
                 }
                 else
                 {
@@ -292,7 +293,20 @@ public class Score : MonoBehaviour
 
         corruptedView.SetFloat("_Strength", 0);
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+        if(currentLevel == 8)
+        {
+            if(fruitsCollected == 16)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            } else
+            {
+                GameEnd();
+            }
+        } else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 
     /// <summary>

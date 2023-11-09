@@ -18,7 +18,9 @@ public class HUDMessenger : MonoBehaviour
     }
 
     [SerializeField] TMP_Text displayBox;
+    [SerializeField] TMP_Text corruptedDisplayBox;
     [SerializeField] float displaySpeed = 30;
+    [SerializeField] float corruptedDisplaySpeed = 15;
 
     Queue<Message> messages = new Queue<Message>();
 
@@ -29,10 +31,23 @@ public class HUDMessenger : MonoBehaviour
         messages.Enqueue(new Message(message, length));
 
         if (displayCoroutine == null)
-            displayCoroutine = StartCoroutine(DisplayMessage());
+            displayCoroutine = StartCoroutine(DisplayMessage(displayBox, displaySpeed));
     }
 
-    IEnumerator DisplayMessage()
+    public void CorruptedDisplay(string message, float length)
+    {
+        messages.Enqueue(new Message(message, length));
+
+        if (displayCoroutine != null)
+            StopCoroutine(displayCoroutine);
+
+        displayBox.text = "";
+
+        displayCoroutine = StartCoroutine(DisplayMessage(corruptedDisplayBox, corruptedDisplaySpeed));
+    }
+
+
+    IEnumerator DisplayMessage(TMP_Text displayBox, float displaySpeed)
     {
         WaitForSeconds displayTypeInterval = new WaitForSeconds(1 / displaySpeed);
 

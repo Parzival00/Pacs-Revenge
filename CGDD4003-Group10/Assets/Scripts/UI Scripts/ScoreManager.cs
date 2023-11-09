@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
@@ -20,6 +19,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] TMP_InputField uiInput;
     [SerializeField] TMP_Text highScoreDisplay;
     [SerializeField] TMP_Text currentPlayerScore;
+    [SerializeField] TMP_Text babyModeInsult;
 
     bool wroteToFile = false;
 
@@ -52,7 +52,21 @@ public class ScoreManager : MonoBehaviour
             }
         }
 
-        DisplayCurrentScore();
+        if(PlayerPrefs.GetInt("Difficulty") == 0) 
+        {
+            uiInput.gameObject.SetActive(false);
+            highScoreDisplay.gameObject.SetActive(false);
+            currentPlayerScore.gameObject.SetActive(false);
+            babyModeInsult.gameObject.SetActive(true); 
+        } 
+        else
+        {
+            babyModeInsult.gameObject.SetActive(false);
+            uiInput.gameObject.SetActive(true);
+            highScoreDisplay.gameObject.SetActive(true);
+            currentPlayerScore.gameObject.SetActive(true);
+            DisplayCurrentScore();
+        }
     }
 
 

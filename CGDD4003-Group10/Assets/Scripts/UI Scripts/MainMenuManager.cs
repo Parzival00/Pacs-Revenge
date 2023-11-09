@@ -1,16 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
-using System.IO;
 
 public class MainMenuManager : MonoBehaviour
 {
-    private string playerInput;
-    private StreamReader scoresForScoreBoard;
 
     public static bool isGamePaused;
 
@@ -19,8 +14,6 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject options;
     [SerializeField] GameObject difficultyScreen;
     [SerializeField] GameObject howToPlayUI;
-    [SerializeField] TMP_InputField uiInput;
-    [SerializeField] TMP_Text highScoreDisplay;
 
     [Header("Resolution Settings")]
     [SerializeField] TMP_Dropdown screenResolution;
@@ -64,9 +57,13 @@ public class MainMenuManager : MonoBehaviour
             menu?.SetActive(false);
         }
 
-        screenResolution.onValueChanged.AddListener(delegate {
-            SetResolution(screenResolution.value);
-        });
+        if (screenResolution != null)
+        {
+            screenResolution.onValueChanged.AddListener(delegate
+            {
+                SetResolution(screenResolution.value);
+            });
+        }
 
     }
 

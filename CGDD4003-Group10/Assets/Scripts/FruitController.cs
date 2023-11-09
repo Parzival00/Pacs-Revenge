@@ -58,6 +58,8 @@ public class FruitController : MonoBehaviour
     [SerializeField] int firstFruitSpawnThreshold = 70;
     [SerializeField] int secondFruitSpawnThreshold = 170;
     [SerializeField] float fruitTimer = 40;
+    [SerializeField] AudioSource fruitEatSource;
+    [SerializeField] AudioClip fruitEat;
 
     [Header("Power Up Spawn Settings")]
     [SerializeField] PowerUp[] powerUps;
@@ -97,7 +99,7 @@ public class FruitController : MonoBehaviour
         firstFruitActivated = false;
         secondFruitActivated = false;
 
-        if (Score.corruptionEnding)
+        if (Score.insanityEnding)
         {
             ActivateFruit();
         }
@@ -163,6 +165,8 @@ public class FruitController : MonoBehaviour
         {
             fruitInfo.pointsWorth = currentFruit.pointsWorth;
             fruitInfo.powerUp = SelectPowerUp(Score.currentLevel);
+
+            fruitEatSource.PlayOneShot(fruitEat);
         }
 
         DeactivateFruit();
@@ -261,7 +265,7 @@ public class FruitController : MonoBehaviour
 
             if(messageDelayTimer <= Time.time && !alertMessegeSent)
             {
-                if (Score.corruptionEnding)
+                if (Score.insanityEnding)
                 {
                     hudMessenger?.Display(corruptionEndingMessage, alertVisibleTimerAmount);
                 }
