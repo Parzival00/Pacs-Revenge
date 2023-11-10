@@ -8,6 +8,11 @@ public class MainMenuManager : MonoBehaviour
 {
 
     public static bool isGamePaused;
+    [Header("Menu Interaction Settings")]
+    [SerializeField] AudioSource UIAudio;
+    [SerializeField] AudioClip buttonClick;
+    [SerializeField] AudioClip buttonHover;
+    
 
     [Header("Menu Screens")]
     [SerializeField] GameObject menu;
@@ -105,6 +110,7 @@ public class MainMenuManager : MonoBehaviour
     }
     public void DisplayOptions() 
     {
+        UIAudio.PlayOneShot(buttonClick);
         menu.SetActive(false);
         options.SetActive(true);
 
@@ -130,6 +136,7 @@ public class MainMenuManager : MonoBehaviour
     }
     public void ExitGame() 
     {
+        UIAudio.PlayOneShot(buttonClick);
         //Exit for actual build
         Application.Quit();
 
@@ -140,6 +147,7 @@ public class MainMenuManager : MonoBehaviour
     }
     public void PauseGame()
     {
+        UIAudio.PlayOneShot(buttonClick);
         Time.timeScale = 0.0f;
 
         menu.SetActive(true);
@@ -151,6 +159,7 @@ public class MainMenuManager : MonoBehaviour
     }
     public void ResumeGame() 
     {
+        UIAudio.PlayOneShot(buttonClick);
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -165,6 +174,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void ReturnToMainMenu(int whichMenu)
     {
+        UIAudio.PlayOneShot(buttonClick);
         switch (whichMenu)
         {
             case 1:
@@ -184,33 +194,39 @@ public class MainMenuManager : MonoBehaviour
     }
     public void DisplayHowToPlayMenu() 
     {
+        UIAudio.PlayOneShot(buttonClick);
         menu.SetActive(false);
         howToPlayUI.SetActive(true);
     }
     public void ToMovementPage() 
     {
+        UIAudio.PlayOneShot(buttonClick);
         shooting.SetActive(false);
         movement.SetActive(true);
     }
     public void ToShootingPage()
     {
+        UIAudio.PlayOneShot(buttonClick);
         movement.SetActive(false);
         shooting.SetActive(true);
         enemies.SetActive(false);
     }
     public void ToEnemiesPage()
     {
+        UIAudio.PlayOneShot(buttonClick);
         shooting.SetActive(false);
         enemies.SetActive(true);
         endConditions.SetActive(false);
     }
     public void ToEndConditionsPage() 
     {
+        UIAudio.PlayOneShot(buttonClick);
         enemies.SetActive(false);
         endConditions.SetActive(true);
     }
     public void DisplayDifficultyScreen()
     {
+        UIAudio.PlayOneShot(buttonClick);
         menu.SetActive(false);
         howToPlayUI.SetActive(false);
         options.SetActive(false);
@@ -248,6 +264,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void SetDifficulty(int value)
     {
+        UIAudio.PlayOneShot(buttonClick);
         Score.SetDifficulty(value);
     }
 }
