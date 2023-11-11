@@ -6741,6 +6741,7 @@ MonoBehaviour:
   railgunAlertMessage: Advanced Targeting System Activated
   railgunAlertLength: 1.5
   railGunVFX: {fileID: 4507674535604613185}
+  wallHitEffect: {fileID: 6679666813536499760, guid: 1510669aa8237614a82d9d8137e99440, type: 3}
   railgunAnimator: {fileID: 6221754044492916589}
   chargeTime: 0.5
   maxWeaponTemp: 7
@@ -6752,13 +6753,12 @@ MonoBehaviour:
   weaponRange: 50
   targetingMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 20800
   stungunVFX: {fileID: 59560998165607546}
   stungunAnimator: {fileID: 3176158172579412883}
-  fireRate: 2
+  fireRate: 1
   bulletOrigin: {fileID: 4904277085903038529}
   stunGun: {fileID: 1216297462127043291}
-  ammoCount: 0
   maxAmmoCount: 3
   gun: {fileID: 8243696478966758294}
   hud: {fileID: 0}
@@ -6790,7 +6790,7 @@ MonoBehaviour:
   powerMusic: {fileID: 8300000, guid: 5e8142d0c3b9d984ab3e2d1649eaa786, type: 3}
   gameStart: {fileID: 8300000, guid: 6bf9ad10f11168d4ba5d6ded08e08be9, type: 3}
   musicPlayer: {fileID: 7457625705006531473}
-  corruptedView: {fileID: 2100000, guid: 55efb060c2d541b409a1eb0fdc2d7d94, type: 2}
+  corruptionEffect: {fileID: 0}
   eatSoundSource: {fileID: 4666828565924791187}
   eatSound: {fileID: 8300000, guid: f050a260f8cec734db2b2c8389248c74, type: 3}
   bossFight: 0
@@ -6817,7 +6817,6 @@ MonoBehaviour:
   pelletsPerAmmo: 12
   indicatorTimerThreshold: 15
   gameSceneRenderTex: {fileID: 8400000, guid: 1fbbf88530324554bbc10d8e0b318019, type: 2}
-  corruptedView: {fileID: 2100000, guid: 55efb060c2d541b409a1eb0fdc2d7d94, type: 2}
 --- !u!114 &6717606324952877450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6897,9 +6896,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c9cea953319ffd429c7db3596d160b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 2865670225406934770}
   baseStungun: {fileID: 3087477177954422826}
   mergedStungun: {fileID: 5345447390018179077}
   stunMuzzleFlash: {fileID: 340231341265847883}
+  canFireEmission: 0.3
+  cantFireEmptyEmission: -1
+  cantFireEmission: -0.32
   stunContainerMat: {fileID: 2100000, guid: 927f122aaed6f964d8c0efade3dc5420, type: 2}
   stungunMuzzleFlash: {fileID: 2100000, guid: bcfda14c7672f6e4695288c009e1a7d7, type: 2}
 --- !u!95 &6954913835686620882

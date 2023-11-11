@@ -27,4 +27,10 @@ public class Projectile : MonoBehaviour
     {
         transform.Translate(transform.forward * speed * Time.deltaTime, Space.World);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Wall")
+            Destroy(gameObject);
+    }
 }

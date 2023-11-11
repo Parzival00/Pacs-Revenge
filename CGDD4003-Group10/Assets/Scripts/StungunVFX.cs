@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class StungunVFX : MonoBehaviour
 {
+    [SerializeField] PlayerController playerController;
     [SerializeField] GameObject baseStungun;
     [SerializeField] GameObject mergedStungun;
     [SerializeField] SpriteRenderer stunMuzzleFlash;
+    [SerializeField] float canFireEmission = 0.3f;
+    [SerializeField] float cantFireEmptyEmission = -1f;
+    [SerializeField] float cantFireEmission = -0.32f;
 
     [Header("Materials")]
     [SerializeField] Material stunContainerMat;
@@ -30,6 +34,17 @@ public class StungunVFX : MonoBehaviour
     private void Update()
     {
         InvisibilityEffect();
+
+        if(playerController.stunGunCanFire)
+        {
+            stunContainerMat.SetFloat("_EmissionIntensity", canFireEmission);
+        } else
+        {
+            if(playerController.stunGunAmmoEmpty)
+                stunContainerMat.SetFloat("_EmissionIntensity", cantFireEmptyEmission);
+            else
+                stunContainerMat.SetFloat("_EmissionIntensity", cantFireEmission);
+        }
     }
 
     bool invisibilityCheck = false;

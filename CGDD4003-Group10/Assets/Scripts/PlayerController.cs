@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] string railgunAlertMessage = "Advanced Targeting System Activated";
     [SerializeField] float railgunAlertLength = 2;
     [SerializeField] RailgunVFX railGunVFX;
+    [SerializeField] GameObject wallHitEffect;
     [SerializeField] Animator railgunAnimator;
     [SerializeField] float chargeTime;
     [SerializeField] float maxWeaponTemp = 5;
@@ -63,7 +64,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float fireRate;
     [SerializeField] Transform bulletOrigin;
     [SerializeField] GameObject stunGun;
-    [SerializeField] int ammoCount;
+    int ammoCount;
     [SerializeField] int maxAmmoCount = 1;
     //The amount of pellets per ammo is set in the score script
     private float stunFireTimer;
@@ -74,6 +75,8 @@ public class PlayerController : MonoBehaviour
     private bool overheated = false;
     private bool weaponDecharging = false;
 
+    bool lostShield;
+
     public float WeaponCharge { get => weaponCharge; }
     public float WeaponDecharge { get => weaponDecharge; }
     public float WeaponTemp01 { get => (weaponTemp / maxWeaponTemp); }
@@ -82,6 +85,8 @@ public class PlayerController : MonoBehaviour
 
     private float gunTimer;
     public float GunTimer01 { get => (gunTimer / gunTimeAmount); }
+    public bool stunGunCanFire { get; private set; }
+    public bool stunGunAmmoEmpty { get => ammoCount <= 0; }
 
     //shield settings
     int shieldsRemaining;
@@ -407,13 +412,11 @@ public class PlayerController : MonoBehaviour
                         Score.AddToScore(tempColorSave,(hitInformation.pointWorth + hitInformation.targetArea.pointsAddition));
 
                         SpawnBlood(hitInformation.bigBlood, hitInformation.smallBlood, hitInformation.targetArea.difficulty, hit);
+                    } else
+                    {
+                        Instantiate(wallHitEffect, hit.point + hit.normal * 0.1f, Quaternion.identity);
                     }
                 }
-                else
-                {
-
-                }
-
 
                 railGunVFX.Shoot(hit, weaponRange);
                 railgunAnimator.SetTrigger("Shoot");
@@ -570,7 +573,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void StungunFire()
     {
-        if(stunFireTimer <= 0 && Input.GetMouseButtonDown(0) && ammoCount > 0)
+        stunGunCanFire = stunFireTimer <= 0 && ammoCount > 0;
+
+        if (stunFireTimer <= 0 && Input.GetMouseButtonDown(0) && ammoCount > 0)
         {
             Instantiate(stunProjectile, bulletOrigin.position, bulletOrigin.rotation);
 
@@ -619,6 +624,11 @@ public class PlayerController : MonoBehaviour
 
                 //Set TempColorSave Variable for Score method
                 tempColorSave = targetOutlineController.GetOutlineColor(target);
+            } else
+            {
+                crosshair.color = Color.white;
+                tempColorSave = Color.white;
+                targetOutlineController.DeactivateOutline();
             }
         } 
         else
@@ -693,6 +703,7 @@ public class PlayerController : MonoBehaviour
 
         baseSpeed += gunSpeedMultiplier;
         AddShields();
+        lostShield = false;
     }
 
     /// <summary>
@@ -752,7 +763,7 @@ public class PlayerController : MonoBehaviour
         //Deactivate any remaining target outline
         targetOutlineController.DeactivateOutline();
 
-        if (shieldsRemaining > 0)
+        if (shieldsRemaining > 0 && !lostShield)
         {
             shieldsRemaining--;
             print("shilds: " + shieldsRemaining);
@@ -808,6 +819,8 @@ public class PlayerController : MonoBehaviour
                     
                     if(shieldAnimator != null && shieldsRemaining > 0)
                     {
+                        if (gunActivated) lostShield = true;
+
                         shieldsRemaining--;
                         print("shields: " + shieldsRemaining);
 
