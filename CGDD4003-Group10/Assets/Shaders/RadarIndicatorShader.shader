@@ -16,7 +16,7 @@ Shader "Custom/RadarIndicator"
         ZWrite Off
         Blend SrcAlpha OneMinusSrcAlpha
 
-         Pass
+        Pass
         {
             HLSLPROGRAM
             #pragma vertex vert

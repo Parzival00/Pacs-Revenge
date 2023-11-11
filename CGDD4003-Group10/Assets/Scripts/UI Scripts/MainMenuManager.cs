@@ -46,6 +46,8 @@ public class MainMenuManager : MonoBehaviour
 
     private void Awake()
     {
+        AudioListener.volume = 1;
+
         if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "GameOverScene" || SceneManager.GetActiveScene().name == "ScoreScreen")
         {
             Cursor.lockState = CursorLockMode.None;
@@ -62,13 +64,13 @@ public class MainMenuManager : MonoBehaviour
             menu?.SetActive(false);
         }
 
-        if (screenResolution != null)
+        /*if (screenResolution != null)
         {
             screenResolution.onValueChanged.AddListener(delegate
             {
                 SetResolution(screenResolution.value);
             });
-        }
+        }*/
 
     }
 
@@ -83,6 +85,14 @@ public class MainMenuManager : MonoBehaviour
         PlayerPrefs.SetFloat("PlVolume", playerVolume.value / 4);
         PlayerPrefs.SetFloat("PiVolume", pickupVolume.value / 4);
         PlayerPrefs.SetFloat("MiscVolume", miscVolume.value / 4);
+        PlayerPrefs.SetInt("Resolution", screenResolution.value);
+
+        SetResolution(screenResolution.value);
+
+        if(fullScreenToggle.isOn)
+            PlayerPrefs.SetInt("Fullscreen", 1);
+        else
+            PlayerPrefs.SetInt("Fullscreen", 0);
 
         if (viewBobbingToggle.isOn)
             PlayerPrefs.SetInt("HeadBob", 1);
@@ -123,7 +133,13 @@ public class MainMenuManager : MonoBehaviour
         playerVolume.value = PlayerPrefs.GetFloat("PlVolume", playerVolume.value / 4) * 4;
         pickupVolume.value = PlayerPrefs.GetFloat("PiVolume", pickupVolume.value / 4) * 4;
         miscVolume.value = PlayerPrefs.GetFloat("MiscVolume", miscVolume.value / 4) * 4;
-        fullScreenToggle.isOn = Screen.fullScreen;
+
+        screenResolution.value = PlayerPrefs.GetInt("Resolution");
+
+        if(PlayerPrefs.GetInt("Fullscreen") == 1)
+            fullScreenToggle.isOn = true;
+        else
+            fullScreenToggle.isOn = false;
 
         if (PlayerPrefs.GetInt("HeadBob") == 1)
             viewBobbingToggle.isOn = true;
@@ -239,23 +255,23 @@ public class MainMenuManager : MonoBehaviour
         switch (res)
         {
             case 0:
-                Screen.SetResolution(3840, 2160, fullScreenToggle);
+                Screen.SetResolution(3840, 2160, fullScreenToggle.isOn);
                 print("1Resolution after at least a frame is " + Screen.width + "x" + Screen.height);
                 break;
             case 1:
-                Screen.SetResolution(2560, 1440, fullScreenToggle);
+                Screen.SetResolution(2560, 1440, fullScreenToggle.isOn);
                 print("2Resolution after at least a frame is " + Screen.width + "x" + Screen.height);
                 break; ;
             case 2:
-                Screen.SetResolution(1920, 1080, fullScreenToggle);
+                Screen.SetResolution(1920, 1080, fullScreenToggle.isOn);
                 print("3Resolution after at least a frame is " + Screen.width + "x" + Screen.height);
                 break;
             case 3:
-                Screen.SetResolution(1600, 900, fullScreenToggle);
+                Screen.SetResolution(1600, 900, fullScreenToggle.isOn);
                 print("4Resolution after at least a frame is " + Screen.width + "x" + Screen.height);
                 break;
             case 4:
-                Screen.SetResolution(1280, 720, fullScreenToggle);
+                Screen.SetResolution(1280, 720, fullScreenToggle.isOn);
                 print("5Resolution after at least a frame is " + Screen.width + "x" + Screen.height);
                 break;
 

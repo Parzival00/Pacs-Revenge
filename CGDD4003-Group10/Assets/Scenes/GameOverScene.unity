@@ -1989,8 +1989,7 @@ Transform:
   m_LocalPosition: {x: -1, y: 20, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 562229790}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &60419351
@@ -16474,12 +16473,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 562229787}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 1, y: 1.5000019, z: 20}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -960, y: -540, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 57803497}
+  m_Father: {fileID: 1248785197}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &562229791
 MonoBehaviour:
@@ -41101,6 +41100,7 @@ RectTransform:
   - {fileID: 911012163}
   - {fileID: 1483113922}
   - {fileID: 224018682}
+  - {fileID: 562229790}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -41183,12 +41183,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21e5d4100ddae4347993ea02eb20b1f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIAudio: {fileID: 0}
+  buttonClick: {fileID: 0}
+  buttonHover: {fileID: 0}
   menu: {fileID: 0}
   options: {fileID: 0}
   difficultyScreen: {fileID: 0}
   howToPlayUI: {fileID: 0}
-  uiInput: {fileID: 0}
-  highScoreDisplay: {fileID: 0}
   screenResolution: {fileID: 0}
   fov: {fileID: 0}
   fullScreenToggle: {fileID: 0}

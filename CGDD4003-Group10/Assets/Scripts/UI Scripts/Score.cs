@@ -29,9 +29,6 @@ public class Score : MonoBehaviour
     [SerializeField] float indicatorTimerThreshold = 10;
     [SerializeField] RenderTexture gameSceneRenderTex;
 
-    [Header("Insanity Ending Settings")]
-    [SerializeField] Material corruptedView;
-
     private int totalPellets;
     private static int amountedAdded;
     private static Color currentTarget = Color.yellow;
@@ -50,8 +47,6 @@ public class Score : MonoBehaviour
 
     void Awake()
     {
-        corruptedView.SetFloat("_Strength", 0);
-
         pelletsCollected = 0;
         GameObject[] pellets = GameObject.FindGameObjectsWithTag("Pellet");
         totalPellets = pellets.Length;
@@ -290,9 +285,6 @@ public class Score : MonoBehaviour
         gameSceneRenderTex.Create();
 
         SaveFruitsCollected();
-
-        corruptedView.SetFloat("_Strength", 0);
-
 
         if(currentLevel == 8)
         {

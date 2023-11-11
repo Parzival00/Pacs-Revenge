@@ -158,8 +158,8 @@ public class ScoreManager : MonoBehaviour
         }
 
         //Trim list to only ten entries
-        if (highScores.Count > 10)
-            highScores.RemoveAt(10);
+        //if (highScores.Count > 10)
+        //    highScores.RemoveAt(10);
 
         //Update rank positions of all entries after newly inserted entry
         for (int i = tempListIndex + 1; i < highScores.Count; i++)
@@ -177,9 +177,9 @@ public class ScoreManager : MonoBehaviour
     public void DisplayHighScores()
     {
         highScoreDisplay.text = "";
-        foreach (ScoreEntry highscore in highScores)
+        for(int i = 0; i < 10 && i < highScores.Count; i++)
         {
-            highScoreDisplay.text += highscore.ToString() + "\n";
+            highScoreDisplay.text += highScores[i].ToString() + "\n";
         }
 
         if(!wroteToFile)

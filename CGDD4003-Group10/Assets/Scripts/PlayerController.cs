@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioSource musicPlayer;
 
     [Header("Insanity Ending Settings")]
-    [SerializeField] Material corruptedView;
+    [SerializeField] PlayerCorruptionEffect corruptionEffect;
     [SerializeField] AudioSource eatSoundSource;
     [SerializeField] AudioClip eatSound;
 
@@ -169,8 +169,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (corruptedView != null)
-            corruptedView.SetFloat("_Strength", 0);
+        AudioListener.volume = 1;
 
         if (!Score.insanityEnding)
         {
@@ -188,6 +187,9 @@ public class PlayerController : MonoBehaviour
             speed = baseSpeed;
 
             canMove = true;
+
+            if (corruptionEffect == null)
+                corruptionEffect = FindObjectOfType<PlayerCorruptionEffect>();
 
             mainMenuManager = FindObjectOfType<MainMenuManager>();
 
@@ -254,11 +256,11 @@ public class PlayerController : MonoBehaviour
         ghosts = new Ghost[4];
         ghosts = FindObjectsOfType<Ghost>();
 
-        if (usePlayerPrefsSettings)
-        {
-            ApplyGameSettings();
-        }
-        else AudioListener.volume = 50;
+        //if (usePlayerPrefsSettings)
+        //{
+        ApplyGameSettings();
+        //}
+        //else AudioListener.volume = 50;
 
         canMove = true;
         canFire = true;
@@ -827,13 +829,14 @@ public class PlayerController : MonoBehaviour
                 ghost.PermenantDeath();
                 baseSpeed += sprintMultiplier;
                 permenantGhostsKilled++;
-                corruptedView.SetFloat("_Strength", corruptedView.GetFloat("_Strength") + 0.2f);
+                //corruptedView.SetFloat("_Strength", corruptedView.GetFloat("_Strength") + 0.2f);
+                corruptionEffect.ProgressCorruption();
 
                 eatSoundSource.PlayOneShot(eatSound);
 
                 if (permenantGhostsKilled == 4)
                 {
-                    Score.GameEnd();
+                    StartCoroutine(InsanityEnd());
                 }
             }
         }
@@ -1131,6 +1134,28 @@ public class PlayerController : MonoBehaviour
     public void EnableCorruptionEnding()
     {
         baseSpeed += sprintMultiplier * 2;
-        corruptedView.SetFloat("_Strength", 0.1f);
+        corruptionEffect.StartCorruption();
+        //corruptedView.SetFloat("_Strength", 0.1f);
+    }
+
+    IEnumerator InsanityEnd()
+    {
+        canMove = false;
+        float stepTime = 0.2f;
+
+        AudioListener.volume = 1;
+
+        int iterations = 10;
+        float volumeStep = 1 / iterations;
+
+        for (int i = 0; i < iterations; i++)
+        {
+            corruptionEffect.ProgressCorruptionEnd();
+            yield return new WaitForSeconds(stepTime);
+            AudioListener.volume -= volumeStep + 0.1f;
+        }
+        AudioListener.volume = 0;
+
+        Score.GameEnd();
     }
 }
