@@ -40,7 +40,18 @@ public class FaceController : MonoBehaviour
     {
         pacManFace = GetComponent<Image>();
 
-        pacManFace.sprite = mouthOpenFace_d1;
+        switch (PlayerController.playerLives)
+        {
+            case 3:
+                pacManFace.sprite = mouthOpenFace_d1;
+                break;
+            case 2:
+                pacManFace.sprite = mouthOpenFace_d2;
+                break;
+            case 1:
+                pacManFace.sprite = mouthOpenFace_d3;
+                break;
+        }
 
         dead = false;
         mouthClosed = false;
