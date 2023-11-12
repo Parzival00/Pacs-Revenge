@@ -9,7 +9,7 @@ public class Pinky : Ghost
     [SerializeField] float radiusToAvoidPlayer;
     [SerializeField] float turnCooldown;
     protected float cooldownTimer;
-    protected bool flipped;
+    protected bool justFlippedDirection;
 
     [Tooltip("Pinky overflow error: (Pinky had a bug in the original game causing an error choosing a target location in specific situations)")]
     [SerializeField] bool originalMode; 
@@ -41,27 +41,32 @@ public class Pinky : Ghost
 
         PlayChaseSound();
 
-        spriteRenderer.color = Color.white; //Temporary
+        //spriteRenderer.color = Color.white; //Temporary
     }
 
     protected override void Scatter()
     {
         ScatterTimer();
+
         Vector2Int playerGridPosition = map.GetPlayerPosition();
         Vector2Int pinkyGridPosition = map.GetGridLocation(transform.position);
+        Vector2Int playerGridDir = map.GetGridSpaceDirection(player.forward);
+        
 
-        if (Vector2Int.Distance(playerGridPosition, pinkyGridPosition) < radiusToAvoidPlayer && !flipped)
+        if (Vector2Int.Distance(playerGridPosition, pinkyGridPosition) < radiusToAvoidPlayer && -currentDirection == playerGridDir && !justFlippedDirection)
         {
             currentDirection = -currentDirection;
             nextGridPosition = map.GetNextGridPosition(currentGridPosition, currentDirection, true, true);
-            flipped = true;
+            justFlippedDirection = true;
             cooldownTimer = turnCooldown;
             targetGridPosition = nextGridPosition;
+            print("Pinky Flipped Direction");
         }
         else
         {
-            Vector2Int scatterTargetGridPos = map.GetGridLocation(scatterTarget.position);
-            targetGridPosition = scatterTargetGridPos;
+            Vector2Int pinkyGridTarget = map.GetGridPositionAhead(playerGridPosition, -playerGridDir, spacesAheadOfPlayer + 2, true, false);
+            //Vector2Int scatterTargetGridPos = map.GetGridLocation(scatterTarget.position);
+            targetGridPosition = map.CheckEdgePositions(transform.position, pinkyGridTarget);
         }
         Move(false);
         lastTargetGridPosition = targetGridPosition;
@@ -74,7 +79,7 @@ public class Pinky : Ghost
         }
         else
         {
-            flipped = false;
+            justFlippedDirection = false;
         }
     }
 

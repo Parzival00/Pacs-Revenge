@@ -51,6 +51,9 @@ public class FaceController : MonoBehaviour
             case 1:
                 pacManFace.sprite = mouthOpenFace_d3;
                 break;
+            default:
+                pacManFace.sprite = mouthOpenFace_d1;
+                break;
         }
 
         dead = false;
