@@ -46,13 +46,15 @@ public class Score : MonoBehaviour
 
     static float scoreMultiplier;
 
+    static bool hasLevel1BeenEntered = false;
+
     //Various Stats
-    public static int totalGhostKilled { get; private set; }
+    public static int totalGhostKilled { get;  set; }
     public static int totalPelletsCollected { get; private set; }
-    public static int totalShieldsRecieved { get; private set; }
-    public static int totalLivesConsumed { get; private set; }
-    public static int totalShotsFired { get; private set; }
-    public static int totalStunsFired { get; private set; }
+    public static int totalShieldsRecieved { get;  set; }
+    public static int totalLivesConsumed { get;  set; }
+    public static int totalShotsFired { get; set; }
+    public static int totalStunsFired { get; set; }
     public static float totalTimePlayed { get; private set; }
 
     void Awake()
@@ -108,6 +110,11 @@ public class Score : MonoBehaviour
         pointValueIndicator.text = "";
         pointsIndicatorAmount = 0;
         previousScore = score;
+
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
+        {
+            hasLevel1BeenEntered = true;
+        }
     }
 
 
@@ -123,6 +130,10 @@ public class Score : MonoBehaviour
 
             indicatorActive = timeSinceLastPellet >= indicatorTimerThreshold;
         }
+        if (hasLevel1BeenEntered) 
+        {
+            TimePlayed();
+        }
     }
 
     
@@ -135,6 +146,7 @@ public class Score : MonoBehaviour
             other.gameObject.SetActive(false);
             munchAudioSource.PlayOneShot(pelletSound);
             pelletsCollected += 1;
+            totalPelletsCollected++;
             timeSinceLastPellet = 0;
             AddToScore(Color.white, 50);
             if (pelletsCollected >= totalPellets)
@@ -249,6 +261,17 @@ public class Score : MonoBehaviour
     {
          pelletsLeft = totalPellets - pelletsCollected;
          pelletRemaining.text = "" + pelletsLeft;
+    }
+    /// <summary>
+    /// This Function will check if they have entered level 1(Scene 1) and then start the timer to track the time played
+    /// </summary>
+    /// <param></param>
+    private static void TimePlayed() 
+    {
+        if (hasLevel1BeenEntered) 
+        {
+            totalTimePlayed += Time.timeSinceLevelLoad;
+        }
     }
 
     public static void SetDifficulty(int value)

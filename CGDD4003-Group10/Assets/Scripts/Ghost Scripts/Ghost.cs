@@ -540,6 +540,8 @@ public class Ghost : MonoBehaviour
     {
         //spriteRenderer.color = Color.black;
 
+        Score.totalGhostKilled++;
+
         chaseSoundSource.Stop();
 
         hitSoundSource.PlayOneShot(deathSound);

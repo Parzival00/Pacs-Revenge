@@ -420,7 +420,7 @@ public class PlayerController : MonoBehaviour
 
                 railGunVFX.Shoot(hit, weaponRange);
                 railgunAnimator.SetTrigger("Shoot");
-
+                Score.totalShotsFired++;
                 StartCoroutine(Decharge());
             }
             else
@@ -566,6 +566,8 @@ public class PlayerController : MonoBehaviour
         if (stunFireTimer <= 0 && Input.GetMouseButtonDown(0) && ammoCount > 0)
         {
             Instantiate(stunProjectile, bulletOrigin.position, bulletOrigin.rotation);
+
+            Score.totalStunsFired++;
 
             stungunVFX.Shoot();
             if (stungunAnimator != null)
@@ -909,6 +911,7 @@ public class PlayerController : MonoBehaviour
         transform.position = playerSpawnPoint.position;
 
         playerLives--;
+        Score.totalLivesConsumed++;
 
         if (playerLives <= 0)
         {
@@ -947,6 +950,7 @@ public class PlayerController : MonoBehaviour
     public void AddShields()
     {
         shieldsRemaining++;
+        Score.totalShieldsRecieved++;
         print("shields: " + shieldsRemaining);
         if (shieldAnimator != null && shieldsRemaining == 1)
             shieldAnimator.PlayShieldUp();
