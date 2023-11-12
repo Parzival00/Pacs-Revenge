@@ -46,8 +46,6 @@ public class Score : MonoBehaviour
 
     static float scoreMultiplier;
 
-    static bool hasLevel1BeenEntered = false;
-
     //Various Stats
     public static int totalGhostKilled { get;  set; }
     public static int totalPelletsCollected { get; private set; }
@@ -56,6 +54,8 @@ public class Score : MonoBehaviour
     public static int totalShotsFired { get; set; }
     public static int totalStunsFired { get; set; }
     public static float totalTimePlayed { get; private set; }
+
+    static float sceneStartTime;
 
     void Awake()
     {
@@ -86,10 +86,16 @@ public class Score : MonoBehaviour
         }
 
         if (currentLevel == 1)
-            score = 0;
-
-        if (currentLevel == 1)
         {
+            score = 0;
+            totalGhostKilled = 0;
+            totalPelletsCollected = 0;
+            totalShieldsRecieved = 0;
+            totalLivesConsumed = 0;
+            totalShotsFired = 0;
+            totalStunsFired = 0;
+            totalTimePlayed = 0;
+
             fruitsCollected = 0;
             PlayerPrefs.SetInt("FruitsCollected", fruitsCollected);
         }
@@ -102,7 +108,7 @@ public class Score : MonoBehaviour
         bossEnding = currentLevel == 10;
 
         playerController = this.gameObject.GetComponent<PlayerController>();
-        gameSceneCamera = Camera.main;// GameObject.FindGameObjectWithTag("GameSceneCamera")?.GetComponent<Camera>();
+        gameSceneCamera = Camera.main;
         hudMessenger = FindObjectOfType<HUDMessenger>();
 
         wonLevel = false;
@@ -111,10 +117,7 @@ public class Score : MonoBehaviour
         pointsIndicatorAmount = 0;
         previousScore = score;
 
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
-        {
-            hasLevel1BeenEntered = true;
-        }
+        sceneStartTime = Time.time;
     }
 
 
@@ -129,10 +132,6 @@ public class Score : MonoBehaviour
             timeSinceLastPellet += Time.deltaTime;
 
             indicatorActive = timeSinceLastPellet >= indicatorTimerThreshold;
-        }
-        if (hasLevel1BeenEntered) 
-        {
-            TimePlayed();
         }
     }
 
@@ -262,17 +261,6 @@ public class Score : MonoBehaviour
          pelletsLeft = totalPellets - pelletsCollected;
          pelletRemaining.text = "" + pelletsLeft;
     }
-    /// <summary>
-    /// This Function will check if they have entered level 1(Scene 1) and then start the timer to track the time played
-    /// </summary>
-    /// <param></param>
-    private static void TimePlayed() 
-    {
-        if (hasLevel1BeenEntered) 
-        {
-            totalTimePlayed += Time.timeSinceLevelLoad;
-        }
-    }
 
     public static void SetDifficulty(int value)
     {
@@ -312,6 +300,7 @@ public class Score : MonoBehaviour
         {
             if(fruitsCollected == 16)
             {
+                totalTimePlayed += Time.time - sceneStartTime;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             } else
             {
@@ -319,6 +308,7 @@ public class Score : MonoBehaviour
             }
         } else
         {
+            totalTimePlayed += Time.time - sceneStartTime;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
@@ -328,6 +318,7 @@ public class Score : MonoBehaviour
     /// </summary>
     public static void GameEnd()
     {
+        totalTimePlayed += Time.time - sceneStartTime;
         SceneManager.LoadScene("GameOverScene");
     }
 }
