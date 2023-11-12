@@ -75,7 +75,7 @@ public class Map : MonoBehaviour
     {
         if (pos.x >= mapWidth || pos.y >= mapHeight)
             return GridType.Wall;
-        return map[pos.x, pos.y];
+        return map[Mathf.Clamp(pos.x, 0, mapWidth - 1), Mathf.Clamp(pos.y, 0, mapHeight - 1)];
     }
     /// <summary>
     /// Takes in a location on the map and returns the grid type [air, wall, etc.] at that location
@@ -85,7 +85,7 @@ public class Map : MonoBehaviour
         Vector2Int gridLoc = GetGridLocation(pos);
         if (gridLoc.x >= mapWidth || gridLoc.y >= mapHeight)
             return GridType.Wall;
-        return map[gridLoc.x, gridLoc.y];
+        return map[Mathf.Clamp(gridLoc.x, 0, mapWidth - 1), Mathf.Clamp(gridLoc.y, 0, mapHeight - 1)];
     }
 
     /// <summary>

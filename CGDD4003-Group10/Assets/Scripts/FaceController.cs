@@ -57,7 +57,6 @@ public class FaceController : MonoBehaviour
         mouthClosed = false;
         happyFace = false;
         fruitEaten = false;
-
     }
 
     public void EatPellet()

@@ -393,15 +393,15 @@ public class PlayerController : MonoBehaviour
         {
             if (weaponCharge >= 1)
             {
-                StartCoroutine(ShotEffect());
+                weaponSound.Stop();
+                weaponSound.PlayOneShot(gunshot);
+
                 Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
                 RaycastHit hit;
 
                 //Detect hit on enemy
                 if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange, targetingMask))
                 {
-                    //laserLine.SetPosition(1, hit.point);
-
                     print("Hit: " + hit.collider.gameObject.name);
 
                     TargetAreaCollider targetAreaCollider = hit.collider.GetComponent<TargetAreaCollider>();
@@ -453,18 +453,6 @@ public class PlayerController : MonoBehaviour
                 weaponCharge = 0;
             }
         }
-    }
-
-    /// <summary>
-    /// Plays the weapon sound effect and enables the line render
-    /// </summary>
-    private IEnumerator ShotEffect()
-    {
-        weaponSound.Stop();
-        weaponSound.PlayOneShot(gunshot);
-        //laserLine.enabled = true;
-        yield return shotDuration;
-       // laserLine.enabled = false;
     }
 
     /// <summary>

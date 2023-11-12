@@ -113,62 +113,73 @@ public class ScoreManager : MonoBehaviour
             currentPlayerScore.gameObject.SetActive(false);
         }
 
+        bool matchingNameFound = false;
+        bool removedMatchingName = false;
 
         //Check for matching name already in high score list and remove it
         for (int i = 0; i < highScores.Count; i++)
         {
             if(highScores[i].name == playerIntials)
             {
-                print("Matching Name");
-                highScores.RemoveAt(i);
-
-                //Update rank positions of all entries after removed entry
-                for (int e = i; e < highScores.Count; e++)
+                matchingNameFound = true;
+                if (highScores[i].playerScore < Score.score)
                 {
-                    ScoreEntry temp = highScores[e];
-                    temp.playerRank -= 1;
+                    removedMatchingName = true;
+                    print("Matching Name");
+                    highScores.RemoveAt(i);
 
-                    highScores.Insert(e, temp);
-                    highScores.RemoveAt(e + 1);
+                    //Update rank positions of all entries after removed entry
+                    for (int e = i; e < highScores.Count; e++)
+                    {
+                        ScoreEntry temp = highScores[e];
+                        temp.playerRank -= 1;
+
+                        highScores.Insert(e, temp);
+                        highScores.RemoveAt(e + 1);
+                    }
                 }
             }
         }
 
-        bool foundInsertLocation = false;
-        tempListIndex = highScores.Count;
-
-        //Find index of new entry into high score list
-        for (int i = 0; i < highScores.Count; i++)
+        if (!matchingNameFound || (matchingNameFound && removedMatchingName))
         {
-            if (Score.score > highScores[i].playerScore && foundInsertLocation == false)
+            bool foundInsertLocation = false;
+            tempListIndex = highScores.Count;
+
+            //Find index of new entry into high score list
+            for (int i = 0; i < highScores.Count; i++)
             {
-                foundInsertLocation = true;
+                if (Score.score > highScores[i].playerScore && foundInsertLocation == false)
+                {
+                    foundInsertLocation = true;
 
-                tempListIndex = i;
+                    tempListIndex = i;
+                }
             }
-        }
 
-        //Add new entry
-        if (tempListIndex < highScores.Count)
-        {
-            highScores.Insert(tempListIndex, new ScoreEntry(tempListIndex + 1, playerIntials, Score.score));
-        } else
-        {
-            highScores.Add(new ScoreEntry(highScores.Count + 1, playerIntials, Score.score));
-        }
+            //Add new entry
+            if (tempListIndex < highScores.Count)
+            {
+                highScores.Insert(tempListIndex, new ScoreEntry(tempListIndex + 1, playerIntials, Score.score));
+            }
+            else
+            {
+                highScores.Add(new ScoreEntry(highScores.Count + 1, playerIntials, Score.score));
+            }
 
-        //Trim list to only ten entries
-        //if (highScores.Count > 10)
-        //    highScores.RemoveAt(10);
+            //Trim list to only ten entries
+            //if (highScores.Count > 10)
+            //    highScores.RemoveAt(10);
 
-        //Update rank positions of all entries after newly inserted entry
-        for (int i = tempListIndex + 1; i < highScores.Count; i++)
-        {
-            ScoreEntry temp = highScores[i];
-            temp.playerRank += 1;
+            //Update rank positions of all entries after newly inserted entry
+            for (int i = tempListIndex + 1; i < highScores.Count; i++)
+            {
+                ScoreEntry temp = highScores[i];
+                temp.playerRank += 1;
 
-            highScores.Insert(i, temp);
-            highScores.RemoveAt(i + 1);
+                highScores.Insert(i, temp);
+                highScores.RemoveAt(i + 1);
+            }
         }
 
         DisplayHighScores();

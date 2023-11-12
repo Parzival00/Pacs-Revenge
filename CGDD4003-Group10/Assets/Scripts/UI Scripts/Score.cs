@@ -27,14 +27,14 @@ public class Score : MonoBehaviour
     [SerializeField] AudioClip pelletSound;
     [SerializeField] AudioClip radarPing;
     [SerializeField] int pelletsPerAmmo;
-    [SerializeField] float indicatorTimerThreshold = 10;
+    [SerializeField] float indicatorTimerThreshold = 10; //radar pellet indicator timer threshold
+    [SerializeField] float pointsAddedIndicatorLength = 1;
     [SerializeField] RenderTexture gameSceneRenderTex;
 
     private int totalPellets;
-    private static int amountedAdded;
+    private static int pointsIndicatorAmount;
     private static Color currentTarget = Color.yellow;
-    private float timeToWait = 2;
-    private bool hasScoreIncrease = false;
+    private float pointsIndicatorTimer = 0;
     private static int previousScore;
     
     float timeSinceLastPellet;
@@ -47,13 +47,13 @@ public class Score : MonoBehaviour
     static float scoreMultiplier;
 
     //Various Stats
-    public static int numGhostKilled { get; private set; }
-    public static int totalPelletsCollect { get; private set; }
-    public static int totalShildsRecieved { get; private set; }
+    public static int totalGhostKilled { get; private set; }
+    public static int totalPelletsCollected { get; private set; }
+    public static int totalShieldsRecieved { get; private set; }
     public static int totalLivesConsumed { get; private set; }
-    public static int numberOfShotsFired { get; private set; }
-    public static int numberOfStunsFired { get; private set; }
-    public static int totalFruitCollected { get; private set; }
+    public static int totalShotsFired { get; private set; }
+    public static int totalStunsFired { get; private set; }
+    public static float totalTimePlayed { get; private set; }
 
     void Awake()
     {
@@ -104,6 +104,10 @@ public class Score : MonoBehaviour
         hudMessenger = FindObjectOfType<HUDMessenger>();
 
         wonLevel = false;
+
+        pointValueIndicator.text = "";
+        pointsIndicatorAmount = 0;
+        previousScore = score;
     }
 
 
@@ -113,7 +117,6 @@ public class Score : MonoBehaviour
         {
             UpdateScore();
             UpdatePelletsRemaining();
-            CheckIfScoreChanged();
             UpdatePointIndicator();
 
             timeSinceLastPellet += Time.deltaTime;
@@ -211,50 +214,36 @@ public class Score : MonoBehaviour
     void UpdateScore() 
     {
         scoreUI.text = "" + score;
-        pointValueIndicator.text = "" + amountedAdded;
+        pointValueIndicator.text = "" + pointsIndicatorAmount;
     }
 
     public static void AddToScore(Color targetColor, int amount)
     {
         currentTarget = targetColor;
-        amountedAdded = (int)(amount * scoreMultiplier);
+        int pointsToAdd = (int)(amount * scoreMultiplier);
+        pointsIndicatorAmount += pointsToAdd;
         previousScore = score;
-        score += (int)(amount * scoreMultiplier);
+        score += pointsToAdd;
     }
 
     public void UpdatePointIndicator()
     {
-        if (hasScoreIncrease == true) 
-        {
-            pointValueIndicator.gameObject.SetActive(true);
-        }
-
-        pointValueIndicator.color = currentTarget;
-        pointValueIndicator.text = "+" + amountedAdded;
-
-        //Time to wait
-        timeToWait -= Time.deltaTime;
-        if (timeToWait <= 0)
-        {
-            pointValueIndicator.gameObject.SetActive(false);
-            timeToWait = 2;
-            hasScoreIncrease = false;
-        }
-    }
-
-    public void CheckIfScoreChanged()
-    {
         if (previousScore != score)
         {
-            hasScoreIncrease = true;
+            pointsIndicatorTimer = Time.time + pointsAddedIndicatorLength;
             previousScore = score;
         }
-        else 
+
+        if (pointsIndicatorTimer >= Time.time)
         {
-            hasScoreIncrease = false;
+            pointValueIndicator.color = currentTarget;
+            pointValueIndicator.text = "+" + pointsIndicatorAmount;
+        } else
+        {
+            pointValueIndicator.text = "";
+            pointsIndicatorAmount = 0;
         }
     }
-
 
     public void UpdatePelletsRemaining() 
     {
