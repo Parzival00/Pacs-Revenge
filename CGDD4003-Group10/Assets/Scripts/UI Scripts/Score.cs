@@ -10,6 +10,7 @@ public class Score : MonoBehaviour
     public static int score { get; private set; }
     public static int pelletsCollected {get; private set; }
     public static int pelletsLeft { get; private set; }
+    
     public static bool indicatorActive { get; private set; }
     public static int fruitsCollected { get; private set; }
     public static int currentLevel { get; private set; }
@@ -44,6 +45,15 @@ public class Score : MonoBehaviour
     HUDMessenger hudMessenger;
 
     static float scoreMultiplier;
+
+    //Various Stats
+    public static int numGhostKilled { get; private set; }
+    public static int totalPelletsCollect { get; private set; }
+    public static int totalShildsRecieved { get; private set; }
+    public static int totalLivesConsumed { get; private set; }
+    public static int numberOfShotsFired { get; private set; }
+    public static int numberOfStunsFired { get; private set; }
+    public static int totalFruitCollected { get; private set; }
 
     void Awake()
     {
