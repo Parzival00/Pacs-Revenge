@@ -34,6 +34,9 @@ public class GlobalAudioController : MonoBehaviour
         if (PlayerPrefs.HasKey("PiVolume"))
             mix.SetFloat("PickupVol", PlayerPrefs.GetFloat("PiVolume"));
 
+        if (PlayerPrefs.HasKey("UIVolume"))
+            mix.SetFloat("UIVol", PlayerPrefs.GetFloat("UIVolume"));
+
         if (PlayerPrefs.HasKey("MiscVolume"))
             mix.SetFloat("MiscVol", PlayerPrefs.GetFloat("MiscVolume"));
     }

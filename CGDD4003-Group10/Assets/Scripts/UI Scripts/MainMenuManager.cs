@@ -6,14 +6,13 @@ using TMPro;
 
 public class MainMenuManager : MonoBehaviour
 {
-
     public static bool isGamePaused;
+
     [Header("Menu Interaction Settings")]
     [SerializeField] AudioSource UIAudio;
     [SerializeField] AudioClip buttonClick;
     [SerializeField] AudioClip buttonHover;
     
-
     [Header("Menu Screens")]
     [SerializeField] GameObject menu;
     [SerializeField] GameObject options;
@@ -32,7 +31,17 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Slider enemyVolume;
     [SerializeField] Slider playerVolume;
     [SerializeField] Slider pickupVolume;
+    [SerializeField] Slider uiVolume;
     [SerializeField] Slider miscVolume;
+    [Header("Audio Tests")]
+    [SerializeField] AudioSource masterSource;
+    [SerializeField] AudioSource musicSource;
+    [SerializeField] AudioSource weaponSource;
+    [SerializeField] AudioSource enemySource;
+    [SerializeField] AudioSource playerSource;
+    [SerializeField] AudioSource pickupSource;
+    [SerializeField] AudioSource uiSource;
+    [SerializeField] AudioSource miscSource;
 
     [Header("GamePlay Settings")]
     [SerializeField] Slider MouseSensitivity;
@@ -44,9 +53,15 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject enemies;
     [SerializeField] GameObject endConditions;
 
+    GlobalAudioController audioController;
+    PlayerController player;
+
     private void Awake()
     {
         AudioListener.volume = 1;
+
+        player = GameObject.FindObjectOfType<PlayerController>();
+        audioController = GameObject.FindObjectOfType<GlobalAudioController>();
 
         if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "GameOverScene" || SceneManager.GetActiveScene().name == "ScoreScreen")
         {
@@ -84,6 +99,7 @@ public class MainMenuManager : MonoBehaviour
         PlayerPrefs.SetFloat("EVolume", enemyVolume.value / 4);
         PlayerPrefs.SetFloat("PlVolume", playerVolume.value / 4);
         PlayerPrefs.SetFloat("PiVolume", pickupVolume.value / 4);
+        PlayerPrefs.SetFloat("UIVolume", uiVolume.value / 4);
         PlayerPrefs.SetFloat("MiscVolume", miscVolume.value / 4);
         PlayerPrefs.SetInt("Resolution", screenResolution.value);
 
@@ -101,13 +117,12 @@ public class MainMenuManager : MonoBehaviour
 
         PlayerPrefs.Save();
 
-        PlayerController player = GameObject.FindObjectOfType<PlayerController>();
-        GlobalAudioController audio = GameObject.FindObjectOfType<GlobalAudioController>();
+
         
         if(player!=null)
             player.ApplyGameSettings();
-        if (audio != null)
-            audio.ApplyAudioSettings();
+        if (audioController != null)
+            audioController.ApplyAudioSettings();
     }
 
     public void LoadGameScene(int sceneIndex) 
@@ -132,6 +147,7 @@ public class MainMenuManager : MonoBehaviour
         enemyVolume.value = PlayerPrefs.GetFloat("EVolume", enemyVolume.value / 4) * 4;
         playerVolume.value = PlayerPrefs.GetFloat("PlVolume", playerVolume.value / 4) * 4;
         pickupVolume.value = PlayerPrefs.GetFloat("PiVolume", pickupVolume.value / 4) * 4;
+        uiVolume.value = PlayerPrefs.GetFloat("UIVolume", uiVolume.value / 4) * 4;
         miscVolume.value = PlayerPrefs.GetFloat("MiscVolume", miscVolume.value / 4) * 4;
 
         screenResolution.value = PlayerPrefs.GetInt("Resolution");
@@ -283,4 +299,63 @@ public class MainMenuManager : MonoBehaviour
         UIAudio.PlayOneShot(buttonClick);
         Score.SetDifficulty(value);
     }
+
+    #region Audio Volume Testing Functions
+    public void PlayMasterSoundTest()
+    {
+        masterSource.PlayOneShot(masterSource.clip);
+        PlayerPrefs.SetFloat("MastVolume", masterVolume.value / 4);
+
+        audioController.ApplyAudioSettings();
+    }
+    public void PlayMusicSoundTest()
+    {
+        musicSource.PlayOneShot(musicSource.clip);
+        PlayerPrefs.SetFloat("MusVolume", musicVolume.value / 4);
+
+        audioController.ApplyAudioSettings();
+    }
+    public void PlayWeaponSoundTest()
+    {
+        weaponSource.PlayOneShot(weaponSource.clip);
+        PlayerPrefs.SetFloat("WVolume", weaponVolume.value / 4);
+
+        audioController.ApplyAudioSettings();
+    }
+    public void PlayEnemySoundTest()
+    {
+        enemySource.PlayOneShot(enemySource.clip);
+        PlayerPrefs.SetFloat("EVolume", enemyVolume.value / 4);
+
+        audioController.ApplyAudioSettings();
+    }
+    public void PlayPlayerSoundTest()
+    {
+        playerSource.PlayOneShot(playerSource.clip);
+        PlayerPrefs.SetFloat("PlVolume", playerVolume.value / 4);
+
+        audioController.ApplyAudioSettings();
+    }
+    public void PlayPickUpSoundTest()
+    {
+        pickupSource.PlayOneShot(pickupSource.clip);
+        PlayerPrefs.SetFloat("PiVolume", pickupVolume.value / 4);
+
+        audioController.ApplyAudioSettings();
+    }
+    public void PlayUISoundTest()
+    {
+        uiSource.PlayOneShot(uiSource.clip);
+        PlayerPrefs.SetFloat("UIVolume", uiVolume.value / 4);
+
+        audioController.ApplyAudioSettings();
+    }
+    public void PlayMiscSoundTest()
+    {
+        miscSource.PlayOneShot(miscSource.clip);
+        PlayerPrefs.SetFloat("MiscVolume", miscVolume.value / 4);
+
+        audioController.ApplyAudioSettings();
+    }
+    #endregion
 }
