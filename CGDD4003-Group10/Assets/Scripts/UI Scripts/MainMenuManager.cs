@@ -63,7 +63,8 @@ public class MainMenuManager : MonoBehaviour
         player = GameObject.FindObjectOfType<PlayerController>();
         audioController = GameObject.FindObjectOfType<GlobalAudioController>();
 
-        if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "GameOverScene" || SceneManager.GetActiveScene().name == "ScoreScreen")
+        if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "GameOverScene" || 
+            SceneManager.GetActiveScene().name == "ScoreScreen" || SceneManager.GetActiveScene().name == "Credits")
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -75,8 +76,10 @@ public class MainMenuManager : MonoBehaviour
 
             isGamePaused = false;
 
-            options?.SetActive(false);
-            menu?.SetActive(false);
+            if(options != null)
+                options?.SetActive(false);
+            if(menu != null)
+                menu?.SetActive(false);
         }
 
         /*if (screenResolution != null)
