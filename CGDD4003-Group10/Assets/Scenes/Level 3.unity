@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9625,6 +9625,10 @@ PrefabInstance:
     - target: {fileID: 4733746807560845601, guid: a4431a89dae9e1c4bb856fc648a70c1b, type: 3}
       propertyPath: m_Name
       value: Decorations
+      objectReference: {fileID: 0}
+    - target: {fileID: 4733746807560845601, guid: a4431a89dae9e1c4bb856fc648a70c1b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5960165422972939784, guid: a4431a89dae9e1c4bb856fc648a70c1b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -28312,6 +28316,10 @@ PrefabInstance:
     - target: {fileID: 3799092519243194410, guid: 8feee5add1d593348858ed83ff5f3651, type: 3}
       propertyPath: m_Name
       value: TeleportDestinations
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799092519243194410, guid: 8feee5add1d593348858ed83ff5f3651, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7006027499525255154, guid: 8feee5add1d593348858ed83ff5f3651, type: 3}
       propertyPath: m_LocalPosition.x
