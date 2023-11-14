@@ -788,18 +788,18 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Collision Detection (Weapon, Fruit, Enemy)
-    private void OnTriggerEnter(Collider other)
+    //Accounting for scatter ending when player is touching a ghost
+    private void OnTriggerStay(Collider other)
     {
-        if(other.tag == "Weapon" && !gunActivated)
+        if (Score.wonLevel)
+            return;
+
+        if (other.tag == "Weapon" && !gunActivated)
         {
             Destroy(other.gameObject);
             StartCoroutine(ActivateGun());
         }
-    }
 
-    //Accounting for scatter ending when player is touching a ghost
-    private void OnTriggerStay(Collider other)
-    {
         if (other.tag == "Enemy")
         {
             Ghost ghost = other.gameObject.transform.root.GetComponent<Ghost>();

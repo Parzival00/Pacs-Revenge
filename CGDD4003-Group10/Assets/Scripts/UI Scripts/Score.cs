@@ -110,6 +110,9 @@ public class Score : MonoBehaviour
         gameSceneCamera = Camera.main;
         hudMessenger = FindObjectOfType<HUDMessenger>();
 
+        Invoke("DisplayLevelNumber", 0.5f);
+
+        AudioListener.volume = 1;
         wonLevel = false;
 
         pointValueIndicator.text = "";
@@ -117,6 +120,12 @@ public class Score : MonoBehaviour
         previousScore = score;
 
         sceneStartTime = Time.time;
+    }
+
+    void DisplayLevelNumber()
+    {
+        if (currentLevel <= 8)
+            hudMessenger.Display("Level " + currentLevel, 3);
     }
 
 
@@ -278,16 +287,23 @@ public class Score : MonoBehaviour
         gameSceneRenderTex.width = Screen.width;
         gameSceneRenderTex.height = Screen.height;
 
-        yield return null;
+        wonLevel = true;
 
-        //gameSceneCamera.gameObject.SetActive(true);
+        float audioLevel = 1;
+        while(audioLevel > 0)
+        {
+            AudioListener.volume = audioLevel;
+            audioLevel -= 4 * Time.deltaTime;
+            yield return null;
+        }
 
-        //gameSceneCamera.fieldOfView = PlayerPrefs.GetFloat("FOV");
+        audioLevel = 0;
+        AudioListener.volume = audioLevel;
 
         gameSceneCamera.targetTexture = gameSceneRenderTex;
         gameSceneCamera.Render();
         gameSceneCamera.targetTexture = null;
-        wonLevel = true;
+
 
         gameSceneRenderTex.Create();
 
@@ -295,7 +311,7 @@ public class Score : MonoBehaviour
 
         if(currentLevel == 8)
         {
-            if(fruitsCollected == 16)
+            if(fruitsCollected >= 14)
             {
                 totalTimePlayed += Time.time - sceneStartTime;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);

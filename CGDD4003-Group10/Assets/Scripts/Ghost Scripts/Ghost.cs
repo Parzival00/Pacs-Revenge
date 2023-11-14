@@ -180,6 +180,8 @@ public class Ghost : MonoBehaviour
         navMesh.speed = speed;
 
         stunEffect.SetActive(false);
+        minimapIcon.SetActive(true);
+        deadMinimapIcon.SetActive(false);
 
         targetAreaDirectory = new Dictionary<TargetAreaType, TargetArea>();
         foreach(TargetArea area in targetAreas)
@@ -688,6 +690,9 @@ public class Ghost : MonoBehaviour
         navMesh.enabled = true;
 
         stunEffect.SetActive(false);
+
+        minimapIcon.SetActive(true);
+        deadMinimapIcon.SetActive(false);
 
         spriteController.ResetParameters();
         chaseSoundSource.Stop();

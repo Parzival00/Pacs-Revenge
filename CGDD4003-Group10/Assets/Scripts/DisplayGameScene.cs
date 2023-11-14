@@ -35,7 +35,7 @@ public class DisplayGameScene : MonoBehaviour
             currentTransitionalMat.SetFloat("_TransitionProgress", 0);
             StartCoroutine(Transition());
         } 
-        else if (Score.currentLevel != 1)
+        else // if (Score.currentLevel != 1)
         {
             currentTransitionalMat = transitionMat;
             gameSceneTexture.SetActive(true);
