@@ -334,4 +334,6 @@ public class Score : MonoBehaviour
         totalTimePlayed += Time.time - sceneStartTime;
         SceneManager.LoadScene("GameOverScene");
     }
+
+    
 }

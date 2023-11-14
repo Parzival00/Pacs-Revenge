@@ -52,6 +52,17 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject shooting;
     [SerializeField] GameObject enemies;
     [SerializeField] GameObject endConditions;
+    [Header("End Statistics Menus")]
+    [SerializeField] GameObject gameOverScreen;
+    [SerializeField] GameObject endStatsScreen;
+    [SerializeField] TMP_Text playTime;
+    [SerializeField] TMP_Text railgunNumFired;
+    [SerializeField] TMP_Text stungunNumFired;
+    [SerializeField] TMP_Text ghostKilled;
+    [SerializeField] TMP_Text shieldUsed;
+    [SerializeField] TMP_Text livesUsed;
+    [SerializeField] TMP_Text totalPellets;
+
 
     GlobalAudioController audioController;
     PlayerController player;
@@ -89,7 +100,11 @@ public class MainMenuManager : MonoBehaviour
                 SetResolution(screenResolution.value);
             });
         }*/
-
+        if (gameOverScreen != null && endStatsScreen != null) 
+        {
+            LoadEndStatistics();
+        }
+        
     }
 
     public void SaveSettings()
@@ -301,6 +316,28 @@ public class MainMenuManager : MonoBehaviour
     {
         UIAudio.PlayOneShot(buttonClick);
         Score.SetDifficulty(value);
+    }
+    public void DisplayEndStatistics()
+    {
+        UIAudio.PlayOneShot(buttonClick);
+        gameOverScreen.SetActive(false);
+        endStatsScreen.SetActive(true);
+    }
+    public void LoadEndStatistics() 
+    {
+        playTime.text = "Total Play Time: " + Score.totalTimePlayed.ToString();
+        railgunNumFired.text = "Railgun Fired: " + Score.totalShotsFired;
+        stungunNumFired.text = "StunGun Fired: " + Score.totalStunsFired;
+        ghostKilled.text = "Ghost Killed: " + Score.totalGhostKilled;
+        shieldUsed.text = "Shields Used: " + Score.totalShieldsRecieved;
+        livesUsed.text = "Lives Used: " + Score.totalLivesConsumed;
+        totalPellets.text = "Total Pellets: " + Score.totalPelletsCollected;
+    } 
+    public void ReturnToGameOverScreen() 
+    {
+        UIAudio.PlayOneShot(buttonClick);
+        endStatsScreen.SetActive(false);
+        gameOverScreen.SetActive(true);
     }
 
     #region Audio Volume Testing Functions
