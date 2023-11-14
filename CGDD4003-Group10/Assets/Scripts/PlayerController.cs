@@ -61,13 +61,15 @@ public class PlayerController : MonoBehaviour
     [Header("Stun-Gun Settings")]
     [SerializeField] StungunVFX stungunVFX;
     [SerializeField] Animator stungunAnimator;
-    [SerializeField] float fireRate;
+    [SerializeField] float timeBtwStunShots;
+    [SerializeField] int pelletsPerStunAmmo = 10;
     [SerializeField] Transform bulletOrigin;
     [SerializeField] GameObject stunGun;
     int ammoCount;
     [SerializeField] int maxAmmoCount = 1;
     //The amount of pellets per ammo is set in the score script
     private float stunFireTimer;
+    private int pelletCountSinceLastShot;
 
     private float weaponCharge;
     private float weaponDecharge;
@@ -77,16 +79,19 @@ public class PlayerController : MonoBehaviour
 
     bool lostShield;
 
+    private float gunTimer;
+
     public float WeaponCharge { get => weaponCharge; }
     public float WeaponDecharge { get => weaponDecharge; }
     public float WeaponTemp01 { get => (weaponTemp / maxWeaponTemp); }
     public bool Overheated { get => overheated; }
     public bool WeaponDecharging { get => weaponDecharging; }
-
-    private float gunTimer;
     public float GunTimer01 { get => (gunTimer / gunTimeAmount); }
-    public bool stunGunCanFire { get; private set; }
-    public bool stunGunAmmoEmpty { get => ammoCount <= 0; }
+
+    public bool StunGunCanFire { get; private set; }
+    public int StunAmmoCount { get => ammoCount; }
+    public int StunAmmoPerPellets { get => pelletsPerStunAmmo; }
+    public bool StunGunAmmoEmpty { get => ammoCount <= 0; }
 
     //shield settings
     int shieldsRemaining;
@@ -561,7 +566,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void StungunFire()
     {
-        stunGunCanFire = stunFireTimer <= 0 && ammoCount > 0;
+        
+        StunGunCanFire = stunFireTimer <= 0 && ammoCount > 0;
 
         if (stunFireTimer <= 0 && Input.GetMouseButtonDown(0) && ammoCount > 0)
         {
@@ -569,25 +575,31 @@ public class PlayerController : MonoBehaviour
 
             Score.totalStunsFired++;
 
+            if(ammoCount == maxAmmoCount)
+                pelletCountSinceLastShot = Score.pelletsCollected;
+
             stungunVFX.Shoot();
             if (stungunAnimator != null)
                 stungunAnimator.SetTrigger("Shoot");
 
-            stunFireTimer = fireRate;
+            stunFireTimer = timeBtwStunShots;
             weaponSound.PlayOneShot(stunShotSound);
             ammoCount--;
-            ammoText.text = "" + ammoCount;
+            ammoText.text = "" + Mathf.RoundToInt(Mathf.Clamp(ammoCount + ((Score.pelletsCollected - pelletCountSinceLastShot) % pelletsPerStunAmmo) / (float)pelletsPerStunAmmo, 0, maxAmmoCount) * 100) + "%";
         }
         else if (stunFireTimer > 0)
         {
             stunFireTimer -= Time.deltaTime;
         }
     }
-    public void AddAmmo()
+    public void CheckToAddStunAmmo()
     {
-        if(ammoCount < maxAmmoCount)
-            ammoCount++;
-        ammoText.text = "" + ammoCount;
+        if ((Score.pelletsCollected - pelletCountSinceLastShot) > 0 && (Score.pelletsCollected - pelletCountSinceLastShot) % pelletsPerStunAmmo == 0)
+        {
+            if (ammoCount < maxAmmoCount)
+                ammoCount++;
+        }
+        ammoText.text = "" + Mathf.RoundToInt(Mathf.Clamp(ammoCount + ((Score.pelletsCollected - pelletCountSinceLastShot) % pelletsPerStunAmmo) / (float)pelletsPerStunAmmo, 0, maxAmmoCount) * 100) + "%";
     }
     #endregion
 

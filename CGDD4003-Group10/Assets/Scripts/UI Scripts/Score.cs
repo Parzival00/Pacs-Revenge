@@ -26,7 +26,6 @@ public class Score : MonoBehaviour
     [SerializeField] AudioSource radarAudioSource;
     [SerializeField] AudioClip pelletSound;
     [SerializeField] AudioClip radarPing;
-    [SerializeField] int pelletsPerAmmo;
     [SerializeField] float indicatorTimerThreshold = 10; //radar pellet indicator timer threshold
     [SerializeField] float pointsAddedIndicatorLength = 1;
     [SerializeField] RenderTexture gameSceneRenderTex;
@@ -148,14 +147,12 @@ public class Score : MonoBehaviour
             totalPelletsCollected++;
             timeSinceLastPellet = 0;
             AddToScore(Color.white, 50);
+            playerController.CheckToAddStunAmmo();
+
             if (pelletsCollected >= totalPellets)
             {
                 playerController.SaveLives();
                 StartCoroutine(SceneEnd());
-            }
-            else if (pelletsCollected % pelletsPerAmmo == 0)
-            {
-                playerController.AddAmmo();
             }
         }
 

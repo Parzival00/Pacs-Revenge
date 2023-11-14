@@ -8,8 +8,8 @@ public class StungunVFX : MonoBehaviour
     [SerializeField] GameObject baseStungun;
     [SerializeField] GameObject mergedStungun;
     [SerializeField] SpriteRenderer stunMuzzleFlash;
+    [SerializeField] Color[] fillColors;
     [SerializeField] float canFireEmission = 0.3f;
-    [SerializeField] float cantFireEmptyEmission = -1f;
     [SerializeField] float cantFireEmission = -0.32f;
 
     [Header("Materials")]
@@ -26,24 +26,21 @@ public class StungunVFX : MonoBehaviour
         stungunMuzzleFlash.SetFloat("_Alpha", 1f);
     }
 
-    void Init()
-    {
-
-    }
-
     private void Update()
     {
         InvisibilityEffect();
 
-        if(playerController.stunGunCanFire)
+        if(playerController.StunGunCanFire)
         {
             stunContainerMat.SetFloat("_EmissionIntensity", canFireEmission);
+            if(playerController.StunAmmoCount < fillColors.Length)
+                stunContainerMat.SetColor("_EmissionColor", fillColors[playerController.StunAmmoCount]);
         } else
         {
-            if(playerController.stunGunAmmoEmpty)
-                stunContainerMat.SetFloat("_EmissionIntensity", cantFireEmptyEmission);
-            else
-                stunContainerMat.SetFloat("_EmissionIntensity", cantFireEmission);
+            if (playerController.StunAmmoCount < fillColors.Length)
+                stunContainerMat.SetColor("_EmissionColor", fillColors[playerController.StunAmmoCount]);
+
+            stunContainerMat.SetFloat("_EmissionIntensity", cantFireEmission);
         }
     }
 

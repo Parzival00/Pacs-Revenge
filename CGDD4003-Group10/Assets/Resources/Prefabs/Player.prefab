@@ -6756,7 +6756,7 @@ MonoBehaviour:
     m_Bits: 20800
   stungunVFX: {fileID: 59560998165607546}
   stungunAnimator: {fileID: 3176158172579412883}
-  fireRate: 1
+  fireRate: 0.5
   bulletOrigin: {fileID: 4904277085903038529}
   stunGun: {fileID: 1216297462127043291}
   maxAmmoCount: 3
@@ -6901,9 +6901,15 @@ MonoBehaviour:
   baseStungun: {fileID: 3087477177954422826}
   mergedStungun: {fileID: 5345447390018179077}
   stunMuzzleFlash: {fileID: 340231341265847883}
-  canFireEmission: 0.3
-  cantFireEmptyEmission: -1
-  cantFireEmission: -0.32
+  fillColors:
+  - {r: 0.07450981, g: 0.07450981, b: 0.07450981, a: 0}
+  - {r: 0, g: 0.14509805, b: 0.16862746, a: 0}
+  - {r: 0, g: 0.27450982, b: 0.32156864, a: 0}
+  - {r: 0, g: 0.48235294, b: 0.5647059, a: 0}
+  canFireEmission: 1.63
+  canFireColor: {r: 0.40392157, g: 0.40392157, b: 0.40392157, a: 1}
+  cantFireEmission: 1.63
+  cantFireColor: {r: 0.4627451, g: 0.15294118, b: 0.08627451, a: 1}
   stunContainerMat: {fileID: 2100000, guid: 927f122aaed6f964d8c0efade3dc5420, type: 2}
   stungunMuzzleFlash: {fileID: 2100000, guid: bcfda14c7672f6e4695288c009e1a7d7, type: 2}
 --- !u!95 &6954913835686620882
