@@ -302,6 +302,8 @@ public class PlayerController : MonoBehaviour
 
         shieldsRemaining = 0;
 
+        invisibilityActivated = false;
+
         musicPlayer.PlayOneShot(gameStart);
 
         LivesText.text = "" + playerLives;
