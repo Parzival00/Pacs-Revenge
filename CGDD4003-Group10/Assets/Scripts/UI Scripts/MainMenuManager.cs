@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -77,6 +78,7 @@ public class MainMenuManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "GameOverScene" || 
             SceneManager.GetActiveScene().name == "ScoreScreen" || SceneManager.GetActiveScene().name == "Credits")
         {
+            Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         } else
@@ -104,7 +106,6 @@ public class MainMenuManager : MonoBehaviour
         {
             LoadEndStatistics();
         }
-        
     }
 
     public void SaveSettings()
@@ -135,8 +136,6 @@ public class MainMenuManager : MonoBehaviour
 
         PlayerPrefs.Save();
 
-
-        
         if(player!=null)
             player.ApplyGameSettings();
         if (audioController != null)
@@ -145,12 +144,31 @@ public class MainMenuManager : MonoBehaviour
 
     public void LoadGameScene(int sceneIndex) 
     {
-        SceneManager.LoadScene(sceneIndex);
+        //UIAudio.PlayOneShot(buttonClick);
+        StartCoroutine(LoadScene(sceneIndex));
+        //SceneManager.LoadScene(sceneIndex);
+
     }
     public void LoadGameScene(string sceneName)
     {
+        //UIAudio.PlayOneShot(buttonClick);
+        StartCoroutine(LoadScene(sceneName));
+        //SceneManager.LoadScene(sceneName);
+    }
+
+    IEnumerator LoadScene(int sceneIndex)
+    {
+        UIAudio.PlayOneShot(buttonClick);
+        yield return new WaitForSecondsRealtime(0.3f);
+        SceneManager.LoadScene(sceneIndex);
+    }
+    IEnumerator LoadScene(string sceneName)
+    {
+        UIAudio.PlayOneShot(buttonClick);
+        yield return new WaitForSecondsRealtime(0.3f);
         SceneManager.LoadScene(sceneName);
     }
+
     public void DisplayOptions() 
     {
         UIAudio.PlayOneShot(buttonClick);
@@ -182,7 +200,7 @@ public class MainMenuManager : MonoBehaviour
     }
     public void DisplayScoreBoard() 
     {
-        SceneManager.LoadScene(null);
+        UIAudio.PlayOneShot(buttonClick);
     }
     public void ExitGame() 
     {
@@ -323,15 +341,29 @@ public class MainMenuManager : MonoBehaviour
         gameOverScreen.SetActive(false);
         endStatsScreen.SetActive(true);
     }
-    public void LoadEndStatistics() 
+    public void LoadEndStatistics()
     {
-        playTime.text = "Total Play Time: " + Score.totalTimePlayed.ToString();
-        railgunNumFired.text = "Railgun Fired: " + Score.totalShotsFired;
-        stungunNumFired.text = "StunGun Fired: " + Score.totalStunsFired;
-        ghostKilled.text = "Ghost Killed: " + Score.totalGhostKilled;
-        shieldUsed.text = "Shields Used: " + Score.totalShieldsRecieved;
-        livesUsed.text = "Lives Used: " + Score.totalLivesConsumed;
-        totalPellets.text = "Total Pellets: " + Score.totalPelletsCollected;
+        int hours = Mathf.RoundToInt(Score.totalTimePlayed / 60 / 60);
+        int minutes = Mathf.RoundToInt(Score.totalTimePlayed / 60 % 60);
+        int seconds = Mathf.RoundToInt(Score.totalTimePlayed % 60);
+        string hoursString = hours < 10 ? "0" + hours : hours.ToString();
+        string minutesString = minutes < 10 ? "0" + minutes : minutes.ToString();
+        string secondsString = seconds < 10 ? "0" + seconds : seconds.ToString();
+
+        if (hours > 0)
+        {
+            playTime.text = hoursString + ":" + minutesString + ":" + secondsString;
+        } else
+        {
+            playTime.text = minutesString + ":" + secondsString;
+        }
+
+        railgunNumFired.text = "" + Score.totalShotsFired;
+        stungunNumFired.text = "" + Score.totalStunsFired;
+        ghostKilled.text = "" + Score.totalGhostKilled;
+        shieldUsed.text = "" + Score.totalShieldsRecieved;
+        livesUsed.text = "" + Score.totalLivesConsumed;
+        totalPellets.text = "" + Score.totalPelletsCollected;
     } 
     public void ReturnToGameOverScreen() 
     {

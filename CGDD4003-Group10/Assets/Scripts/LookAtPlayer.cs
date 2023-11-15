@@ -14,5 +14,4 @@ public class LookAtPlayer : MonoBehaviour
     {
         transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
     }
-    
 }
