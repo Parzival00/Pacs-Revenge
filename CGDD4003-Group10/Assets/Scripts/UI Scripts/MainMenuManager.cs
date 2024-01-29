@@ -204,6 +204,7 @@ public class MainMenuManager : MonoBehaviour
     }
     public void ExitGame() 
     {
+        AchievementManager.save();
         UIAudio.PlayOneShot(buttonClick);
         //Exit for actual build
         Application.Quit();
