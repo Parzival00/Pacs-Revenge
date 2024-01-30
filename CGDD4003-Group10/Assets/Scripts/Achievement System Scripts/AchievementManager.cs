@@ -87,4 +87,8 @@ public class AchievementManager
         }
         File.WriteAllLines(saveFile, jsonLines);
     }
+    public static void displayAchievement(string title)
+    {
+
+    }
 }
