@@ -2,7 +2,8 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
+using UnityEngine.UI;
 //Had to make my own serializable int type bc normal ints dont work for json
 [System.Serializable]
 public class sInt
@@ -34,17 +35,17 @@ public class AchievementManager
             endings = new sInt(0);
             deaths = new sInt(0);
             fruitCollected = new sInt(0);
-            potential.Add(new Achievement(Application.dataPath + "/AchievementImages/triple_threat.png", "Triple Threat", "Get all three endings", false));
-            potential.Add(new Achievement(Application.dataPath + "/AchievementImages/victory.png", "You Made It!", "Beat the boss and win the game", false));
-            potential.Add(new Achievement(Application.dataPath + "/AchievementImages/corrupted.png", "Corruption", "Sucumb to the corruption and slaughter them all", false));
-            potential.Add(new Achievement(Application.dataPath + "/AchievementImages/slow.png", "Too Slow!", "Fail to beat the boss in time", false));
-            potential.Add(new Achievement(Application.dataPath + "/AchievementImages/baby.png", "Wah Wah!", "Play on Baby mode", false));
-            potential.Add(new Achievement(Application.dataPath + "/AchievementImages/oof.png", "OOF", "Die x amount of times", false));
-            potential.Add(new Achievement(Application.dataPath + "/AchievementImages/dead_baby.png", "Seriously??", "Die on baby mode", false));
-            potential.Add(new Achievement(Application.dataPath + "/AchievementImages/massacre.png", "Massacre", "Kill x ghosts on one level", false));
-            potential.Add(new Achievement(Application.dataPath + "/AchievementImages/nom.png", "Nom Nom Nom", "Collect every kind of fruit", false));
-            potential.Add(new Achievement(Application.dataPath + "/AchievementImages/speakers.png", "Where's That Coming From?", "Check out the Boss' sound system", false));
-            potential.Add(new Achievement(Application.dataPath + "/AchievementImages/speed.png", "Speed Racer", "Beat the boss in x amount of time", false));
+            potential.Add(new Achievement("AchievementImages/triple_threat.png", "Triple Threat", "Get all three endings", false));
+            potential.Add(new Achievement("AchievementImages/victory.png", "You Made It!", "Beat the boss and win the game", false));
+            potential.Add(new Achievement("AchievementImages/corrupted.png", "Corruption", "Sucumb to the corruption and slaughter them all", false));
+            potential.Add(new Achievement("AchievementImages/slow.png", "Too Slow!", "Fail to beat the boss in time", false));
+            potential.Add(new Achievement("AchievementImages/baby.png", "Wah Wah!", "Play on Baby mode", false));
+            potential.Add(new Achievement("AchievementImages/oof.png", "OOF", "Die x amount of times", false));
+            potential.Add(new Achievement("/AchievementImages/dead_baby.png", "Seriously??", "Die on baby mode", false));
+            potential.Add(new Achievement("AchievementImages/massacre.png", "Massacre", "Kill x ghosts on one level", false));
+            potential.Add(new Achievement("AchievementImages/nom.png", "Nom Nom Nom", "Collect every kind of fruit", false));
+            potential.Add(new Achievement("AchievementImages/speakers.png", "Where's That Coming From?", "Check out the Boss' sound system", false));
+            potential.Add(new Achievement("AchievementImages/speed.png", "Speed Racer", "Beat the boss in x amount of time", false));
         }
         else
         {
@@ -89,6 +90,31 @@ public class AchievementManager
     }
     public static void displayAchievement(string title)
     {
+        GameObject popup = Resources.Load<GameObject>("AchievementBG");
+        GameObject.Instantiate(popup);
+        TextMeshProUGUI titleText = GameObject.FindGameObjectWithTag("ATitle").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI descripText = GameObject.FindGameObjectWithTag("ADescription").GetComponent<TextMeshProUGUI>();
+        Image icon = popup.GetComponentInChildren<Image>();
 
+        Achievement current = null;
+        foreach (Achievement a in potential)
+        {
+            if(a.title.Equals(title))
+            {
+                current = a;
+                break;
+            }
+        }
+
+        if(current == null)
+        {
+            Debug.Log("No Achievement Found");
+        }
+        else
+        {
+            titleText.text = current.title;
+            descripText.text = current.description;
+            icon.sprite = Resources.Load<Sprite>(current.imagePath);
+        }
     }
 }
