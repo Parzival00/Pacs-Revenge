@@ -55,6 +55,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float gunTimeAmount = 5f;
     [SerializeField] Camera fpsCam;
     [SerializeField] WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
+    [SerializeField] float camShakeFrequency = 1f;
+    [SerializeField] float camShakeDuration = 0.4f;
+    [SerializeField] CameraShake camShake;
     [SerializeField] float weaponRange;
     [SerializeField] LayerMask targetingMask;
 
@@ -400,6 +403,8 @@ public class PlayerController : MonoBehaviour
         {
             if (weaponCharge >= 1)
             {
+                if (camShake) camShake.ShakeCamera(camShakeFrequency, 0.5f, camShakeDuration);
+
                 weaponSound.Stop();
                 weaponSound.PlayOneShot(gunshot);
 

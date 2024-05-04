@@ -352,7 +352,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2701049378798147818}
+  - {fileID: 4024535778165123925}
   m_Father: {fileID: 743185093512582757}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1573818468627485014
@@ -6146,6 +6146,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6622275217034872740}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3741585811432328052
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4024535778165123925}
+  - component: {fileID: 2690408470737444805}
+  m_Layer: 10
+  m_Name: ShakePivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4024535778165123925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3741585811432328052}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2701049378798147818}
+  m_Father: {fileID: 2330434011805666726}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2690408470737444805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3741585811432328052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec38bd2cbcf29584e8c1ad2fad4d5aa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 4024535778165123925}
 --- !u!1 &3830099978605199799
 GameObject:
   m_ObjectHideFlags: 0
@@ -6750,13 +6796,17 @@ MonoBehaviour:
   dechargeTime: 0.25
   gunTimeAmount: 31
   fpsCam: {fileID: 7004879224189848639}
+  camShakeFrequency: 0.5
+  camShakeDuration: 0.25
+  camShake: {fileID: 2690408470737444805}
   weaponRange: 50
   targetingMask:
     serializedVersion: 2
     m_Bits: 20800
   stungunVFX: {fileID: 59560998165607546}
   stungunAnimator: {fileID: 3176158172579412883}
-  fireRate: 0.5
+  timeBtwStunShots: 0
+  pelletsPerStunAmmo: 10
   bulletOrigin: {fileID: 4904277085903038529}
   stunGun: {fileID: 1216297462127043291}
   maxAmmoCount: 3
@@ -6814,7 +6864,6 @@ MonoBehaviour:
   radarAudioSource: {fileID: 1280984969820592023}
   pelletSound: {fileID: 8300000, guid: 390b72579c63df34d8cfead757aab8ff, type: 3}
   radarPing: {fileID: 8300000, guid: b497797476fe5a84b923353b5215e407, type: 3}
-  pelletsPerAmmo: 12
   indicatorTimerThreshold: 10
   pointsAddedIndicatorLength: 0.8
   gameSceneRenderTex: {fileID: 8400000, guid: 1fbbf88530324554bbc10d8e0b318019, type: 2}
@@ -6907,9 +6956,7 @@ MonoBehaviour:
   - {r: 0, g: 0.27450982, b: 0.32156864, a: 0}
   - {r: 0, g: 0.48235294, b: 0.5647059, a: 0}
   canFireEmission: 1.63
-  canFireColor: {r: 0.40392157, g: 0.40392157, b: 0.40392157, a: 1}
   cantFireEmission: 1.63
-  cantFireColor: {r: 0.4627451, g: 0.15294118, b: 0.08627451, a: 1}
   stunContainerMat: {fileID: 2100000, guid: 927f122aaed6f964d8c0efade3dc5420, type: 2}
   stungunMuzzleFlash: {fileID: 2100000, guid: bcfda14c7672f6e4695288c009e1a7d7, type: 2}
 --- !u!95 &6954913835686620882
@@ -7222,7 +7269,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5802968209847089425}
-  m_Father: {fileID: 2330434011805666726}
+  m_Father: {fileID: 4024535778165123925}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &7004879224189848639
 Camera:

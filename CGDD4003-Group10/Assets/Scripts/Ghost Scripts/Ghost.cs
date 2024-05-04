@@ -84,6 +84,7 @@ public class Ghost : MonoBehaviour
     [SerializeField] protected GameObject stunEffect;
     [SerializeField] protected GameObject minimapIcon;
     [SerializeField] protected GameObject deadMinimapIcon;
+    SpawnDoor spawnDoor;
 
     [Header("Ghost Settings")]
     [SerializeField] protected DifficultySettings[] difficultySettings = new DifficultySettings[3];
@@ -162,6 +163,8 @@ public class Ghost : MonoBehaviour
 
         if (spriteController == null)
             spriteController = GetComponentInChildren<GhostSpriteController>();
+
+        spawnDoor = GameObject.FindGameObjectWithTag("SpawnRoomDoor").GetComponent<SpawnDoor>();
 
         if (Score.difficulty < difficultySettings.Length)
         {
@@ -444,8 +447,10 @@ public class Ghost : MonoBehaviour
     //Mode for exiting the spawn location
     protected virtual void Exiting()
     {
-        if(!startedExiting)
+        if (!startedExiting)
+        {
             exitingCoroutine = StartCoroutine(ExitingSequence());
+        }
     }
 
     Coroutine exitingCoroutine;
@@ -457,11 +462,15 @@ public class Ghost : MonoBehaviour
         Vector2Int spawnExitGridPosition = map.GetGridLocation(spawnExit.position);
         navMesh.SetDestination(map.GetWorldFromGrid(spawnExitGridPosition));
 
+        spawnDoor.OpenSpawnDoor();
+
         yield return null;
 
         WaitUntil arrivedAtExitPoint = new WaitUntil(() => currentMode != Mode.Exiting || Vector2Int.Distance(spawnExitGridPosition, currentGridPosition) <= 0.1f);
 
         yield return arrivedAtExitPoint;
+
+        spawnDoor.CloseSpawnDoor();
 
         print("Exited");
 
@@ -589,9 +598,14 @@ public class Ghost : MonoBehaviour
 
         spriteController.StartReformAnimation();
 
+        float respawnWaitLength = (respawnWaitTime + currentHitArea.respawnTimeAddition) * (1 - respawnTimeDampener);
         WaitForSeconds respawnWait = new WaitForSeconds((respawnWaitTime + currentHitArea.respawnTimeAddition) * (1 - respawnTimeDampener));
-
-        yield return respawnWait;
+        float timer = 0;
+        while(timer < respawnWaitLength)
+        {
+            yield return null;
+            timer += Time.deltaTime;
+        }
 
         spriteController.EndRespawning();
 
