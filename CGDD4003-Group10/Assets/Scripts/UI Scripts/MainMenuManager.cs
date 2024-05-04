@@ -24,6 +24,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] TMP_Dropdown screenResolution;
     [SerializeField] Slider fov;
     [SerializeField] Toggle fullScreenToggle;
+    [SerializeField] Toggle tutorialToggle;
 
     [Header("Audio Settings")]
     [SerializeField] Slider masterVolume;
@@ -121,6 +122,7 @@ public class MainMenuManager : MonoBehaviour
         PlayerPrefs.SetFloat("UIVolume", uiVolume.value / 4);
         PlayerPrefs.SetFloat("MiscVolume", miscVolume.value / 4);
         PlayerPrefs.SetInt("Resolution", screenResolution.value);
+        PlayerPrefs.SetInt("TutorialPrompts", tutorialToggle.isOn ? 1 : 0);
 
         SetResolution(screenResolution.value);
 
@@ -197,6 +199,11 @@ public class MainMenuManager : MonoBehaviour
             viewBobbingToggle.isOn = true;
         else
             viewBobbingToggle.isOn = false;
+
+        if (!PlayerPrefs.HasKey("TutorialPrompts") || PlayerPrefs.GetInt("TutorialPrompts") == 1)
+            tutorialToggle.isOn = true;
+        else
+            tutorialToggle.isOn = false;
     }
     public void DisplayScoreBoard() 
     {

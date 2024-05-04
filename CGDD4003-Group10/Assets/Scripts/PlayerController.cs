@@ -107,6 +107,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] TMP_Text shieldText;
     [SerializeField] ShieldEffectAnimator shieldAnimator;
     [SerializeField] Animator deathAnimator;
+    [SerializeField] TutorialController tutorial;
+    bool doTutorials;
 
     public FaceController faceController { get; private set; }
 
@@ -361,11 +363,11 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 mousePosition = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
-        cameraPitch -= mousePosition.y * sensitivity * Time.deltaTime * 100f * Time.timeScale;
+        cameraPitch -= mousePosition.y * sensitivity * Time.deltaTime * 30f * Time.timeScale;
         cameraPitch = Mathf.Clamp(cameraPitch, -60.0f, 60.0f);
 
         playerCam.localEulerAngles = Vector3.right * cameraPitch;
-        playerT.Rotate(Vector3.up * mousePosition.x * sensitivity * Time.deltaTime * 100f * Time.timeScale);
+        playerT.Rotate(Vector3.up * mousePosition.x * sensitivity * Time.deltaTime * 30f * Time.timeScale);
 
     }
 
@@ -405,6 +407,11 @@ public class PlayerController : MonoBehaviour
             {
                 if (camShake) camShake.ShakeCamera(camShakeFrequency, 0.5f, camShakeDuration);
 
+                if (Score.totalShotsFired <= 0 && tutorial)
+                {
+                    tutorial.ToggleReleasePrompt(false);
+                }
+
                 weaponSound.Stop();
                 weaponSound.PlayOneShot(gunshot);
 
@@ -414,7 +421,7 @@ public class PlayerController : MonoBehaviour
                 //Detect hit on enemy
                 if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange, targetingMask))
                 {
-                    print("Hit: " + hit.collider.gameObject.name);
+                    //print("Hit: " + hit.collider.gameObject.name);
 
                     TargetAreaCollider targetAreaCollider = hit.collider.GetComponent<TargetAreaCollider>();
 
@@ -444,6 +451,11 @@ public class PlayerController : MonoBehaviour
         {
             weaponSound.Stop();
             weaponSound.PlayOneShot(chargeup);
+
+            if (Score.totalShotsFired <= 0 && tutorial)
+            {
+                tutorial.ToggleShootPrompt(false);
+            }
         }
         else if (!paused && Input.GetMouseButton(0) && !overheated)
         {
@@ -451,6 +463,14 @@ public class PlayerController : MonoBehaviour
             {
                 weaponCharge += (Time.deltaTime * (1 / chargeTime));
             }
+            if(weaponCharge >= 1f)
+            {
+                if (doTutorials && Score.totalShotsFired <= 0 && tutorial)
+                {
+                    tutorial.ToggleReleasePrompt(true);
+                }
+            }
+
             weaponTemp += (Time.deltaTime * (overheatSpeed));
         }
         else if (!Input.GetMouseButton(0) && !overheated)
@@ -502,6 +522,14 @@ public class PlayerController : MonoBehaviour
     {
         if (weaponTemp >= maxWeaponTemp && !overheated)
         {
+            if (doTutorials && Score.timesOverheated <= 1 && tutorial)
+            {
+                tutorial.ToggleReleasePrompt(false);
+                tutorial.ToggleOverheatPrompt(true);
+            }
+
+            Score.timesOverheated++;
+
             overheated = true;
             //weaponSound.volume = .9f;
             weaponSound.PlayOneShot(overheat);
@@ -515,6 +543,11 @@ public class PlayerController : MonoBehaviour
         }
         else if (overheated && !Input.GetMouseButton(0))
         {
+            if (doTutorials && Score.timesOverheated <= 2 && tutorial)
+            {
+                tutorial.ToggleOverheatPrompt(false);
+            }
+
             weaponTemp -= Time.deltaTime * cooldownSpeed;
         }
     }
@@ -713,6 +746,13 @@ public class PlayerController : MonoBehaviour
         baseSpeed += gunSpeedMultiplier;
         AddShields();
         lostShield = false;
+
+        yield return new WaitForSeconds(0.5f);
+
+        if (doTutorials && gunActivated && Score.totalShotsFired <= 0 && tutorial)
+        {
+            tutorial.ToggleShootPrompt(true);
+        }
     }
 
     /// <summary>
@@ -1146,7 +1186,9 @@ public class PlayerController : MonoBehaviour
             playerCam.GetComponent<Camera>().fieldOfView = PlayerPrefs.GetFloat("FOV");
         
         if (PlayerPrefs.HasKey("Sensitivity"))
-            sensitivity = PlayerPrefs.GetFloat("Sensitivity");
+            sensitivity = PlayerPrefs.GetFloat("Sensitivity") / 5f;
+
+        doTutorials = !PlayerPrefs.HasKey("TutorialPrompts") || PlayerPrefs.GetInt("TutorialPrompts") == 1;
     }
     #endregion
 

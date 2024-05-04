@@ -773,7 +773,7 @@ public class Ghost : MonoBehaviour
     }
     public void OnTriggerEnter(Collider c)
     {
-        if(c.gameObject.tag == "Stun")
+        if(c.gameObject.tag == "Stun" && currentMode != Mode.Respawn)
         {
             Destroy(c.gameObject);
             FreezeGhost();

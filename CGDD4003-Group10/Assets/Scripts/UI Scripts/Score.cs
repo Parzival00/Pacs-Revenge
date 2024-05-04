@@ -53,6 +53,7 @@ public class Score : MonoBehaviour
     public static int totalShotsFired { get; set; }
     public static int totalStunsFired { get; set; }
     public static float totalTimePlayed { get; private set; }
+    public static int timesOverheated { get; set; }
 
     static float sceneStartTime;
 

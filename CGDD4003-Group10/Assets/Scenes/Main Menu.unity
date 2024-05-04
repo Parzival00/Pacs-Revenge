@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2017,6 +2017,7 @@ MonoBehaviour:
   screenResolution: {fileID: 1487051133}
   fov: {fileID: 654173289}
   fullScreenToggle: {fileID: 1132433172}
+  tutorialToggle: {fileID: 1647542709}
   masterVolume: {fileID: 300991091}
   musicVolume: {fileID: 482177536}
   weaponVolume: {fileID: 780497796}
@@ -2039,6 +2040,15 @@ MonoBehaviour:
   shooting: {fileID: 2100003479}
   enemies: {fileID: 1147908301}
   endConditions: {fileID: 1227664807}
+  gameOverScreen: {fileID: 0}
+  endStatsScreen: {fileID: 0}
+  playTime: {fileID: 0}
+  railgunNumFired: {fileID: 0}
+  stungunNumFired: {fileID: 0}
+  ghostKilled: {fileID: 0}
+  shieldUsed: {fileID: 0}
+  livesUsed: {fileID: 0}
+  totalPellets: {fileID: 0}
 --- !u!1 &60419351
 GameObject:
   m_ObjectHideFlags: 0
@@ -61835,6 +61845,17 @@ Transform:
   - {fileID: 582367881}
   m_Father: {fileID: 1980276348}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1647542709 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5552137714178965088, guid: 1a704ce9730d5064d8eb516eec5013ea, type: 3}
+  m_PrefabInstance: {fileID: 4171006476302854821}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1648272728
 GameObject:
   m_ObjectHideFlags: 0
