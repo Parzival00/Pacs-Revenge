@@ -953,6 +953,59 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2200834427276166560
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8417201226520973854}
+  - component: {fileID: 2052171424438145827}
+  m_Layer: 15
+  m_Name: ScoreIncrementBounds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8417201226520973854
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2200834427276166560}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.0000033080573, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.0619999, z: 0}
+  m_LocalScale: {x: 1, y: 0.43458, z: 0.46348}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2569170336096267845}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2052171424438145827
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2200834427276166560}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2252431999045226566
 GameObject:
   m_ObjectHideFlags: 0
@@ -2811,6 +2864,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8417201226520973854}
   - {fileID: 8844340778192396811}
   - {fileID: 2166591925762611624}
   - {fileID: 7412392394038818029}
@@ -2937,7 +2991,7 @@ MonoBehaviour:
   pointWorth: 200
   targetAreas:
   - respawnTimeAddition: 0
-    pointsAddition: 0
+    pointsAddition: 10
     type: 2
     difficulty: 0
     healthValue: 25
@@ -2961,6 +3015,8 @@ MonoBehaviour:
     type: 5
     difficulty: 2
     healthValue: 100
+  scoreIncrementPrefab: {fileID: 7088422221440634481, guid: 3d675f72ebd263d478e130045fce0ea1, type: 3}
+  scoreIncrementSpawnArea: {fileID: 2052171424438145827}
   flinchLength: 0.5
   faceForwardForDeath: 1
   BosssfightMode: 0

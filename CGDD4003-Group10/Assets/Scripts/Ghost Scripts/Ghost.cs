@@ -95,6 +95,8 @@ public class Ghost : MonoBehaviour
     protected float freezeTimer;
     [SerializeField] protected int pointWorth = 20;
     [SerializeField] protected TargetArea[] targetAreas;
+    [SerializeField] protected GameObject scoreIncrementPrefab;
+    [SerializeField] protected BoxCollider scoreIncrementSpawnArea;
     [SerializeField] protected float flinchLength = 0.5f;
     [SerializeField] protected bool faceForwardForDeath = true;
     [SerializeField] protected bool BosssfightMode = false;
@@ -820,7 +822,7 @@ public class Ghost : MonoBehaviour
     {
         HitInformation hit = new HitInformation();
         hit.targetArea = GetTargetArea(type);
-        hit.pointWorth = pointWorth;
+        hit.pointWorth = 0;
         hit.bigBlood = bigBlood;
         hit.smallBlood = smallBlood;
 
@@ -836,12 +838,28 @@ public class Ghost : MonoBehaviour
             ghostHealth = 100;
 
             currentMode = Mode.Respawn;
+
+            hit.pointWorth = pointWorth;
         }
         else
         {
             previousMode = currentMode;
             hitSoundSource.PlayOneShot(hitSound);
             currentMode = Mode.Flinch;
+        }
+
+        if (scoreIncrementPrefab != null)
+        {
+            print("Spawn score increment");
+            Vector3 spawnPoint = scoreIncrementSpawnArea.gameObject.transform.position + new Vector3(
+                Random.Range(-scoreIncrementSpawnArea.bounds.extents.x, scoreIncrementSpawnArea.bounds.extents.x),
+                Random.Range(-scoreIncrementSpawnArea.bounds.extents.y, scoreIncrementSpawnArea.bounds.extents.y),
+                Random.Range(-scoreIncrementSpawnArea.bounds.extents.z, scoreIncrementSpawnArea.bounds.extents.z)
+                );
+
+            GameObject go = Instantiate(scoreIncrementPrefab, spawnPoint, scoreIncrementPrefab.transform.rotation);
+            ScoreIncrementDisplay display = go.GetComponent<ScoreIncrementDisplay>();
+            if (display) display.SetText((hit.pointWorth + hit.targetArea.pointsAddition).ToString());
         }
 
         return hit;

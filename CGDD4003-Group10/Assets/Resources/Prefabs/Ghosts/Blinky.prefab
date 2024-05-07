@@ -3765,6 +3765,7 @@ Transform:
   - {fileID: 5574988903311039125}
   - {fileID: 2725491476164826808}
   - {fileID: 8617480552808740130}
+  - {fileID: 7500078931659531949}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3971016356918884752
@@ -3934,7 +3935,7 @@ MonoBehaviour:
   pointWorth: 200
   targetAreas:
   - respawnTimeAddition: 0
-    pointsAddition: 0
+    pointsAddition: 25
     type: 2
     difficulty: 0
     healthValue: 25
@@ -3958,6 +3959,8 @@ MonoBehaviour:
     type: 5
     difficulty: 2
     healthValue: 100
+  scoreIncrementPrefab: {fileID: 7088422221440634481, guid: 3d675f72ebd263d478e130045fce0ea1, type: 3}
+  scoreIncrementSpawnArea: {fileID: 4946843296798871375}
   flinchLength: 0.5
   faceForwardForDeath: 1
   BosssfightMode: 0
@@ -4999,6 +5002,59 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &8918369636439475004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7500078931659531949}
+  - component: {fileID: 4946843296798871375}
+  m_Layer: 15
+  m_Name: ScoreIncrementBounds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7500078931659531949
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8918369636439475004}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.028, z: 0}
+  m_LocalScale: {x: 1, y: 0.43458, z: 0.46348}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5444096091577913357}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4946843296798871375
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8918369636439475004}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8925148417091850103
 GameObject:
   m_ObjectHideFlags: 0

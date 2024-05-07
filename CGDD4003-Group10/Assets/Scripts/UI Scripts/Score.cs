@@ -232,7 +232,7 @@ public class Score : MonoBehaviour
     void UpdateScore() 
     {
         scoreUI.text = "" + score;
-        pointValueIndicator.text = "" + pointsIndicatorAmount;
+        //pointValueIndicator.text = "" + pointsIndicatorAmount;
     }
 
     public static void AddToScore(Color targetColor, int amount)
@@ -255,7 +255,7 @@ public class Score : MonoBehaviour
         if (pointsIndicatorTimer >= Time.time)
         {
             pointValueIndicator.color = currentTarget;
-            pointValueIndicator.text = "+" + pointsIndicatorAmount;
+            //pointValueIndicator.text = "+" + pointsIndicatorAmount;
         } else
         {
             pointValueIndicator.text = "";
