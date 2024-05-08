@@ -370,6 +370,13 @@ public class Ghost : MonoBehaviour
                 }
             }
 
+            if(desiredNextGridPosition == currentGridPosition && map.SampleGrid(currentGridPosition - currentDirection) == Map.GridType.Air)
+            {
+                Vector2Int nextGridBack = currentGridPosition - currentDirection;
+                desiredNextGridPosition = nextGridBack;
+                desiredNextDirection = -currentDirection;
+            }
+
             nextGridPosition = desiredNextGridPosition;
             turnedAround = Vector2.Dot(currentDirection, desiredNextDirection) < -0.1f;
             currentDirection = desiredNextDirection;
@@ -850,7 +857,6 @@ public class Ghost : MonoBehaviour
 
         if (scoreIncrementPrefab != null)
         {
-            print("Spawn score increment");
             Vector3 spawnPoint = scoreIncrementSpawnArea.gameObject.transform.position + new Vector3(
                 Random.Range(-scoreIncrementSpawnArea.bounds.extents.x, scoreIncrementSpawnArea.bounds.extents.x),
                 Random.Range(-scoreIncrementSpawnArea.bounds.extents.y, scoreIncrementSpawnArea.bounds.extents.y),
