@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -16,10 +18,17 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] bool deleteHighScoreFile;
 
     [Header("UI Components")]
+    [SerializeField] Camera cam;
     [SerializeField] TMP_InputField uiInput;
     [SerializeField] TMP_Text highScoreDisplay;
     [SerializeField] TMP_Text currentPlayerScore;
     [SerializeField] TMP_Text babyModeInsult;
+    [SerializeField] Image caret;
+    [SerializeField] float characterWidth;
+    [SerializeField] float blinkRate = 3f;
+    Vector2 caretStartPos;
+
+    RectTransform caretRect;
 
     bool wroteToFile = false;
 
@@ -35,6 +44,10 @@ public class ScoreManager : MonoBehaviour
             playerScore = score;
         }
         public override string ToString()
+        {
+            return string.Format("{0,-4}{1,4}", $"{this.playerRank}.", this.name) + string.Format("{0,13}", this.playerScore);// this.playerRank + ".   " + this.name + "   " + this.playerScore;
+        }
+        public string ToFileFormat()
         {
             return this.playerRank + " " + this.name + " " + this.playerScore;
         }
@@ -67,6 +80,9 @@ public class ScoreManager : MonoBehaviour
             currentPlayerScore.gameObject.SetActive(true);
             DisplayCurrentScore();
         }
+
+        caretRect = caret.GetComponent<RectTransform>();
+        caretStartPos = caretRect.anchoredPosition;
     }
 
 
@@ -102,8 +118,8 @@ public class ScoreManager : MonoBehaviour
     {
         ReadScores();
 
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
+        //if (Input.GetKeyDown(KeyCode.Return))
+        //{
             if (uiInput.text.Equals("") || uiInput.Equals(null))
             {
                 playerIntials = "BOO";
@@ -111,7 +127,7 @@ public class ScoreManager : MonoBehaviour
             playerIntials = uiInput.text.ToUpper();
             uiInput.gameObject.SetActive(false);
             currentPlayerScore.gameObject.SetActive(false);
-        }
+        //}
 
         bool matchingNameFound = false;
         bool removedMatchingName = false;
@@ -210,7 +226,7 @@ public class ScoreManager : MonoBehaviour
         {
             foreach (ScoreEntry highscores in highScores) 
             {
-                editScores.WriteLine(highscores.ToString());
+                editScores.WriteLine(highscores.ToFileFormat());
             }
         }
     }
@@ -218,5 +234,49 @@ public class ScoreManager : MonoBehaviour
     {
         int playerScore = Score.score;
         currentPlayerScore.text = "Score: " + playerScore;
+    }
+
+    Coroutine blinkCoroutine;
+    IEnumerator BlinkCaret()
+    {
+        float timeBtwBlinks = 1 / blinkRate;
+        float timer = 0;
+        while(caret.gameObject.activeInHierarchy)
+        {
+            if(timer > timeBtwBlinks)
+            {
+                caret.enabled = !caret.enabled;
+                timer = 0;
+            }
+            yield return null;
+            timer += Time.deltaTime;
+        }
+    }
+
+    public void OnValueChangedInput()
+    {
+        string s = uiInput.text.ToUpper();
+
+        caretRect.anchoredPosition = caretStartPos + Vector2.right * s.Length * characterWidth;
+
+        if (s.Length >= 3)
+        {
+            caret.gameObject.SetActive(false);
+        }
+    }
+
+    public void OnSelectInput()
+    {
+        if (uiInput.text.ToUpper().Length < 3)
+        {
+            caret.gameObject.SetActive(true);
+            if (blinkCoroutine != null) StopCoroutine(blinkCoroutine);
+            blinkCoroutine = StartCoroutine(BlinkCaret());
+        }
+    }
+
+    public void OnDeselectInput()
+    {
+        caret.gameObject.SetActive(false);
     }
 }
