@@ -4,20 +4,27 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    Animator animator;
     [Header("Projectile Settings")]
     [SerializeField] float speed = 200;
     [SerializeField] int timeToLive = 4;
 
+    bool move;
+
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(this.gameObject, timeToLive);
+        animator = GetComponent<Animator>();
+        StartCoroutine(DestroyDelay(timeToLive));
+
+        move = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Move();
+        if(move)
+            Move();
     }
 
     /// <summary>
@@ -30,7 +37,19 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Wall")
-            Destroy(gameObject);
+        if (other.tag == "Wall")
+        {
+            move = false;
+            animator.SetTrigger("Destroy");
+        }
+    }
+
+    IEnumerator DestroyDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        move = false;
+        animator.SetTrigger("Destroy");
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
     }
 }

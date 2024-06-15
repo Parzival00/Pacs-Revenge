@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6683312932847083084
 Transform:
   m_ObjectHideFlags: 0
@@ -287,7 +287,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.06
+      scalar: 0.21
       minScalar: 0.55
       maxCurve:
         serializedVersion: 2
@@ -340,7 +340,7 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.36
+      scalar: 0.81
       minScalar: 0.93
       maxCurve:
         serializedVersion: 2
@@ -393,7 +393,7 @@ ParticleSystem:
     startSizeZ:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.82
+      scalar: 1.17
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4066,7 +4066,7 @@ ParticleSystem:
     dieWithParticles: 1
     sizeAffectsWidth: 0
     sizeAffectsLifetime: 0
-    inheritParticleColor: 1
+    inheritParticleColor: 0
     generateLightingData: 0
     splitSubEmitterRibbons: 0
     attachRibbonsToTransform: 0
@@ -4153,17 +4153,17 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.19853869
-          value: 0.4164371
-          inSlope: -1.1252524
-          outSlope: -1.1252524
+          time: 0.2664241
+          value: 0.6717442
+          inSlope: 0.027919548
+          outSlope: 0.027919548
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 0.33333334
+          outWeight: 0.541898
         - serializedVersion: 3
-          time: 0.55071235
-          value: 0.5081199
+          time: 0.52982986
+          value: 0.1942854
           inSlope: -0.9168843
           outSlope: -0.9168843
           tangentMode: 0
@@ -4171,8 +4171,8 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.7963896
-          value: 0.10540968
+          time: 0.6867299
+          value: 0.68519366
           inSlope: -0.14581986
           outSlope: -0.14581986
           tangentMode: 0
@@ -4204,8 +4204,8 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.35182405
-          value: 1
+          time: 0.40404958
+          value: 0.9734037
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -4213,8 +4213,8 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.8202612
-          value: 0.8991381
+          time: 0.91684604
+          value: 0.95765805
           inSlope: 0.16145939
           outSlope: 0.16145939
           tangentMode: 0
@@ -4223,7 +4223,7 @@ ParticleSystem:
           outWeight: 0.33333334
         - serializedVersion: 3
           time: 1
-          value: 0.045869827
+          value: 0.18948165
           inSlope: -0.6118521
           outSlope: -0.6118521
           tangentMode: 0
@@ -10308,6 +10308,7 @@ Transform:
   - {fileID: 6683312932847083084}
   - {fileID: 4362441723287255812}
   - {fileID: 7201247711455912306}
+  - {fileID: 3540943621085909705}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &5887041909919132494
@@ -10346,11 +10347,12 @@ MonoBehaviour:
   alertMessage: Fruit Offering Detected
   corruptionEndingMessage: Final Offering Detected
   lightningBeam: {fileID: 8995631283178144879}
+  lightningStrike: {fileID: 7009991672271020654}
   lightningSoundSource: {fileID: 7480586399702938232}
   alertVisibleTimerAmount: 3
   messageDelayTimerAmount: 2
-  numberOfLightningStrikes: 7
-  intervalBtwLightningStrikes: 0.5
+  numberOfLightningStrikes: 5
+  intervalBtwLightningStrikes: 1
   minimapFruitSpriteRenderer: {fileID: 4585332857110517945}
   fruitSpriteRenderer: {fileID: 43665522539889108}
   fruitCollectionCollider: {fileID: 5887041909919132494}
@@ -10491,3 +10493,85 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &3663018780944647297
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2085435033529456805}
+    m_Modifications:
+    - target: {fileID: 285518267702351432, guid: 43f37f9d5eefac340815eff4d2f48dba, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 285518267702351432, guid: 43f37f9d5eefac340815eff4d2f48dba, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.464
+      objectReference: {fileID: 0}
+    - target: {fileID: 285518267702351432, guid: 43f37f9d5eefac340815eff4d2f48dba, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 285518267702351432, guid: 43f37f9d5eefac340815eff4d2f48dba, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 285518267702351432, guid: 43f37f9d5eefac340815eff4d2f48dba, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 285518267702351432, guid: 43f37f9d5eefac340815eff4d2f48dba, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 285518267702351432, guid: 43f37f9d5eefac340815eff4d2f48dba, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 285518267702351432, guid: 43f37f9d5eefac340815eff4d2f48dba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 285518267702351432, guid: 43f37f9d5eefac340815eff4d2f48dba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 285518267702351432, guid: 43f37f9d5eefac340815eff4d2f48dba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025207607581697775, guid: 43f37f9d5eefac340815eff4d2f48dba, type: 3}
+      propertyPath: m_Name
+      value: LightingStrike
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6025207607581697775, guid: 43f37f9d5eefac340815eff4d2f48dba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 960993190277149459}
+  m_SourcePrefab: {fileID: 100100000, guid: 43f37f9d5eefac340815eff4d2f48dba, type: 3}
+--- !u!4 &3540943621085909705 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 285518267702351432, guid: 43f37f9d5eefac340815eff4d2f48dba, type: 3}
+  m_PrefabInstance: {fileID: 3663018780944647297}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7009991672271020654 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6025207607581697775, guid: 43f37f9d5eefac340815eff4d2f48dba, type: 3}
+  m_PrefabInstance: {fileID: 3663018780944647297}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &960993190277149459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7009991672271020654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dff18f8dd9a8534b864d986eebf9f7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -40,6 +40,7 @@ public class FruitController : MonoBehaviour
     [SerializeField] string alertMessage = "Fruit Offering Detected";
     [SerializeField] string corruptionEndingMessage = "Final Offering Detected";
     [SerializeField] ParticleSystem lightningBeam;
+    [SerializeField] GameObject lightningStrike; 
     [SerializeField] AudioSource lightningSoundSource;
     [SerializeField] float alertVisibleTimerAmount = 3;
     [SerializeField] float messageDelayTimerAmount = 2;
@@ -95,6 +96,8 @@ public class FruitController : MonoBehaviour
             fruitSpriteRenderer.sprite = currentFruit.sprite;
         }
         hudMessenger = FindObjectOfType<HUDMessenger>();
+
+        lightningStrike.SetActive(false);
 
         firstFruitActivated = false;
         secondFruitActivated = false;
@@ -254,8 +257,10 @@ public class FruitController : MonoBehaviour
             {
                 i++;
 
-                lightningBeam?.Stop();
-                lightningBeam?.Play();
+                //lightningBeam?.Stop();
+                //lightningBeam?.Play();
+                lightningStrike.SetActive(false);
+                lightningStrike.SetActive(true);
 
                 if (lightningSoundSource.clip != null)
                     lightningSoundSource.Play();
@@ -283,6 +288,7 @@ public class FruitController : MonoBehaviour
         while(messageTimer > Time.time)
             yield return null;
 
-        lightningBeam?.Stop();
+        lightningStrike.SetActive(false);
+        //lightningBeam?.Stop();
     }
 }
