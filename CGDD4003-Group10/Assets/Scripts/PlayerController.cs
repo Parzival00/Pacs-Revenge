@@ -865,7 +865,6 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    
                     if(shieldAnimator != null && shieldsRemaining > 0)
                     {
                         if (gunActivated) lostShield = true;
@@ -881,12 +880,10 @@ public class PlayerController : MonoBehaviour
                             //baseSpeed -= gunSpeedMultiplier;
                             shieldAnimator.PlayShieldBreak();
                         }
-                        
                     }
-
-                    
                 }
-            } else if (Score.insanityEnding)
+            }
+            else if (Score.insanityEnding)
             {
                 ghost.PermenantDeath();
                 baseSpeed += sprintMultiplier;
@@ -971,7 +968,7 @@ public class PlayerController : MonoBehaviour
 
         playerLives--;
         Score.totalLivesConsumed++;
-
+        AchievementManager.addDeath();
         if (playerLives <= 0)
         {
             print("Ending Scene");

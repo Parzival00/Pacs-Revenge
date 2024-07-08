@@ -72,6 +72,9 @@ public class AchievementManager
             }
         }
     }
+    /// <summary>
+    /// Saves the current values of endings,  deaths, fruit collected, and the achievement lists to a json file.
+    /// </summary>
     public static void save()
     {
         List<string> jsonLines = new List<string>();
@@ -123,5 +126,15 @@ public class AchievementManager
             icon.sprite = Resources.Load<Sprite>(current.imagePath);
             save(); //saves the new achievement to the save file
         }
+    }
+    public static void addDeath()
+    {
+        deaths.value = (deaths.value + 1);
+        save();
+    }
+    public static void addFruit()
+    {
+        fruitCollected.value = (fruitCollected.value + 1);
+        save();
     }
 }
