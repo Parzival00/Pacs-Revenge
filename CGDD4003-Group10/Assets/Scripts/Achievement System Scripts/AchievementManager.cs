@@ -88,6 +88,10 @@ public class AchievementManager
         }
         File.WriteAllLines(saveFile, jsonLines);
     }
+    /// <summary>
+    /// This method takes the title of an achievement. It then displays the achievement to the player and adds it to the collected list.
+    /// </summary>
+    /// <param name="title"></param>
     public static void displayAchievement(string title)
     {
         GameObject popup = Resources.Load<GameObject>("AchievementBG");
@@ -112,9 +116,12 @@ public class AchievementManager
         }
         else
         {
+            collected.Add(current);
+            potential.Remove(current);
             titleText.text = current.title;
             descripText.text = current.description;
             icon.sprite = Resources.Load<Sprite>(current.imagePath);
+            save(); //saves the new achievement to the save file
         }
     }
 }
