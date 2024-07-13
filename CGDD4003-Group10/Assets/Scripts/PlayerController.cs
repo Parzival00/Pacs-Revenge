@@ -389,6 +389,31 @@ public class PlayerController : MonoBehaviour
 
         transform.position = new Vector3(transform.position.x, originalY, transform.position.z); //Ensure character stays on the ground
     }
+
+    public void SlamHit(Vector3 forceVector, float stunLength)
+    {
+        StartCoroutine(Slam(forceVector, stunLength));
+        //character.Move(forceVector * Time.deltaTime);
+    }
+    IEnumerator Slam(Vector3 force, float stunLength)
+    {
+        canMove = false;
+        //Vector3 smallForce = force / 10;
+        float timer = 0;
+        while(timer < 0.15f)
+        {
+            character.Move(force * Time.deltaTime * (Time.deltaTime / 0.15f));
+            yield return null;
+            timer += Time.deltaTime;
+        }
+        /*for (int i = 0; i < 10; i++)
+        {
+            character.Move(smallForce * Time.deltaTime);
+            yield return null;
+        }*/
+        yield return new WaitForSeconds(stunLength);
+        canMove = !inDeathSequence;
+    }
     #endregion
 
     #region Gun Functionality
@@ -438,6 +463,8 @@ public class PlayerController : MonoBehaviour
                         if (bossCollider != null)
                         {
                             Boss.BossHitInformation hitInformation = bossCollider.boss.GotHit(hit.point, bossCollider.HeadID);
+                            if(hitInformation.pointWorth > 0)
+                                Score.AddToScore(tempColorSave, hitInformation.pointWorth);
                         }
                         else
                         {

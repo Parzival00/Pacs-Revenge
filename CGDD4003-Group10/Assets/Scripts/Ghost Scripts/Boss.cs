@@ -72,6 +72,8 @@ public class Boss : MonoBehaviour
 
     [Header("Slam Settings")]
     [SerializeField] float slamThreshold;
+    [SerializeField] float slamStrength = 100;
+    [SerializeField] float slamStunLength = 0.5f;
 
     [Header("Score Display Settings")]
     [SerializeField] GameObject scoreIncrementPrefab;
@@ -178,7 +180,6 @@ public class Boss : MonoBehaviour
                 Attack();
                 break;
             case BossState.Slam:
-                SlamInitiate();
                 break;
             case BossState.Enrage:
                 break;
@@ -194,8 +195,13 @@ public class Boss : MonoBehaviour
     void Chase()
     {
         float distToPlayer = (player.transform.position - transform.position).magnitude;
+        if (distToPlayer < slamThreshold)
+        {
+            currentState = BossState.Slam;
+            SlamInitiate();
+        }
 
-        currentState = BossState.Attack;
+        //currentState = BossState.Attack;
         /*Vector2Int playerGridPosition = map.CheckEdgePositions(transform.position);
 
         targetGridPosition = playerGridPosition;
@@ -213,7 +219,6 @@ public class Boss : MonoBehaviour
 
     private void AttackCooldown()
     {
-
         attackCooldownTimer -= Time.deltaTime;
 
         if(attackCooldownTimer <= 0)
@@ -370,6 +375,14 @@ public class Boss : MonoBehaviour
     //Animation Event
     private void SlamAttack()
     {
+        Vector3 vectorToPlayer = player.transform.position - transform.position;
+        float distToPlayer = vectorToPlayer.magnitude;
+        Vector3 dirToPlayer = vectorToPlayer.normalized;
+        if (distToPlayer <= slamThreshold)
+        {
+            player.SlamHit(dirToPlayer * slamStrength * ((slamThreshold - distToPlayer) / 1.5f + 1), slamStunLength);
+        }
+
         attackCooldownTimer = slamAttackCooldown;
         currentState = BossState.AttackCooldown;
     }
@@ -404,38 +417,14 @@ public class Boss : MonoBehaviour
             GameObject obj = Instantiate(shieldPrefab, hitPosition + transform.forward * 0.2f, transform.rotation, transform);
             obj.transform.localRotation *= Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.forward);
             Destroy(obj, 2.5f);
-        }
-        //hit.targetArea = GetTargetArea(type);
-        //hit.bigBlood = bigBlood;
-        //hit.smallBlood = smallBlood;
 
-        //currentHitArea = hit.targetArea;
-
-        //damage the ghost
-       /* ghostHealth -= currentHitArea.healthValue;
-        print("subtracted: " + currentHitArea.healthValue + " health: " + ghostHealth);
-
-        if (ghostHealth <= 0)
-        {
-            if (Score.bossEnding)
-            {
-
-            }
-            else
-            {
-                print("respawning");
-                ghostHealth = 100;
-
-                currentMode = Mode.Respawn;
-            }
-            hit.pointWorth = pointWorth;
+            //hitSoundSource.PlayOneShot(shieldHitSound);
         }
         else
         {
-            previousMode = currentMode;
-            hitSoundSource.PlayOneShot(hitSound);
-            currentMode = Mode.Flinch;
-        }*/
+            rb.AddForce(transform.forward * Time.deltaTime * -10);
+            //hitSoundSource.PlayOneShot(hitSound);
+        }
 
         if (hit.pointWorth > 0 && scoreIncrementPrefab != null)
         {

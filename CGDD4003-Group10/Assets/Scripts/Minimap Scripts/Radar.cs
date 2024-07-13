@@ -105,7 +105,7 @@ public class Radar : MonoBehaviour
 
         Vector2 dirToClosestPellet = (new Vector2(closestPellet.transform.position.x, closestPellet.transform.position.z) - new Vector2(player.position.x, player.position.z)).normalized;
 
-        print("Closest Pellet: " + closestPellet.transform.position);
+        //print("Closest Pellet: " + closestPellet.transform.position);
         float angleToClosestPellet = 360 + Vector2.SignedAngle(new Vector2(player.forward.x, player.forward.z), dirToClosestPellet);
         //print("Angle to closest pellet: " + (angleToClosestPellet + radarIndicatorAngleOffset - 360));
         radarIndicatorMat.SetFloat("_IndicatorAngle", (Mathf.Deg2Rad * (720 - angleToClosestPellet + radarIndicatorAngleOffset + 90)) / (Mathf.PI * 2));

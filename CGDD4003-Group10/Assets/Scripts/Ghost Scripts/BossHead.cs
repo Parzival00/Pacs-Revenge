@@ -45,22 +45,27 @@ public class BossHead : MonoBehaviour
             deactivateTimer += Time.deltaTime;
             yield return null;
         }
-        shieldActive = true;
+        shieldActive = !dead;
     }
 
     public int TakeDamage(float amount, float patienceMultiplier, int newGhostsKilled)
     {
-        if(shieldActive == false)
+        int points = 0;
+        if(shieldActive == false && health > 0)
         {
             health -= amount * (newGhostsKilled - ghostsKilled - 1) * patienceMultiplier;
-            if(health <= 0)
+            if (health <= 0)
             {
                 health = 0;
                 dead = true;
-                return Mathf.RoundToInt((float)killedPointWorth * (newGhostsKilled - ghostsKilled - 1) * patienceMultiplier);
+                points = Mathf.RoundToInt((float)killedPointWorth * (newGhostsKilled - ghostsKilled - 1) * patienceMultiplier);
             }
-            return Mathf.RoundToInt((float)hitPointWorth * (newGhostsKilled - ghostsKilled - 1) * patienceMultiplier);
+            else
+            {
+                points = Mathf.RoundToInt((float)hitPointWorth * (newGhostsKilled - ghostsKilled - 1) * patienceMultiplier);
+                ghostsKilled = newGhostsKilled;
+            }
         }
-        return 0;
+        return points;
     }
 }
