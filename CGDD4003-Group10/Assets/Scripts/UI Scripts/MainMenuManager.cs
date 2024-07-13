@@ -242,10 +242,11 @@ public class MainMenuManager : MonoBehaviour
 
         isGamePaused = false;
 
+        if (options.activeSelf)
+            SaveSettings();
+
         options.SetActive(false);
         menu.SetActive(false);
-
-        SaveSettings();
     }
 
     public void ReturnToMainMenu(int whichMenu)

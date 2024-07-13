@@ -44,7 +44,8 @@ public class Ghost : MonoBehaviour
         Flinch, //Ghost got hit by the railgun but didnt die
         InvisibilityPowerUp, //Player has the invisibility powerup
         Reseting, //Ghost is getting reset because player got killed
-        Bossfight, //Ghost is attacking the player using the bossfight movement 
+        BossfightMove, //Ghost is attacking the player using the bossfight movement 
+        BossfightSpawn,
         CorruptionEnding
     }
 
@@ -152,7 +153,17 @@ public class Ghost : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentMode = Mode.Dormant;
+        print(this.GetType());
+        if (Score.bossEnding)
+        {
+            currentMode = Mode.BossfightSpawn;
+        }
+        else
+        {
+            currentMode = Mode.Dormant;
+
+            spawnDoor = GameObject.FindGameObjectWithTag("SpawnRoomDoor").GetComponent<SpawnDoor>();
+        }
 
         if (navMesh == null)
             navMesh = GetComponent<NavMeshAgent>();
@@ -166,7 +177,6 @@ public class Ghost : MonoBehaviour
         if (spriteController == null)
             spriteController = GetComponentInChildren<GhostSpriteController>();
 
-        spawnDoor = GameObject.FindGameObjectWithTag("SpawnRoomDoor").GetComponent<SpawnDoor>();
 
         if (Score.difficulty < difficultySettings.Length)
         {
@@ -231,7 +241,7 @@ public class Ghost : MonoBehaviour
             case Mode.Flinch:
                 Flinch();
                 break;
-            case Mode.Bossfight:
+            case Mode.BossfightMove:
                 Bossfight();
                 break;
             case Mode.InvisibilityPowerUp:
@@ -240,9 +250,17 @@ public class Ghost : MonoBehaviour
             case Mode.CorruptionEnding:
                 CorruptionEnding();
                 break;
+            case Mode.BossfightSpawn:
+                BossfightSpawn();
+                break;
             default:
                 break;
         }
+    }
+
+    protected virtual void BossfightSpawn()
+    {
+        spriteController.BossfightSpawn();
     }
 
     //Chase the player
@@ -304,7 +322,7 @@ public class Ghost : MonoBehaviour
     /// </summary>
     protected bool Move(bool canTurnAround)
     {
-        if (currentMode != Mode.Chase && currentMode != Mode.Scatter && currentMode != Mode.InvisibilityPowerUp && currentMode != Mode.Bossfight && currentMode != Mode.CorruptionEnding)
+        if (currentMode != Mode.Chase && currentMode != Mode.Scatter && currentMode != Mode.InvisibilityPowerUp && currentMode != Mode.BossfightMove && currentMode != Mode.CorruptionEnding)
             return false;
 
         navMesh.enabled = true;
@@ -495,7 +513,7 @@ public class Ghost : MonoBehaviour
         }
         else if(Score.bossEnding)
         {
-            currentMode = Mode.Bossfight;
+            currentMode = Mode.BossfightMove;
             print("bossfight Mode");
             if (exitSpawnToRight)
             {
@@ -576,7 +594,9 @@ public class Ghost : MonoBehaviour
         spriteController.StartDeathAnimation(faceForwardForDeath);
 
         minimapIcon.SetActive(false);
-        deadMinimapIcon.SetActive(true);
+
+        if(!Score.bossEnding)
+            deadMinimapIcon.SetActive(true);
         
 
         WaitForSeconds deathWait = new WaitForSeconds(3f);
@@ -588,69 +608,94 @@ public class Ghost : MonoBehaviour
             Instantiate(corpse, transform.position, transform.rotation);
         }
 
-        spriteController.StartMovingCorpse();
-
-        yield return new WaitForSeconds(0.5f);
-
-        navMesh.enabled = true;
-
-        Vector2Int respawnPointGridPos = map.GetGridLocation(respawnPoint.position);
-        navMesh.SetDestination(map.GetWorldFromGrid(respawnPointGridPos));
-
-        yield return null;
-
-        WaitUntil arrivedAtRespawnPoint = new WaitUntil(() => currentMode != Mode.Respawn || Vector2Int.Distance(respawnPointGridPos, currentGridPosition) <= 0.1f);
-
-        yield return arrivedAtRespawnPoint;
-        print("Arrived at Respawn Point");
-        
-
-        spriteController.StartReformAnimation();
-
-        float respawnWaitLength = (respawnWaitTime + currentHitArea.respawnTimeAddition) * (1 - respawnTimeDampener);
-        WaitForSeconds respawnWait = new WaitForSeconds((respawnWaitTime + currentHitArea.respawnTimeAddition) * (1 - respawnTimeDampener));
-        float timer = 0;
-        while(timer < respawnWaitLength)
+        if (!Score.bossEnding)
         {
+            spriteController.StartMovingCorpse();
+
+            yield return new WaitForSeconds(0.5f);
+
+            navMesh.enabled = true;
+
+            Vector2Int respawnPointGridPos = map.GetGridLocation(respawnPoint.position);
+            navMesh.SetDestination(map.GetWorldFromGrid(respawnPointGridPos));
+
             yield return null;
-            timer += Time.deltaTime;
-        }
 
-        spriteController.EndRespawning();
+            WaitUntil arrivedAtRespawnPoint = new WaitUntil(() => currentMode != Mode.Respawn || Vector2Int.Distance(respawnPointGridPos, currentGridPosition) <= 0.1f);
 
-        //Reset variables
-        startedRespawnSequence = false;
+            yield return arrivedAtRespawnPoint;
+            print("Arrived at Respawn Point");
 
-        print("Respawned: " + name);
-        minimapIcon.SetActive(true);
-        deadMinimapIcon.SetActive(false);
 
-        //spriteRenderer.color = Color.white;
+            spriteController.StartReformAnimation();
 
-        spriteController.ActivateColliders();
-        //if(ghostCollider)
-        //    ghostCollider.enabled = true;
+            float respawnWaitLength = (respawnWaitTime + currentHitArea.respawnTimeAddition) * (1 - respawnTimeDampener);
+            WaitForSeconds respawnWait = new WaitForSeconds((respawnWaitTime + currentHitArea.respawnTimeAddition) * (1 - respawnTimeDampener));
+            float timer = 0;
+            while (timer < respawnWaitLength)
+            {
+                yield return null;
+                timer += Time.deltaTime;
+            }
 
-        if(currentMode == Mode.Respawn)
+            spriteController.EndRespawning();
+
+            //Reset variables
+            startedRespawnSequence = false;
+
+            print("Respawned: " + name);
+            minimapIcon.SetActive(true);
+            deadMinimapIcon.SetActive(false);
+
+            //spriteRenderer.color = Color.white;
+
+            spriteController.ActivateColliders();
+            //if(ghostCollider)
+            //    ghostCollider.enabled = true;
+
+            if (currentMode == Mode.Respawn)
+            {
+                if (BosssfightMode)
+                {
+                    currentMode = Mode.Dormant;
+                }
+                else
+                {
+                    currentMode = Mode.Exiting;
+                }
+            }
+
+            lastTargetGridPosition = new Vector2Int(-1, -1);
+        } else
         {
-            if(BosssfightMode)
+            Boss boss = FindObjectOfType<Boss>();
+            if (boss != null)
             {
-                currentMode = Mode.Dormant;
-            }
-            else
-            {
-                currentMode = Mode.Exiting;
+                if (GetType() == typeof(Inky))
+                {
+                    boss.IncrementKillCount(0);
+                }
+                else if (GetType() == typeof(Blinky))
+                {
+                    boss.IncrementKillCount(1);
+                }
+                else if (GetType() == typeof(Pinky))
+                {
+                    boss.IncrementKillCount(2);
+                }
+                else if (GetType() == typeof(Clyde))
+                {
+                    boss.IncrementKillCount(3);
+                }
             }
         }
-            
-        lastTargetGridPosition = new Vector2Int(-1, -1);
     }
 
     #endregion
 
     public virtual void InitiateScatter()
     {
-        if (currentMode == Mode.Chase)
+        if (!Score.bossEnding && currentMode == Mode.Chase)
         {
             currentMode = Mode.Scatter;
             currentDirection = -currentDirection;
@@ -659,7 +704,7 @@ public class Ghost : MonoBehaviour
     }
     public virtual void DeactivateScatter()
     {
-        if (currentMode == Mode.Scatter)
+        if (!Score.bossEnding && currentMode == Mode.Scatter)
         {
             currentMode = Mode.Chase;
         }
@@ -845,7 +890,6 @@ public class Ghost : MonoBehaviour
             ghostHealth = 100;
 
             currentMode = Mode.Respawn;
-
             hit.pointWorth = pointWorth;
         }
         else

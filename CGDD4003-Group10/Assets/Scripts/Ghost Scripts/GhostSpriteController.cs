@@ -263,6 +263,11 @@ public class GhostSpriteController : MonoBehaviour
         collidersActive = false;
     }
 
+    public void BossfightSpawn()
+    {
+        animator.SetTrigger("BossSpawn");
+    }
+
     //Debug Function
     public void PrintParameters()
     {

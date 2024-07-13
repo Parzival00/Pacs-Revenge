@@ -81,7 +81,7 @@ BlendTree:
     m_DirectBlendParameter: Damage
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 56f9dd7256f75854ab149595637d444f, type: 2}
+    m_Motion: {fileID: 7400000, guid: 4d119e223a42306488c64446414ffeea, type: 2}
     m_Threshold: 1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -89,7 +89,7 @@ BlendTree:
     m_DirectBlendParameter: Damage
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 4d119e223a42306488c64446414ffeea, type: 2}
+    m_Motion: {fileID: 7400000, guid: 662ad57894d260f43a95f6eddc6e3a1f, type: 2}
     m_Threshold: 2
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -97,7 +97,7 @@ BlendTree:
     m_DirectBlendParameter: Damage
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 662ad57894d260f43a95f6eddc6e3a1f, type: 2}
+    m_Motion: {fileID: 7400000, guid: 56f9dd7256f75854ab149595637d444f, type: 2}
     m_Threshold: 3
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -204,7 +204,7 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: c3dec9c69f5fd8d4ebb7821d975d8c89, type: 2}
+    m_Motion: {fileID: 7400000, guid: f72cc96431e664341a566762b9abd9df, type: 2}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -212,7 +212,7 @@ BlendTree:
     m_DirectBlendParameter: Damage
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 0c155296a919774498bf9ccaf8ba048f, type: 2}
+    m_Motion: {fileID: 7400000, guid: 1e8d50696397b574aadbff77dcf0ad14, type: 2}
     m_Threshold: 1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -236,7 +236,7 @@ BlendTree:
     m_DirectBlendParameter: Damage
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: ad053623bdc94754eac452122caf198c, type: 2}
+    m_Motion: {fileID: 7400000, guid: 755b960f028e1884ebcfd6c4ad84be7e, type: 2}
     m_Threshold: 4
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -244,7 +244,7 @@ BlendTree:
     m_DirectBlendParameter: Damage
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: f620e3b8491a9b341ab1f28259bb7fec, type: 2}
+    m_Motion: {fileID: 7400000, guid: db449560b997e1a45b152227dfae860d, type: 2}
     m_Threshold: 5
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -799,7 +799,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.060377717
   m_TransitionOffset: 0
   m_ExitTime: 0.95939744
-  m_HasExitTime: 0
+  m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -812,7 +812,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: BlinkyAttack Discharge
-  m_Speed: 1
+  m_Speed: -1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 8437820908557810982}

@@ -99,7 +99,7 @@ AnimationClip:
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 1.6666666
+        time: 2
         value: {x: 59.573555, y: 59.57356, z: 59.57356}
         inSlope: {x: Infinity, y: Infinity, z: Infinity}
         outSlope: {x: Infinity, y: Infinity, z: Infinity}
@@ -135,7 +135,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1.6666666
+        time: 2
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -174,7 +174,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1.6666666
+        time: 2.5
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -409,7 +409,7 @@ AnimationClip:
     - time: 0.6666667
       value: {fileID: 439732156, guid: e24dad29a117e554cb9b231bb4202b15, type: 3}
     - time: 1.1666666
-      value: {fileID: 1391934593, guid: e24dad29a117e554cb9b231bb4202b15, type: 3}
+      value: {fileID: 1847006110, guid: e23c6d759e825d84394ffc2a0e3f8a5e, type: 3}
     attribute: m_Sprite
     path: Sprite
     classID: 212
@@ -576,7 +576,7 @@ AnimationClip:
     - {fileID: 1694870814, guid: e24dad29a117e554cb9b231bb4202b15, type: 3}
     - {fileID: 1799160032, guid: e24dad29a117e554cb9b231bb4202b15, type: 3}
     - {fileID: 439732156, guid: e24dad29a117e554cb9b231bb4202b15, type: 3}
-    - {fileID: 1391934593, guid: e24dad29a117e554cb9b231bb4202b15, type: 3}
+    - {fileID: 1847006110, guid: e23c6d759e825d84394ffc2a0e3f8a5e, type: 3}
     - {fileID: 1147440821, guid: 47359d51778c37f4498f08a730b74888, type: 3}
     - {fileID: -1349455114, guid: 47359d51778c37f4498f08a730b74888, type: 3}
     - {fileID: 709727632, guid: 47359d51778c37f4498f08a730b74888, type: 3}
@@ -591,12 +591,12 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.6666666
+    m_StopTime: 2.5
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 1
+    m_LoopTime: 0
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
@@ -630,7 +630,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1.6666666
+        time: 2
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -669,7 +669,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1.6666666
+        time: 2.5
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -1059,7 +1059,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 1.6666666
+        time: 2
         value: 59.573555
         inSlope: Infinity
         outSlope: Infinity
@@ -1125,7 +1125,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 1.6666666
+        time: 2
         value: 59.57356
         inSlope: Infinity
         outSlope: Infinity
@@ -1191,7 +1191,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 1.6666666
+        time: 2
         value: 59.57356
         inSlope: Infinity
         outSlope: Infinity
@@ -1211,15 +1211,43 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 0
+    functionName: SetNorthAura
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.6666667
-    functionName: 
+    functionName: MaterializeAura
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.6666667
+    functionName: StartPS
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.6666667
+    functionName: SetSlamAura
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 1.1666666
-    functionName: 
+    functionName: SetNorthAura
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 2.1666667
+    functionName: StopPS
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

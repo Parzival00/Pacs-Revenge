@@ -433,7 +433,16 @@ public class PlayerController : MonoBehaviour
                         SpawnBlood(hitInformation.bigBlood, hitInformation.smallBlood, hitInformation.targetArea.difficulty, hit);
                     } else
                     {
-                        Instantiate(wallHitEffect, hit.point + hit.normal * 0.1f, Quaternion.identity);
+                        BossCollider bossCollider = hit.collider.GetComponent<BossCollider>();
+
+                        if (bossCollider != null)
+                        {
+                            Boss.BossHitInformation hitInformation = bossCollider.boss.GotHit(hit.point, bossCollider.HeadID);
+                        }
+                        else
+                        {
+                            Instantiate(wallHitEffect, hit.point + hit.normal * 0.1f, Quaternion.identity);
+                        }
                     }
                 }
 
