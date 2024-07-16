@@ -446,7 +446,7 @@ public class PlayerController : MonoBehaviour
                 //Detect hit on enemy
                 if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange, targetingMask))
                 {
-                    //print("Hit: " + hit.collider.gameObject.name);
+                    print("Hit: " + hit.collider.gameObject.name);
 
                     TargetAreaCollider targetAreaCollider = hit.collider.GetComponent<TargetAreaCollider>();
 
@@ -851,7 +851,7 @@ public class PlayerController : MonoBehaviour
         if (shieldsRemaining > 0 && !lostShield)
         {
             shieldsRemaining--;
-            print("shilds: " + shieldsRemaining);
+            print("shields: " + shieldsRemaining);
             if (shieldAnimator != null && shieldsRemaining == 0)
             {
                 shieldAnimator.PlayShieldDown();

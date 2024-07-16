@@ -80,6 +80,20 @@ public class Boss : MonoBehaviour
     [SerializeField] BoxCollider scoreIncrementSpawnArea;
 
     [Header("Damage Settings")]
+    [SerializeField] GameObject bigInkyBloodPrefab;
+    [SerializeField] GameObject smallInkyBloodPrefab;
+    [SerializeField] GameObject bigBlinkyBloodPrefab;
+    [SerializeField] GameObject smallBlinkyBloodPrefab;
+    [SerializeField] GameObject bigPinkyBloodPrefab;
+    [SerializeField] GameObject smallPinkyBloodPrefab;
+    [SerializeField] GameObject bigClydeBloodPrefab;
+    [SerializeField] GameObject smallClydeBloodPrefab;
+    [SerializeField] int bloodAmountUponHeadDeath = 20;
+    [SerializeField] int bloodAmountUponDeath = 40;
+    [SerializeField] BoxCollider inkyBloodSpawnArea;
+    [SerializeField] BoxCollider pinkyBloodSpawnArea;
+    [SerializeField] BoxCollider blinkyBloodSpawnArea;
+    [SerializeField] BoxCollider clydeBloodSpawnArea;
     [SerializeField] GameObject shieldPrefab;
     [SerializeField] float baseRailgunDamage;
     [SerializeField] float patienceMultiplier = 1.05f; // multiplier to the damage based on the amount of ghosts of a particular kind you kill before shooting the corresponding head
@@ -91,7 +105,6 @@ public class Boss : MonoBehaviour
     public int damage { get 
         {
             int d = (inkyHead.dead ? 1 : 0) + ((blinkyHead.dead ? 1 : 0) << 1) + ((pinkyHead.dead ? 1 : 0) << 2);
-            animator.SetFloat("Damage", d);  
             return d; 
         } 
     }
@@ -400,15 +413,15 @@ public class Boss : MonoBehaviour
                 break;
             case 1:
                 head = blinkyHead;
-                hit.pointWorth = inkyHead.TakeDamage(baseRailgunDamage, patienceMultiplier, blinkysKilled);
+                hit.pointWorth = blinkyHead.TakeDamage(baseRailgunDamage, patienceMultiplier, blinkysKilled);
                 break;
             case 2:
                 head = pinkyHead;
-                hit.pointWorth = inkyHead.TakeDamage(baseRailgunDamage, patienceMultiplier, pinkysKilled);
+                hit.pointWorth = pinkyHead.TakeDamage(baseRailgunDamage, patienceMultiplier, pinkysKilled);
                 break;
             case 3:
                 head = clydeHead;
-                hit.pointWorth = inkyHead.TakeDamage(baseRailgunDamage, patienceMultiplier, clydesKilled);
+                hit.pointWorth = clydeHead.TakeDamage(baseRailgunDamage, patienceMultiplier, clydesKilled);
                 break;
         }
 
@@ -422,7 +435,9 @@ public class Boss : MonoBehaviour
         }
         else
         {
-            rb.AddForce(transform.forward * Time.deltaTime * -10);
+            SpawnBlood(3, headID);
+            //StartCoroutine(Knockback(transform.forward * Time.deltaTime * -200, 0.1f));
+            rb.AddForce(transform.forward * Time.deltaTime * -3000);
             //hitSoundSource.PlayOneShot(hitSound);
         }
 
@@ -440,5 +455,107 @@ public class Boss : MonoBehaviour
         }
 
         return hit;
+    }
+
+    //Head got killed
+    public void HeadKilled(int headID)
+    {
+        int bloodAmount = bloodAmountUponHeadDeath;
+        if(headID == 3)
+        {
+            bloodAmount = bloodAmountUponDeath;
+        }
+
+        SpawnBlood(bloodAmount, headID);
+
+        if (damage == 7 && headID < 3)
+            StartCoroutine(EnrageSequence());
+        else if (damage == 7 && headID == 3)
+            StartCoroutine(DeathSequence());
+        else
+            animator.SetFloat("Damage", damage);
+
+        if(headID < 3)
+            ChangeAttackChoiceWeight(headID, 0);
+    }
+
+    //Animation Event for Enrage animation
+    public void SetMaxDamage()
+    {
+        animator.SetFloat("Damage", damage);
+    }
+
+    /*IEnumerator Knockback(Vector3 force, float duration)
+    {
+        float timer = 0;
+        while(timer < duration)
+        {
+            transform.Translate(force * Time.deltaTime * (Time.deltaTime / duration), Space.World);
+            yield return null;
+            timer += Time.deltaTime;
+        }
+    }*/
+
+    void SpawnBlood(int bloodAmount, int headID)
+    {
+        GameObject bigBlood = bigInkyBloodPrefab;
+        GameObject smallBlood = smallInkyBloodPrefab;
+
+        Collider bloodSpawnArea = inkyBloodSpawnArea;
+        switch (headID)
+        {
+            case 0:
+                bigBlood = bigInkyBloodPrefab;
+                smallBlood = smallInkyBloodPrefab;
+                bloodSpawnArea = inkyBloodSpawnArea;
+                break;
+            case 1:
+                bigBlood = bigBlinkyBloodPrefab;
+                smallBlood = smallBlinkyBloodPrefab;
+                bloodSpawnArea = blinkyBloodSpawnArea;
+                break;
+            case 2:
+                bigBlood = bigPinkyBloodPrefab;
+                smallBlood = smallPinkyBloodPrefab;
+                bloodSpawnArea = pinkyBloodSpawnArea;
+                break;
+            case 3:
+                bigBlood = bigClydeBloodPrefab;
+                smallBlood = smallClydeBloodPrefab;
+                bloodSpawnArea = clydeBloodSpawnArea;
+                break;
+        }
+
+        for (int i = 0; i < bloodAmount; i++)
+        {
+            Vector3 spawnPoint = bloodSpawnArea.gameObject.transform.position + new Vector3(
+                Random.Range(-bloodSpawnArea.bounds.extents.x, bloodSpawnArea.bounds.extents.x),
+                Random.Range(-bloodSpawnArea.bounds.extents.y, bloodSpawnArea.bounds.extents.y),
+                Random.Range(-bloodSpawnArea.bounds.extents.z, bloodSpawnArea.bounds.extents.z)
+            );
+
+            if (Random.Range(0, 5) < 1)
+            {
+                Instantiate(smallBlood, spawnPoint, smallBlood.transform.rotation);
+            }
+            else
+            {
+                Instantiate(bigBlood, spawnPoint, bigBlood.transform.rotation);
+            }
+        }
+    }
+
+    IEnumerator EnrageSequence()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        animator.SetTrigger("Enrage");
+    }
+
+    IEnumerator DeathSequence()
+    {
+        yield return new WaitForSeconds(0.75f);
+
+        animator.SetTrigger("Death");
     }
 }

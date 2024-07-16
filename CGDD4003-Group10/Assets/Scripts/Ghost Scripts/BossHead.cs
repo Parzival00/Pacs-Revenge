@@ -5,13 +5,19 @@ using UnityEngine;
 public class BossHead : MonoBehaviour
 {
     Boss boss;
+
     [Header("Head Settings")]
+    [SerializeField] int id;
     [SerializeField] float maxHealth = 300;
     float health;
     [SerializeField] float shieldDeactivateLength = 10;
     [Header("Point Settings")]
     [SerializeField] int killedPointWorth;
     [SerializeField] int hitPointWorth;
+    [SerializeField] bool debug = true;
+
+    public float MaxHealth { get => maxHealth; }
+    public float Health { get => health; }
 
     public bool dead { get; private set; }
 
@@ -53,16 +59,19 @@ public class BossHead : MonoBehaviour
         int points = 0;
         if(shieldActive == false && health > 0)
         {
-            health -= amount * (newGhostsKilled - ghostsKilled - 1) * patienceMultiplier;
+            health -= amount * Mathf.Max(1, (newGhostsKilled - ghostsKilled - 1)) * patienceMultiplier;
+            if(debug) print(name + " - Health: " + health + ", Max Health: " + maxHealth);
             if (health <= 0)
             {
                 health = 0;
                 dead = true;
-                points = Mathf.RoundToInt((float)killedPointWorth * (newGhostsKilled - ghostsKilled - 1) * patienceMultiplier);
+                points = Mathf.RoundToInt((float)killedPointWorth * Mathf.Max(1, (newGhostsKilled - ghostsKilled - 1)) * patienceMultiplier);
+
+                boss.HeadKilled(id);
             }
             else
             {
-                points = Mathf.RoundToInt((float)hitPointWorth * (newGhostsKilled - ghostsKilled - 1) * patienceMultiplier);
+                points = Mathf.RoundToInt((float)hitPointWorth * Mathf.Max(1, (newGhostsKilled - ghostsKilled - 1)) * patienceMultiplier);
                 ghostsKilled = newGhostsKilled;
             }
         }
