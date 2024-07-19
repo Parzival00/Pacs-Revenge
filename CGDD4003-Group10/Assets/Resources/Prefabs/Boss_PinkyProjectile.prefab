@@ -127,7 +127,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1191545830692368762}
@@ -167,6 +167,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 972f0a1693dbc9346a94f2cfb6146b92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  difficultySettings:
+  - difficultyLevel: 0
+    scale: 1.25
+    speed: 9.5
+    timeToLive: 2
+    impactRegisterDelay: 0.1
+    attackLeading: 0.35
+    followPlayer: 0
+    followSmoothing: 0
+  - difficultyLevel: 1
+    scale: 1.5
+    speed: 11
+    timeToLive: 2.5
+    impactRegisterDelay: 0.1
+    attackLeading: 0.5
+    followPlayer: 0
+    followSmoothing: 0
+  - difficultyLevel: 2
+    scale: 2
+    speed: 13
+    timeToLive: 3.5
+    impactRegisterDelay: 0.25
+    attackLeading: 0.6
+    followPlayer: 0
+    followSmoothing: 0
   canHitFloor: 1
   speed: 11
   timeToLive: 2.5

@@ -187,8 +187,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 972f0a1693dbc9346a94f2cfb6146b92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  difficultySettings:
+  - difficultyLevel: 1
+    scale: 1.75
+    speed: 8
+    timeToLive: 4
+    impactRegisterDelay: 0
+    attackLeading: 0
+    followPlayer: 0
+    followSmoothing: 0
+  - difficultyLevel: 1
+    scale: 1.75
+    speed: 8
+    timeToLive: 4
+    impactRegisterDelay: 0
+    attackLeading: 0
+    followPlayer: 0
+    followSmoothing: 0
+  - difficultyLevel: 1
+    scale: 1.75
+    speed: 8
+    timeToLive: 4
+    impactRegisterDelay: 0
+    attackLeading: 0
+    followPlayer: 0
+    followSmoothing: 0
+  canHitFloor: 0
   speed: 8
   timeToLive: 4
+  impactRegisterDelay: 0
+  impactCollider: {fileID: 0}
+  canHitPlayer: 0
+  orientToPlayerOnStart: 0
+  attackLeading: 2
+  followPlayer: 0
+  followSmoothing: 0.1
 --- !u!54 &-5308872115441545406
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -29,7 +29,35 @@ public class Boss : MonoBehaviour
         public int pointWorth;
     }
 
-    public enum BossState { Initial, Chase, AttackCooldown, Dash, Slam, Attack, Enrage }
+    [System.Serializable]
+    public struct DifficultySettings
+    {
+        public int difficultyLevel;
+
+        [Header("Movement Settings")]
+        public float movementSpeed;
+        public float dashSpeed;
+        public float movementPhaseLength;
+        [Range(0, 1)] public float dashChance;
+        public float dashPhaseLength;
+        [Header("Attack Settings")]
+        public float normalAttackCooldown;
+        public float enrageAttackCooldown;
+        public float slamAttackCooldown;
+        public float attackLeading;
+        public float blinkyAttackDuration;
+        public float blinkyMaxRange;
+        [Range(0, 100)] public float blinkyRotationSmoothing;
+        [Header("Slam Settings")]
+        public float slamThreshold;
+        public float slamStunLength;
+        [Header("Damage Settings")]
+        public float baseRailgunDamage;
+        [Tooltip("Multiplier to the damage based on the amount of ghosts of a particular kind you kill before shooting the corresponding head")]
+        public float patienceMultiplier;
+    }
+
+    public enum BossState { Initial, Chase, AttackCooldown, Dash, Slam, Attack, Enrage, Death }
     public BossState currentState { get; private set; }
 
     PlayerController player;
@@ -43,9 +71,13 @@ public class Boss : MonoBehaviour
     [SerializeField] BossHead pinkyHead;
     [SerializeField] BossHead clydeHead;
 
+    [Header("Difficulty Settings")]
+    [SerializeField] DifficultySettings[] difficultySettings = new DifficultySettings[3];
+
     [Header("Movement Settings")]
     [SerializeField] [Range(0,100)] float rotationSmoothing = 0.5f;
-    [SerializeField] float movementSpeed;
+    [SerializeField] float moveCamShakeStrength = 0.5f;
+    [SerializeField] float moveCamShakeDropoffDist = 10f;
 
     [Header("Attack Setup")]
     [SerializeField] Transform inkyProjSpawn;
@@ -60,20 +92,13 @@ public class Boss : MonoBehaviour
     [SerializeField] Transform blinkyRaycastOrigin;
 
     [Header("Attack Settings")]
-    [SerializeField] float normalAttackCooldown = 6;
-    [SerializeField] float enrageAttackCooldown = 4;
-    [SerializeField] float slamAttackCooldown = 2.5f;
-    [SerializeField] float attackLeading = 2f;
     [SerializeField] float pinkySpread = 0.07f;
-    [SerializeField] float blinkyAttackDuration = 5f;
     [SerializeField] LayerMask blinkyLayerMask;
-    [SerializeField] float blinkyMaxRange = 20f;
-    [SerializeField] [Range(0,100)] float blinkyRotationSmoothing = 10f;
 
     [Header("Slam Settings")]
-    [SerializeField] float slamThreshold;
     [SerializeField] float slamStrength = 100;
-    [SerializeField] float slamStunLength = 0.5f;
+    [SerializeField] float slamCamShakeStrength = 1f;
+    [SerializeField] float slamCamShakeDropoffDist = 20f;
 
     [Header("Score Display Settings")]
     [SerializeField] GameObject scoreIncrementPrefab;
@@ -95,12 +120,20 @@ public class Boss : MonoBehaviour
     [SerializeField] BoxCollider blinkyBloodSpawnArea;
     [SerializeField] BoxCollider clydeBloodSpawnArea;
     [SerializeField] GameObject shieldPrefab;
-    [SerializeField] float baseRailgunDamage;
-    [SerializeField] float patienceMultiplier = 1.05f; // multiplier to the damage based on the amount of ghosts of a particular kind you kill before shooting the corresponding head
+
+    DifficultySettings currentDifficultySettings;
 
     AttackChoice[] attackChoices;
+    bool isAttacking = false;
 
     float attackCooldownTimer;
+
+    float movementPhaseTimer = 0;
+    float dashStartTimer = 0;
+
+    bool movementPhaseStarted = false;
+
+    bool canMove = true;
 
     public int damage { get 
         {
@@ -113,6 +146,15 @@ public class Boss : MonoBehaviour
 
     private void Start()
     {
+        if (Score.difficulty < difficultySettings.Length)
+        {
+            currentDifficultySettings = difficultySettings[Score.difficulty];
+        }
+        else
+        {
+            currentDifficultySettings = difficultySettings[0];
+        }
+
         currentState = BossState.Initial;
 
         blinkysKilled = 0;
@@ -196,6 +238,8 @@ public class Boss : MonoBehaviour
                 break;
             case BossState.Enrage:
                 break;
+            case BossState.Death:
+                break;
         }
     }
 
@@ -204,35 +248,136 @@ public class Boss : MonoBehaviour
         currentState = BossState.Chase;
     }
 
-    //For now the boss will just follow the same chasing pattern as blinky
+    //Move straight towards the player for a random amount of time, randomly chosing to dash left or right at a random time
     void Chase()
     {
-        float distToPlayer = (player.transform.position - transform.position).magnitude;
-        if (distToPlayer < slamThreshold)
+        if (movementPhaseStarted)
         {
-            currentState = BossState.Slam;
-            SlamInitiate();
+            animator.SetInteger("xDir", 0);
+            animator.SetInteger("yDir", 1);
+
+            if (canMove)
+            {
+                animator.SetBool("isWalking", true);
+
+                rb.velocity = transform.forward * currentDifficultySettings.movementSpeed * (damage == 7 ? 1.10f : 1f) * Time.deltaTime;
+            }
+
+            movementPhaseTimer -= Time.deltaTime;
+            dashStartTimer -= Time.deltaTime;
+
+            //Initiate the slam because the player got too close
+            float distToPlayer = (player.transform.position - transform.position).magnitude;
+            if (distToPlayer < currentDifficultySettings.slamThreshold)
+            {
+                if (canMove)
+                    rb.velocity = Vector3.zero;
+                currentState = BossState.Slam;
+                SlamInitiate();
+
+                animator.SetBool("isWalking", false);
+            }
+
+            //Movement phase has ended so attack
+            if(movementPhaseTimer <= 0)
+            {
+                if (canMove)
+                    rb.velocity = Vector3.zero;
+
+                currentState = BossState.Attack;
+                movementPhaseStarted = false;
+
+                animator.SetBool("isWalking", false);
+            }
+
+            //Initiate a dash
+            if(dashStartTimer <= 0)
+            {
+                currentState = BossState.Dash;
+
+                dashCoroutine = StartCoroutine(Dash());
+            }
+        } else
+        {
+            movementPhaseStarted = true;
+            movementPhaseTimer = Random.Range(0, currentDifficultySettings.movementPhaseLength * (damage == 7 ? 0.5f : 1f)); //Choose a random length for the movement phase
+            dashStartTimer = Random.Range(0, 1f) < currentDifficultySettings.dashChance ? Random.Range(0, movementPhaseTimer) : float.MaxValue; //Choose whether to dash and a random time to dash
+        }
+    }
+
+    Coroutine dashCoroutine;
+    IEnumerator Dash()
+    {
+        float timer = 0;
+
+        float dashLength = currentDifficultySettings.dashPhaseLength * (damage == 7 ? 0.5f : 1f);
+
+        float turnLength = dashLength * 0.25f;
+        float straightLength = dashLength * 0.5f;
+
+        //Move diagonally
+        bool rightDash = Random.Range(0, 1f) > 0.5f;
+        while(timer < turnLength)
+        {
+            animator.SetInteger("xDir", rightDash ? 1 : -1);
+            animator.SetInteger("yDir", 1);
+            if (canMove)
+            {
+                Vector3 dir = transform.TransformDirection(new Vector3(rightDash ? 1 : -1, 0, 1).normalized);
+                rb.velocity = dir * currentDifficultySettings.dashSpeed * (damage == 7 ? 1.10f : 1f) * Time.deltaTime;
+            }
+            yield return null;
+            timer += Time.deltaTime;
         }
 
-        //currentState = BossState.Attack;
-        /*Vector2Int playerGridPosition = map.CheckEdgePositions(transform.position);
-
-        targetGridPosition = playerGridPosition;
-
-        Move(false);
-
-        lastTargetGridPosition = targetGridPosition;
-        PlayChaseSound();
-
-        if(attackTimer >= attackCooldown)
+        //Move sideways
+        timer = 0;
+        while (timer < straightLength)
         {
-            Attack();
-        }*/
+            animator.SetInteger("xDir", rightDash ? 1 : -1);
+            animator.SetInteger("yDir", 0);
+
+            if (canMove)
+            {
+                Vector3 dir = transform.TransformDirection(new Vector3(rightDash ? 1 : -1, 0, 0).normalized);
+                rb.velocity = dir * currentDifficultySettings.dashSpeed * (damage == 7 ? 1.10f : 1f) * Time.deltaTime;
+            }
+            yield return null;
+            timer += Time.deltaTime;
+        }
+
+        //Move diagonally
+        timer = 0;
+        while (timer < turnLength)
+        {
+            animator.SetInteger("xDir", rightDash ? 1 : -1);
+            animator.SetInteger("yDir", 1);
+
+            if (canMove)
+            {
+                Vector3 dir = transform.TransformDirection(new Vector3(rightDash ? 1 : -1, 0, 1).normalized);
+                rb.velocity = dir * currentDifficultySettings.dashSpeed * (damage == 7 ? 1.10f : 1f) * Time.deltaTime;
+            }
+            yield return null;
+            timer += Time.deltaTime;
+        }
+
+        dashStartTimer = float.MaxValue;
+        currentState = BossState.Chase;
+    }
+
+    public void MovementCamShake()
+    {
+        float distToPlayer = (player.transform.position - transform.position).magnitude;
+        float multiplier = Mathf.Clamp01(1 - (distToPlayer - 1.5f) / moveCamShakeDropoffDist);
+        if(multiplier > 0)
+            player.CamShake.ShakeCamera(moveCamShakeStrength * multiplier, 0.5f, 0.08f);
     }
 
     private void AttackCooldown()
     {
-        attackCooldownTimer -= Time.deltaTime;
+        if(!isAttacking)
+            attackCooldownTimer -= Time.deltaTime;
 
         if(attackCooldownTimer <= 0)
         {
@@ -240,20 +385,20 @@ public class Boss : MonoBehaviour
         }
     }
 
-    //For now it just does a simple random generator to select the next attack
-    //In the future I will make it so that it can potentially be weighted and varied based on which heads are active or not
+    //Choose an attack based off of a weighted system and takes into account the active heads
     private void Attack()
     {
         if (damage == 7)
         {
             animator.SetTrigger("ClydeAttack");
 
-            attackCooldownTimer = enrageAttackCooldown;
+            attackCooldownTimer = currentDifficultySettings.enrageAttackCooldown;
         }
         else
         {
             currentAttack = 0;
 
+            //Weighted random choice
             float totalWeight = 0;
             for (int i = 0; i < attackChoices.Length; i++)
             {
@@ -278,6 +423,7 @@ public class Boss : MonoBehaviour
 
             if (currentAttack == 0)
             {
+                isAttacking = true;
                 animator.SetTrigger("InkyAttack");
             }
             else if (currentAttack == 1)
@@ -285,19 +431,29 @@ public class Boss : MonoBehaviour
                 animator.SetBool("BlinkyAttacking", true);
                 animator.SetTrigger("BlinkyAttack");
 
-                currentRotationSmoothing = blinkyRotationSmoothing;
+                isAttacking = true;
+
+                //Change rotation smoothing of the boss to a slower amount to prevent instant death from the blinky laser
+                currentRotationSmoothing = currentDifficultySettings.blinkyRotationSmoothing;
             }
             else if (currentAttack == 2)
             {
+                isAttacking = true;
                 animator.SetTrigger("PinkyAttack");
             }
 
-            attackCooldownTimer = normalAttackCooldown;
+            attackCooldownTimer = currentDifficultySettings.normalAttackCooldown;
         }
 
         currentState = BossState.AttackCooldown;
     }
 
+    public void StopAttacking()
+    {
+        isAttacking = false;
+    }
+
+    //Helper function to update the weight of a particular attack being chosen
     void ChangeAttackChoiceWeight(int attackID, float newWeight)
     {
         for (int i = 0; i < attackChoices.Length; i++)
@@ -312,9 +468,9 @@ public class Boss : MonoBehaviour
     {
         attackChoices[2].weight = 0.3f; //Add weight to current attack to make it less likely to happen twice in a row
 
-        Vector3 dirToPlayer = (player.transform.position + player.velocity * attackLeading - transform.position).normalized;
-        Vector3 dirToPlayer2 = (player.transform.position + player.velocity * attackLeading - player.transform.right * pinkySpread - transform.position).normalized;
-        Vector3 dirToPlayer3 = (player.transform.position + player.velocity * attackLeading + player.transform.right * pinkySpread - transform.position).normalized;
+        Vector3 dirToPlayer = (player.transform.position + player.transform.up * 0.3f + player.velocity * currentDifficultySettings.attackLeading - transform.position).normalized;
+        Vector3 dirToPlayer2 = (player.transform.position + player.transform.up * 0.3f + player.velocity * currentDifficultySettings.attackLeading - player.transform.right * pinkySpread - transform.position).normalized;
+        Vector3 dirToPlayer3 = (player.transform.position + player.transform.up * 0.3f + player.velocity * currentDifficultySettings.attackLeading + player.transform.right * pinkySpread - transform.position).normalized;
         Quaternion rot = Quaternion.FromToRotation(transform.forward, dirToPlayer);
         Quaternion rot2 = Quaternion.FromToRotation(transform.forward, dirToPlayer2);
         Quaternion rot3 = Quaternion.FromToRotation(transform.forward, dirToPlayer3);
@@ -333,16 +489,18 @@ public class Boss : MonoBehaviour
         attackChoices[1].weight = 0.3f; //Add weight to current attack to make it less likely to happen twice in a row
         StartCoroutine(BlinkyLaser());
     }
+    //Activate the blinky laser for a certain amount of time
     IEnumerator BlinkyLaser()
     {
         blinkyLaser.gameObject.SetActive(true);
 
         float timer = 0;
-        while (timer < blinkyAttackDuration)
+        while (timer < currentDifficultySettings.blinkyAttackDuration)
         {
-            float distance = blinkyMaxRange;
+            //Find the closest distance the laser should be shooting and update all positions
+            float distance = currentDifficultySettings.blinkyMaxRange;
             RaycastHit hitInfo = new RaycastHit();
-            if(Physics.Raycast(blinkyRaycastOrigin.position, blinkyRaycastOrigin.transform.forward, out hitInfo, blinkyMaxRange, blinkyLayerMask))
+            if(Physics.Raycast(blinkyRaycastOrigin.position, blinkyRaycastOrigin.transform.forward, out hitInfo, currentDifficultySettings.blinkyMaxRange, blinkyLayerMask))
             {
                 distance = hitInfo.distance;
             }
@@ -364,6 +522,9 @@ public class Boss : MonoBehaviour
 
         blinkyLaser.gameObject.SetActive(false);
 
+        isAttacking = false;
+
+        //Change rotation smoothing of the boss back to the normal amount
         currentRotationSmoothing = rotationSmoothing;
     }
 
@@ -381,6 +542,7 @@ public class Boss : MonoBehaviour
         Instantiate(clydeProjectile, clydeProjSpawn.position, transform.rotation);
     }
 
+    //Start the slam animation
     private void SlamInitiate()
     {
         animator.SetTrigger("Slam");
@@ -391,40 +553,44 @@ public class Boss : MonoBehaviour
         Vector3 vectorToPlayer = player.transform.position - transform.position;
         float distToPlayer = vectorToPlayer.magnitude;
         Vector3 dirToPlayer = vectorToPlayer.normalized;
-        if (distToPlayer <= slamThreshold)
+        if (distToPlayer <= currentDifficultySettings.slamThreshold)
         {
-            player.SlamHit(dirToPlayer * slamStrength * ((slamThreshold - distToPlayer) / 1.5f + 1), slamStunLength);
+            //Player is within the distance threshold so is hit by the slam attack
+            player.SlamHit(dirToPlayer * slamStrength * ((currentDifficultySettings.slamThreshold - distToPlayer) / 1.5f + 1), currentDifficultySettings.slamStunLength);
         }
 
-        attackCooldownTimer = slamAttackCooldown;
+        //Apply camera shake based off distance to player
+        float multiplier = Mathf.Clamp01(1 - (distToPlayer - 1.5f) / slamCamShakeDropoffDist);
+        if(multiplier > 0) player.CamShake.ShakeCamera(slamCamShakeStrength * multiplier, 0.5f, currentDifficultySettings.slamStunLength, false);
+
+        //Switch to cooldown phase
+        attackCooldownTimer = currentDifficultySettings.slamAttackCooldown;
         currentState = BossState.AttackCooldown;
     }
 
+    //Boss was hit with the railgun
     public BossHitInformation GotHit(Vector3 hitPosition, int headID)
     {
         BossHitInformation hit = new BossHitInformation();
 
-        BossHead head = inkyHead;
+        //Apply damage to correct head
         switch(headID)
         {
             case 0:
-                head = inkyHead;
-                hit.pointWorth = inkyHead.TakeDamage(baseRailgunDamage, patienceMultiplier, inkysKilled);
+                hit.pointWorth = inkyHead.TakeDamage(currentDifficultySettings.baseRailgunDamage, currentDifficultySettings.patienceMultiplier, inkysKilled);
                 break;
             case 1:
-                head = blinkyHead;
-                hit.pointWorth = blinkyHead.TakeDamage(baseRailgunDamage, patienceMultiplier, blinkysKilled);
+                hit.pointWorth = blinkyHead.TakeDamage(currentDifficultySettings.baseRailgunDamage, currentDifficultySettings.patienceMultiplier, blinkysKilled);
                 break;
             case 2:
-                head = pinkyHead;
-                hit.pointWorth = pinkyHead.TakeDamage(baseRailgunDamage, patienceMultiplier, pinkysKilled);
+                hit.pointWorth = pinkyHead.TakeDamage(currentDifficultySettings.baseRailgunDamage, currentDifficultySettings.patienceMultiplier, pinkysKilled);
                 break;
             case 3:
-                head = clydeHead;
-                hit.pointWorth = clydeHead.TakeDamage(baseRailgunDamage, patienceMultiplier, clydesKilled);
+                hit.pointWorth = clydeHead.TakeDamage(currentDifficultySettings.baseRailgunDamage, currentDifficultySettings.patienceMultiplier, clydesKilled);
                 break;
         }
 
+        //No points awarded means the hit heads shield was active so spawn shield prefab
         if(hit.pointWorth <= 0)
         {
             GameObject obj = Instantiate(shieldPrefab, hitPosition + transform.forward * 0.2f, transform.rotation, transform);
@@ -436,11 +602,12 @@ public class Boss : MonoBehaviour
         else
         {
             SpawnBlood(3, headID);
-            //StartCoroutine(Knockback(transform.forward * Time.deltaTime * -200, 0.1f));
-            rb.AddForce(transform.forward * Time.deltaTime * -3000);
+            StartCoroutine(Knockback(-transform.forward * Time.deltaTime * 3000, 0.1f));
+
             //hitSoundSource.PlayOneShot(hitSound);
         }
 
+        //Points awarded means the hit head took damage because the shield was inactive
         if (hit.pointWorth > 0 && scoreIncrementPrefab != null)
         {
             Vector3 spawnPoint = scoreIncrementSpawnArea.gameObject.transform.position + new Vector3(
@@ -454,6 +621,7 @@ public class Boss : MonoBehaviour
             if (display) display.SetText((hit.pointWorth).ToString());
         }
 
+        //Return the points awarded
         return hit;
     }
 
@@ -468,14 +636,14 @@ public class Boss : MonoBehaviour
 
         SpawnBlood(bloodAmount, headID);
 
-        if (damage == 7 && headID < 3)
+        if (damage == 7 && headID < 3) //All three bottoms got killed so enrage
             StartCoroutine(EnrageSequence());
-        else if (damage == 7 && headID == 3)
+        else if (damage == 7 && headID == 3) //All heads are dead so play death sequence
             StartCoroutine(DeathSequence());
-        else
+        else //One of the bottom 3 heads got killed so update damage state
             animator.SetFloat("Damage", damage);
 
-        if(headID < 3)
+        if(headID < 3) //Deactivate the killed heads' attack
             ChangeAttackChoiceWeight(headID, 0);
     }
 
@@ -485,16 +653,22 @@ public class Boss : MonoBehaviour
         animator.SetFloat("Damage", damage);
     }
 
-    /*IEnumerator Knockback(Vector3 force, float duration)
+    IEnumerator Knockback(Vector3 force, float duration)
     {
+        canMove = false;
+
+        rb.velocity = Vector3.zero;
+        rb.AddForce(force * Time.deltaTime);
+
         float timer = 0;
         while(timer < duration)
         {
-            transform.Translate(force * Time.deltaTime * (Time.deltaTime / duration), Space.World);
+            //transform.Translate(force * Time.deltaTime * (Time.deltaTime / duration), Space.World);
             yield return null;
             timer += Time.deltaTime;
         }
-    }*/
+        canMove = true;
+    }
 
     void SpawnBlood(int bloodAmount, int headID)
     {
@@ -547,13 +721,25 @@ public class Boss : MonoBehaviour
 
     IEnumerator EnrageSequence()
     {
+        if (dashCoroutine != null) StopCoroutine(dashCoroutine);
+
+        currentState = BossState.Enrage;
         yield return new WaitForSeconds(0.1f);
 
+        isAttacking = false;
         animator.SetTrigger("Enrage");
+
+        yield return new WaitForSeconds(1f);
+
+        movementPhaseStarted = false;
+        currentState = BossState.Chase;
     }
 
     IEnumerator DeathSequence()
     {
+        if (dashCoroutine != null) StopCoroutine(dashCoroutine);
+
+        currentState = BossState.Death;
         yield return new WaitForSeconds(0.75f);
 
         animator.SetTrigger("Death");

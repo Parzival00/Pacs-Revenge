@@ -70,6 +70,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 972f0a1693dbc9346a94f2cfb6146b92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  difficultySettings:
+  - difficultyLevel: 0
+    scale: 2.25
+    speed: 11
+    timeToLive: 2.75
+    impactRegisterDelay: 0.4
+    attackLeading: -0.3
+    followPlayer: 1
+    followSmoothing: 2.5
+  - difficultyLevel: 1
+    scale: 2.5
+    speed: 13
+    timeToLive: 3.25
+    impactRegisterDelay: 0.5
+    attackLeading: -0.1
+    followPlayer: 1
+    followSmoothing: 6
+  - difficultyLevel: 2
+    scale: 3
+    speed: 15
+    timeToLive: 4
+    impactRegisterDelay: 0.65
+    attackLeading: 0
+    followPlayer: 1
+    followSmoothing: 8
   canHitFloor: 1
   speed: 13
   timeToLive: 3.25

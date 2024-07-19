@@ -61,6 +61,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float weaponRange;
     [SerializeField] LayerMask targetingMask;
 
+    public CameraShake CamShake { get => camShake; }
+
     [Header("Stun-Gun Settings")]
     [SerializeField] StungunVFX stungunVFX;
     [SerializeField] Animator stungunAnimator;
@@ -180,6 +182,8 @@ public class PlayerController : MonoBehaviour
     HUDMessenger hudMessenger;
 
     int permenantGhostsKilled = 0;
+
+    bool canBeDamagedBoss = true;
 
     // Start is called before the first frame update
     void Start()
@@ -363,11 +367,11 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 mousePosition = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
-        cameraPitch -= mousePosition.y * sensitivity * Time.deltaTime * 30f * Time.timeScale;
+        cameraPitch -= mousePosition.y * sensitivity * Mathf.Min(1, Time.deltaTime) * 30f * Time.timeScale;
         cameraPitch = Mathf.Clamp(cameraPitch, -60.0f, 60.0f);
 
         playerCam.localEulerAngles = Vector3.right * cameraPitch;
-        playerT.Rotate(Vector3.up * mousePosition.x * sensitivity * Time.deltaTime * 30f * Time.timeScale);
+        playerT.Rotate(Vector3.up * mousePosition.x * sensitivity * Mathf.Min(1, Time.deltaTime) * 30f * Time.timeScale);
 
     }
 
@@ -398,21 +402,42 @@ public class PlayerController : MonoBehaviour
     IEnumerator Slam(Vector3 force, float stunLength)
     {
         canMove = false;
-        //Vector3 smallForce = force / 10;
+
         float timer = 0;
         while(timer < 0.15f)
         {
-            character.Move(force * Time.deltaTime * (Time.deltaTime / 0.15f));
+            character.Move(force * Mathf.Min(1, Time.deltaTime) * Mathf.Min(Time.deltaTime / 0.15f));
             yield return null;
             timer += Time.deltaTime;
         }
-        /*for (int i = 0; i < 10; i++)
+
+        if (shieldsRemaining <= 0)
         {
-            character.Move(smallForce * Time.deltaTime);
-            yield return null;
-        }*/
-        yield return new WaitForSeconds(stunLength);
-        canMove = !inDeathSequence;
+            if (!inDeathSequence)
+            {
+                //ghost.PlayBiteSound();
+                StartCoroutine(DeathSequence());
+            }
+        }
+        else
+        {
+            if (shieldAnimator != null && shieldsRemaining > 0)
+            {
+                if (gunActivated) lostShield = true;
+
+                shieldsRemaining--;
+                print("shields: " + shieldsRemaining);
+
+                if (shieldsRemaining <= 0)
+                {
+                    shieldAnimator.PlayShieldBreak();
+                }
+            }
+
+            yield return new WaitForSeconds(stunLength);
+            canMove = !inDeathSequence;
+        }
+
     }
     #endregion
 
@@ -934,7 +959,41 @@ public class PlayerController : MonoBehaviour
                     StartCoroutine(InsanityEnd());
                 }
             }
+        } else if (canBeDamagedBoss && other.tag == "EnemyProjectile")
+        {
+            Debug.LogWarning("Player hit by enemy projectile: " + other.gameObject.transform.parent);
+
+            if (shieldsRemaining <= 0)
+            {
+                if (!inDeathSequence)
+                {
+                    //ghost.PlayBiteSound();
+                    StartCoroutine(DeathSequence());
+                }
+            }
+            else
+            {
+                if (shieldAnimator != null && shieldsRemaining > 0)
+                {
+                    if (gunActivated) lostShield = true;
+
+                    shieldsRemaining--;
+                    print("shields: " + shieldsRemaining);
+
+                    if (shieldsRemaining <= 0)
+                    {
+                        shieldAnimator.PlayShieldBreak();
+                    }
+                }
+
+                canBeDamagedBoss = false;
+                Invoke("CanBeDamaged", 1f);
+            }
         }
+    }
+    public void CanBeDamaged()
+    {
+        canBeDamagedBoss = true;
     }
     #endregion
 
