@@ -1046,10 +1046,18 @@ public class PlayerController : MonoBehaviour
 
         yield return deathTimer;
 
-        //Reset the Ghosts
-        foreach (Ghost g in ghosts)
+        if (Score.bossEnding)
         {
-            g.ResetGhost();
+            BossSpawner bossSpawner = FindObjectOfType<BossSpawner>();
+            if (bossSpawner) bossSpawner.ResetGhosts();
+        }
+        else
+        {
+            //Reset the Ghosts
+            foreach (Ghost g in ghosts)
+            {
+                g.ResetGhost();
+            }
         }
 
         //Reset the fruit (just in case)

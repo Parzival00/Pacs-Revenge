@@ -66,6 +66,7 @@ public class GhostSpriteController : MonoBehaviour
     [SerializeField] [Range(-180f, 180f)] float northwestMinThreshold = 22.5f;
 
     bool respawning;
+    bool spawning;
 
     private void Start()
     {
@@ -97,7 +98,7 @@ public class GhostSpriteController : MonoBehaviour
         Vector3 dirToPlayer = (new Vector3(player.position.x, 0, player.position.z) - new Vector3(mainTransform.position.x, 0, mainTransform.position.z)).normalized; //to - from
         float angleBtwPlayer = Vector3.SignedAngle(forward, dirToPlayer, mainTransform.up);
 
-        if (!respawning)
+        if (!respawning && !spawning)
         {
             if (angleBtwPlayer < northMaxThreshold - thresholdPadding && angleBtwPlayer > northMinThreshold + thresholdPadding)
             {
@@ -240,6 +241,7 @@ public class GhostSpriteController : MonoBehaviour
         animator.SetBool("MoveCorpse", false);
     }
 
+
     public void ResetParameters()
     {
         animator.ResetTrigger("Death");
@@ -263,9 +265,19 @@ public class GhostSpriteController : MonoBehaviour
         collidersActive = false;
     }
 
+    public void BossfightSpawnStart()
+    {
+        spawning = true;
+        animator.SetBool("Spawning", true);
+    }
     public void BossfightSpawn()
     {
         animator.SetTrigger("BossSpawn");
+        animator.SetBool("Spawning", false);
+    }
+    public void BossfightSpawnEnd()
+    {
+        spawning = false;
     }
 
     //Debug Function

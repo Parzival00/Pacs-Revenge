@@ -153,18 +153,6 @@ public class Ghost : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        print(this.GetType());
-        if (Score.bossEnding)
-        {
-            currentMode = Mode.BossfightSpawn;
-        }
-        else
-        {
-            currentMode = Mode.Dormant;
-
-            spawnDoor = GameObject.FindGameObjectWithTag("SpawnRoomDoor").GetComponent<SpawnDoor>();
-        }
-
         if (navMesh == null)
             navMesh = GetComponent<NavMeshAgent>();
 
@@ -191,7 +179,7 @@ public class Ghost : MonoBehaviour
         respawnTimeDampener = currentDifficultySettings.respawnTimeDampener;
         ghostHealth = currentDifficultySettings.health;
 
-        speed *= 1 + levelSpeedIncrease * (Score.currentLevel - 1);
+        speed *= 1 + (Score.bossEnding ?  -0.2f : levelSpeedIncrease * (Score.currentLevel - 1));
         navMesh.speed = speed;
 
         stunEffect.SetActive(false);
@@ -202,6 +190,18 @@ public class Ghost : MonoBehaviour
         foreach(TargetArea area in targetAreas)
         {
             targetAreaDirectory.Add(area.type, area);
+        }
+
+        if (Score.bossEnding)
+        {
+            currentMode = Mode.BossfightSpawn;
+            StartCoroutine(BossfightSpawn());
+        }
+        else
+        {
+            currentMode = Mode.Dormant;
+
+            spawnDoor = GameObject.FindGameObjectWithTag("SpawnRoomDoor").GetComponent<SpawnDoor>();
         }
     }
 
@@ -251,16 +251,21 @@ public class Ghost : MonoBehaviour
                 CorruptionEnding();
                 break;
             case Mode.BossfightSpawn:
-                BossfightSpawn();
+                //BossfightSpawn();
                 break;
             default:
                 break;
         }
     }
 
-    protected virtual void BossfightSpawn()
+    protected virtual IEnumerator BossfightSpawn()
     {
+        spriteController.BossfightSpawnStart();
+        yield return new WaitForSeconds(1f);
         spriteController.BossfightSpawn();
+        yield return new WaitForSeconds(1f);
+        spriteController.BossfightSpawnEnd();
+        currentMode = Mode.BossfightMove;
     }
 
     //Chase the player
@@ -580,6 +585,30 @@ public class Ghost : MonoBehaviour
 
         Score.totalGhostKilled++;
 
+        if(Score.bossEnding)
+        {
+            Boss boss = FindObjectOfType<Boss>();
+            if (boss != null)
+            {
+                if (GetType() == typeof(Inky))
+                {
+                    boss.IncrementKillCount(0);
+                }
+                else if (GetType() == typeof(Blinky))
+                {
+                    boss.IncrementKillCount(1);
+                }
+                else if (GetType() == typeof(Pinky))
+                {
+                    boss.IncrementKillCount(2);
+                }
+                else if (GetType() == typeof(Clyde))
+                {
+                    boss.IncrementKillCount(3);
+                }
+            }
+        }
+
         chaseSoundSource.Stop();
 
         hitSoundSource.PlayOneShot(deathSound);
@@ -668,26 +697,7 @@ public class Ghost : MonoBehaviour
             lastTargetGridPosition = new Vector2Int(-1, -1);
         } else
         {
-            Boss boss = FindObjectOfType<Boss>();
-            if (boss != null)
-            {
-                if (GetType() == typeof(Inky))
-                {
-                    boss.IncrementKillCount(0);
-                }
-                else if (GetType() == typeof(Blinky))
-                {
-                    boss.IncrementKillCount(1);
-                }
-                else if (GetType() == typeof(Pinky))
-                {
-                    boss.IncrementKillCount(2);
-                }
-                else if (GetType() == typeof(Clyde))
-                {
-                    boss.IncrementKillCount(3);
-                }
-            }
+            Destroy(gameObject);
         }
     }
 

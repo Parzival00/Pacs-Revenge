@@ -23,7 +23,7 @@ public class BossHead : MonoBehaviour
 
     int ghostsKilled = 0;
 
-    bool shieldActive;
+    bool shieldActive = true;
 
     // Start is called before the first frame update
     void Start()

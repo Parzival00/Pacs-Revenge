@@ -13,6 +13,8 @@ public class Map : MonoBehaviour
 
     public GridType[,] map { get; private set; }
 
+    public Vector2Int[] openMapLocations { get; private set; }
+
     [SerializeField] Transform player;
     [SerializeField] Transform leftEdge;
     [SerializeField] Transform rightEdge;
@@ -66,6 +68,20 @@ public class Map : MonoBehaviour
             Vector2Int index = GetGridLocation(barrier.transform.position);
             map[index.x, index.y] = GridType.Barrier;
         }
+
+        List<Vector2Int> tempList = new List<Vector2Int>();
+        for (int y = 0; y < mapHeight; y++)
+        {
+            for (int x = 0; x < mapWidth; x++)
+            {
+                if (map[x, y] == GridType.Air)
+                {
+                    tempList.Add(new Vector2Int(x, y));
+                    //map[x, y] = GridType.Air;
+                }
+            }
+        }
+        openMapLocations = tempList.ToArray();
     }
 
     /// <summary>

@@ -65,6 +65,8 @@ public class Boss : MonoBehaviour
     Animator animator;
     Rigidbody rb;
 
+    [SerializeField] BossSpawner bossSpawner;
+
     [Header("Boss Heads")]
     [SerializeField] BossHead inkyHead;
     [SerializeField] BossHead blinkyHead;
@@ -140,6 +142,20 @@ public class Boss : MonoBehaviour
             int d = (inkyHead.dead ? 1 : 0) + ((blinkyHead.dead ? 1 : 0) << 1) + ((pinkyHead.dead ? 1 : 0) << 2);
             return d; 
         } 
+    }
+
+    public float BossHealth {
+        get
+        {
+            return inkyHead.Health + blinkyHead.Health + pinkyHead.Health + clydeHead.Health;
+        }
+    }
+    public float BossMaxHealth
+    {
+        get
+        {
+            return inkyHead.MaxHealth + blinkyHead.MaxHealth + pinkyHead.MaxHealth + clydeHead.MaxHealth;
+        }
     }
 
     int currentAttack = 0;
@@ -459,7 +475,11 @@ public class Boss : MonoBehaviour
         for (int i = 0; i < attackChoices.Length; i++)
         {
             if (attackChoices[i].attackID == attackID)
+            {
                 attackChoices[i].weight = newWeight;
+
+                if(bossSpawner) bossSpawner.ChangeGhostWeight(attackID, newWeight);
+            }
         }
     }
     
@@ -632,6 +652,8 @@ public class Boss : MonoBehaviour
         if(headID == 3)
         {
             bloodAmount = bloodAmountUponDeath;
+
+            if (bossSpawner) bossSpawner.ChangeGhostWeight(3, 0);
         }
 
         SpawnBlood(bloodAmount, headID);
@@ -722,6 +744,8 @@ public class Boss : MonoBehaviour
     IEnumerator EnrageSequence()
     {
         if (dashCoroutine != null) StopCoroutine(dashCoroutine);
+
+        if (bossSpawner) bossSpawner.ChangeGhostWeight(3, 1);
 
         currentState = BossState.Enrage;
         yield return new WaitForSeconds(0.1f);

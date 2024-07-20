@@ -1,0 +1,143 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BossSpawner : MonoBehaviour
+{
+    [System.Serializable]
+    public struct DifficultySettings
+    {
+        public int difficultyLevel;
+        public float normalSpawnInterval;
+        public float enrageSpawnInterval;
+    }
+
+    struct GhostChoice
+    {
+        public int ghostID;
+        public float weight;
+        public GhostChoice(int id, float weight)
+        {
+            ghostID = id;
+            this.weight = weight;
+        }
+    }
+
+    GhostChoice[] ghostChoices;
+
+    [SerializeField] DifficultySettings[] difficultySettings;
+    [SerializeField] Boss boss;
+    [SerializeField] Map map;
+    [SerializeField] GameObject lightningEffect;
+    [SerializeField] GameObject[] ghosts;
+    [SerializeField] float spawnRadius = 10f;
+
+    public bool spawnGhosts = true;
+
+    DifficultySettings currentDifficultySettings;
+
+    float spawnTimer;
+
+    List<GameObject> spawnedGhosts;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        if (Score.difficulty < difficultySettings.Length)
+        {
+            currentDifficultySettings = difficultySettings[Score.difficulty];
+        }
+        else
+        {
+            currentDifficultySettings = difficultySettings[0];
+        }
+
+        ghostChoices = new GhostChoice[4];
+        ghostChoices[0] = new GhostChoice(0, 1);
+        ghostChoices[1] = new GhostChoice(1, 1);
+        ghostChoices[2] = new GhostChoice(2, 1);
+        ghostChoices[3] = new GhostChoice(3, 0);
+
+        spawnTimer = currentDifficultySettings.normalSpawnInterval;
+
+        spawnedGhosts = new List<GameObject>();
+    }
+
+    public void ChangeGhostWeight(int id, float newWeight)
+    {
+        ghostChoices[id].weight = newWeight;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (spawnGhosts)
+        {
+            spawnTimer -= Time.deltaTime;
+
+            if(spawnTimer <= 0)
+            {
+                StartCoroutine(SpawnGhost());
+
+                spawnTimer = boss.damage == 7 ? currentDifficultySettings.enrageSpawnInterval : currentDifficultySettings.normalSpawnInterval;
+            }
+        }
+    }
+
+    IEnumerator SpawnGhost()
+    {
+        int currentGhost = 0;
+
+        //Weighted random choice
+        float totalWeight = 0;
+        for (int i = 0; i < ghostChoices.Length; i++)
+        {
+            totalWeight += ghostChoices[i].weight;
+        }
+        float rand = Random.Range(0.1f, totalWeight);
+        for (int i = 0; i < ghostChoices.Length; i++)
+        {
+            if (rand <= ghostChoices[i].weight)
+            {
+                currentGhost = ghostChoices[i].ghostID;
+                break;
+            }
+            rand -= ghostChoices[i].weight;
+        }
+
+        Vector3 spawnPos = Vector3.zero;
+
+        //spawnPos = map.GetWorldFromGrid(map.openMapLocations[Random.Range(0, map.openMapLocations.Length)]);
+
+        bool goodSelection = false;
+        while(!goodSelection)
+        {
+            Vector2 offset = Random.insideUnitCircle * spawnRadius;
+            Vector3 testPos = new Vector3(boss.transform.position.x, transform.position.y, boss.transform.position.z) + new Vector3(offset.x, 0, offset.y);
+
+            goodSelection = map.SampleGrid(testPos) == Map.GridType.Air;
+
+            if (goodSelection) spawnPos = testPos;
+        }
+
+        Instantiate(lightningEffect, spawnPos, Quaternion.identity);
+
+        yield return new WaitForSeconds(0.38f);
+
+        GameObject ghostObj = Instantiate(ghosts[currentGhost], spawnPos, Quaternion.identity);
+
+        spawnedGhosts.Add(ghostObj);
+    }
+
+    public void ResetGhosts()
+    {
+        foreach(GameObject obj in spawnedGhosts)
+        {
+            Destroy(obj);
+        }
+
+        spawnedGhosts = new List<GameObject>();
+
+        spawnGhosts = true;
+    }
+}
