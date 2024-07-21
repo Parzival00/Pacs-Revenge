@@ -5,6 +5,13 @@ using UnityEngine;
 public class FruitController : MonoBehaviour
 {
     [System.Serializable]
+    public struct DifficultySettings
+    {
+        public int difficultyLevel;
+        public float bossFruitInterval;
+    }
+
+    [System.Serializable]
     public struct Fruit
     {
         public string name;
@@ -35,6 +42,9 @@ public class FruitController : MonoBehaviour
         public PowerUpType type;
         [Range(0,100)] public int[] weights;
     }
+
+    [SerializeField] DifficultySettings[] difficultySettings;
+    DifficultySettings currentDifficultySettings;
 
     [Header("Fruit Spawn Alert Settings")]
     [SerializeField] string alertMessage = "Fruit Offering Detected";
@@ -76,16 +86,30 @@ public class FruitController : MonoBehaviour
 
     HUDMessenger hudMessenger;
 
+    float bossFruitTimer = 0;
+
     // Start is called before the first frame update
     void Start()
     {
+        if (Score.difficulty < difficultySettings.Length)
+        {
+            currentDifficultySettings = difficultySettings[Score.difficulty];
+        }
+        else
+        {
+            currentDifficultySettings = difficultySettings[0];
+        }
 
         if (availableFruits != null)
         {
             currentFruit = availableFruits[0];
             for (int i = 0; i < availableFruits.Length; i++)
             {
-                if(availableFruits[i].levelAppearance == Score.currentLevel)
+                if(Score.bossEnding)
+                {
+                    currentFruit = availableFruits[0];
+                }
+                else if(availableFruits[i].levelAppearance == Score.currentLevel)
                 {
                     currentFruit = availableFruits[i];
                     break;
@@ -110,6 +134,8 @@ public class FruitController : MonoBehaviour
         {
             DeactivateFruit();
         }
+
+        bossFruitTimer = currentDifficultySettings.bossFruitInterval;
     }
 
     /// <summary>
@@ -199,15 +225,29 @@ public class FruitController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!fruitActivated && ((Score.pelletsCollected == firstFruitSpawnThreshold && !firstFruitActivated) || (Score.pelletsCollected == secondFruitSpawnThreshold && !secondFruitActivated)))
+        if (!fruitActivated && Score.bossEnding)
         {
-            if (Score.pelletsCollected == firstFruitSpawnThreshold)
-                firstFruitActivated = true;
+            bossFruitTimer -= Time.deltaTime;
 
-            if (Score.pelletsCollected == secondFruitSpawnThreshold)
-                secondFruitActivated = true;
+            if(bossFruitTimer <= 0)
+            {
+                ActivateFruit();
 
-            ActivateFruit();
+                bossFruitTimer = Random.Range(currentDifficultySettings.bossFruitInterval / 2f, currentDifficultySettings.bossFruitInterval);
+            }
+        }
+        else
+        {
+            if (!fruitActivated && ((Score.pelletsCollected == firstFruitSpawnThreshold && !firstFruitActivated) || (Score.pelletsCollected == secondFruitSpawnThreshold && !secondFruitActivated)))
+            {
+                if (Score.pelletsCollected == firstFruitSpawnThreshold)
+                    firstFruitActivated = true;
+
+                if (Score.pelletsCollected == secondFruitSpawnThreshold)
+                    secondFruitActivated = true;
+
+                ActivateFruit();
+            }
         }
     }
 

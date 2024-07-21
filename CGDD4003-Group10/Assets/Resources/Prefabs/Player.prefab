@@ -6626,6 +6626,7 @@ GameObject:
   - component: {fileID: 4507674535604613185}
   - component: {fileID: 59560998165607546}
   - component: {fileID: 6954913835686620882}
+  - component: {fileID: 4790564691503176113}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -6674,7 +6675,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5301077504717036913}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6868,6 +6869,13 @@ MonoBehaviour:
   indicatorTimerThreshold: 10
   pointsAddedIndicatorLength: 0.8
   gameSceneRenderTex: {fileID: 8400000, guid: 1fbbf88530324554bbc10d8e0b318019, type: 2}
+  difficultySettings:
+  - difficultyLevel: 0
+    bossStungunRechargeRate: 3
+  - difficultyLevel: 1
+    bossStungunRechargeRate: 4
+  - difficultyLevel: 2
+    bossStungunRechargeRate: 5.5
 --- !u!114 &6717606324952877450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6981,6 +6989,29 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4790564691503176113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5301077504717036913}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa2f61c0ca1df8f43adbfff5f070f4c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  corpseMats:
+  - {fileID: 2100000, guid: 90a49acc728a802479206323a6c89ea4, type: 2}
+  - {fileID: 2100000, guid: 020088ade4ce0514f974489044cecc4a, type: 2}
+  - {fileID: 2100000, guid: 0617109de92e8174189616ed11f652c4, type: 2}
+  - {fileID: 2100000, guid: 3a3ee5ac7a97df343a60dbc5a94cf3bf, type: 2}
+  ghostMats:
+  - {fileID: 2100000, guid: 371573605ba3dfe40b60ffe2cbad3a50, type: 2}
+  - {fileID: 2100000, guid: 0d87e8a7035882542988c51cd30bb699, type: 2}
+  customPostProcess: {fileID: 2100000, guid: 00830592538978e40b43e1c030980aaa, type: 2}
+  defaultFogDistance: 19.5
+  bossFogDistance: 35
 --- !u!1 &5465787359837868252
 GameObject:
   m_ObjectHideFlags: 0

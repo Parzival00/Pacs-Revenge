@@ -57,7 +57,7 @@ public class Boss : MonoBehaviour
         public float patienceMultiplier;
     }
 
-    public enum BossState { Initial, Chase, AttackCooldown, Dash, Slam, Attack, Enrage, Death }
+    public enum BossState { Initial, Chase, AttackCooldown, Dash, Slam, Attack, Enrage, Death, InvisbilityPowerup }
     public BossState currentState { get; private set; }
 
     PlayerController player;
@@ -122,6 +122,20 @@ public class Boss : MonoBehaviour
     [SerializeField] BoxCollider blinkyBloodSpawnArea;
     [SerializeField] BoxCollider clydeBloodSpawnArea;
     [SerializeField] GameObject shieldPrefab;
+
+    [Header("Audio Sources")]
+    [SerializeField] AudioSource enrageSound;
+    [SerializeField] AudioSource stepSound;
+    [SerializeField] AudioSource blinkyChargeSound;
+    [SerializeField] AudioSource blinkyReleaseSound;
+    [SerializeField] AudioSource inkyChargeSound;
+    [SerializeField] AudioSource inkyReleaseSound;
+    [SerializeField] AudioSource pinkyChargeSound;
+    [SerializeField] AudioSource pinkyReleaseSound;
+    [SerializeField] AudioSource clydeChargeSound;
+    [SerializeField] AudioSource clydeReleaseSound;
+    [SerializeField] AudioSource slamChargeSound;
+    [SerializeField] AudioSource slamSound;
 
     DifficultySettings currentDifficultySettings;
 
@@ -256,6 +270,9 @@ public class Boss : MonoBehaviour
                 break;
             case BossState.Death:
                 break;
+            case BossState.InvisbilityPowerup:
+                InvisibilityPowerup();
+                break;
         }
     }
 
@@ -379,7 +396,27 @@ public class Boss : MonoBehaviour
         }
 
         dashStartTimer = float.MaxValue;
-        currentState = BossState.Chase;
+        if(currentState != BossState.InvisbilityPowerup) currentState = BossState.Chase;
+    }
+
+    public void InvisibililtyPowerupActivated()
+    {
+        currentState = BossState.InvisbilityPowerup;
+    }
+    public void InvisibilityPowerup()
+    {
+        if (dashStartTimer > 0)
+        {
+            animator.SetInteger("xDir", 0);
+            animator.SetInteger("yDir", 1);
+
+            if (canMove)
+            {
+                animator.SetBool("isWalking", true);
+
+                rb.velocity = transform.forward * currentDifficultySettings.movementSpeed * (damage == 7 ? 1.10f : 1f) * Time.deltaTime * 0.5f;
+            }
+        }
     }
 
     public void MovementCamShake()
@@ -486,7 +523,8 @@ public class Boss : MonoBehaviour
     //Animation Event
     private void PinkyAttack()
     {
-        attackChoices[2].weight = 0.3f; //Add weight to current attack to make it less likely to happen twice in a row
+        if(attackChoices[2].weight > 0)
+            attackChoices[2].weight = 0.3f; //Add weight to current attack to make it less likely to happen twice in a row
 
         Vector3 dirToPlayer = (player.transform.position + player.transform.up * 0.3f + player.velocity * currentDifficultySettings.attackLeading - transform.position).normalized;
         Vector3 dirToPlayer2 = (player.transform.position + player.transform.up * 0.3f + player.velocity * currentDifficultySettings.attackLeading - player.transform.right * pinkySpread - transform.position).normalized;
@@ -506,7 +544,8 @@ public class Boss : MonoBehaviour
     //Animation Event
     private void BlinkyAttack()
     {
-        attackChoices[1].weight = 0.3f; //Add weight to current attack to make it less likely to happen twice in a row
+        if (attackChoices[1].weight > 0)
+            attackChoices[1].weight = 0.3f; //Add weight to current attack to make it less likely to happen twice in a row
         StartCoroutine(BlinkyLaser());
     }
     //Activate the blinky laser for a certain amount of time
@@ -517,6 +556,8 @@ public class Boss : MonoBehaviour
         float timer = 0;
         while (timer < currentDifficultySettings.blinkyAttackDuration)
         {
+            if (blinkyHead.dead) break; //Cancel attack if blinky head dies
+
             //Find the closest distance the laser should be shooting and update all positions
             float distance = currentDifficultySettings.blinkyMaxRange;
             RaycastHit hitInfo = new RaycastHit();
@@ -551,7 +592,8 @@ public class Boss : MonoBehaviour
     //Animation Event
     private void InkyAttack()
     {
-        attackChoices[0].weight = 0.3f; //Add weight to current attack to make it less likely to happen twice in a row
+        if (attackChoices[0].weight > 0)
+            attackChoices[0].weight = 0.3f; //Add weight to current attack to make it less likely to happen twice in a row
 
         Instantiate(inkyProjectile, inkyProjSpawn.position, transform.rotation);
     }
@@ -667,6 +709,10 @@ public class Boss : MonoBehaviour
 
         if(headID < 3) //Deactivate the killed heads' attack
             ChangeAttackChoiceWeight(headID, 0);
+
+        if(currentAttack == headID) {
+            isAttacking = false;
+        }
     }
 
     //Animation Event for Enrage animation

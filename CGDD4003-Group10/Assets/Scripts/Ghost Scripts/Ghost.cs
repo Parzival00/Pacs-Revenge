@@ -271,7 +271,7 @@ public class Ghost : MonoBehaviour
     //Chase the player
     protected virtual void Chase()
     {
-        Vector2Int playerGridPosition = map.CheckEdgePositions(transform.position);
+        Vector2Int playerGridPosition = map.GetPlayerPosition();//CheckEdgePositions(transform.position);
 
         targetGridPosition = playerGridPosition;
 
@@ -283,7 +283,7 @@ public class Ghost : MonoBehaviour
 
     protected void PlayChaseSound()
     {
-        Vector2Int playerGridPosition = map.CheckEdgePositions(transform.position);
+        Vector2Int playerGridPosition = map.GetPlayerPosition();// CheckEdgePositions(transform.position);
 
         float distToPlayer = Vector2Int.Distance(playerGridPosition, currentGridPosition);
 
@@ -443,7 +443,7 @@ public class Ghost : MonoBehaviour
     /// </summary>
     protected virtual void Bossfight()
     {
-        Vector2Int playerGridPosition = map.CheckEdgePositions(transform.position);
+        Vector2Int playerGridPosition = map.GetPlayerPosition();//CheckEdgePositions(transform.position);
 
         targetGridPosition = playerGridPosition;
         Move(true);
@@ -892,11 +892,11 @@ public class Ghost : MonoBehaviour
 
         //damage the ghost
         ghostHealth -= currentHitArea.healthValue;
-        print("subtracted: " + currentHitArea.healthValue + " health: " + ghostHealth);
+        //print("subtracted: " + currentHitArea.healthValue + " health: " + ghostHealth);
 
         if (ghostHealth <= 0)
         {
-            print("respawning");
+            //print("respawning");
             ghostHealth = 100;
 
             currentMode = Mode.Respawn;

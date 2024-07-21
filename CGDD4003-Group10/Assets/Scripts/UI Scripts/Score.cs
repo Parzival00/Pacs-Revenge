@@ -7,6 +7,13 @@ using System.Threading;
 
 public class Score : MonoBehaviour
 {
+    [System.Serializable]
+    public struct DifficultySettings
+    {
+        public int difficultyLevel;
+        public float bossStungunRechargeRate;
+    }
+
     public static int score { get; private set; }
     public static int pelletsCollected {get; private set; }
     public static int pelletsLeft { get; private set; }
@@ -29,6 +36,9 @@ public class Score : MonoBehaviour
     [SerializeField] float indicatorTimerThreshold = 10; //radar pellet indicator timer threshold
     [SerializeField] float pointsAddedIndicatorLength = 1;
     [SerializeField] RenderTexture gameSceneRenderTex;
+    [SerializeField] DifficultySettings[] difficultySettings;
+
+    DifficultySettings currentDifficultySettings;
 
     private int totalPellets;
     private static int pointsIndicatorAmount;
@@ -56,6 +66,8 @@ public class Score : MonoBehaviour
     public static int timesOverheated { get; set; }
 
     static float sceneStartTime;
+
+    float bossStungunRechargeTimer;
 
     void Awake()
     {
@@ -121,6 +133,18 @@ public class Score : MonoBehaviour
         previousScore = score;
 
         sceneStartTime = Time.time;
+
+        if (Score.difficulty < difficultySettings.Length)
+        {
+            currentDifficultySettings = difficultySettings[Score.difficulty];
+        }
+        else
+        {
+            currentDifficultySettings = difficultySettings[0];
+        }
+
+        if(bossEnding)
+            bossStungunRechargeTimer = currentDifficultySettings.bossStungunRechargeRate;
     }
 
     void DisplayLevelNumber()
@@ -132,7 +156,7 @@ public class Score : MonoBehaviour
 
     void Update()
     {
-        if (!insanityEnding)
+        if (!insanityEnding && !bossEnding)
         {
             UpdateScore();
             UpdatePelletsRemaining();
@@ -141,6 +165,21 @@ public class Score : MonoBehaviour
             timeSinceLastPellet += Time.deltaTime;
 
             indicatorActive = timeSinceLastPellet >= indicatorTimerThreshold;
+        }
+        else if (bossEnding)
+        {
+            UpdateScore();
+            pelletRemaining.text = "99$%&!*";
+
+            bossStungunRechargeTimer -= Time.deltaTime;
+
+            if(bossStungunRechargeTimer <= 0)
+            {
+                pelletsCollected++;
+                playerController.CheckToAddStunAmmo();
+
+                bossStungunRechargeTimer = currentDifficultySettings.bossStungunRechargeRate;
+            }
         }
     }
 
@@ -304,7 +343,6 @@ public class Score : MonoBehaviour
         gameSceneCamera.targetTexture = gameSceneRenderTex;
         gameSceneCamera.Render();
         gameSceneCamera.targetTexture = null;
-
 
         gameSceneRenderTex.Create();
 

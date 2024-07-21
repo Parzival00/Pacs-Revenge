@@ -4,19 +4,29 @@ using UnityEngine;
 
 public class BossHead : MonoBehaviour
 {
+    [System.Serializable]
+    public struct DifficultySettings
+    {
+        public int difficultyLevel;
+        [Header("Head Settings")]
+        public float maxHealth;
+        public float shieldDeactivateLength;
+        [Header("Point Settings")]
+        public int killedPointWorth;
+        public int hitPointWorth;
+    }
+
     Boss boss;
 
-    [Header("Head Settings")]
+    [SerializeField] DifficultySettings[] difficultySettings;
     [SerializeField] int id;
-    [SerializeField] float maxHealth = 300;
-    float health;
-    [SerializeField] float shieldDeactivateLength = 10;
-    [Header("Point Settings")]
-    [SerializeField] int killedPointWorth;
-    [SerializeField] int hitPointWorth;
     [SerializeField] bool debug = true;
 
-    public float MaxHealth { get => maxHealth; }
+    float health;
+
+    DifficultySettings currentDifficultySettings;
+
+    public float MaxHealth { get => currentDifficultySettings.maxHealth; }
     public float Health { get => health; }
 
     public bool dead { get; private set; }
@@ -28,7 +38,16 @@ public class BossHead : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        health = maxHealth;
+        if (Score.difficulty < difficultySettings.Length)
+        {
+            currentDifficultySettings = difficultySettings[Score.difficulty];
+        }
+        else
+        {
+            currentDifficultySettings = difficultySettings[0];
+        }
+
+        health = currentDifficultySettings.maxHealth;
 
         boss = GetComponentInParent<Boss>();
     }
@@ -46,7 +65,7 @@ public class BossHead : MonoBehaviour
     {
         shieldActive = false;
         float deactivateTimer = 0;
-        while(deactivateTimer < shieldDeactivateLength)
+        while(deactivateTimer < currentDifficultySettings.shieldDeactivateLength)
         {
             deactivateTimer += Time.deltaTime;
             yield return null;
@@ -60,18 +79,18 @@ public class BossHead : MonoBehaviour
         if(shieldActive == false && health > 0)
         {
             health -= amount * Mathf.Max(1, (newGhostsKilled - ghostsKilled - 1)) * patienceMultiplier;
-            if(debug) print(name + " - Health: " + health + ", Max Health: " + maxHealth);
+            if(debug) print(name + " - Health: " + health + ", Max Health: " + currentDifficultySettings.maxHealth);
             if (health <= 0)
             {
                 health = 0;
                 dead = true;
-                points = Mathf.RoundToInt((float)killedPointWorth * Mathf.Max(1, (newGhostsKilled - ghostsKilled - 1)) * patienceMultiplier);
+                points = Mathf.RoundToInt((float)currentDifficultySettings.killedPointWorth * Mathf.Max(1, (newGhostsKilled - ghostsKilled - 1)) * patienceMultiplier);
 
                 boss.HeadKilled(id);
             }
             else
             {
-                points = Mathf.RoundToInt((float)hitPointWorth * Mathf.Max(1, (newGhostsKilled - ghostsKilled - 1)) * patienceMultiplier);
+                points = Mathf.RoundToInt((float)currentDifficultySettings.hitPointWorth * Mathf.Max(1, (newGhostsKilled - ghostsKilled - 1)) * patienceMultiplier);
                 ghostsKilled = newGhostsKilled;
             }
         }

@@ -38,7 +38,7 @@ public class BossSpawner : MonoBehaviour
 
     float spawnTimer;
 
-    List<GameObject> spawnedGhosts;
+    List<Ghost> spawnedGhosts;
 
     // Start is called before the first frame update
     void Start()
@@ -60,12 +60,17 @@ public class BossSpawner : MonoBehaviour
 
         spawnTimer = currentDifficultySettings.normalSpawnInterval;
 
-        spawnedGhosts = new List<GameObject>();
+        spawnedGhosts = new List<Ghost>();
     }
 
     public void ChangeGhostWeight(int id, float newWeight)
     {
         ghostChoices[id].weight = newWeight;
+
+        if(id == 3 && newWeight <= 0)
+        {
+            KillAllGhosts();
+        }
     }
 
     // Update is called once per frame
@@ -126,18 +131,33 @@ public class BossSpawner : MonoBehaviour
 
         GameObject ghostObj = Instantiate(ghosts[currentGhost], spawnPos, Quaternion.identity);
 
-        spawnedGhosts.Add(ghostObj);
+        spawnedGhosts.Add(ghostObj.GetComponent<Ghost>());
     }
 
     public void ResetGhosts()
     {
-        foreach(GameObject obj in spawnedGhosts)
+        foreach(Ghost ghost in spawnedGhosts)
         {
-            Destroy(obj);
+            if(ghost != null)
+                Destroy(ghost.gameObject);
         }
 
-        spawnedGhosts = new List<GameObject>();
+        spawnedGhosts = new List<Ghost>();
 
         spawnGhosts = true;
+    }
+
+    public void KillAllGhosts()
+    {
+        foreach (Ghost ghost in spawnedGhosts)
+        {
+            if (ghost != null)
+            {
+                Ghost.HitInformation hitInfo = ghost.GotHit(Ghost.TargetAreaType.Head);
+                Score.AddToScore(Color.white, hitInfo.pointWorth);
+            }
+        }
+
+        spawnGhosts = false;
     }
 }

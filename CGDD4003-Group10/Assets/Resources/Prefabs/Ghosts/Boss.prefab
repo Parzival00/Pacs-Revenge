@@ -186,7 +186,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 0d87e8a7035882542988c51cd30bb699, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -362,11 +362,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4130fe622d3edd64e9619d5e8b4cff8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  difficultySettings:
+  - difficultyLevel: 0
+    maxHealth: 250
+    shieldDeactivateLength: 20
+    killedPointWorth: 250
+    hitPointWorth: 75
+  - difficultyLevel: 1
+    maxHealth: 325
+    shieldDeactivateLength: 18
+    killedPointWorth: 325
+    hitPointWorth: 100
+  - difficultyLevel: 2
+    maxHealth: 400
+    shieldDeactivateLength: 15
+    killedPointWorth: 400
+    hitPointWorth: 150
   id: 2
-  maxHealth: 300
-  shieldDeactivateLength: 10
-  killedPointWorth: 500
-  hitPointWorth: 100
   debug: 1
 --- !u!1 &1441283276336533368
 GameObject:
@@ -6096,11 +6108,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4130fe622d3edd64e9619d5e8b4cff8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  difficultySettings:
+  - difficultyLevel: 0
+    maxHealth: 250
+    shieldDeactivateLength: 20
+    killedPointWorth: 250
+    hitPointWorth: 75
+  - difficultyLevel: 1
+    maxHealth: 325
+    shieldDeactivateLength: 18
+    killedPointWorth: 325
+    hitPointWorth: 100
+  - difficultyLevel: 2
+    maxHealth: 400
+    shieldDeactivateLength: 15
+    killedPointWorth: 400
+    hitPointWorth: 150
   id: 0
-  maxHealth: 300
-  shieldDeactivateLength: 10
-  killedPointWorth: 500
-  hitPointWorth: 100
   debug: 1
 --- !u!1 &4094730944567028652
 GameObject:
@@ -6522,11 +6546,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4130fe622d3edd64e9619d5e8b4cff8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  difficultySettings:
+  - difficultyLevel: 0
+    maxHealth: 300
+    shieldDeactivateLength: 20
+    killedPointWorth: 300
+    hitPointWorth: 100
+  - difficultyLevel: 1
+    maxHealth: 375
+    shieldDeactivateLength: 18
+    killedPointWorth: 375
+    hitPointWorth: 125
+  - difficultyLevel: 2
+    maxHealth: 450
+    shieldDeactivateLength: 15
+    killedPointWorth: 450
+    hitPointWorth: 175
   id: 3
-  maxHealth: 300
-  shieldDeactivateLength: 10
-  killedPointWorth: 1000
-  hitPointWorth: 250
   debug: 1
 --- !u!1 &5755413158833607867
 GameObject:
@@ -6725,11 +6761,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4130fe622d3edd64e9619d5e8b4cff8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  difficultySettings:
+  - difficultyLevel: 0
+    maxHealth: 250
+    shieldDeactivateLength: 20
+    killedPointWorth: 250
+    hitPointWorth: 75
+  - difficultyLevel: 1
+    maxHealth: 325
+    shieldDeactivateLength: 18
+    killedPointWorth: 325
+    hitPointWorth: 100
+  - difficultyLevel: 2
+    maxHealth: 400
+    shieldDeactivateLength: 15
+    killedPointWorth: 400
+    hitPointWorth: 150
   id: 1
-  maxHealth: 300
-  shieldDeactivateLength: 10
-  killedPointWorth: 650
-  hitPointWorth: 125
   debug: 1
 --- !u!1 &6775241143821678178
 GameObject:
@@ -7151,6 +7199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 385f3a2ffc5fee54f91562af02ac878a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossSpawner: {fileID: 0}
   inkyHead: {fileID: 1780653166209507624}
   blinkyHead: {fileID: 6756449761917360858}
   pinkyHead: {fileID: 800224489552950836}
@@ -7208,11 +7257,6 @@ MonoBehaviour:
     baseRailgunDamage: 40
     patienceMultiplier: 1.035
   rotationSmoothing: 75
-  movementSpeed: 175
-  dashSpeed: 300
-  movementPhaseLength: 6
-  dashChance: 0.6
-  dashPhaseLength: 2.5
   moveCamShakeStrength: 0.5
   moveCamShakeDropoffDist: 15
   inkyProjSpawn: {fileID: 943964827120757775}
@@ -7231,20 +7275,11 @@ MonoBehaviour:
   blinkyLaserEnds:
   - {fileID: 265042516138243017}
   blinkyRaycastOrigin: {fileID: 8285436715857457147}
-  normalAttackCooldown: 1
-  enrageAttackCooldown: 0.8
-  slamAttackCooldown: 1
-  attackLeading: 0.5
   pinkySpread: 3
-  blinkyAttackDuration: 3
   blinkyLayerMask:
     serializedVersion: 2
     m_Bits: 65523
-  blinkyMaxRange: 20
-  blinkyRotationSmoothing: 2.5
-  slamThreshold: 4
   slamStrength: 350
-  slamStunLength: 0.2
   slamCamShakeStrength: 1.5
   slamCamShakeDropoffDist: 20
   scoreIncrementPrefab: {fileID: 7088422221440634481, guid: 3d675f72ebd263d478e130045fce0ea1, type: 3}
@@ -7264,8 +7299,18 @@ MonoBehaviour:
   blinkyBloodSpawnArea: {fileID: 1816295975370626307}
   clydeBloodSpawnArea: {fileID: 738278182893096992}
   shieldPrefab: {fileID: 789085006371951349, guid: 4cd2e6cc0688f9f42b0ca6da999313f3, type: 3}
-  baseRailgunDamage: 25
-  patienceMultiplier: 1.05
+  enrageSound: {fileID: 0}
+  stepSound: {fileID: 0}
+  blinkyChargeSound: {fileID: 0}
+  blinkyReleaseSound: {fileID: 0}
+  inkyChargeSound: {fileID: 0}
+  inkyReleaseSound: {fileID: 0}
+  pinkyChargeSound: {fileID: 0}
+  pinkyReleaseSound: {fileID: 0}
+  clydeChargeSound: {fileID: 0}
+  clydeReleaseSound: {fileID: 0}
+  slamChargeSound: {fileID: 0}
+  slamSound: {fileID: 0}
 --- !u!54 &2872795292413762790
 Rigidbody:
   m_ObjectHideFlags: 0

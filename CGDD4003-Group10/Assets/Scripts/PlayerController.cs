@@ -367,11 +367,11 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 mousePosition = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
-        cameraPitch -= mousePosition.y * sensitivity * Mathf.Min(1, Time.deltaTime) * 30f * Time.timeScale;
+        cameraPitch -= mousePosition.y * sensitivity * Mathf.Min(0.01f, Time.deltaTime) * 30f * Time.timeScale;
         cameraPitch = Mathf.Clamp(cameraPitch, -60.0f, 60.0f);
 
         playerCam.localEulerAngles = Vector3.right * cameraPitch;
-        playerT.Rotate(Vector3.up * mousePosition.x * sensitivity * Mathf.Min(1, Time.deltaTime) * 30f * Time.timeScale);
+        playerT.Rotate(Vector3.up * mousePosition.x * sensitivity * Mathf.Min(0.01f, Time.deltaTime) * 30f * Time.timeScale);
 
     }
 
