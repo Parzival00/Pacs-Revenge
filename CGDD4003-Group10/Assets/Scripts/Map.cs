@@ -63,6 +63,18 @@ public class Map : MonoBehaviour
             Vector2Int index = GetGridLocation(wall.transform.position);
             map[index.x, index.y] = GridType.Wall;
         }
+        walls = GameObject.FindGameObjectsWithTag("Corner");
+        foreach (GameObject wall in walls)
+        {
+            Vector2Int index = GetGridLocation(wall.transform.position);
+            map[index.x, index.y] = GridType.Wall;
+        }
+        walls = GameObject.FindGameObjectsWithTag("T Wall");
+        foreach (GameObject wall in walls)
+        {
+            Vector2Int index = GetGridLocation(wall.transform.position);
+            map[index.x, index.y] = GridType.Wall;
+        }
 
         //Gather all barriers in the scene
         GameObject[] barriers = GameObject.FindGameObjectsWithTag("Barrier");
