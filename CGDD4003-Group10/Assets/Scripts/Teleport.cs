@@ -18,7 +18,7 @@ public class Teleport : MonoBehaviour
     }
     private void Update()
     {
-        if (this.tag.Equals("CorruptedTeleport"))
+        if (!Score.bossEnding && this.tag.Equals("CorruptedTeleport"))
         {
             this.transform.position = new Vector3(27f, 0f, 5f);
         }
