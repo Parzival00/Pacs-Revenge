@@ -459,7 +459,7 @@ public class PlayerController : MonoBehaviour
 
                 if (Score.totalShotsFired <= 0 && tutorial)
                 {
-                    tutorial.ToggleReleasePrompt(false);
+                    //tutorial.ToggleReleasePrompt(false);
                 }
 
                 weaponSound.Stop();
@@ -515,7 +515,7 @@ public class PlayerController : MonoBehaviour
 
             if (Score.totalShotsFired <= 0 && tutorial)
             {
-                tutorial.ToggleShootPrompt(false);
+                //tutorial.ToggleShootPrompt(false);
             }
         }
         else if (!paused && Input.GetMouseButton(0) && !overheated)
@@ -528,7 +528,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (doTutorials && Score.totalShotsFired <= 0 && tutorial)
                 {
-                    tutorial.ToggleReleasePrompt(true);
+                    //tutorial.ToggleReleasePrompt(true);
                 }
             }
 
@@ -585,8 +585,8 @@ public class PlayerController : MonoBehaviour
         {
             if (doTutorials && Score.timesOverheated <= 1 && tutorial)
             {
-                tutorial.ToggleReleasePrompt(false);
-                tutorial.ToggleOverheatPrompt(true);
+                //tutorial.ToggleReleasePrompt(false);
+                //tutorial.ToggleOverheatPrompt(true);
             }
 
             Score.timesOverheated++;
@@ -606,7 +606,7 @@ public class PlayerController : MonoBehaviour
         {
             if (doTutorials && Score.timesOverheated <= 2 && tutorial)
             {
-                tutorial.ToggleOverheatPrompt(false);
+                //tutorial.ToggleOverheatPrompt(false);
             }
 
             weaponTemp -= Time.deltaTime * cooldownSpeed;
@@ -761,7 +761,7 @@ public class PlayerController : MonoBehaviour
         {
             stunGun.SetActive(false);
         }
-        if(bossFight)
+        if(Score.bossEnding)
         {
             WeaponSpawner ws = FindObjectOfType<WeaponSpawner>();
             ws.Reset();
@@ -812,7 +812,7 @@ public class PlayerController : MonoBehaviour
 
         if (doTutorials && gunActivated && Score.totalShotsFired <= 0 && tutorial)
         {
-            tutorial.ToggleShootPrompt(true);
+            //tutorial.ToggleShootPrompt(true);
         }
     }
 
@@ -912,7 +912,7 @@ public class PlayerController : MonoBehaviour
         {
             Ghost ghost = other.gameObject.transform.root.GetComponent<Ghost>();
 
-            if (ghost.CurrentMode == Ghost.Mode.Chase || ghost.CurrentMode == Ghost.Mode.Scatter || ghost.CurrentMode == Ghost.Mode.InvisibilityPowerUp || Score.bossEnding)
+            if (ghost.CurrentMode == Ghost.Mode.Chase || ghost.CurrentMode == Ghost.Mode.Scatter || ghost.CurrentMode == Ghost.Mode.InvisibilityPowerUp || (Score.bossEnding && ghost.CurrentMode != Ghost.Mode.BossfightSpawn))
             {
                 print("hit by " + other.gameObject.name);
 

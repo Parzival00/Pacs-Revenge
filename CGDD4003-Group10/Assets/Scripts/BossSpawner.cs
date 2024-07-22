@@ -129,9 +129,12 @@ public class BossSpawner : MonoBehaviour
 
         yield return new WaitForSeconds(0.38f);
 
-        GameObject ghostObj = Instantiate(ghosts[currentGhost], spawnPos, Quaternion.identity);
+        if (spawnGhosts)
+        {
+            GameObject ghostObj = Instantiate(ghosts[currentGhost], spawnPos, Quaternion.identity);
 
-        spawnedGhosts.Add(ghostObj.GetComponent<Ghost>());
+            spawnedGhosts.Add(ghostObj.GetComponent<Ghost>());
+        }
     }
 
     public void ResetGhosts()

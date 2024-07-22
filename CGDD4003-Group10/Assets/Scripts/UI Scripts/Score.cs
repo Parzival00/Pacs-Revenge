@@ -314,7 +314,7 @@ public class Score : MonoBehaviour
         PlayerPrefs.SetInt("Difficulty", difficulty);
     }
 
-    public void SaveFruitsCollected()
+    public static void SaveFruitsCollected()
     {
         PlayerPrefs.SetInt("FruitsCollected", fruitsCollected);
     }
@@ -356,7 +356,8 @@ public class Score : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             } else
             {
-                GameEnd();
+                totalTimePlayed += Time.time - sceneStartTime;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
             }
         } else
         {
@@ -374,5 +375,10 @@ public class Score : MonoBehaviour
         SceneManager.LoadScene("GameOverScene");
     }
 
-    
+    public static void BossEnd()
+    {
+        SaveFruitsCollected();
+        totalTimePlayed += Time.time - sceneStartTime;
+        //SceneManager.LoadScene("GameOverScene");
+    }
 }

@@ -74,8 +74,12 @@ public class Projectile : MonoBehaviour
         if(currentDifficultySettings.followPlayer == true)
         {
             Vector3 dirToPlayer = (player.transform.position + player.velocity * currentDifficultySettings.attackLeading - transform.position).normalized;
-            Quaternion rot = Quaternion.FromToRotation(transform.forward, dirToPlayer);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rot * transform.rotation, currentDifficultySettings.followSmoothing * Time.deltaTime);
+
+            if (Vector3.Dot(transform.forward, dirToPlayer) > 0)
+            {
+                Quaternion rot = Quaternion.FromToRotation(transform.forward, dirToPlayer);
+                transform.rotation = Quaternion.Slerp(transform.rotation, rot * transform.rotation, currentDifficultySettings.followSmoothing * Time.deltaTime);
+            }
         }
 
         transform.Translate(transform.forward * currentDifficultySettings.speed * Time.deltaTime, Space.World);

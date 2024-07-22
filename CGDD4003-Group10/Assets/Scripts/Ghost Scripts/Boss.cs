@@ -13,6 +13,8 @@ public class Boss : MonoBehaviour
     public int pinkysKilled { get; private set; }
     public int clydesKilled { get; private set; }
 
+    public static bool bossDead { get; private set; }
+
     struct AttackChoice
     {
         public int attackID;
@@ -66,6 +68,7 @@ public class Boss : MonoBehaviour
     Rigidbody rb;
 
     [SerializeField] BossSpawner bossSpawner;
+    [SerializeField] BossfightEndController endController;
 
     [Header("Boss Heads")]
     [SerializeField] BossHead inkyHead;
@@ -191,6 +194,8 @@ public class Boss : MonoBehaviour
         inkysKilled = 0;
         pinkysKilled = 0;
         clydesKilled = 0;
+
+        bossDead = false;
 
         AttackChoice inky = new AttackChoice(0, 1f);
         AttackChoice blinky = new AttackChoice(1, 1f);
@@ -664,7 +669,7 @@ public class Boss : MonoBehaviour
         else
         {
             SpawnBlood(3, headID);
-            StartCoroutine(Knockback(-transform.forward * Time.deltaTime * 3000, 0.1f));
+            StartCoroutine(Knockback(-transform.forward * Time.deltaTime * 10000, 0.1f));
 
             //hitSoundSource.PlayOneShot(hitSound);
         }
@@ -726,7 +731,7 @@ public class Boss : MonoBehaviour
         canMove = false;
 
         rb.velocity = Vector3.zero;
-        rb.AddForce(force * Time.deltaTime);
+        rb.AddForce(force * Time.deltaTime, ForceMode.VelocityChange);
 
         float timer = 0;
         while(timer < duration)
@@ -807,11 +812,18 @@ public class Boss : MonoBehaviour
 
     IEnumerator DeathSequence()
     {
+        bossDead = true;
+        rb.velocity = Vector3.zero;
+
         if (dashCoroutine != null) StopCoroutine(dashCoroutine);
 
         currentState = BossState.Death;
         yield return new WaitForSeconds(0.75f);
 
         animator.SetTrigger("Death");
+
+        yield return new WaitForSeconds(3f);
+
+        endController.StartEndSequence();
     }
 }

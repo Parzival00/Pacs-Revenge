@@ -78,7 +78,7 @@ MonoBehaviour:
     impactRegisterDelay: 0.4
     attackLeading: -0.3
     followPlayer: 1
-    followSmoothing: 2.5
+    followSmoothing: 3.5
   - difficultyLevel: 1
     scale: 2.5
     speed: 13
@@ -96,15 +96,9 @@ MonoBehaviour:
     followPlayer: 1
     followSmoothing: 8
   canHitFloor: 1
-  speed: 13
-  timeToLive: 3.25
-  impactRegisterDelay: 0.5
   impactCollider: {fileID: 209512093054789283}
   canHitPlayer: 1
   orientToPlayerOnStart: 0
-  attackLeading: -0.1
-  followPlayer: 1
-  followSmoothing: 6
 --- !u!135 &1434667490830627905
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -124,7 +118,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.25
+  m_Radius: 0.19631489
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &5021636358095362478
 Rigidbody:
@@ -301,5 +295,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Radius: 0.46433192
+  m_Radius: 0.41137877
   m_Center: {x: 0, y: 0, z: 0}

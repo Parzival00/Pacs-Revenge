@@ -265,7 +265,11 @@ public class Ghost : MonoBehaviour
         spriteController.BossfightSpawn();
         yield return new WaitForSeconds(1f);
         spriteController.BossfightSpawnEnd();
-        currentMode = Mode.BossfightMove;
+
+        if (PlayerController.invisibilityActivated)
+            currentMode = Mode.InvisibilityPowerUp;
+        else
+            currentMode = Mode.BossfightMove;
     }
 
     //Chase the player
@@ -782,7 +786,7 @@ public class Ghost : MonoBehaviour
     #region Freeze/Stun Ghosts
     public void FreezeGhost()
     {
-        if (currentMode == Mode.Scatter || currentMode == Mode.Chase || currentMode == Mode.InvisibilityPowerUp)
+        if (currentMode == Mode.Scatter || currentMode == Mode.Chase || currentMode == Mode.InvisibilityPowerUp || currentMode == Mode.BossfightMove)
         {
             freezeTimer = freezeTime;
             previousMode = currentMode;
@@ -806,12 +810,23 @@ public class Ghost : MonoBehaviour
             chaseSoundSource.Play();
             stunEffect.SetActive(false);
 
-            if (PlayerController.gunActivated)
-                currentMode = Mode.Scatter;
-            else if (PlayerController.invisibilityActivated)
-                currentMode = Mode.InvisibilityPowerUp;
+            if (Score.bossEnding)
+            {
+                if (PlayerController.invisibilityActivated)
+                    currentMode = Mode.InvisibilityPowerUp;
+                else
+                    currentMode = Mode.BossfightMove;
+                
+            }
             else
-                currentMode = Mode.Chase;
+            {
+                if (PlayerController.gunActivated)
+                    currentMode = Mode.Scatter;
+                else if (PlayerController.invisibilityActivated)
+                    currentMode = Mode.InvisibilityPowerUp;
+                else
+                    currentMode = Mode.Chase;
+            }
         }
         freezeTimer = freezeTime;
     }
@@ -848,7 +863,7 @@ public class Ghost : MonoBehaviour
     #region Invisibility Power-Up
     public void ActivatedInvisibilityPowerUp()
     {
-        if(currentMode == Mode.Scatter || currentMode == Mode.Chase)
+        if(currentMode == Mode.Scatter || currentMode == Mode.Chase || currentMode == Mode.BossfightMove)
             currentMode = Mode.InvisibilityPowerUp;
     }
 
@@ -866,7 +881,10 @@ public class Ghost : MonoBehaviour
 
         if(!PlayerController.invisibilityActivated)
         {
-            currentMode = Mode.Chase;
+            if (Score.bossEnding)
+                currentMode = Mode.BossfightMove;
+            else
+                currentMode = Mode.Chase;
         }
     }
     #endregion

@@ -225,7 +225,7 @@ public class FruitController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!fruitActivated && Score.bossEnding)
+        if (!fruitActivated && Score.bossEnding && !Boss.bossDead)
         {
             bossFruitTimer -= Time.deltaTime;
 
@@ -291,7 +291,7 @@ public class FruitController : MonoBehaviour
         bool alertMessegeSent = false;
 
         int i = 0;
-        while(i < numberOfLightningStrikes)
+        while(i < (Score.bossEnding ? 1 :numberOfLightningStrikes))
         {
             if(lightningStrikeTimer <= Time.time)
             {
