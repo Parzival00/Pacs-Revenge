@@ -159,9 +159,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioSource eatSoundSource;
     [SerializeField] AudioClip eatSound;
 
-    [Header("Boss Ending Settings")]
-    [SerializeField] bool bossFight = false;
-
     [Header("Debug Settings")]
     [SerializeField] bool usePlayerPrefsSettings;
 
@@ -912,9 +909,9 @@ public class PlayerController : MonoBehaviour
         {
             Ghost ghost = other.gameObject.transform.root.GetComponent<Ghost>();
 
-            if (ghost.CurrentMode == Ghost.Mode.Chase || ghost.CurrentMode == Ghost.Mode.Scatter || ghost.CurrentMode == Ghost.Mode.InvisibilityPowerUp || (Score.bossEnding && ghost.CurrentMode != Ghost.Mode.BossfightSpawn))
+            if (ghost.CurrentMode == Ghost.Mode.Chase || ghost.CurrentMode == Ghost.Mode.Scatter || ghost.CurrentMode == Ghost.Mode.InvisibilityPowerUp || ghost.CurrentMode == Ghost.Mode.BossfightMove)
             {
-                print("hit by " + other.gameObject.name);
+                //print("hit by " + other.gameObject.name);
 
                 if(shieldsRemaining <=0)
                 {

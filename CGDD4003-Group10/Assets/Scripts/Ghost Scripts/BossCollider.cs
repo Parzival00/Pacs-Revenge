@@ -12,4 +12,12 @@ public class BossCollider : MonoBehaviour
     {
         boss = GetComponentInParent<Boss>();
     }
+
+    public void OnTriggerEnter(Collider c)
+    {
+        if (c.gameObject.tag == "Stun")
+        {
+            Destroy(c.gameObject);
+        }
+    }
 }

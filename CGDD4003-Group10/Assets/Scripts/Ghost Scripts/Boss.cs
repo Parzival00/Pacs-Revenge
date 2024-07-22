@@ -298,7 +298,7 @@ public class Boss : MonoBehaviour
             {
                 animator.SetBool("isWalking", true);
 
-                rb.velocity = transform.forward * currentDifficultySettings.movementSpeed * (damage == 7 ? 1.10f : 1f) * Time.deltaTime;
+                rb.velocity = transform.forward * currentDifficultySettings.movementSpeed * (damage == 7 ? 1.10f : 1f) * Mathf.Min(0.1f,Time.deltaTime);
             }
 
             movementPhaseTimer -= Time.deltaTime;
@@ -813,9 +813,11 @@ public class Boss : MonoBehaviour
     IEnumerator DeathSequence()
     {
         bossDead = true;
-        rb.velocity = Vector3.zero;
 
         if (dashCoroutine != null) StopCoroutine(dashCoroutine);
+
+        rb.velocity = Vector3.zero;
+        rb.constraints = RigidbodyConstraints.FreezePosition;
 
         currentState = BossState.Death;
         yield return new WaitForSeconds(0.75f);

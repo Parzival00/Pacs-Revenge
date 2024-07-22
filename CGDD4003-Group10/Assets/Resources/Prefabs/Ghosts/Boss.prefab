@@ -364,18 +364,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySettings:
   - difficultyLevel: 0
-    maxHealth: 250
-    shieldDeactivateLength: 20
+    maxHealth: 400
+    shieldDeactivateLength: 12
     killedPointWorth: 250
     hitPointWorth: 75
   - difficultyLevel: 1
-    maxHealth: 325
-    shieldDeactivateLength: 18
+    maxHealth: 500
+    shieldDeactivateLength: 9
     killedPointWorth: 325
     hitPointWorth: 100
   - difficultyLevel: 2
-    maxHealth: 400
-    shieldDeactivateLength: 15
+    maxHealth: 600
+    shieldDeactivateLength: 7
     killedPointWorth: 400
     hitPointWorth: 150
   id: 2
@@ -16021,18 +16021,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySettings:
   - difficultyLevel: 0
-    maxHealth: 250
-    shieldDeactivateLength: 20
+    maxHealth: 400
+    shieldDeactivateLength: 12
     killedPointWorth: 250
     hitPointWorth: 75
   - difficultyLevel: 1
-    maxHealth: 325
-    shieldDeactivateLength: 18
+    maxHealth: 500
+    shieldDeactivateLength: 9
     killedPointWorth: 325
     hitPointWorth: 100
   - difficultyLevel: 2
-    maxHealth: 400
-    shieldDeactivateLength: 15
+    maxHealth: 600
+    shieldDeactivateLength: 7
     killedPointWorth: 400
     hitPointWorth: 150
   id: 0
@@ -21354,18 +21354,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySettings:
   - difficultyLevel: 0
-    maxHealth: 300
-    shieldDeactivateLength: 20
+    maxHealth: 425
+    shieldDeactivateLength: 12
     killedPointWorth: 300
     hitPointWorth: 100
   - difficultyLevel: 1
-    maxHealth: 375
-    shieldDeactivateLength: 18
+    maxHealth: 575
+    shieldDeactivateLength: 9
     killedPointWorth: 375
     hitPointWorth: 125
   - difficultyLevel: 2
-    maxHealth: 450
-    shieldDeactivateLength: 15
+    maxHealth: 700
+    shieldDeactivateLength: 7
     killedPointWorth: 450
     hitPointWorth: 175
   id: 3
@@ -21603,18 +21603,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySettings:
   - difficultyLevel: 0
-    maxHealth: 250
-    shieldDeactivateLength: 20
+    maxHealth: 400
+    shieldDeactivateLength: 12
     killedPointWorth: 250
     hitPointWorth: 75
   - difficultyLevel: 1
-    maxHealth: 325
-    shieldDeactivateLength: 18
+    maxHealth: 500
+    shieldDeactivateLength: 9
     killedPointWorth: 325
     hitPointWorth: 100
   - difficultyLevel: 2
-    maxHealth: 400
-    shieldDeactivateLength: 15
+    maxHealth: 600
+    shieldDeactivateLength: 7
     killedPointWorth: 400
     hitPointWorth: 150
   id: 1
@@ -21939,6 +21939,7 @@ GameObject:
   - component: {fileID: 5535119109003937163}
   - component: {fileID: 4229955907849833385}
   - component: {fileID: 2872795292413762790}
+  - component: {fileID: 668638077915111621}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -22049,11 +22050,11 @@ MonoBehaviour:
   clydeHead: {fileID: 2932101892771913630}
   difficultySettings:
   - difficultyLevel: 0
-    movementSpeed: 150
-    dashSpeed: 250
-    movementPhaseLength: 8
+    movementSpeed: 200
+    dashSpeed: 325
+    movementPhaseLength: 6
     dashChance: 0.35
-    dashPhaseLength: 4
+    dashPhaseLength: 3
     normalAttackCooldown: 2.5
     enrageAttackCooldown: 1.5
     slamAttackCooldown: 1.5
@@ -22066,11 +22067,11 @@ MonoBehaviour:
     baseRailgunDamage: 75
     patienceMultiplier: 1.1
   - difficultyLevel: 1
-    movementSpeed: 175
-    dashSpeed: 275
-    movementPhaseLength: 6
+    movementSpeed: 250
+    dashSpeed: 375
+    movementPhaseLength: 4.5
     dashChance: 0.5
-    dashPhaseLength: 2.5
+    dashPhaseLength: 2.25
     normalAttackCooldown: 1.5
     enrageAttackCooldown: 1
     slamAttackCooldown: 1
@@ -22083,11 +22084,11 @@ MonoBehaviour:
     baseRailgunDamage: 50
     patienceMultiplier: 1.05
   - difficultyLevel: 2
-    movementSpeed: 200
-    dashSpeed: 300
-    movementPhaseLength: 4.5
+    movementSpeed: 300
+    dashSpeed: 400
+    movementPhaseLength: 3
     dashChance: 0.7
-    dashPhaseLength: 2
+    dashPhaseLength: 1.5
     normalAttackCooldown: 1
     enrageAttackCooldown: 0.7
     slamAttackCooldown: 0.7
@@ -22181,6 +22182,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!210 &668638077915111621
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8036845001061338620}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &8078405747489952692
 GameObject:
   m_ObjectHideFlags: 0
