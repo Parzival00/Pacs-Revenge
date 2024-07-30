@@ -6845,7 +6845,6 @@ MonoBehaviour:
   corruptionEffect: {fileID: 0}
   eatSoundSource: {fileID: 4666828565924791187}
   eatSound: {fileID: 8300000, guid: f050a260f8cec734db2b2c8389248c74, type: 3}
-  bossFight: 0
   usePlayerPrefsSettings: 1
 --- !u!114 &6532150692148206727
 MonoBehaviour:
@@ -6871,11 +6870,11 @@ MonoBehaviour:
   gameSceneRenderTex: {fileID: 8400000, guid: 1fbbf88530324554bbc10d8e0b318019, type: 2}
   difficultySettings:
   - difficultyLevel: 0
-    bossStungunRechargeRate: 3
+    bossStungunRechargeRate: 1.5
   - difficultyLevel: 1
-    bossStungunRechargeRate: 4
+    bossStungunRechargeRate: 2.5
   - difficultyLevel: 2
-    bossStungunRechargeRate: 5.5
+    bossStungunRechargeRate: 3.5
 --- !u!114 &6717606324952877450
 MonoBehaviour:
   m_ObjectHideFlags: 0

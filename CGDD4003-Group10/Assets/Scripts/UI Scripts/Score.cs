@@ -25,6 +25,7 @@ public class Score : MonoBehaviour
     public static bool wonLevel { get; private set; }
     public static bool insanityEnding { get; private set; }
     public static bool bossEnding { get; private set; }
+    public static int ending { get; private set; }
 
     [SerializeField] TMP_Text scoreUI;
     [SerializeField] TMP_Text pelletRemaining;
@@ -201,7 +202,7 @@ public class Score : MonoBehaviour
             if (pelletsCollected >= totalPellets)
             {
                 playerController.SaveLives();
-                StartCoroutine(SceneEnd());
+                StartCoroutine(SceneEnd(false));
             }
         }
 
@@ -319,13 +320,16 @@ public class Score : MonoBehaviour
         PlayerPrefs.SetInt("FruitsCollected", fruitsCollected);
     }
 
-    public IEnumerator SceneEnd()
+    public IEnumerator SceneEnd(bool playerDied)
     {
-        gameSceneRenderTex.Release();
-        gameSceneRenderTex.DiscardContents();
+        if (!playerDied && !insanityEnding)
+        {
+            gameSceneRenderTex.Release();
+            gameSceneRenderTex.DiscardContents();
 
-        gameSceneRenderTex.width = Screen.width;
-        gameSceneRenderTex.height = Screen.height;
+            gameSceneRenderTex.width = Screen.width;
+            gameSceneRenderTex.height = Screen.height;
+        }
 
         wonLevel = true;
 
@@ -340,29 +344,66 @@ public class Score : MonoBehaviour
         audioLevel = 0;
         AudioListener.volume = audioLevel;
 
-        gameSceneCamera.targetTexture = gameSceneRenderTex;
-        gameSceneCamera.Render();
-        gameSceneCamera.targetTexture = null;
+        if (!playerDied && !insanityEnding)
+        {
+            gameSceneCamera.targetTexture = gameSceneRenderTex;
+            gameSceneCamera.Render();
+            gameSceneCamera.targetTexture = null;
 
-        gameSceneRenderTex.Create();
+            gameSceneRenderTex.Create();
+        }
 
         SaveFruitsCollected();
 
-        if(currentLevel == 8)
+        if (playerDied)
         {
-            if(fruitsCollected >= 14)
+            if (bossEnding)
+            {
+                PlayerPrefs.SetInt("Ending", 0);
+
+                totalTimePlayed += Time.time - sceneStartTime;
+                SceneManager.LoadScene("End");
+            }
+            else
+            {
+                GameEnd();
+            }
+        }
+        else
+        {
+
+            if (currentLevel == 8)
+            {
+                if (fruitsCollected >= 14)
+                {
+                    totalTimePlayed += Time.time - sceneStartTime;
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                }
+                else
+                {
+                    totalTimePlayed += Time.time - sceneStartTime;
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+                }
+            }
+            else if (bossEnding)
+            {
+                PlayerPrefs.SetInt("Ending", 1);
+
+                totalTimePlayed += Time.time - sceneStartTime;
+                SceneManager.LoadScene("End");
+            }
+            else if (insanityEnding)
+            {
+                PlayerPrefs.SetInt("Ending", 2);
+
+                totalTimePlayed += Time.time - sceneStartTime;
+                SceneManager.LoadScene("End");
+            }
+            else
             {
                 totalTimePlayed += Time.time - sceneStartTime;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            } else
-            {
-                totalTimePlayed += Time.time - sceneStartTime;
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
             }
-        } else
-        {
-            totalTimePlayed += Time.time - sceneStartTime;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 

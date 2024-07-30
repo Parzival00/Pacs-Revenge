@@ -422,6 +422,11 @@ public class Boss : MonoBehaviour
                 rb.velocity = transform.forward * currentDifficultySettings.movementSpeed * (damage == 7 ? 1.10f : 1f) * Time.deltaTime * 0.5f;
             }
         }
+
+        if (!PlayerController.invisibilityActivated)
+        {
+            currentState = BossState.Chase;
+        }
     }
 
     public void MovementCamShake()
@@ -448,6 +453,7 @@ public class Boss : MonoBehaviour
     {
         if (damage == 7)
         {
+            isAttacking = true;
             animator.SetTrigger("ClydeAttack");
 
             attackCooldownTimer = currentDifficultySettings.enrageAttackCooldown;
@@ -804,7 +810,7 @@ public class Boss : MonoBehaviour
         isAttacking = false;
         animator.SetTrigger("Enrage");
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         movementPhaseStarted = false;
         currentState = BossState.Chase;

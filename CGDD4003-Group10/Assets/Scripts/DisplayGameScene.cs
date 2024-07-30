@@ -19,7 +19,7 @@ public class DisplayGameScene : MonoBehaviour
     {
         gameSceneTexture.SetActive(false);
 
-        if(SceneManager.GetActiveScene().name == "GameOverScene")
+        if(SceneManager.GetActiveScene().name == "GameOverScene" || SceneManager.GetActiveScene().name == "End")
         {
             if(PlayerPrefs.GetInt("Lives") == 0 || Score.insanityEnding)
             {

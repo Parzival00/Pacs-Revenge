@@ -78,7 +78,7 @@ public class BossfightEndController : MonoBehaviour
 
         yield return new WaitForSeconds(timeTillFadeBlack);
 
-        timer = 0;
+        /*timer = 0;
         color = blackFade.color;
         color.a = 0;
         blackFade.color = color;
@@ -91,8 +91,11 @@ public class BossfightEndController : MonoBehaviour
             yield return null;
         }
         color.a = 1;
-        blackFade.color = color;
+        blackFade.color = color;*/
 
-        Score.BossEnd();
+        Score score = FindObjectOfType<Score>();
+        StartCoroutine(score.SceneEnd(false));
+
+        //Score.BossEnd();
     }
 }

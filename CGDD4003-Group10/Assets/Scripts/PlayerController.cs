@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour
 
     //shield settings
     int shieldsRemaining;
-    
+
     [Header("GameObject Refereneces")]
     [SerializeField] GameObject gun;
     [SerializeField] GameObject hud;
@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour
     [Header("Player Settings")]
     [SerializeField] float deathSequenceLength = 1;
     [SerializeField] int defaultPlayerLives = 3;
-     
+
     [Header("Player Animator")]
     [SerializeField] Animator animator;
 
@@ -229,7 +229,7 @@ public class PlayerController : MonoBehaviour
 
         hudMessenger = FindObjectOfType<HUDMessenger>();
 
-        if(extraLifeFlash == null)
+        if (extraLifeFlash == null)
             extraLifeFlash = GameObject.FindGameObjectWithTag("ExtraLifeFlash")?.GetComponent<Image>();
 
         if (extraLifeFlash != null)
@@ -341,7 +341,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape)) 
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             PauseGame();
         }
@@ -352,8 +352,8 @@ public class PlayerController : MonoBehaviour
             musicPlayer.loop = true;
         }
 
-        if(!Score.insanityEnding)
-            DisplayPLayerShields(); 
+        if (!Score.insanityEnding)
+            DisplayPLayerShields();
     }
 
     #region Move and Look
@@ -401,7 +401,7 @@ public class PlayerController : MonoBehaviour
         canMove = false;
 
         float timer = 0;
-        while(timer < 0.15f)
+        while (timer < 0.15f)
         {
             character.Move(force * Mathf.Min(1, Time.deltaTime) * Mathf.Min(Time.deltaTime / 0.15f));
             yield return null;
@@ -475,7 +475,7 @@ public class PlayerController : MonoBehaviour
                     if (targetAreaCollider != null)
                     {
                         Ghost.HitInformation hitInformation = targetAreaCollider.OnShot();
-                        Score.AddToScore(tempColorSave,(hitInformation.pointWorth + hitInformation.targetArea.pointsAddition));
+                        Score.AddToScore(tempColorSave, (hitInformation.pointWorth + hitInformation.targetArea.pointsAddition));
 
                         SpawnBlood(hitInformation.bigBlood, hitInformation.smallBlood, hitInformation.targetArea.difficulty, hit);
                     } else
@@ -485,7 +485,7 @@ public class PlayerController : MonoBehaviour
                         if (bossCollider != null)
                         {
                             Boss.BossHitInformation hitInformation = bossCollider.boss.GotHit(hit.point, bossCollider.HeadID);
-                            if(hitInformation.pointWorth > 0)
+                            if (hitInformation.pointWorth > 0)
                                 Score.AddToScore(tempColorSave, hitInformation.pointWorth);
                         }
                         else
@@ -505,7 +505,7 @@ public class PlayerController : MonoBehaviour
                 weaponSound.Stop();
             }
         }
-        else if(!paused && Input.GetMouseButtonDown(0) && !overheated)
+        else if (!paused && Input.GetMouseButtonDown(0) && !overheated)
         {
             weaponSound.Stop();
             weaponSound.PlayOneShot(chargeup);
@@ -521,7 +521,7 @@ public class PlayerController : MonoBehaviour
             {
                 weaponCharge += (Time.deltaTime * (1 / chargeTime));
             }
-            if(weaponCharge >= 1f)
+            if (weaponCharge >= 1f)
             {
                 if (doTutorials && Score.totalShotsFired <= 0 && tutorial)
                 {
@@ -533,7 +533,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (!Input.GetMouseButton(0) && !overheated)
         {
-            if(weaponCharge > 0)
+            if (weaponCharge > 0)
             {
                 weaponCharge -= (Time.deltaTime * (1 / (chargeTime / 2)));
                 weaponTemp -= Time.deltaTime * (overheatSpeed * 2);
@@ -613,16 +613,16 @@ public class PlayerController : MonoBehaviour
     void SpawnBlood(GameObject bigBlood, GameObject smallBlood, Ghost.TargetAreaDifficulty difficulty, RaycastHit hit)
     {
         float spawnRadius = 0.5f;
-        if(difficulty == Ghost.TargetAreaDifficulty.Easy)
+        if (difficulty == Ghost.TargetAreaDifficulty.Easy)
         {
             spawnRadius = 0.2f;
             GameObject blood = smallBlood;
             for (int i = 0; i < 2; i++)
             {
-                Instantiate(blood, hit.point + 
+                Instantiate(blood, hit.point +
                     hit.transform.right * Random.Range(-spawnRadius, spawnRadius) + hit.transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2), Quaternion.identity);
             }
-        } 
+        }
         else if (difficulty == Ghost.TargetAreaDifficulty.Medium)
         {
             GameObject blood = smallBlood;
@@ -638,7 +638,7 @@ public class PlayerController : MonoBehaviour
                 Instantiate(blood, hit.point +
                     hit.transform.right * Random.Range(-spawnRadius, spawnRadius) + hit.transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2), Quaternion.identity);
             }
-        } 
+        }
         else
         {
             GameObject blood = smallBlood;
@@ -664,7 +664,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void StungunFire()
     {
-        
+
         StunGunCanFire = stunFireTimer <= 0 && ammoCount > 0;
 
         if (stunFireTimer <= 0 && Input.GetMouseButtonDown(0) && ammoCount > 0)
@@ -673,7 +673,7 @@ public class PlayerController : MonoBehaviour
 
             Score.totalStunsFired++;
 
-            if(ammoCount == maxAmmoCount)
+            if (ammoCount == maxAmmoCount)
                 pelletCountSinceLastShot = Score.pelletsCollected;
 
             stungunVFX.Shoot();
@@ -730,7 +730,7 @@ public class PlayerController : MonoBehaviour
                 tempColorSave = Color.white;
                 targetOutlineController.DeactivateOutline();
             }
-        } 
+        }
         else
         {
             //print("Not Targetting Anything");
@@ -750,7 +750,7 @@ public class PlayerController : MonoBehaviour
         if (gunTimerCoroutine != null)
             StopCoroutine(gunTimerCoroutine);
 
-        if(stungunAnimator != null)
+        if (stungunAnimator != null)
         {
             stungunAnimator.SetBool("Equipped", false);
             yield return new WaitForSeconds(0.2f);
@@ -758,7 +758,7 @@ public class PlayerController : MonoBehaviour
         {
             stunGun.SetActive(false);
         }
-        if(Score.bossEnding)
+        if (Score.bossEnding)
         {
             WeaponSpawner ws = FindObjectOfType<WeaponSpawner>();
             ws.Reset();
@@ -795,7 +795,7 @@ public class PlayerController : MonoBehaviour
         if (railGunVFX != null)
             railGunVFX.ActivateEffects();
 
-        foreach(Ghost ghost in ghosts)
+        foreach (Ghost ghost in ghosts)
         {
             ghost.InitiateScatter();
         }
@@ -821,7 +821,7 @@ public class PlayerController : MonoBehaviour
 
         gunTimer = gunTimeAmount;
 
-        while(gunTimer >= 0)
+        while (gunTimer >= 0)
         {
             gunTimer -= Time.deltaTime;
             yield return null;
@@ -835,7 +835,7 @@ public class PlayerController : MonoBehaviour
     /// Deactivates the gun and any related visuals
     /// </summary>
     IEnumerator DeactivateGun()
-    {    
+    {
         gunActivated = false;
         gun.SetActive(false);
         hud.SetActive(false);
@@ -913,7 +913,7 @@ public class PlayerController : MonoBehaviour
             {
                 //print("hit by " + other.gameObject.name);
 
-                if(shieldsRemaining <=0)
+                if (shieldsRemaining <= 0)
                 {
                     if (!inDeathSequence)
                     {
@@ -923,7 +923,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    if(shieldAnimator != null && shieldsRemaining > 0)
+                    if (shieldAnimator != null && shieldsRemaining > 0)
                     {
                         if (gunActivated) lostShield = true;
 
@@ -994,7 +994,7 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    IEnumerator DeathSequence() 
+    IEnumerator DeathSequence()
     {
         inDeathSequence = true;
 
@@ -1075,7 +1075,9 @@ public class PlayerController : MonoBehaviour
             SaveLives();
             //end game scene
             //corruptedView.SetFloat("_Strength", 0);
-            Score.GameEnd();
+            //Score.GameEnd();
+            Score score = FindObjectOfType<Score>();
+            StartCoroutine(score.SceneEnd(true));
         }
         else
         {
@@ -1115,7 +1117,7 @@ public class PlayerController : MonoBehaviour
     #region Extra Life
     public void AddLives()
     {
-        if(extraLifeSource != null)
+        if (extraLifeSource != null)
             extraLifeSource.PlayOneShot(extraLifeSound);
 
         if (extraLifeFlash != null)
@@ -1175,10 +1177,17 @@ public class PlayerController : MonoBehaviour
     Coroutine invisibilityPowerUpCoroutine;
     public void ActivateInvisibility()
     {
-        foreach(Ghost ghost in ghosts)
+        foreach (Ghost ghost in ghosts)
         {
             ghost.ActivatedInvisibilityPowerUp();
         }
+
+        if (Score.bossEnding)
+        {
+            Boss boss = FindObjectOfType<Boss>();
+            boss.InvisibililtyPowerupActivated();
+        }
+
 
         if (invisibilityPowerUpCoroutine != null)
             StopCoroutine(invisibilityPowerUpCoroutine);
@@ -1319,6 +1328,8 @@ public class PlayerController : MonoBehaviour
         }
         AudioListener.volume = 0;
 
-        Score.GameEnd();
+        //Score.GameEnd();
+        Score score = FindObjectOfType<Score>();
+        StartCoroutine(score.SceneEnd(false));
     }
 }

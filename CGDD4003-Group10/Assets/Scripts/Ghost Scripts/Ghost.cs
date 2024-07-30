@@ -203,6 +203,29 @@ public class Ghost : MonoBehaviour
 
             spawnDoor = GameObject.FindGameObjectWithTag("SpawnRoomDoor").GetComponent<SpawnDoor>();
         }
+
+        if(scatterTarget == null)
+        {
+            if (Score.bossEnding)
+            {
+                if (GetType() == typeof(Inky))
+                {
+                    scatterTarget = GameObject.FindGameObjectWithTag("InkyScatter").transform;
+                }
+                else if (GetType() == typeof(Blinky))
+                {
+                    scatterTarget = GameObject.FindGameObjectWithTag("BlinkyScatter").transform;
+                }
+                else if (GetType() == typeof(Pinky))
+                {
+                    scatterTarget = GameObject.FindGameObjectWithTag("PinkyScatter").transform;
+                }
+                else if (GetType() == typeof(Clyde))
+                {
+                    scatterTarget = GameObject.FindGameObjectWithTag("ClydeScatter").transform;
+                }
+            }
+        }
     }
 
     // Update is called once per frame

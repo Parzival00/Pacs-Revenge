@@ -77,7 +77,7 @@ public class MainMenuManager : MonoBehaviour
         audioController = GameObject.FindObjectOfType<GlobalAudioController>();
 
         if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "GameOverScene" || 
-            SceneManager.GetActiveScene().name == "ScoreScreen" || SceneManager.GetActiveScene().name == "Credits")
+            SceneManager.GetActiveScene().name == "ScoreScreen" || SceneManager.GetActiveScene().name == "Credits" || SceneManager.GetActiveScene().name == "End")
         {
             Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.None;
@@ -379,6 +379,11 @@ public class MainMenuManager : MonoBehaviour
         UIAudio.PlayOneShot(buttonClick);
         endStatsScreen.SetActive(false);
         gameOverScreen.SetActive(true);
+    }
+
+    public void PlayClickAudio()
+    {
+        UIAudio.PlayOneShot(buttonClick);
     }
 
     #region Audio Volume Testing Functions
