@@ -67,8 +67,11 @@ public class Boss : MonoBehaviour
     Animator animator;
     Rigidbody rb;
 
+    Vector3 startPosition;
+
     [SerializeField] BossSpawner bossSpawner;
     [SerializeField] BossfightEndController endController;
+    [SerializeField] float startDelay = 5f;
 
     [Header("Boss Heads")]
     [SerializeField] BossHead inkyHead;
@@ -120,6 +123,7 @@ public class Boss : MonoBehaviour
     [SerializeField] GameObject smallClydeBloodPrefab;
     [SerializeField] int bloodAmountUponHeadDeath = 20;
     [SerializeField] int bloodAmountUponDeath = 40;
+    [SerializeField] float respawnDelay = 2f;
     [SerializeField] BoxCollider inkyBloodSpawnArea;
     [SerializeField] BoxCollider pinkyBloodSpawnArea;
     [SerializeField] BoxCollider blinkyBloodSpawnArea;
@@ -190,6 +194,10 @@ public class Boss : MonoBehaviour
 
         currentState = BossState.Initial;
 
+        Invoke("Initial", startDelay);
+
+        startPosition = transform.position;
+
         blinkysKilled = 0;
         inkysKilled = 0;
         pinkysKilled = 0;
@@ -256,7 +264,6 @@ public class Boss : MonoBehaviour
         switch(currentState)
         {
             case BossState.Initial:
-                Initial();
                 break;
             case BossState.AttackCooldown:
                 AttackCooldown();
@@ -833,5 +840,15 @@ public class Boss : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         endController.StartEndSequence();
+    }
+
+    public void ResetBoss()
+    {
+        transform.position = startPosition;
+
+        rb.velocity = Vector3.zero;
+
+        currentState = BossState.Initial;
+        Invoke("Initial", respawnDelay);
     }
 }

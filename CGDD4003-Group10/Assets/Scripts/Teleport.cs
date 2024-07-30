@@ -67,7 +67,7 @@ public class Teleport : MonoBehaviour
         Vector3 randomDestination = new Vector3(Random.Range(-25, 25), 0.52f, Random.Range(-20, 20));
         Vector2 gridLocation = map.GetGridLocation(randomDestination);
 
-        if (map.map[(int)gridLocation.x, (int)gridLocation.y].Equals(Map.GridType.Barrier))
+        if (map.map[(int)gridLocation.x, (int)gridLocation.y].Equals(Map.GridType.Barrier) || map.map[(int)gridLocation.x, (int)gridLocation.y].Equals(Map.GridType.Wall))
         {
             return GetValidSpace();
         }

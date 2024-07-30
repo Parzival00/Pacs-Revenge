@@ -1047,6 +1047,8 @@ public class PlayerController : MonoBehaviour
         {
             BossSpawner bossSpawner = FindObjectOfType<BossSpawner>();
             if (bossSpawner) bossSpawner.ResetGhosts();
+            Boss boss = FindObjectOfType<Boss>();
+            if (boss) boss.ResetBoss();
         }
         else
         {

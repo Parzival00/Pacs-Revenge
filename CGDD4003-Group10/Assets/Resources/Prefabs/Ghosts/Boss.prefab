@@ -78,6 +78,7 @@ GameObject:
   - component: {fileID: 2749209369017834518}
   - component: {fileID: 5874843912045446154}
   - component: {fileID: 6779262941612954664}
+  - component: {fileID: 3546402783165907607}
   m_Layer: 16
   m_Name: BlinkyHead
   m_TagString: Untagged
@@ -134,6 +135,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headID: 1
+--- !u!54 &3546402783165907607
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 132771469982510805}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &194157121697474584
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,6 +288,7 @@ GameObject:
   - component: {fileID: 6594447896754148701}
   - component: {fileID: 9063378495458102981}
   - component: {fileID: 1026021543708174922}
+  - component: {fileID: 5340945839751649555}
   m_Layer: 16
   m_Name: PinkyHead
   m_TagString: Untagged
@@ -318,6 +347,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headID: 2
+--- !u!54 &5340945839751649555
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667797599312114383}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &1201093778711766403
 GameObject:
   m_ObjectHideFlags: 0
@@ -365,17 +421,17 @@ MonoBehaviour:
   difficultySettings:
   - difficultyLevel: 0
     maxHealth: 400
-    shieldDeactivateLength: 12
+    shieldDeactivateLength: 8
     killedPointWorth: 250
     hitPointWorth: 75
   - difficultyLevel: 1
     maxHealth: 500
-    shieldDeactivateLength: 9
+    shieldDeactivateLength: 6.5
     killedPointWorth: 325
     hitPointWorth: 100
   - difficultyLevel: 2
     maxHealth: 600
-    shieldDeactivateLength: 7
+    shieldDeactivateLength: 5
     killedPointWorth: 400
     hitPointWorth: 150
   id: 2
@@ -500,7 +556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeModifier: 0.75
-  enhanced: 0
+  enhanced: 1
 --- !u!1 &1434805243670815117
 GameObject:
   m_ObjectHideFlags: 0
@@ -5469,6 +5525,7 @@ GameObject:
   - component: {fileID: 867206900806275605}
   - component: {fileID: 8342585624934206956}
   - component: {fileID: 9142794937931413586}
+  - component: {fileID: 543986694358624346}
   m_Layer: 16
   m_Name: PinkyHead
   m_TagString: Untagged
@@ -5527,6 +5584,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headID: 2
+--- !u!54 &543986694358624346
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810979553706993390}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &2093325365308103354
 GameObject:
   m_ObjectHideFlags: 0
@@ -5622,6 +5706,7 @@ GameObject:
   - component: {fileID: 6184756104036552349}
   - component: {fileID: 1649609172037058615}
   - component: {fileID: 2254490528618774338}
+  - component: {fileID: 6090764324861598568}
   m_Layer: 16
   m_Name: PinkyHead
   m_TagString: Untagged
@@ -5680,6 +5765,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headID: 2
+--- !u!54 &6090764324861598568
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2233873202623814947}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &2265368097081057001
 GameObject:
   m_ObjectHideFlags: 0
@@ -5744,6 +5856,7 @@ GameObject:
   - component: {fileID: 4975425623804507685}
   - component: {fileID: 4159772426781484757}
   - component: {fileID: 781347095644983902}
+  - component: {fileID: 7595733034759608764}
   m_Layer: 16
   m_Name: ClydeHead
   m_TagString: Untagged
@@ -5802,6 +5915,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headID: 3
+--- !u!54 &7595733034759608764
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2557330144549622483}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &2839472800875292813
 GameObject:
   m_ObjectHideFlags: 0
@@ -10792,6 +10932,7 @@ GameObject:
   - component: {fileID: 885130779963841040}
   - component: {fileID: 473795411807164431}
   - component: {fileID: 1725535408669293287}
+  - component: {fileID: 8950796509756591237}
   m_Layer: 16
   m_Name: ClydeHead
   m_TagString: Untagged
@@ -10850,6 +10991,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headID: 3
+--- !u!54 &8950796509756591237
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3083299966141189708}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &3225140143211940071
 GameObject:
   m_ObjectHideFlags: 0
@@ -10902,7 +11070,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9087848050378509675
 Transform:
   m_ObjectHideFlags: 0
@@ -10933,7 +11101,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -11172,7 +11340,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.06
+      scalar: 0.03
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -11225,7 +11393,7 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.25
+      scalar: 0.27
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -11755,7 +11923,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 30
+      scalar: 0
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -11858,8 +12026,66 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    m_BurstCount: 0
-    m_Bursts: []
+    m_BurstCount: 1
+    m_Bursts:
+    - serializedVersion: 2
+      time: 0
+      countCurve:
+        serializedVersion: 2
+        minMaxState: 1
+        scalar: 8
+        minScalar: 30
+        maxCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 1
+            inSlope: -1
+            outSlope: -1
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 0
+            inSlope: -1
+            outSlope: -1
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        minCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+      cycleCount: 16
+      repeatInterval: 0.1
+      probability: 1
   SizeModule:
     enabled: 1
     curve:
@@ -15795,6 +16021,7 @@ GameObject:
   - component: {fileID: 6628978298412722631}
   - component: {fileID: 7628752797276582147}
   - component: {fileID: 686844375298608532}
+  - component: {fileID: 3659596438375410838}
   m_Layer: 16
   m_Name: InkyHead
   m_TagString: Untagged
@@ -15853,6 +16080,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headID: 0
+--- !u!54 &3659596438375410838
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3707820118285813205}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &3791074210631194895
 GameObject:
   m_ObjectHideFlags: 0
@@ -15917,6 +16171,7 @@ GameObject:
   - component: {fileID: 5536563724736725342}
   - component: {fileID: 5016825268463863602}
   - component: {fileID: 7324215564459841194}
+  - component: {fileID: 392633521999182859}
   m_Layer: 16
   m_Name: ClydeHead
   m_TagString: Untagged
@@ -15975,6 +16230,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headID: 3
+--- !u!54 &392633521999182859
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3930315334702561592}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &4040822789618345815
 GameObject:
   m_ObjectHideFlags: 0
@@ -16022,17 +16304,17 @@ MonoBehaviour:
   difficultySettings:
   - difficultyLevel: 0
     maxHealth: 400
-    shieldDeactivateLength: 12
+    shieldDeactivateLength: 8
     killedPointWorth: 250
     hitPointWorth: 75
   - difficultyLevel: 1
     maxHealth: 500
-    shieldDeactivateLength: 9
+    shieldDeactivateLength: 6.5
     killedPointWorth: 325
     hitPointWorth: 100
   - difficultyLevel: 2
     maxHealth: 600
-    shieldDeactivateLength: 7
+    shieldDeactivateLength: 5
     killedPointWorth: 400
     hitPointWorth: 150
   id: 0
@@ -16048,6 +16330,7 @@ GameObject:
   - component: {fileID: 6257648066090433469}
   - component: {fileID: 6884552009093283077}
   - component: {fileID: 8275431524396553462}
+  - component: {fileID: 1931406388055339682}
   m_Layer: 16
   m_Name: InkyHead
   m_TagString: Untagged
@@ -16106,6 +16389,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headID: 0
+--- !u!54 &1931406388055339682
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4094730944567028652}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &4281480061666954831
 GameObject:
   m_ObjectHideFlags: 0
@@ -16188,6 +16498,7 @@ GameObject:
   - component: {fileID: 1252535608824866182}
   - component: {fileID: 731761070619966652}
   - component: {fileID: 5223122872950708455}
+  - component: {fileID: 6979054259124041537}
   m_Layer: 16
   m_Name: PinkyHead
   m_TagString: Untagged
@@ -16246,6 +16557,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headID: 2
+--- !u!54 &6979054259124041537
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4415476493649628612}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &4493533918994349579
 GameObject:
   m_ObjectHideFlags: 0
@@ -16257,6 +16595,7 @@ GameObject:
   - component: {fileID: 7763810200226789297}
   - component: {fileID: 9222150016685466246}
   - component: {fileID: 2694184775788305152}
+  - component: {fileID: 3974753182545004738}
   m_Layer: 16
   m_Name: ClydeHead
   m_TagString: Untagged
@@ -16315,6 +16654,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headID: 3
+--- !u!54 &3974753182545004738
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4493533918994349579}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &4673900747937552567
 GameObject:
   m_ObjectHideFlags: 0
@@ -16326,6 +16692,7 @@ GameObject:
   - component: {fileID: 3969145880084402569}
   - component: {fileID: 3199961763905387743}
   - component: {fileID: 8059168896597678639}
+  - component: {fileID: 5084329597319441551}
   m_Layer: 16
   m_Name: BlinkyHead
   m_TagString: Untagged
@@ -16382,6 +16749,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headID: 1
+--- !u!54 &5084329597319441551
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4673900747937552567}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &4898124779952604777
 GameObject:
   m_ObjectHideFlags: 0
@@ -21355,17 +21749,17 @@ MonoBehaviour:
   difficultySettings:
   - difficultyLevel: 0
     maxHealth: 425
-    shieldDeactivateLength: 12
+    shieldDeactivateLength: 6.5
     killedPointWorth: 300
     hitPointWorth: 100
   - difficultyLevel: 1
     maxHealth: 575
-    shieldDeactivateLength: 9
+    shieldDeactivateLength: 5
     killedPointWorth: 375
     hitPointWorth: 125
   - difficultyLevel: 2
     maxHealth: 700
-    shieldDeactivateLength: 7
+    shieldDeactivateLength: 3.5
     killedPointWorth: 450
     hitPointWorth: 175
   id: 3
@@ -21416,6 +21810,7 @@ GameObject:
   - component: {fileID: 2688690642433659069}
   - component: {fileID: 7523509174953216257}
   - component: {fileID: 7127962273859956109}
+  - component: {fileID: 2317270727312981210}
   m_Layer: 16
   m_Name: InkyHead
   m_TagString: Untagged
@@ -21474,6 +21869,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headID: 0
+--- !u!54 &2317270727312981210
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5755413158833607867}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &5813253829682548083
 GameObject:
   m_ObjectHideFlags: 0
@@ -21605,17 +22027,17 @@ MonoBehaviour:
   difficultySettings:
   - difficultyLevel: 0
     maxHealth: 400
-    shieldDeactivateLength: 12
+    shieldDeactivateLength: 8
     killedPointWorth: 250
     hitPointWorth: 75
   - difficultyLevel: 1
     maxHealth: 500
-    shieldDeactivateLength: 9
+    shieldDeactivateLength: 6.5
     killedPointWorth: 325
     hitPointWorth: 100
   - difficultyLevel: 2
     maxHealth: 600
-    shieldDeactivateLength: 7
+    shieldDeactivateLength: 5
     killedPointWorth: 400
     hitPointWorth: 150
   id: 1
@@ -21631,6 +22053,7 @@ GameObject:
   - component: {fileID: 5694674588072883561}
   - component: {fileID: 5801716216239641468}
   - component: {fileID: 774076403032534173}
+  - component: {fileID: 339347494919358165}
   m_Layer: 16
   m_Name: InkyHead
   m_TagString: Untagged
@@ -21689,6 +22112,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headID: 0
+--- !u!54 &339347494919358165
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6775241143821678178}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &6955391811326770366
 GameObject:
   m_ObjectHideFlags: 0
@@ -21700,6 +22150,7 @@ GameObject:
   - component: {fileID: 4824916625243573653}
   - component: {fileID: 4212874189394413117}
   - component: {fileID: 1577411840329638630}
+  - component: {fileID: 7981905854036479842}
   m_Layer: 16
   m_Name: PinkyHead
   m_TagString: Untagged
@@ -21758,6 +22209,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headID: 2
+--- !u!54 &7981905854036479842
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6955391811326770366}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &7127608893223729189
 GameObject:
   m_ObjectHideFlags: 0
@@ -21804,6 +22282,7 @@ GameObject:
   - component: {fileID: 9188241325696980661}
   - component: {fileID: 2092452125830161169}
   - component: {fileID: 8460536594189952779}
+  - component: {fileID: 5426564702640497159}
   m_Layer: 16
   m_Name: BlinkyHead
   m_TagString: Untagged
@@ -21860,6 +22339,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headID: 1
+--- !u!54 &5426564702640497159
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7562588942971837858}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &7800963557387512724
 GameObject:
   m_ObjectHideFlags: 0
@@ -21871,6 +22377,7 @@ GameObject:
   - component: {fileID: 684487323774020439}
   - component: {fileID: 3260691017102899098}
   - component: {fileID: 2924716989471315812}
+  - component: {fileID: 327313919819225975}
   m_Layer: 16
   m_Name: BlinkyHead
   m_TagString: Untagged
@@ -21927,6 +22434,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headID: 1
+--- !u!54 &327313919819225975
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7800963557387512724}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &8036845001061338620
 GameObject:
   m_ObjectHideFlags: 0
@@ -22045,6 +22579,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossSpawner: {fileID: 0}
   endController: {fileID: 0}
+  startDelay: 9
   inkyHead: {fileID: 1780653166209507624}
   blinkyHead: {fileID: 6756449761917360858}
   pinkyHead: {fileID: 800224489552950836}
@@ -22139,6 +22674,7 @@ MonoBehaviour:
   smallClydeBloodPrefab: {fileID: 7818894797380219674, guid: 1999a51d056ffd04f9a23faff7276b0e, type: 3}
   bloodAmountUponHeadDeath: 20
   bloodAmountUponDeath: 40
+  respawnDelay: 5
   inkyBloodSpawnArea: {fileID: 3855749541170970046}
   pinkyBloodSpawnArea: {fileID: 6152226726740492531}
   blinkyBloodSpawnArea: {fileID: 1816295975370626307}
@@ -22237,6 +22773,7 @@ GameObject:
   - component: {fileID: 7823876942583593866}
   - component: {fileID: 3383741006763409982}
   - component: {fileID: 4929459346651237686}
+  - component: {fileID: 5067583886395539756}
   m_Layer: 16
   m_Name: InkyHead
   m_TagString: Untagged
@@ -22295,6 +22832,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headID: 0
+--- !u!54 &5067583886395539756
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8270643365480653159}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &8635410039739238957
 GameObject:
   m_ObjectHideFlags: 0
@@ -22306,6 +22870,7 @@ GameObject:
   - component: {fileID: 2922736241893724591}
   - component: {fileID: 2357878007331050774}
   - component: {fileID: 8567011497291195926}
+  - component: {fileID: 5190209425213781386}
   m_Layer: 16
   m_Name: ClydeHead
   m_TagString: Untagged
@@ -22364,6 +22929,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headID: 3
+--- !u!54 &5190209425213781386
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8635410039739238957}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &8892957687502393380
 GameObject:
   m_ObjectHideFlags: 0
@@ -27270,6 +27862,7 @@ GameObject:
   - component: {fileID: 7177118848953771660}
   - component: {fileID: 1304733102488743421}
   - component: {fileID: 1367970644461969601}
+  - component: {fileID: 5553573044569815341}
   m_Layer: 16
   m_Name: BlinkyHead
   m_TagString: Untagged
@@ -27326,6 +27919,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headID: 1
+--- !u!54 &5553573044569815341
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8964447172353830227}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &8985958751941589614
 GameObject:
   m_ObjectHideFlags: 0
@@ -27423,12 +28043,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 8830217029841420559}
     m_Modifications:
     - target: {fileID: 1577719863364244292, guid: 4f66dc0aaad382c4ebb989d580c4a354, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577719863364244292, guid: 4f66dc0aaad382c4ebb989d580c4a354, type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].time
       value: 0.058348715
       objectReference: {fileID: 0}
     - target: {fileID: 1577719863364244292, guid: 4f66dc0aaad382c4ebb989d580c4a354, type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
       value: 0.31501836
+      objectReference: {fileID: 0}
+    - target: {fileID: 1984296982800954363, guid: 4f66dc0aaad382c4ebb989d580c4a354, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2026369401877275134, guid: 4f66dc0aaad382c4ebb989d580c4a354, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3594000407557878294, guid: 4f66dc0aaad382c4ebb989d580c4a354, type: 3}
       propertyPath: m_Name
@@ -27441,6 +28073,10 @@ PrefabInstance:
     - target: {fileID: 5886061437412519609, guid: 4f66dc0aaad382c4ebb989d580c4a354, type: 3}
       propertyPath: m_TagString
       value: EnemyProjectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 8094928328770913778, guid: 4f66dc0aaad382c4ebb989d580c4a354, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8094928328770913778, guid: 4f66dc0aaad382c4ebb989d580c4a354, type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].time

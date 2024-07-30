@@ -33,6 +33,8 @@ public class BossHead : MonoBehaviour
 
     int ghostsKilled = 0;
 
+    int newGhostsKilled = 0;
+
     bool shieldActive = true;
 
     // Start is called before the first frame update
@@ -71,6 +73,7 @@ public class BossHead : MonoBehaviour
             yield return null;
         }
         shieldActive = !dead;
+        ghostsKilled = newGhostsKilled;
     }
 
     public int TakeDamage(float amount, float patienceMultiplier, int newGhostsKilled)
@@ -78,20 +81,22 @@ public class BossHead : MonoBehaviour
         int points = 0;
         if(shieldActive == false && health > 0)
         {
-            health -= amount * Mathf.Max(1, (newGhostsKilled - ghostsKilled - 1)) * patienceMultiplier;
+            health -= amount * Mathf.Max(1, (newGhostsKilled - ghostsKilled - 1) * patienceMultiplier);
             if(debug) print(name + " - Health: " + health + ", Max Health: " + currentDifficultySettings.maxHealth);
             if (health <= 0)
             {
                 health = 0;
                 dead = true;
-                points = Mathf.RoundToInt((float)currentDifficultySettings.killedPointWorth * Mathf.Max(1, (newGhostsKilled - ghostsKilled - 1)) * patienceMultiplier);
+                points = Mathf.RoundToInt((float)currentDifficultySettings.killedPointWorth * Mathf.Max(1, (newGhostsKilled - ghostsKilled - 1) * patienceMultiplier));
 
                 boss.HeadKilled(id);
             }
             else
             {
-                points = Mathf.RoundToInt((float)currentDifficultySettings.hitPointWorth * Mathf.Max(1, (newGhostsKilled - ghostsKilled - 1)) * patienceMultiplier);
-                ghostsKilled = newGhostsKilled;
+                points = Mathf.RoundToInt((float)currentDifficultySettings.hitPointWorth * Mathf.Max(1, (newGhostsKilled - ghostsKilled - 1) * patienceMultiplier));
+                this.newGhostsKilled = newGhostsKilled;
+                if (newGhostsKilled - ghostsKilled <= 1)
+                    ghostsKilled = newGhostsKilled;
             }
         }
         return points;

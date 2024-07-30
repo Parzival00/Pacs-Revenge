@@ -6,34 +6,37 @@ using UnityEngine.Jobs;
 
 public class BossArenaSetUp : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField] float startDelay = 2.5f;
+    [Header("Camera Shake")]
+    [SerializeField] CameraShake cameraShake;
+    [SerializeField] float shakeStrength;
+
     [Header("Wall Variables")]
-    Transform allInnerWalls;
+    [SerializeField] Transform allInnerWalls;
 
-    public Vector3 wTargetY = new Vector3(0,-10,0);
+    [SerializeField] Vector3 wTargetY = new Vector3(0,-10,0);
 
-    public float wSpeed = 0.5f;
+    [SerializeField] float wSpeed = 0.5f;
 
     [Header("Pillar Variables")]
-    public Transform mapPillars;
+    [SerializeField] Transform mapPillars;
 
-    public Vector3 pTargetY = new Vector3(0, -10, 0);
+    [SerializeField] Vector3 pTargetY = new Vector3(0, -10, 0);
 
-    public float pSpeed = 0.5f;
+    [SerializeField] float pSpeed = 0.5f;
 
     void Start()
     {
+        Invoke("BossStart", startDelay);
+    }
 
+    private void BossStart()
+    {
         allInnerWalls = GetComponent<Transform>();
         Debug.Log("Got empty objects transform");
         StartCoroutine(LowerInnerWalls());
         Debug.Log("Walls have moved down?");
         StartCoroutine(RaisePillars());
-    }
-
-    void Update()
-    {
-
     }
 
     public IEnumerator LowerInnerWalls() 
@@ -44,20 +47,21 @@ public class BossArenaSetUp : MonoBehaviour
 
             allInnerWalls.position = Vector3.MoveTowards(allInnerWalls.position,wTargetY,wSpeed * Time.deltaTime);
 
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
     }
     public IEnumerator RaisePillars()
     {
-        while(mapPillars.position != pTargetY) 
+        cameraShake.ShakeCamera(shakeStrength, 0.5f, Mathf.Abs(mapPillars.position.y - pTargetY.y) / pSpeed, false);
+        while (mapPillars.position != pTargetY) 
         {
             Debug.Log("Winner Winner Chicken Dinner");
 
             mapPillars.position = Vector3.MoveTowards(mapPillars.position,pTargetY, pSpeed * Time.deltaTime);
 
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
 
-        Destroy(allInnerWalls.gameObject,5);
+        Destroy(allInnerWalls.gameObject,6);
     }
 }
