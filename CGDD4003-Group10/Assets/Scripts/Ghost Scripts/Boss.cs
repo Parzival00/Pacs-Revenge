@@ -133,16 +133,20 @@ public class Boss : MonoBehaviour
     [Header("Audio Sources")]
     [SerializeField] AudioSource enrageSound;
     [SerializeField] AudioSource stepSound;
+    [SerializeField] AudioSource stepSound2;
     [SerializeField] AudioSource blinkyChargeSound;
     [SerializeField] AudioSource blinkyReleaseSound;
     [SerializeField] AudioSource inkyChargeSound;
     [SerializeField] AudioSource inkyReleaseSound;
-    [SerializeField] AudioSource pinkyChargeSound;
     [SerializeField] AudioSource pinkyReleaseSound;
     [SerializeField] AudioSource clydeChargeSound;
     [SerializeField] AudioSource clydeReleaseSound;
-    [SerializeField] AudioSource slamChargeSound;
     [SerializeField] AudioSource slamSound;
+    [SerializeField] AudioSource bossHit;
+    [SerializeField] AudioSource bossDeflect;
+    [SerializeField] AudioSource blinkyDeath;
+    [SerializeField] AudioSource inkyDeath;
+    [SerializeField] AudioSource pinkyDeath;
 
     DifficultySettings currentDifficultySettings;
 
@@ -442,6 +446,17 @@ public class Boss : MonoBehaviour
         float multiplier = Mathf.Clamp01(1 - (distToPlayer - 1.5f) / moveCamShakeDropoffDist);
         if(multiplier > 0)
             player.CamShake.ShakeCamera(moveCamShakeStrength * multiplier, 0.5f, 0.08f);
+
+        if (!stepSound.isPlaying)
+        {
+            stepSound.pitch = Random.Range(0.9f, 1.1f);
+            stepSound.Play();
+        }
+        else if (!stepSound2.isPlaying)
+        {
+            stepSound2.pitch = Random.Range(0.9f, 1.1f);
+            stepSound2.Play();
+        }
     }
 
     private void AttackCooldown()
@@ -677,10 +692,14 @@ public class Boss : MonoBehaviour
             obj.transform.localRotation *= Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.forward);
             Destroy(obj, 2.5f);
 
+            if (bossDeflect != null) bossDeflect.Play();
+
             //hitSoundSource.PlayOneShot(shieldHitSound);
         }
         else
         {
+            if (bossHit != null) bossHit.Play();
+
             SpawnBlood(3, headID);
             StartCoroutine(Knockback(-transform.forward * Time.deltaTime * 10000, 0.1f));
 
@@ -817,7 +836,7 @@ public class Boss : MonoBehaviour
         isAttacking = false;
         animator.SetTrigger("Enrage");
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2.5f);
 
         movementPhaseStarted = false;
         currentState = BossState.Chase;
@@ -850,5 +869,10 @@ public class Boss : MonoBehaviour
 
         currentState = BossState.Initial;
         Invoke("Initial", respawnDelay);
+    }
+
+    void PlaySlamSound()
+    {
+        slamSound.Play();
     }
 }

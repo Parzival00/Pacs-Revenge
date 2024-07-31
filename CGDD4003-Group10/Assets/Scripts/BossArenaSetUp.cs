@@ -1,8 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 using UnityEngine;
-using UnityEngine.Jobs;
 
 public class BossArenaSetUp : MonoBehaviour
 {
@@ -13,17 +10,16 @@ public class BossArenaSetUp : MonoBehaviour
 
     [Header("Wall Variables")]
     [SerializeField] Transform allInnerWalls;
-
     [SerializeField] Vector3 wTargetY = new Vector3(0,-10,0);
-
     [SerializeField] float wSpeed = 0.5f;
 
     [Header("Pillar Variables")]
     [SerializeField] Transform mapPillars;
-
     [SerializeField] Vector3 pTargetY = new Vector3(0, -10, 0);
-
     [SerializeField] float pSpeed = 0.5f;
+
+    [Header("Audio")]
+    [SerializeField] AudioSource wallRevealSound;
 
     void Start()
     {
@@ -32,6 +28,8 @@ public class BossArenaSetUp : MonoBehaviour
 
     private void BossStart()
     {
+        wallRevealSound.Play();
+
         allInnerWalls = GetComponent<Transform>();
         Debug.Log("Got empty objects transform");
         StartCoroutine(LowerInnerWalls());
