@@ -581,10 +581,16 @@ public class Boss : MonoBehaviour
             attackChoices[1].weight = 0.3f; //Add weight to current attack to make it less likely to happen twice in a row
         StartCoroutine(BlinkyLaser());
     }
+    void PlayBlinkyChargeSound()
+    {
+        blinkyChargeSound.Play();
+    }
     //Activate the blinky laser for a certain amount of time
     IEnumerator BlinkyLaser()
     {
         blinkyLaser.gameObject.SetActive(true);
+
+        blinkyReleaseSound.Play();
 
         float timer = 0;
         while (timer < currentDifficultySettings.blinkyAttackDuration)
@@ -620,6 +626,19 @@ public class Boss : MonoBehaviour
 
         //Change rotation smoothing of the boss back to the normal amount
         currentRotationSmoothing = rotationSmoothing;
+
+        float volume = blinkyReleaseSound.volume;
+        timer = 0;
+        while(timer < 0.2f)
+        {
+            timer += Time.deltaTime;
+            blinkyReleaseSound.volume = volume * ((0.2f - timer) / 0.2f);
+
+            yield return null;
+        }
+
+        blinkyReleaseSound.Stop();
+        blinkyReleaseSound.volume = volume;
     }
 
     //Animation Event
