@@ -147,6 +147,7 @@ public class Boss : MonoBehaviour
     [SerializeField] AudioSource blinkyDeath;
     [SerializeField] AudioSource inkyDeath;
     [SerializeField] AudioSource pinkyDeath;
+    [SerializeField] AudioSource clydeDeath;
 
     DifficultySettings currentDifficultySettings;
 
@@ -768,6 +769,22 @@ public class Boss : MonoBehaviour
 
         if(currentAttack == headID) {
             isAttacking = false;
+        }
+
+        switch(headID)
+        {
+            case 0:
+                if (inkyDeath) inkyDeath.Play();
+                break;
+            case 1:
+                if (blinkyDeath) blinkyDeath.Play();
+                break;
+            case 2:
+                if (pinkyDeath) pinkyDeath.Play();
+                break;
+            case 3:
+                if (clydeDeath) clydeDeath.Play();
+                break;
         }
     }
 
