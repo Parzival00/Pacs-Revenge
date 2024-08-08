@@ -343,6 +343,9 @@ public class MainMenuManager : MonoBehaviour
     {
         UIAudio.PlayOneShot(buttonClick);
         Score.SetDifficulty(value);
+
+        //Wah Wah! achievement (Play Baby mode)
+        AchievementManager.displayAchievement("Wah Wah!");
     }
     public void DisplayEndStatistics()
     {

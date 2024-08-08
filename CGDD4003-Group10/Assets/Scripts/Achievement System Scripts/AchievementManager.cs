@@ -41,7 +41,7 @@ public class AchievementManager
             potential.Add(new Achievement("AchievementImages/slow.png", "Too Slow!", "Fail to beat the boss in time", false));
             potential.Add(new Achievement("AchievementImages/baby.png", "Wah Wah!", "Play on Baby mode", false));
             potential.Add(new Achievement("AchievementImages/oof.png", "OOF", "Die x amount of times", false));
-            potential.Add(new Achievement("/AchievementImages/dead_baby.png", "Seriously??", "Die on baby mode", false));
+            potential.Add(new Achievement("AchievementImages/dead_baby.png", "Seriously??", "Die on baby mode", false));
             potential.Add(new Achievement("AchievementImages/massacre.png", "Massacre", "Kill x ghosts on one level", false));
             potential.Add(new Achievement("AchievementImages/nom.png", "Nom Nom Nom", "Collect every kind of fruit", false));
             potential.Add(new Achievement("AchievementImages/speakers.png", "Where's That Coming From?", "Check out the Boss' sound system", false));
@@ -125,16 +125,38 @@ public class AchievementManager
             descripText.text = current.description;
             icon.sprite = Resources.Load<Sprite>(current.imagePath);
             save(); //saves the new achievement to the save file
+
+            //Completionist Achievement (Get all other achievements)
+            //Needs art to add the real achievement
+            if (collected.Count <= 1)
+                displayAchievement("Completionist");
         }
     }
     public static void addDeath()
     {
         deaths.value = (deaths.value + 1);
+
+        //Oof achievement (Die a certain amount of times)
+        int deathsRequired = 100;
+
+        if (deaths.value >= deathsRequired)
+            displayAchievement("OOF");
+
+        //Seriously?? achievement (Die on baby mode)
+        if (Score.difficulty == 0)
+            displayAchievement("Seriously??");
+            
         save();
     }
+
     public static void addFruit()
     {
         fruitCollected.value = (fruitCollected.value + 1);
+
+        //Nom Nom Nom achievement (Eat a fruit)
+        if (Score.difficulty == 0)
+            displayAchievement("Nom Nom Nom");
+        
         save();
     }
 }
