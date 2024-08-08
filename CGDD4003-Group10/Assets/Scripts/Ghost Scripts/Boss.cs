@@ -687,22 +687,26 @@ public class Boss : MonoBehaviour
     public BossHitInformation GotHit(Vector3 hitPosition, int headID)
     {
         BossHitInformation hit = new BossHitInformation();
+        hit.pointWorth = 0;
 
-        //Apply damage to correct head
-        switch(headID)
+        if (!Score.bossTimerEnded)
         {
-            case 0:
-                hit.pointWorth = inkyHead.TakeDamage(currentDifficultySettings.baseRailgunDamage, currentDifficultySettings.patienceMultiplier, inkysKilled);
-                break;
-            case 1:
-                hit.pointWorth = blinkyHead.TakeDamage(currentDifficultySettings.baseRailgunDamage, currentDifficultySettings.patienceMultiplier, blinkysKilled);
-                break;
-            case 2:
-                hit.pointWorth = pinkyHead.TakeDamage(currentDifficultySettings.baseRailgunDamage, currentDifficultySettings.patienceMultiplier, pinkysKilled);
-                break;
-            case 3:
-                hit.pointWorth = clydeHead.TakeDamage(currentDifficultySettings.baseRailgunDamage, currentDifficultySettings.patienceMultiplier, clydesKilled);
-                break;
+            //Apply damage to correct head
+            switch (headID)
+            {
+                case 0:
+                    hit.pointWorth = inkyHead.TakeDamage(currentDifficultySettings.baseRailgunDamage, currentDifficultySettings.patienceMultiplier, inkysKilled);
+                    break;
+                case 1:
+                    hit.pointWorth = blinkyHead.TakeDamage(currentDifficultySettings.baseRailgunDamage, currentDifficultySettings.patienceMultiplier, blinkysKilled);
+                    break;
+                case 2:
+                    hit.pointWorth = pinkyHead.TakeDamage(currentDifficultySettings.baseRailgunDamage, currentDifficultySettings.patienceMultiplier, pinkysKilled);
+                    break;
+                case 3:
+                    hit.pointWorth = clydeHead.TakeDamage(currentDifficultySettings.baseRailgunDamage, currentDifficultySettings.patienceMultiplier, clydesKilled);
+                    break;
+            }
         }
 
         //No points awarded means the hit heads shield was active so spawn shield prefab

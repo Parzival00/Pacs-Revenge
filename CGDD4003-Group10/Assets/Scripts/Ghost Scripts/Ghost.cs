@@ -180,6 +180,7 @@ public class Ghost : MonoBehaviour
         ghostHealth = currentDifficultySettings.health;
 
         speed *= 1 + (Score.bossEnding ?  -0.2f : levelSpeedIncrease * (Score.currentLevel - 1));
+        if (Score.bossEnding && Score.bossTimerEnded) speed *= 1.5f; 
         navMesh.speed = speed;
 
         stunEffect.SetActive(false);

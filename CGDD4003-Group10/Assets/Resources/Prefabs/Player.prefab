@@ -6861,6 +6861,7 @@ MonoBehaviour:
   scoreUI: {fileID: 0}
   pelletRemaining: {fileID: 0}
   pointValueIndicator: {fileID: 0}
+  bossFightTimerText: {fileID: 0}
   munchAudioSource: {fileID: 7337700370802506642}
   radarAudioSource: {fileID: 1280984969820592023}
   pelletSound: {fileID: 8300000, guid: 390b72579c63df34d8cfead757aab8ff, type: 3}
@@ -6868,13 +6869,17 @@ MonoBehaviour:
   indicatorTimerThreshold: 10
   pointsAddedIndicatorLength: 0.8
   gameSceneRenderTex: {fileID: 8400000, guid: 1fbbf88530324554bbc10d8e0b318019, type: 2}
+  bossFightStartDelay: 15
   difficultySettings:
   - difficultyLevel: 0
     bossStungunRechargeRate: 1.5
+    bossTimerAmount: 8
   - difficultyLevel: 1
     bossStungunRechargeRate: 2.5
+    bossTimerAmount: 8
   - difficultyLevel: 2
     bossStungunRechargeRate: 3.5
+    bossTimerAmount: 8
 --- !u!114 &6717606324952877450
 MonoBehaviour:
   m_ObjectHideFlags: 0

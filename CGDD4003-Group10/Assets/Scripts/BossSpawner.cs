@@ -31,6 +31,7 @@ public class BossSpawner : MonoBehaviour
     [SerializeField] GameObject lightningEffect;
     [SerializeField] GameObject[] ghosts;
     [SerializeField] float spawnRadius = 10f;
+    [SerializeField] float bossTimerEndInterval = 0.1f;
 
     public bool spawnGhosts = true;
 
@@ -82,9 +83,12 @@ public class BossSpawner : MonoBehaviour
 
             if(spawnTimer <= 0)
             {
-                StartCoroutine(SpawnGhost());
+                if(spawnedGhosts.Count < 50)
+                    StartCoroutine(SpawnGhost());
 
                 spawnTimer = boss.damage == 7 ? currentDifficultySettings.enrageSpawnInterval : currentDifficultySettings.normalSpawnInterval;
+
+                if (Score.bossTimerEnded) spawnTimer = bossTimerEndInterval;
             }
         }
     }

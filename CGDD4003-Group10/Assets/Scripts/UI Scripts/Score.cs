@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
-using System.Threading;
+using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
@@ -12,6 +12,7 @@ public class Score : MonoBehaviour
     {
         public int difficultyLevel;
         public float bossStungunRechargeRate;
+        public float bossTimerAmount;
     }
 
     public static int score { get; private set; }
@@ -27,9 +28,15 @@ public class Score : MonoBehaviour
     public static bool bossEnding { get; private set; }
     public static int ending { get; private set; }
 
+    public static bool bossTimerEnded { get; private set; }
+
     [SerializeField] TMP_Text scoreUI;
     [SerializeField] TMP_Text pelletRemaining;
     [SerializeField] TMP_Text pointValueIndicator;
+    [SerializeField] GameObject bossTimerParent;
+    [SerializeField] TMP_Text bossFightTimerText;
+    [SerializeField] Image bossTimerEndRedFlash;
+    [SerializeField] Color bossTimerEndBackgroundColor;
     [SerializeField] AudioSource munchAudioSource;
     [SerializeField] AudioSource radarAudioSource;
     [SerializeField] AudioClip pelletSound;
@@ -37,6 +44,7 @@ public class Score : MonoBehaviour
     [SerializeField] float indicatorTimerThreshold = 10; //radar pellet indicator timer threshold
     [SerializeField] float pointsAddedIndicatorLength = 1;
     [SerializeField] RenderTexture gameSceneRenderTex;
+    [SerializeField] float bossFightStartDelay = 15f;
     [SerializeField] DifficultySettings[] difficultySettings;
 
     DifficultySettings currentDifficultySettings;
@@ -55,6 +63,10 @@ public class Score : MonoBehaviour
     HUDMessenger hudMessenger;
 
     static float scoreMultiplier;
+
+    float bossTimer;
+
+    bool startBossTimer;
 
     //Various Stats
     public static int totalGhostKilled { get;  set; }
@@ -144,14 +156,31 @@ public class Score : MonoBehaviour
             currentDifficultySettings = difficultySettings[0];
         }
 
-        if(bossEnding)
+        if (bossEnding)
+        {
             bossStungunRechargeTimer = currentDifficultySettings.bossStungunRechargeRate;
+            bossTimerEnded = false;
+            bossTimer = currentDifficultySettings.bossTimerAmount * 60f;
+
+            int seconds = Mathf.RoundToInt(bossTimer % 60f);
+            int minutes = Mathf.RoundToInt(bossTimer / 60);
+            bossFightTimerText.text = string.Format("{0:00.}", minutes) + ":" + string.Format("{0:00.}", seconds);
+
+            Invoke("StartBossTimer", bossFightStartDelay);
+        }
     }
 
     void DisplayLevelNumber()
     {
         if (currentLevel <= 8)
             hudMessenger.Display("Level " + currentLevel, 3);
+    }
+
+    void StartBossTimer()
+    {
+        startBossTimer = true;
+
+        if (bossTimerParent) bossTimerParent.SetActive(true);
     }
 
 
@@ -181,7 +210,73 @@ public class Score : MonoBehaviour
 
                 bossStungunRechargeTimer = currentDifficultySettings.bossStungunRechargeRate;
             }
+
+            if(startBossTimer == true && PlayerController.playerLives > 0 && !Boss.bossDead)
+            {
+                bossTimer -= Time.deltaTime;
+                if (bossFightTimerText) 
+                {
+                    if (bossTimer > 0)
+                    {
+                        int seconds = Mathf.RoundToInt(bossTimer % 60f);
+                        int minutes = Mathf.FloorToInt(bossTimer / 60);
+                        bossFightTimerText.text = string.Format("{0:00.}", minutes) + ":" + string.Format("{0:00.}", seconds);
+                    } else
+                    {
+                        bossFightTimerText.text ="00:00";
+                    }
+                }
+
+                if(bossTimer <= 0)
+                {
+                    bossTimerEnded = true;
+
+                    if (!timerEndSequenceStarted) StartCoroutine(TimerEndSequence());
+                }
+            } else
+            {
+                if (bossTimerParent) bossTimerParent.SetActive(false);
+            }
         }
+    }
+    bool timerEndSequenceStarted = false;
+
+    IEnumerator TimerEndSequence()
+    {
+        timerEndSequenceStarted = true;
+
+        bossTimerEndRedFlash.gameObject.SetActive(true);
+
+        float timer = 0;
+        Color newColor = bossTimerEndRedFlash.color;
+        newColor.a = 0;
+        bossTimerEndRedFlash.color = newColor;
+        while (timer <= 0.35f)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+            newColor.a = timer / 0.35f;
+            bossTimerEndRedFlash.color = newColor;
+        }
+        newColor.a = 1;
+        bossTimerEndRedFlash.color = newColor;
+
+        gameSceneCamera.backgroundColor = bossTimerEndBackgroundColor;
+
+        yield return new WaitForSeconds(0.15f);
+
+        timer = 0;
+        while (timer <= 0.35f)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+            newColor.a = 1 - timer / 0.35f;
+            bossTimerEndRedFlash.color = newColor;
+        }
+        newColor.a = 0;
+        bossTimerEndRedFlash.color = newColor;
+
+        bossTimerEndRedFlash.gameObject.SetActive(false);
     }
 
     
