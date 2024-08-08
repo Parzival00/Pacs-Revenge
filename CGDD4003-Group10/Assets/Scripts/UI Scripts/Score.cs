@@ -173,7 +173,10 @@ public class Score : MonoBehaviour
     void DisplayLevelNumber()
     {
         if (currentLevel <= 8)
+        {
             hudMessenger.Display("Level " + currentLevel, 3);
+            hudMessenger.Display("Collect all the pellets", 3);
+        }
     }
 
     void StartBossTimer()

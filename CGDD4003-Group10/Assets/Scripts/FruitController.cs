@@ -60,6 +60,7 @@ public class FruitController : MonoBehaviour
     [Header("Sprite Renderers")]
     [SerializeField] SpriteRenderer minimapFruitSpriteRenderer;
     [SerializeField] SpriteRenderer fruitSpriteRenderer;
+    [SerializeField] GameObject pedastalMinimapSprite;
 
     [Header("Collection Collider")]
     [SerializeField] Collider fruitCollectionCollider;
@@ -118,6 +119,8 @@ public class FruitController : MonoBehaviour
 
             minimapFruitSpriteRenderer.sprite = currentFruit.sprite;
             fruitSpriteRenderer.sprite = currentFruit.sprite;
+
+            pedastalMinimapSprite.SetActive(true);
         }
         hudMessenger = FindObjectOfType<HUDMessenger>();
 
@@ -151,6 +154,7 @@ public class FruitController : MonoBehaviour
             fruitCollectionCollider.enabled = true;
 
             fruitActivated = true;
+            pedastalMinimapSprite.SetActive(false);
 
             if (alertMessage != null)
                 fruitSpawnAlertCoroutine = StartCoroutine(FruitSpawnAlert());
@@ -168,6 +172,8 @@ public class FruitController : MonoBehaviour
         fruitCollectionCollider.enabled = false;
 
         fruitActivated = false;
+
+        pedastalMinimapSprite.SetActive(true);
 
         if (fruitTimerCoroutine != null)
             StopCoroutine(fruitTimerCoroutine);
