@@ -29,6 +29,7 @@ public class Score : MonoBehaviour
     public static int ending { get; private set; }
 
     public static bool bossTimerEnded { get; private set; }
+    public float bossfightProgress { get { return 1 - bossTimer / (currentDifficultySettings.bossTimerAmount * 60f); } }
 
     [SerializeField] TMP_Text scoreUI;
     [SerializeField] TMP_Text pelletRemaining;
@@ -37,6 +38,7 @@ public class Score : MonoBehaviour
     [SerializeField] TMP_Text bossFightTimerText;
     [SerializeField] Image bossTimerEndRedFlash;
     [SerializeField] Color bossTimerEndBackgroundColor;
+    [SerializeField] GameObject bossfightPortal;
     [SerializeField] AudioSource munchAudioSource;
     [SerializeField] AudioSource radarAudioSource;
     [SerializeField] AudioClip pelletSound;
@@ -45,7 +47,10 @@ public class Score : MonoBehaviour
     [SerializeField] float pointsAddedIndicatorLength = 1;
     [SerializeField] RenderTexture gameSceneRenderTex;
     [SerializeField] float bossFightStartDelay = 15f;
+    [SerializeField] float bossFightPortalMaxSize = 15f;
     [SerializeField] DifficultySettings[] difficultySettings;
+
+    Vector3 bossfightPortalStartSize;
 
     DifficultySettings currentDifficultySettings;
 
@@ -166,6 +171,8 @@ public class Score : MonoBehaviour
             int minutes = Mathf.RoundToInt(bossTimer / 60);
             bossFightTimerText.text = string.Format("{0:00.}", minutes) + ":" + string.Format("{0:00.}", seconds);
 
+            bossfightPortalStartSize = bossfightPortal.transform.localScale;
+
             Invoke("StartBossTimer", bossFightStartDelay);
         }
     }
@@ -216,6 +223,8 @@ public class Score : MonoBehaviour
 
             if(startBossTimer == true && PlayerController.playerLives > 0 && !Boss.bossDead)
             {
+                if (bossfightPortal) bossfightPortal.transform.localScale = Vector3.Lerp(bossfightPortalStartSize, Vector3.one * bossFightPortalMaxSize, bossfightProgress);
+
                 bossTimer -= Time.deltaTime;
                 if (bossFightTimerText) 
                 {
@@ -265,6 +274,7 @@ public class Score : MonoBehaviour
         bossTimerEndRedFlash.color = newColor;
 
         gameSceneCamera.backgroundColor = bossTimerEndBackgroundColor;
+        bossfightPortal.SetActive(false);
 
         yield return new WaitForSeconds(0.15f);
 
