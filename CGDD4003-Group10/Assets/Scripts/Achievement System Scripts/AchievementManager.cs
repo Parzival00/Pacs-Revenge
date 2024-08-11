@@ -35,17 +35,18 @@ public class AchievementManager
             endings = new sInt(0);
             deaths = new sInt(0);
             fruitCollected = new sInt(0);
-            potential.Add(new Achievement("AchievementImages/triple_threat.png", "Triple Threat", "Get all three endings", false));
-            potential.Add(new Achievement("AchievementImages/victory.png", "You Made It!", "Beat the boss and win the game", false));
-            potential.Add(new Achievement("AchievementImages/corrupted.png", "Corruption", "Sucumb to the corruption and slaughter them all", false));
-            potential.Add(new Achievement("AchievementImages/slow.png", "Too Slow!", "Fail to beat the boss in time", false));
-            potential.Add(new Achievement("AchievementImages/baby.png", "Wah Wah!", "Play on Baby mode", false));
-            potential.Add(new Achievement("AchievementImages/oof.png", "OOF", "Die x amount of times", false));
-            potential.Add(new Achievement("AchievementImages/dead_baby.png", "Seriously??", "Die on baby mode", false));
-            potential.Add(new Achievement("AchievementImages/massacre.png", "Massacre", "Kill x ghosts on one level", false));
-            potential.Add(new Achievement("AchievementImages/nom.png", "Nom Nom Nom", "Collect every kind of fruit", false));
-            potential.Add(new Achievement("AchievementImages/speakers.png", "Where's That Coming From?", "Check out the Boss' sound system", false));
-            potential.Add(new Achievement("AchievementImages/speed.png", "Speed Racer", "Beat the boss in x amount of time", false));
+            potential.Add(new Achievement("AchievementImages/triple_threat", "Triple Threat", "Get all three endings", false));
+            potential.Add(new Achievement("AchievementImages/victory", "You Made It!", "Beat the boss and win the game", false));
+            potential.Add(new Achievement("AchievementImages/corrupted", "Corruption", "Sucumb to the corruption and slaughter them all", false));
+            potential.Add(new Achievement("AchievementImages/slow", "Too Slow!", "Fail to beat the boss in time", false));
+            potential.Add(new Achievement("AchievementImages/baby", "Wah Wah!", "Play on Baby mode", false));
+            potential.Add(new Achievement("AchievementImages/oof", "OOF", "Die x amount of times", false));
+            potential.Add(new Achievement("AchievementImages/dead_baby", "Seriously??", "Die on baby mode", false));
+            potential.Add(new Achievement("AchievementImages/massacre", "Massacre", "Kill x ghosts on one level", false));
+            potential.Add(new Achievement("AchievementImages/nom", "Nom Nom Nom", "Collect every kind of fruit", false));
+            potential.Add(new Achievement("AchievementImages/speakers", "Where's That Coming From?", "Check out the Boss' sound system", false));
+            potential.Add(new Achievement("AchievementImages/speed", "Speedrunner", "Beat the boss in x amount of time", false));
+            potential.Add(new Achievement("AchievementImages/completed", "Completionist", "Get all achievements", false));
         }
         else
         {
@@ -158,5 +159,14 @@ public class AchievementManager
             displayAchievement("Nom Nom Nom");
         
         save();
+    }
+
+    public static List<Achievement> getPotentialAchievements()
+    {
+        return potential;
+    }
+    public static List<Achievement> getCompletedAchievements()
+    {
+        return collected;
     }
 }

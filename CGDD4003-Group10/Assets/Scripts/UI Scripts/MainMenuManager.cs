@@ -19,6 +19,8 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject options;
     [SerializeField] GameObject difficultyScreen;
     [SerializeField] GameObject howToPlayUI;
+    [SerializeField] GameObject achievementsScreen;
+    [SerializeField] AchievementDisplay achievementDisplay;
 
     [Header("Resolution Settings")]
     [SerializeField] TMP_Dropdown screenResolution;
@@ -260,12 +262,15 @@ public class MainMenuManager : MonoBehaviour
                 menu.SetActive(true);
                 if(difficultyScreen)
                     difficultyScreen?.SetActive(false);
+                if (achievementsScreen) achievementsScreen.SetActive(false);
+
                 break;
             case 2:
                 howToPlayUI.SetActive(false);
                 menu.SetActive(true);
                 if (difficultyScreen)
                     difficultyScreen?.SetActive(false);
+                if(achievementsScreen) achievementsScreen.SetActive(false);
                 break;
         }
     }
@@ -274,6 +279,8 @@ public class MainMenuManager : MonoBehaviour
         UIAudio.PlayOneShot(buttonClick);
         menu.SetActive(false);
         howToPlayUI.SetActive(true);
+        achievementsScreen.SetActive(false);
+
     }
     public void ToMovementPage() 
     {
@@ -308,6 +315,18 @@ public class MainMenuManager : MonoBehaviour
         howToPlayUI.SetActive(false);
         options.SetActive(false);
         difficultyScreen.SetActive(true);
+        achievementsScreen.SetActive(false);
+    }
+    public void DisplayAchievementsScreen()
+    {
+        UIAudio.PlayOneShot(buttonClick);
+        menu.SetActive(false);
+        howToPlayUI.SetActive(false);
+        options.SetActive(false);
+        difficultyScreen.SetActive(false);
+        achievementsScreen.SetActive(true);
+
+        achievementDisplay.DisplayAchievements();
     }
 
     public void SetResolution(int res)
