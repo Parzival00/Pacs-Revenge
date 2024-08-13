@@ -938,6 +938,8 @@ public class Ghost : MonoBehaviour
 
         if (ghostHealth <= 0)
         {
+            AchievementManager.addGhostsKilled();
+
             //print("respawning");
             ghostHealth = 100;
 

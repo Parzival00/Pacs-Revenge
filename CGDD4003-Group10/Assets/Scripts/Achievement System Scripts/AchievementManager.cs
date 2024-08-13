@@ -23,6 +23,9 @@ public class AchievementManager
     static sInt endings;
     static sInt deaths;
     static sInt fruitCollected;
+    static sInt shotsFired;
+    static sInt overheats;
+    static sInt ghostsKilled;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void Load()
@@ -155,10 +158,41 @@ public class AchievementManager
         fruitCollected.value = (fruitCollected.value + 1);
 
         //Nom Nom Nom achievement (Eat a fruit)
-        if (Score.difficulty == 0)
-            displayAchievement("Nom Nom Nom");
+        displayAchievement("Nom Nom Nom");
         
         save();
+    }
+
+    public static void addShotsFired()
+    {
+        int shotsRequired = 100;
+        shotsFired.value++;
+
+        if (shotsFired.value >= shotsRequired)
+            displayAchievement("Trigger Finger"); //No image yet, so no achievement
+    }
+
+    public static void addTimesOverheated()
+    {
+        int overheatsRequired = 100;
+        overheats.value++;
+
+        if (shotsFired.value >= overheatsRequired)
+            displayAchievement("What are you doing?"); //No image yet, so no achievement
+    }
+
+    public static void addGhostsKilled()
+    {
+        int killsRequired = 25;
+        ghostsKilled.value++;
+
+        if (ghostsKilled.value >= killsRequired)
+            displayAchievement("Massacre");
+    }
+
+    public static void resetGhostKills()
+    {
+        ghostsKilled.value = 0;
     }
 
     public static List<Achievement> getPotentialAchievements()

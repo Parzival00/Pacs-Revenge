@@ -309,6 +309,7 @@ public class Score : MonoBehaviour
 
             if (pelletsCollected >= totalPellets)
             {
+                AchievementManager.resetGhostKills();
                 playerController.SaveLives();
                 StartCoroutine(SceneEnd(false));
             }
