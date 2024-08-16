@@ -497,7 +497,6 @@ public class PlayerController : MonoBehaviour
 
                 railGunVFX.Shoot(hit, weaponRange);
                 railgunAnimator.SetTrigger("Shoot");
-                AchievementManager.addShotsFired();
                 Score.totalShotsFired++;
                 StartCoroutine(Decharge());
             }
@@ -588,7 +587,6 @@ public class PlayerController : MonoBehaviour
             }
 
             Score.timesOverheated++;
-            AchievementManager.addTimesOverheated();
 
             overheated = true;
             //weaponSound.volume = .9f;
