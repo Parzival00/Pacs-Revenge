@@ -143,6 +143,7 @@ public class Boss : MonoBehaviour
     [SerializeField] AudioSource clydeReleaseSound;
     [SerializeField] AudioSource slamSound;
     [SerializeField] AudioSource bossHit;
+    [SerializeField] AudioSource bossDeath;
     [SerializeField] AudioSource bossDeflect;
     [SerializeField] AudioSource blinkyDeath;
     [SerializeField] AudioSource inkyDeath;
@@ -892,8 +893,9 @@ public class Boss : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezePosition;
 
         currentState = BossState.Death;
-        yield return new WaitForSeconds(0.75f);
-
+        bossDeath.Play();
+        yield return new WaitForSeconds(1f);
+        
         animator.SetTrigger("Death");
 
         yield return new WaitForSeconds(3f);

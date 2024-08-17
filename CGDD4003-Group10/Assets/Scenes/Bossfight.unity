@@ -5386,6 +5386,10 @@ PrefabInstance:
       propertyPath: endController
       value: 
       objectReference: {fileID: 194737182}
+    - target: {fileID: 4229955907849833385, guid: 44d1f67e11d61b54680223d02cd6d7b7, type: 3}
+      propertyPath: difficultySettings.Array.data[1].baseRailgunDamage
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 8036845001061338620, guid: 44d1f67e11d61b54680223d02cd6d7b7, type: 3}
       propertyPath: m_Name
       value: Boss
@@ -8135,7 +8139,7 @@ AudioReverbZone:
   m_GameObject: {fileID: 228885980}
   m_Enabled: 1
   m_MinDistance: 0
-  m_MaxDistance: 29.377434
+  m_MaxDistance: 40
   m_ReverbPreset: 9
   m_Room: -1000
   m_RoomHF: 0
@@ -18998,7 +19002,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 7131999003614377871, guid: 28f800679063ee84fb2e3c41fee59bc0, type: 2}
   m_audioClip: {fileID: 8300000, guid: f94ec0b5db385e541939d2706146b7cc, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.25
+  m_Volume: 0.132
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -28967,7 +28971,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6532150692148206727, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: difficultySettings.Array.data[1].bossTimerAmount
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6532150692148206727, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: difficultySettings.Array.data[2].bossTimerAmount
