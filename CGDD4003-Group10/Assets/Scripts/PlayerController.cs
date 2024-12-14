@@ -180,7 +180,7 @@ public class PlayerController : MonoBehaviour
 
     int permenantGhostsKilled = 0;
 
-    bool canBeDamagedBoss = true;
+    bool canBeDamaged = true;
 
     // Start is called before the first frame update
     void Start()
@@ -956,7 +956,7 @@ public class PlayerController : MonoBehaviour
                     StartCoroutine(InsanityEnd());
                 }
             }
-        } else if (canBeDamagedBoss && other.tag == "EnemyProjectile")
+        } else if (canBeDamaged && other.tag == "EnemyProjectile")
         {
             Debug.LogWarning("Player hit by enemy projectile: " + other.gameObject.transform.parent);
 
@@ -983,14 +983,46 @@ public class PlayerController : MonoBehaviour
                     }
                 }
 
-                canBeDamagedBoss = false;
+                canBeDamaged = false;
                 Invoke("CanBeDamaged", 1f);
             }
         }
     }
     public void CanBeDamaged()
     {
-        canBeDamagedBoss = true;
+        canBeDamaged = true;
+    }
+    public void TakeDamage()
+    {
+        if (canBeDamaged)
+        {
+            if (shieldsRemaining <= 0)
+            {
+                if (!inDeathSequence)
+                {
+                    //ghost.PlayBiteSound();
+                    StartCoroutine(DeathSequence());
+                }
+            }
+            else
+            {
+                if (shieldAnimator != null && shieldsRemaining > 0)
+                {
+                    if (gunActivated) lostShield = true;
+
+                    shieldsRemaining--;
+                    print("shields: " + shieldsRemaining);
+
+                    if (shieldsRemaining <= 0)
+                    {
+                        shieldAnimator.PlayShieldBreak();
+                    }
+                }
+
+                canBeDamaged = false;
+                Invoke("CanBeDamaged", 1f);
+            }
+        }
     }
     #endregion
 

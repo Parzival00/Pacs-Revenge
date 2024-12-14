@@ -11336,9 +11336,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 0.59590244
-  MaxDistance: 16.77073
+  MaxDistance: 25
   Pan2D: 0
-  rolloffMode: 2
+  rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 1
@@ -17116,7 +17116,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -4621455035186419615, guid: 28f800679063ee84fb2e3c41fee59bc0, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 31f11b40bbc56f84da8e2d670b80061d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 335c629131ba49a4f88adb792c001069, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.379
   m_Pitch: 1
@@ -23150,7 +23150,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 0.59590244
-  MaxDistance: 18.292469
+  MaxDistance: 25
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -23970,9 +23970,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 0.59590244
-  MaxDistance: 17.64877
+  MaxDistance: 30
   Pan2D: 0
-  rolloffMode: 1
+  rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 1
@@ -29176,9 +29176,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 0.59590244
-  MaxDistance: 17.64877
+  MaxDistance: 25
   Pan2D: 0
-  rolloffMode: 1
+  rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 1
@@ -29259,6 +29259,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8830217029841420559}
     m_Modifications:
+    - target: {fileID: 1074611674829280914, guid: 4f66dc0aaad382c4ebb989d580c4a354, type: 3}
+      propertyPath: upAxis
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1074611674829280914, guid: 4f66dc0aaad382c4ebb989d580c4a354, type: 3}
+      propertyPath: negative
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1577719863364244292, guid: 4f66dc0aaad382c4ebb989d580c4a354, type: 3}
       propertyPath: m_SortingOrder
       value: 1
@@ -29290,6 +29298,14 @@ PrefabInstance:
     - target: {fileID: 5886061437412519609, guid: 4f66dc0aaad382c4ebb989d580c4a354, type: 3}
       propertyPath: m_TagString
       value: EnemyProjectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 6828705772443297354, guid: 4f66dc0aaad382c4ebb989d580c4a354, type: 3}
+      propertyPath: upAxis
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6828705772443297354, guid: 4f66dc0aaad382c4ebb989d580c4a354, type: 3}
+      propertyPath: negative
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8094928328770913778, guid: 4f66dc0aaad382c4ebb989d580c4a354, type: 3}
       propertyPath: m_SortingOrder

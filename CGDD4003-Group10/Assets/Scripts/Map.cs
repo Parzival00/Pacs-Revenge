@@ -26,6 +26,10 @@ public class Map : MonoBehaviour
     [SerializeField] Vector3 centerOffset;
     [SerializeField] bool startGridFromOrigin;
 
+    public float Size { get => size; }
+    public int MapWidth { get => mapWidth; }
+    public int MapHeight { get => mapHeight; }
+
     [Header("Debug Settings")]
     [SerializeField] bool visualizePlayerGridLocation;
     [SerializeField] bool visualizeMap;
@@ -99,6 +103,22 @@ public class Map : MonoBehaviour
             }
         }
         openMapLocations = tempList.ToArray();
+    }
+
+    public void SetGridAtPosition(Vector3 pos, GridType gridType)
+    {
+        Vector2Int gridLoc = GetGridLocation(pos);
+        if (gridLoc.x < mapWidth && gridLoc.y < mapHeight)
+        {
+            map[gridLoc.x, gridLoc.y] = gridType;
+        }
+    }
+    public void SetGridAtPosition(Vector2Int pos, GridType gridType)
+    {
+        if (pos.x < mapWidth && pos.y < mapHeight)
+        {
+            map[pos.x, pos.y] = gridType;
+        }
     }
 
     /// <summary>

@@ -936,7 +936,7 @@ public class Ghost : MonoBehaviour
         ghostHealth -= currentHitArea.healthValue;
         //print("subtracted: " + currentHitArea.healthValue + " health: " + ghostHealth);
 
-        if (ghostHealth <= 0)
+        if (ghostHealth <= 0 && currentMode != Mode.Respawn)
         {
             //print("respawning");
             ghostHealth = 100;
