@@ -558,6 +558,7 @@ public class Boss : MonoBehaviour
     //Animation Event
     private void PinkyAttack()
     {
+        pinkyReleaseSound.Play();
         if(attackChoices[2].weight > 0)
             attackChoices[2].weight = 0.3f; //Add weight to current attack to make it less likely to happen twice in a row
 
