@@ -868,6 +868,7 @@ public class Boss : MonoBehaviour
 
     IEnumerator EnrageSequence()
     {
+        enrageSound.Play();
         if (dashCoroutine != null) StopCoroutine(dashCoroutine);
 
         if (bossSpawner) bossSpawner.ChangeGhostWeight(3, 1);
