@@ -115,14 +115,14 @@ public class MainMenuManager : MonoBehaviour
     {
         PlayerPrefs.SetFloat("FOV", fov.value);
         PlayerPrefs.SetFloat("Sensitivity", MouseSensitivity.value);
-        PlayerPrefs.SetFloat("MastVolume", masterVolume.value / 4);
-        PlayerPrefs.SetFloat("MusVolume", musicVolume.value / 4);
-        PlayerPrefs.SetFloat("WVolume", weaponVolume.value / 4);
-        PlayerPrefs.SetFloat("EVolume", enemyVolume.value / 4);
-        PlayerPrefs.SetFloat("PlVolume", playerVolume.value / 4);
-        PlayerPrefs.SetFloat("PiVolume", pickupVolume.value / 4);
-        PlayerPrefs.SetFloat("UIVolume", uiVolume.value / 4);
-        PlayerPrefs.SetFloat("MiscVolume", miscVolume.value / 4);
+        PlayerPrefs.SetFloat("MastVolume", masterVolume.value >= 0 ? masterVolume.value / 4 : masterVolume.value);
+        PlayerPrefs.SetFloat("MusVolume", musicVolume.value >= 0 ? musicVolume.value / 4 : musicVolume.value);
+        PlayerPrefs.SetFloat("WVolume", weaponVolume.value >= 0 ? weaponVolume.value / 4 : weaponVolume.value);
+        PlayerPrefs.SetFloat("EVolume", enemyVolume.value >= 0 ? enemyVolume.value / 4 : enemyVolume.value);
+        PlayerPrefs.SetFloat("PlVolume", playerVolume.value >= 0 ? playerVolume.value / 4 : playerVolume.value);
+        PlayerPrefs.SetFloat("PiVolume", pickupVolume.value >= 0 ? pickupVolume.value / 4: pickupVolume.value);
+        PlayerPrefs.SetFloat("UIVolume", uiVolume.value >= 0 ? uiVolume.value / 4 : uiVolume.value);
+        PlayerPrefs.SetFloat("MiscVolume", miscVolume.value >= 0 ? miscVolume.value / 4 : miscVolume.value);
         PlayerPrefs.SetInt("Resolution", screenResolution.value);
         PlayerPrefs.SetInt("TutorialPrompts", tutorialToggle.isOn ? 1 : 0);
 
@@ -179,25 +179,33 @@ public class MainMenuManager : MonoBehaviour
         menu.SetActive(false);
         options.SetActive(true);
 
-        fov.value = PlayerPrefs.GetFloat("FOV");
-        MouseSensitivity.value = PlayerPrefs.GetFloat("Sensitivity");
-        masterVolume.value = PlayerPrefs.GetFloat("MastVolume", masterVolume.value / 4) * 4;
-        musicVolume.value = PlayerPrefs.GetFloat("MusVolume", musicVolume.value / 4) * 4;
-        weaponVolume.value = PlayerPrefs.GetFloat("WVolume", weaponVolume.value / 4) * 4;
-        enemyVolume.value = PlayerPrefs.GetFloat("EVolume", enemyVolume.value / 4) * 4;
-        playerVolume.value = PlayerPrefs.GetFloat("PlVolume", playerVolume.value / 4) * 4;
-        pickupVolume.value = PlayerPrefs.GetFloat("PiVolume", pickupVolume.value / 4) * 4;
-        uiVolume.value = PlayerPrefs.GetFloat("UIVolume", uiVolume.value / 4) * 4;
-        miscVolume.value = PlayerPrefs.GetFloat("MiscVolume", miscVolume.value / 4) * 4;
+        fov.value = PlayerPrefs.GetFloat("FOV", 70);
+        MouseSensitivity.value = PlayerPrefs.GetFloat("Sensitivity", 100);
+        masterVolume.value = PlayerPrefs.GetFloat("MastVolume", masterVolume.value >= 0 ? masterVolume.value / 4 : masterVolume.value);
+        masterVolume.value = masterVolume.value >= 0 ? masterVolume.value * 4 : masterVolume.value;
+        musicVolume.value = PlayerPrefs.GetFloat("MusVolume", musicVolume.value >= 0 ? musicVolume.value / 4 : musicVolume.value);
+        musicVolume.value = musicVolume.value >= 0 ? musicVolume.value * 4 : musicVolume.value;
+        weaponVolume.value = PlayerPrefs.GetFloat("WVolume", weaponVolume.value >= 0 ? weaponVolume.value / 4 : weaponVolume.value);
+        weaponVolume.value = weaponVolume.value >= 0 ? weaponVolume.value * 4 : weaponVolume.value;
+        enemyVolume.value = PlayerPrefs.GetFloat("EVolume", enemyVolume.value >= 0 ? enemyVolume.value / 4 : enemyVolume.value);
+        enemyVolume.value = enemyVolume.value >= 0 ? enemyVolume.value * 4 : enemyVolume.value;
+        playerVolume.value = PlayerPrefs.GetFloat("PlVolume", playerVolume.value >= 0 ? playerVolume.value / 4 : playerVolume.value);
+        playerVolume.value = playerVolume.value >= 0 ? playerVolume.value * 4 : playerVolume.value;
+        pickupVolume.value = PlayerPrefs.GetFloat("PiVolume", pickupVolume.value >= 0 ? pickupVolume.value / 4 : pickupVolume.value);
+        pickupVolume.value = pickupVolume.value >= 0 ? pickupVolume.value * 4 : pickupVolume.value;
+        uiVolume.value = PlayerPrefs.GetFloat("UIVolume", uiVolume.value >= 0 ? uiVolume.value / 4 : uiVolume.value);
+        uiVolume.value = uiVolume.value >= 0 ? uiVolume.value * 4 : uiVolume.value;
+        miscVolume.value = PlayerPrefs.GetFloat("MiscVolume", miscVolume.value >= 0 ? miscVolume.value / 4 : miscVolume.value);
+        miscVolume.value = miscVolume.value >= 0 ? miscVolume.value * 4 : miscVolume.value;
 
-        screenResolution.value = PlayerPrefs.GetInt("Resolution");
+        screenResolution.value = PlayerPrefs.GetInt("Resolution", 0);
 
-        if(PlayerPrefs.GetInt("Fullscreen") == 1)
+        if(PlayerPrefs.GetInt("Fullscreen", 1) == 1)
             fullScreenToggle.isOn = true;
         else
             fullScreenToggle.isOn = false;
 
-        if (PlayerPrefs.GetInt("HeadBob") == 1)
+        if (PlayerPrefs.GetInt("HeadBob", 1) == 1)
             viewBobbingToggle.isOn = true;
         else
             viewBobbingToggle.isOn = false;

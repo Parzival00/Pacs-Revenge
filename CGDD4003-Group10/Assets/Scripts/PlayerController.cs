@@ -35,11 +35,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float sensitivity;
 
     [Header("Weapon Audio")]
-    [SerializeField] AudioClip gunshot;
-    [SerializeField] AudioClip stunShotSound;
-    [SerializeField] AudioClip overheat;
-    [SerializeField] AudioClip chargeup;
+    [SerializeField] AudioClip gunshotSFX;
+    [SerializeField] AudioClip stunShotSFX;
+    [SerializeField] AudioClip overheatSFX;
+    [SerializeField] AudioClip chargeupSFX;
+    [SerializeField] AudioClip chargeReadySFX;
     [SerializeField] AudioSource weaponSound;
+    [SerializeField] AudioSource weaponChargeSound;
+    [SerializeField] AudioSource weaponChargeReadySound;
 
     [Header("Railgun Settings")]
     [SerializeField] string railgunAlertMessage = "Advanced Targeting System Activated";
@@ -439,6 +442,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Gun Functionality
+    bool chargeReady;
     /// <summary>
     /// When the left mouse button is pressed this generates a raycast to where the player was aiming.
     /// A sound effect is played and the raytrace is rendered
@@ -460,7 +464,8 @@ public class PlayerController : MonoBehaviour
                 }
 
                 weaponSound.Stop();
-                weaponSound.PlayOneShot(gunshot);
+                weaponChargeSound.Stop();
+                weaponSound.PlayOneShot(gunshotSFX);
 
                 Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
                 RaycastHit hit;
@@ -502,13 +507,18 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                weaponSound.Stop();
+                //weaponChargeSound.Pause();
+                weaponChargeSound.pitch = -1;
             }
         }
         else if (!paused && Input.GetMouseButtonDown(0) && !overheated)
         {
-            weaponSound.Stop();
-            weaponSound.PlayOneShot(chargeup);
+            weaponChargeSound.pitch = 1;
+            weaponChargeSound.time = Mathf.Clamp01(weaponCharge);
+            weaponChargeSound.clip = chargeupSFX;
+            weaponChargeSound.Play();
+
+            chargeReady = false;
 
             if (Score.totalShotsFired <= 0 && tutorial)
             {
@@ -517,12 +527,27 @@ public class PlayerController : MonoBehaviour
         }
         else if (!paused && Input.GetMouseButton(0) && !overheated)
         {
+            if(chargeReady == true && weaponCharge < 1f)
+            {
+                weaponChargeSound.pitch = 1;
+                weaponChargeSound.time = Mathf.Clamp01(weaponCharge);
+                weaponChargeSound.clip = chargeupSFX;
+                weaponChargeSound.Play();
+
+                chargeReady = false;
+            }
+
             if (weaponCharge < 1f)
             {
                 weaponCharge += (Time.deltaTime * (1 / chargeTime));
             }
             if (weaponCharge >= 1f)
             {
+                if(chargeReady == false)
+                {
+                    weaponChargeReadySound.PlayOneShot(chargeReadySFX);
+                    chargeReady = true;
+                }
                 if (doTutorials && Score.totalShotsFired <= 0 && tutorial)
                 {
                     //tutorial.ToggleReleasePrompt(true);
@@ -590,7 +615,7 @@ public class PlayerController : MonoBehaviour
 
             overheated = true;
             //weaponSound.volume = .9f;
-            weaponSound.PlayOneShot(overheat);
+            weaponSound.PlayOneShot(overheatSFX);
             //weaponSound.volume = .1f;
         }
         else if (weaponTemp <= 0f && overheated)
@@ -681,7 +706,7 @@ public class PlayerController : MonoBehaviour
                 stungunAnimator.SetTrigger("Shoot");
 
             stunFireTimer = timeBtwStunShots;
-            weaponSound.PlayOneShot(stunShotSound);
+            weaponSound.PlayOneShot(stunShotSFX);
             ammoCount--;
             ammoText.text = "" + Mathf.RoundToInt(Mathf.Clamp(ammoCount + ((Score.pelletsCollected - pelletCountSinceLastShot) % pelletsPerStunAmmo) / (float)pelletsPerStunAmmo, 0, maxAmmoCount) * 100) + "%";
         }
