@@ -10403,6 +10403,7 @@ GameObject:
   - component: {fileID: 2085435033529456805}
   - component: {fileID: 5887041909919132494}
   - component: {fileID: 8554294911076339095}
+  - component: {fileID: 5247932707246337467}
   m_Layer: 0
   m_Name: Pedastal
   m_TagString: Fruit
@@ -10539,6 +10540,18 @@ MonoBehaviour:
     weights: 32000000320000000a00000032000000320000000a0000003200000032000000320000000000000000000000
   - type: 4
     weights: 0a0000000a000000640000000a0000000a000000640000000a0000000a0000000a0000004600000046000000
+--- !u!210 &5247932707246337467
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8497039291931120781}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &9213692965577662632
 GameObject:
   m_ObjectHideFlags: 0
@@ -10670,6 +10683,10 @@ PrefabInstance:
     - target: {fileID: 285518267702351432, guid: 43f37f9d5eefac340815eff4d2f48dba, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 708592771316079705, guid: 43f37f9d5eefac340815eff4d2f48dba, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6025207607581697775, guid: 43f37f9d5eefac340815eff4d2f48dba, type: 3}
       propertyPath: m_Name

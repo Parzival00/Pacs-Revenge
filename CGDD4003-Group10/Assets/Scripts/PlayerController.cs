@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     MainMenuManager mainMenuManager;
 
     public bool canMove { get; private set; }
+    public bool trapped { get; private set; }
 
     [Header("Movement Settings")]
     [SerializeField] float baseSpeed;
@@ -326,7 +327,8 @@ public class PlayerController : MonoBehaviour
             if (canMove)
             {
                 MouseControl();
-                MovementControl();
+                if(!trapped)
+                    MovementControl();
             }
 
             if (canFire)
@@ -356,7 +358,7 @@ public class PlayerController : MonoBehaviour
         }
 
         if (!Score.insanityEnding)
-            DisplayPLayerShields();
+            DisplayPlayerShields();
     }
 
     #region Move and Look
@@ -368,7 +370,7 @@ public class PlayerController : MonoBehaviour
         Vector2 mousePosition = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
         cameraPitch -= mousePosition.y * sensitivity * Mathf.Min(0.01f, Time.deltaTime) * 30f * Time.timeScale;
-        cameraPitch = Mathf.Clamp(cameraPitch, -60.0f, 60.0f);
+        cameraPitch = Mathf.Clamp(cameraPitch, -35.0f, 50.0f);
 
         playerCam.localEulerAngles = Vector3.right * cameraPitch;
         playerT.Rotate(Vector3.up * mousePosition.x * sensitivity * Mathf.Min(0.01f, Time.deltaTime) * 30f * Time.timeScale);
@@ -458,10 +460,10 @@ public class PlayerController : MonoBehaviour
             {
                 if (camShake) camShake.ShakeCamera(camShakeFrequency, 0.5f, camShakeDuration);
 
-                if (Score.totalShotsFired <= 0 && tutorial)
+                /*if (Score.totalShotsFired <= 0 && tutorial)
                 {
                     //tutorial.ToggleReleasePrompt(false);
-                }
+                }*/
 
                 weaponSound.Stop();
                 weaponChargeSound.Stop();
@@ -476,27 +478,29 @@ public class PlayerController : MonoBehaviour
                     print("Hit: " + hit.collider.gameObject.name);
 
                     TargetAreaCollider targetAreaCollider = hit.collider.GetComponent<TargetAreaCollider>();
+                    BossCollider bossCollider = hit.collider.GetComponent<BossCollider>();
+                    CaptureTentacle captureTentacle = hit.collider.GetComponent<CaptureTentacle>();
 
-                    if (targetAreaCollider != null)
+                    if (targetAreaCollider != null && captureTentacle == null)
                     {
                         Ghost.HitInformation hitInformation = targetAreaCollider.OnShot();
                         Score.AddToScore(tempColorSave, (hitInformation.pointWorth + hitInformation.targetArea.pointsAddition));
 
                         SpawnBlood(hitInformation.bigBlood, hitInformation.smallBlood, hitInformation.targetArea.difficulty, hit);
-                    } else
+                    }
+                    else if (bossCollider != null)
                     {
-                        BossCollider bossCollider = hit.collider.GetComponent<BossCollider>();
-
-                        if (bossCollider != null)
-                        {
-                            Boss.BossHitInformation hitInformation = bossCollider.boss.GotHit(hit.point, bossCollider.HeadID);
-                            if (hitInformation.pointWorth > 0)
-                                Score.AddToScore(tempColorSave, hitInformation.pointWorth);
-                        }
-                        else
-                        {
-                            Instantiate(wallHitEffect, hit.point + hit.normal * 0.1f, Quaternion.identity);
-                        }
+                        Boss.BossHitInformation hitInformation = bossCollider.boss.GotHit(hit.point, bossCollider.HeadID);
+                        if (hitInformation.pointWorth > 0)
+                            Score.AddToScore(tempColorSave, hitInformation.pointWorth);
+                    }
+                    else if (captureTentacle != null)
+                    {
+                        captureTentacle.TakeDamage(50);
+                    }
+                    else
+                    {
+                        Instantiate(wallHitEffect, hit.point + hit.normal * 0.1f, Quaternion.identity);
                     }
                 }
 
@@ -520,10 +524,10 @@ public class PlayerController : MonoBehaviour
 
             chargeReady = false;
 
-            if (Score.totalShotsFired <= 0 && tutorial)
+            /*if (Score.totalShotsFired <= 0 && tutorial)
             {
                 //tutorial.ToggleShootPrompt(false);
-            }
+            }*/
         }
         else if (!paused && Input.GetMouseButton(0) && !overheated)
         {
@@ -548,10 +552,10 @@ public class PlayerController : MonoBehaviour
                     weaponChargeReadySound.PlayOneShot(chargeReadySFX);
                     chargeReady = true;
                 }
-                if (doTutorials && Score.totalShotsFired <= 0 && tutorial)
+                /*if (doTutorials && Score.totalShotsFired <= 0 && tutorial)
                 {
                     //tutorial.ToggleReleasePrompt(true);
-                }
+                }*/
             }
 
             weaponTemp += (Time.deltaTime * (overheatSpeed));
@@ -605,11 +609,11 @@ public class PlayerController : MonoBehaviour
     {
         if (weaponTemp >= maxWeaponTemp && !overheated)
         {
-            if (doTutorials && Score.timesOverheated <= 1 && tutorial)
+            /*if (doTutorials && Score.timesOverheated <= 1 && tutorial)
             {
                 //tutorial.ToggleReleasePrompt(false);
                 //tutorial.ToggleOverheatPrompt(true);
-            }
+            }*/
 
             Score.timesOverheated++;
 
@@ -626,10 +630,10 @@ public class PlayerController : MonoBehaviour
         }
         else if (overheated && !Input.GetMouseButton(0))
         {
-            if (doTutorials && Score.timesOverheated <= 2 && tutorial)
+            /*if (doTutorials && Score.timesOverheated <= 2 && tutorial)
             {
                 //tutorial.ToggleOverheatPrompt(false);
-            }
+            }*/
 
             weaponTemp -= Time.deltaTime * cooldownSpeed;
         }
@@ -788,6 +792,7 @@ public class PlayerController : MonoBehaviour
             WeaponSpawner ws = FindObjectOfType<WeaponSpawner>();
             ws.Reset();
         }
+        canFire = false;
         gunActivated = true;
         gun.SetActive(true);
         hud.SetActive(true);
@@ -830,6 +835,8 @@ public class PlayerController : MonoBehaviour
         AddShields();
         lostShield = false;
 
+        canFire = true;
+
         yield return new WaitForSeconds(0.5f);
 
         if (doTutorials && gunActivated && Score.totalShotsFired <= 0 && tutorial)
@@ -861,7 +868,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     IEnumerator DeactivateGun()
     {
-        gunActivated = false;
+        canFire = false;
         gun.SetActive(false);
         hud.SetActive(false);
 
@@ -914,6 +921,9 @@ public class PlayerController : MonoBehaviour
         {
             stunGun.SetActive(true);
         }
+
+        gunActivated = false;
+        canFire = true;
     }
     #endregion
 
@@ -1226,7 +1236,7 @@ public class PlayerController : MonoBehaviour
 
         extraLifeFlash.gameObject.SetActive(false);
     }
-    public void DisplayPLayerShields()
+    public void DisplayPlayerShields()
     {
         shieldText.text = "" + shieldsRemaining;
     }
@@ -1323,6 +1333,11 @@ public class PlayerController : MonoBehaviour
     {
         character.enabled = false;
         transform.position = pos;
+    }
+
+    public void SetTrapped(bool trapped)
+    {
+        this.trapped = trapped;
     }
 
     #region UI Functions

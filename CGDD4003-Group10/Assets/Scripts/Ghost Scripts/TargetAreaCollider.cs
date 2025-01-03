@@ -33,7 +33,10 @@ public class TargetAreaCollider : MonoBehaviour
         TargetInfo targetInfo;
         targetInfo.outline = outline;
         targetInfo.areaType = targetAreaType;
-        targetInfo.areaDifficulty = ghost.GetDifficulty(targetAreaType);
+        if (ghost == null)
+            targetInfo.areaDifficulty = Ghost.TargetAreaDifficulty.Hard;
+        else
+            targetInfo.areaDifficulty = ghost.GetDifficulty(targetAreaType);
         return targetInfo;
     }
 }

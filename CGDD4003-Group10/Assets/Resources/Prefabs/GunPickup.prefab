@@ -94,8 +94,8 @@ GameObject:
   - component: {fileID: 7465043686356946606}
   - component: {fileID: 8682133017349688744}
   - component: {fileID: 6182260271452572287}
-  - component: {fileID: 9129842586246350946}
   - component: {fileID: 3009442871549127268}
+  - component: {fileID: 5280146425761930447}
   m_Layer: 0
   m_Name: GunPickup
   m_TagString: Weapon
@@ -140,7 +140,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.6682525, y: 0.7065761, z: 0.21947944}
+  m_Size: {x: 0.5660254, y: 0.7065761, z: 0.3443135}
   m_Center: {x: 0.018076539, y: -0.0011547804, z: -0.0039372444}
 --- !u!82 &6182260271452572287
 AudioSource:
@@ -247,18 +247,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &9129842586246350946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3550454985558555889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 106fdf3af5d49784f99ca64aea0cb2bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &3009442871549127268
 Animator:
   serializedVersion: 5
@@ -280,6 +268,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5280146425761930447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3550454985558555889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94173a21763868945b56231c2a851ee4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canBeCorrupted: 0
+  isCorrupted: 0
 --- !u!1 &7455486211433142026
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,7 +310,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7465043686356946606}
@@ -406,7 +408,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
   m_LocalPosition: {x: 0, y: 2.75, z: 0}
-  m_LocalScale: {x: 0.63657653, y: 0.63657653, z: 0.8487687}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7465043686356946606}
