@@ -866,7 +866,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Deactivates the gun and any related visuals
     /// </summary>
-    IEnumerator DeactivateGun()
+    public IEnumerator DeactivateGun()
     {
         canFire = false;
         gun.SetActive(false);
