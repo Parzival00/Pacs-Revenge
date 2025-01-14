@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2436519596183900257}
   - component: {fileID: 4536165224493662526}
+  - component: {fileID: 735137633677303596}
+  - component: {fileID: 168389542725202475}
   m_Layer: 0
   m_Name: ControllableDoor
   m_TagString: Untagged
@@ -57,6 +59,46 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &735137633677303596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999597378129821033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e232947f7ba354c8c194df8120abeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentDoor: {fileID: 8826997332198944432}
+  leverToDoor: {fileID: 2216066692524767483}
+  doorUp: {fileID: 323885785103793398}
+  doorDown: {fileID: 9125944554159919032}
+  doorSpeed: 5
+  leverResetTimer: 5
+  doorResetTimer: 5
+--- !u!135 &168389542725202475
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999597378129821033}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: -2.95, y: 1, z: 0.75}
 --- !u!1 &2216066692524767483
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,10 +536,39 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9c98704dc893147abdd922312cb539, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 683623385005566948}
   m_SourcePrefab: {fileID: 100100000, guid: 6e9c98704dc893147abdd922312cb539, type: 3}
 --- !u!4 &8157175486741066762 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6e9c98704dc893147abdd922312cb539, type: 3}
   m_PrefabInstance: {fileID: 8556455148099261409}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8826997332198944432 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9c98704dc893147abdd922312cb539, type: 3}
+  m_PrefabInstance: {fileID: 8556455148099261409}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &683623385005566948
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8826997332198944432}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.006, y: 0.0095, z: 0.0139999995}
+  m_Center: {x: 2.249997e-16, y: 0.00475, z: -1.277512e-19}

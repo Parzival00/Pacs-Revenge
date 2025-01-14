@@ -1406,4 +1406,11 @@ public class PlayerController : MonoBehaviour
         Score score = FindObjectOfType<Score>();
         StartCoroutine(score.SceneEnd(false));
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Lever") 
+        {
+            other.GetComponent<DoorControl>().ActivateDoor();
+        }
+    }
 }
