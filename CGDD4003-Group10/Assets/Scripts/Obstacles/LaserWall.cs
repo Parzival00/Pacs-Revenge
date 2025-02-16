@@ -127,7 +127,7 @@ public class LaserWall : MonoBehaviour
             if (ghost != null)
             {
                 laserShockSound.Play();
-                ghost.GotHit(Ghost.TargetAreaType.Head);
+                ghost.GotHit(Ghost.TargetAreaType.Head, 5);
             }
         }
     }

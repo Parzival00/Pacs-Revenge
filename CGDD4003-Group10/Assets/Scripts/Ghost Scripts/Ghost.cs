@@ -922,7 +922,7 @@ public class Ghost : MonoBehaviour
     /// <summary>
     /// Called when ghost is hit with the gun and sets the mode to respawn and returns a hit information struct which includes points to add and target area hit benefits
     /// </summary>
-    public virtual HitInformation GotHit(TargetAreaType type)
+    public virtual HitInformation GotHit(TargetAreaType type, float damageMultiplier = 1)
     {
         HitInformation hit = new HitInformation();
         hit.targetArea = GetTargetArea(type);
@@ -933,7 +933,7 @@ public class Ghost : MonoBehaviour
         currentHitArea = hit.targetArea;
 
         //damage the ghost
-        ghostHealth -= currentHitArea.healthValue;
+        ghostHealth -= currentHitArea.healthValue * damageMultiplier;
         //print("subtracted: " + currentHitArea.healthValue + " health: " + ghostHealth);
 
         if (ghostHealth <= 0 && currentMode != Mode.Respawn)

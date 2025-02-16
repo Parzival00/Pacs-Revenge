@@ -160,7 +160,7 @@ public class BossSpawner : MonoBehaviour
         {
             if (ghost != null)
             {
-                Ghost.HitInformation hitInfo = ghost.GotHit(Ghost.TargetAreaType.Head);
+                Ghost.HitInformation hitInfo = ghost.GotHit(Ghost.TargetAreaType.Head, 5);
                 Score.AddToScore(Color.white, hitInfo.pointWorth);
             }
         }

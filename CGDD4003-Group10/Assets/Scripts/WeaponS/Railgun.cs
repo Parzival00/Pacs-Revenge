@@ -24,9 +24,7 @@ public class Railgun : Weapon
     [SerializeField] float overheatSpeed = 1;
     [SerializeField] float cooldownSpeed = 1;
     [SerializeField] float dechargeTime = .25f;
-    [SerializeField] float gunTimeAmount = 5f;
     [SerializeField] Camera fpsCam;
-    [SerializeField] WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
     [SerializeField] float camShakeFrequency = 1f;
     [SerializeField] float camShakeDuration = 0.4f;
     [SerializeField] CameraShake camShake;
@@ -80,7 +78,7 @@ public class Railgun : Weapon
 
                     if (targetAreaCollider != null && captureTentacle == null)
                     {
-                        Ghost.HitInformation hitInformation = targetAreaCollider.OnShot();
+                        Ghost.HitInformation hitInformation = targetAreaCollider.OnShot(weaponInfo.damageMultiplier);
                         Score.AddToScore(Color.gray, (hitInformation.pointWorth + hitInformation.targetArea.pointsAddition));
 
                         //SpawnBlood(hitInformation.bigBlood, hitInformation.smallBlood, hitInformation.targetArea.difficulty, hit);
@@ -321,14 +319,14 @@ public class Railgun : Weapon
 
                     if (targetAreaCollider != null && captureTentacle == null)
                     {
-                        Ghost.HitInformation hitInformation = targetAreaCollider.OnShot();
+                        Ghost.HitInformation hitInformation = targetAreaCollider.OnShot(weaponInfo.damageMultiplier);
                         Score.AddToScore(Color.gray, (hitInformation.pointWorth + hitInformation.targetArea.pointsAddition));
 
                         //SpawnBlood(hitInformation.bigBlood, hitInformation.smallBlood, hitInformation.targetArea.difficulty, hit);
                     }
                     else if (bossCollider != null)
                     {
-                        Boss.BossHitInformation hitInformation = bossCollider.boss.GotHit(hit.point, bossCollider.HeadID);
+                        Boss.BossHitInformation hitInformation = bossCollider.boss.GotHit(hit.point, bossCollider.HeadID, weaponInfo.damageMultiplier);
                         if (hitInformation.pointWorth > 0)
                             Score.AddToScore(Color.gray, hitInformation.pointWorth);
                     }

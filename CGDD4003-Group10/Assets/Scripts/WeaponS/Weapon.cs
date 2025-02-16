@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
+    [SerializeField] protected WeaponInfo weaponInfo;
+
     public bool gunActivated { get; private set; }
     protected float gunTimer;
 

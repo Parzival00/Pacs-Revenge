@@ -35,6 +35,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool paused;
     [SerializeField] float sensitivity;
 
+    [Header("Weapon Settings")]
+    [SerializeField] WeaponInfo[] weaponInfos;
+    [SerializeField] Weapon[] weapons;
+    Weapon currentWeapon;
+
     [Header("Weapon Audio")]
     [SerializeField] AudioClip gunshotSFX;
     [SerializeField] AudioClip stunShotSFX;
@@ -79,6 +84,8 @@ public class PlayerController : MonoBehaviour
     //The amount of pellets per ammo is set in the score script
     private float stunFireTimer;
     private int pelletCountSinceLastShot;
+
+    private int weaponIndex;
 
     private float weaponCharge;
     private float weaponDecharge;
@@ -191,6 +198,9 @@ public class PlayerController : MonoBehaviour
     {
         AudioListener.volume = 1;
 
+        weaponIndex = PlayerPrefs.GetInt("Weapon");
+        currentWeapon = weapons[weaponIndex];
+
         if (!Score.insanityEnding)
         {
             Init();
@@ -221,6 +231,7 @@ public class PlayerController : MonoBehaviour
             }
             else AudioListener.volume = 50;
         }
+
     }
 
     private void Init()
@@ -252,7 +263,7 @@ public class PlayerController : MonoBehaviour
             crosshair = GameObject.FindGameObjectWithTag("Crosshair").GetComponent<Image>();
 
         gunActivated = false;
-        gun.SetActive(false);
+        currentWeapon.gameObject.SetActive(false);
         hud.SetActive(false);
 
         if (animator == null)
@@ -335,9 +346,11 @@ public class PlayerController : MonoBehaviour
             {
                 if (gunActivated)
                 {
-                    RailgunFire();
+                    //RailgunFire();
                     OutlineTargetEnemy();
-                    CheckWeaponTemp();
+                    //CheckWeaponTemp();
+                    currentWeapon.OnPassiveEvent();
+
                 }
                 else
                 {
@@ -794,7 +807,7 @@ public class PlayerController : MonoBehaviour
         }
         canFire = false;
         gunActivated = true;
-        gun.SetActive(true);
+        currentWeapon.gameObject.SetActive(true);
         hud.SetActive(true);
 
         //Deactivate stun gun
@@ -869,7 +882,7 @@ public class PlayerController : MonoBehaviour
     public IEnumerator DeactivateGun()
     {
         canFire = false;
-        gun.SetActive(false);
+        currentWeapon.gameObject.SetActive(false);
         hud.SetActive(false);
 
         musicPlayer.Stop();

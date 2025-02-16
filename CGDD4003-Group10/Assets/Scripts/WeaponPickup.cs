@@ -5,6 +5,8 @@ using UnityEngine;
 public class WeaponPickup : MonoBehaviour
 {
     [SerializeField] bool canBeCorrupted;
+    [SerializeField] SpriteRenderer inGameSprite;
+    [SerializeField] SpriteRenderer miniMapGameSprite;
     public bool CanBeCorrupted { get; private set; }
     public bool isCorrupted;
 
