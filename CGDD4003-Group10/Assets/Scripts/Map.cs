@@ -8,12 +8,15 @@ public class Map : MonoBehaviour
     {
         Air,
         Wall,
-        Barrier
+        Barrier,
+        CorruptedWall
     }
 
     public GridType[,] map { get; private set; }
 
     public Vector2Int[] openMapLocations { get; private set; }
+
+    public Dictionary<Vector2Int, MeshRenderer> wallDictionary;
 
     [SerializeField] Transform player;
     [SerializeField] Transform leftEdge;
@@ -29,6 +32,26 @@ public class Map : MonoBehaviour
     public float Size { get => size; }
     public int MapWidth { get => mapWidth; }
     public int MapHeight { get => mapHeight; }
+
+    [Header("Map Corruption Settings")]
+    [SerializeField] bool gradualCorruption;
+    [SerializeField] int corruptionRangePerLevel = 2;
+    [SerializeField] bool startWithRandCorruption;
+    [SerializeField] int startCorruptionCount = 1;
+
+    int corruptedWallCount = 0;
+
+    [Header("Wall Materials")]
+    [SerializeField] Material endPieceMat;
+    [SerializeField] Material straightPieceMat;
+    [SerializeField] Material tPieceMat;
+    [SerializeField] Material lPieceMat;
+    [SerializeField] Material corruptedEndPieceMat;
+    [SerializeField] Material corruptedStraightPieceMat;
+    [SerializeField] Material corruptedTPieceMat;
+    [SerializeField] Material corruptedLPieceMat;
+    [SerializeField] Material transLeftPieceMat;
+    [SerializeField] Material transRightPieceMat;
 
     [Header("Debug Settings")]
     [SerializeField] bool visualizePlayerGridLocation;
@@ -47,6 +70,8 @@ public class Map : MonoBehaviour
             }
         }
 
+        wallDictionary = new Dictionary<Vector2Int, MeshRenderer>();
+
         if (leftEdge == null)
         {
             GameObject obj = GameObject.FindGameObjectWithTag("LeftEdge");
@@ -58,26 +83,76 @@ public class Map : MonoBehaviour
             if (obj) rightEdge = obj.transform;
         }
 
-        //Gather all walls in the scene
+        corruptedWallCount = 0;
+
+        //Gather all end walls in the scene
         GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
 
         //Use the walls position on the map to mark grid spaces with walls
-        foreach(GameObject wall in walls)
+        foreach (GameObject wall in walls)
         {
             Vector2Int index = GetGridLocation(wall.transform.position);
             map[index.x, index.y] = GridType.Wall;
+
+            MeshRenderer meshRend = wall.GetComponent<MeshRenderer>();
+            wallDictionary.Add(index, meshRend);
+
+            if (meshRend.material == corruptedEndPieceMat ||
+                meshRend.material == corruptedStraightPieceMat ||
+                meshRend.material == corruptedTPieceMat ||
+                meshRend.material == corruptedLPieceMat)
+            {
+                map[index.x, index.y] = GridType.CorruptedWall;
+                corruptedWallCount++;
+            }
+        }
+        walls = GameObject.FindGameObjectsWithTag("Straight");
+        foreach (GameObject wall in walls)
+        {
+            Vector2Int index = GetGridLocation(wall.transform.position);
+            map[index.x, index.y] = GridType.Wall;
+
+            MeshRenderer meshRend = wall.GetComponent<MeshRenderer>();
+            wallDictionary.Add(index, meshRend);
+
+            if (meshRend.material.name == corruptedEndPieceMat.name + " (Instance)" ||
+                meshRend.material.name == corruptedStraightPieceMat.name + " (Instance)" /*||
+                meshRend.material.name == transLeftPieceMat.name + " (Instance)" ||
+                meshRend.material.name == transRightPieceMat.name + " (Instance)"*/)
+            {
+                map[index.x, index.y] = GridType.CorruptedWall;
+                corruptedWallCount++;
+            }
         }
         walls = GameObject.FindGameObjectsWithTag("Corner");
         foreach (GameObject wall in walls)
         {
             Vector2Int index = GetGridLocation(wall.transform.position);
             map[index.x, index.y] = GridType.Wall;
+
+            MeshRenderer meshRend = wall.GetComponent<MeshRenderer>();
+            wallDictionary.Add(index, meshRend);
+
+            if(meshRend.material.name == corruptedLPieceMat.name + " (Instance)")
+            {
+                map[index.x, index.y] = GridType.CorruptedWall;
+                corruptedWallCount++;
+            }
         }
         walls = GameObject.FindGameObjectsWithTag("T Wall");
         foreach (GameObject wall in walls)
         {
             Vector2Int index = GetGridLocation(wall.transform.position);
             map[index.x, index.y] = GridType.Wall;
+
+            MeshRenderer meshRend = wall.GetComponent<MeshRenderer>();
+            wallDictionary.Add(index, meshRend);
+
+            if (meshRend.material.name == corruptedTPieceMat.name + " (Instance)")
+            {
+                map[index.x, index.y] = GridType.CorruptedWall;
+                corruptedWallCount++;
+            }
         }
 
         //Gather all barriers in the scene
@@ -103,7 +178,199 @@ public class Map : MonoBehaviour
             }
         }
         openMapLocations = tempList.ToArray();
+
+        CorruptMap(corruptionRangePerLevel, 5);
     }
+
+    #region Map Corruption
+    public void CorruptMap(int tilesPerRound, int rounds)
+    {
+        for (int iterations = 0; iterations < rounds; iterations++)
+        {
+            List<Vector2Int> corruptWallLocs = new List<Vector2Int>();
+            for (int y = 0; y < mapHeight; y++)
+            {
+                for (int x = 0; x < mapWidth; x++)
+                {
+                    if (map[x, y] == GridType.CorruptedWall)
+                    {
+                        corruptWallLocs.Add(new Vector2Int(x, y));
+                    }
+                }
+            }
+
+            for (int i = 0; i < corruptWallLocs.Count; i++)
+            {
+                CorruptNeighbors(corruptWallLocs[i], tilesPerRound);
+            }
+        }
+
+        CleanUpMap();
+    }
+    void CorruptNeighbors(Vector2Int position, int depth)
+    {
+        if(depth > 0)
+        {
+            Vector2Int neighbor = position;
+            for (int i = 0; i < 4; i++)
+            {
+                switch(i)
+                {
+                    case 0: //Check West (Left)
+                        neighbor = new Vector2Int(position.x - 1, position.y);
+                        break;
+                    case 1: //Check East (Right)
+                        neighbor = new Vector2Int(position.x + 1, position.y);
+                        break;
+                    case 2: //Check North (Up)
+                        neighbor = new Vector2Int(position.x, position.y + 1);
+                        break;
+                    case 3: //Check South (Down)
+                        neighbor = new Vector2Int(position.x, position.y - 1);
+                        break;
+                }
+
+                if(neighbor.x >= 0 && neighbor.x < mapWidth && neighbor.y >= 0 && neighbor.y < mapHeight && SampleGrid(neighbor) != GridType.CorruptedWall)
+                {
+                    if (SampleGrid(neighbor) == GridType.Wall)
+                    {
+                        CorruptWall(wallDictionary[neighbor]);
+                        SetGridAtPosition(neighbor, GridType.CorruptedWall);
+                        corruptedWallCount++;
+                    }
+                    CorruptNeighbors(neighbor, depth - Random.Range(1, 3));
+                }
+            }
+        }
+        else
+        {
+            /*if (SampleGrid(position) == GridType.CorruptedWall)
+            {
+                MeshRenderer meshRenderer = wallDictionary[position];
+
+                if (meshRenderer.gameObject.CompareTag("Straight"))
+                {
+                    Vector2Int leftNeighbor = new Vector2Int(position.x - 1, position.y);
+                    Vector2Int rightNeighbor = new Vector2Int(position.x + 1, position.y);
+                    Vector2Int upNeighbor = new Vector2Int(position.x, position.y + 1);
+                    Vector2Int downNeighbor = new Vector2Int(position.x, position.y - 1);
+                    if ((upNeighbor.y < mapHeight && SampleGrid(upNeighbor) == GridType.Wall) *//*||
+                        (rightNeighbor.x < mapWidth && SampleGrid(rightNeighbor) == GridType.Wall)*//*)
+                    {
+                        meshRenderer.material = transRightPieceMat;
+                    }
+                }
+            }*/
+            return;
+        }
+    }
+    void CorruptWall(MeshRenderer wallRenderer)
+    {
+        if(wallRenderer.gameObject.CompareTag("Wall"))
+        {
+            wallRenderer.material = corruptedEndPieceMat;
+        }
+        else if (wallRenderer.gameObject.CompareTag("Straight"))
+        {
+            wallRenderer.material = corruptedStraightPieceMat;
+        }
+        else if (wallRenderer.gameObject.CompareTag("Corner"))
+        {
+            wallRenderer.material = corruptedLPieceMat;
+        }
+        else if (wallRenderer.gameObject.CompareTag("T Wall"))
+        {
+            wallRenderer.material = corruptedTPieceMat;
+        }
+    }
+    void CleanUpMap()
+    {
+        List<Vector2Int> transitionWalls = new List<Vector2Int>();
+        List<Vector2Int> transitionLefts = new List<Vector2Int>();
+        List<Vector2Int> transitionRights = new List<Vector2Int>();
+        for (int y = 0; y < mapHeight; y++)
+        {
+            for (int x = 0; x < mapWidth; x++)
+            {
+                Vector2Int position = new Vector2Int(x, y);
+                if (SampleGrid(position) == GridType.CorruptedWall)
+                {
+                    MeshRenderer meshRenderer = wallDictionary[position];
+                    Vector2Int leftNeighbor = new Vector2Int(position.x - 1, position.y);
+                    Vector2Int rightNeighbor = new Vector2Int(position.x + 1, position.y);
+                    Vector2Int upNeighbor = new Vector2Int(position.x, position.y + 1);
+                    Vector2Int downNeighbor = new Vector2Int(position.x, position.y - 1);
+
+                    if (meshRenderer.gameObject.CompareTag("Straight"))
+                    {
+                        if (upNeighbor.y < mapHeight && SampleGrid(upNeighbor) == GridType.Wall)
+                        {
+                            transitionWalls.Add(position);
+                            if(downNeighbor.y >= 0 && SampleGrid(downNeighbor) == GridType.CorruptedWall)
+                                meshRenderer.material = transRightPieceMat;
+                            else
+                                meshRenderer.material = straightPieceMat;
+                        }
+                        else if (rightNeighbor.x < mapWidth && SampleGrid(rightNeighbor) == GridType.Wall)
+                        {
+                            transitionWalls.Add(position);
+                            if (leftNeighbor.x >= 0 && SampleGrid(leftNeighbor) == GridType.CorruptedWall)
+                                meshRenderer.material = transRightPieceMat;
+                            else
+                                meshRenderer.material = straightPieceMat;
+                        }
+                        else if (leftNeighbor.x >= 0 && SampleGrid(leftNeighbor) == GridType.Wall)
+                        {
+                            transitionWalls.Add(position);
+                            if (rightNeighbor.x < mapWidth && SampleGrid(rightNeighbor) == GridType.CorruptedWall)
+                                meshRenderer.material = transLeftPieceMat;
+                            else
+                                meshRenderer.material = straightPieceMat;
+                        }
+                        else if (downNeighbor.y >= 0 && SampleGrid(downNeighbor) == GridType.Wall)
+                        {
+                            transitionWalls.Add(position);
+                            if (upNeighbor.y < mapHeight && SampleGrid(upNeighbor) == GridType.CorruptedWall)
+                                meshRenderer.material = transLeftPieceMat;
+                            else
+                                meshRenderer.material = straightPieceMat;
+                        }
+                    }
+                    else if (meshRenderer.gameObject.CompareTag("Wall") ||
+                        meshRenderer.gameObject.CompareTag("Corner") ||
+                        meshRenderer.gameObject.CompareTag("T Wall"))
+                    {
+                        leftNeighbor = new Vector2Int(position.x - 1, position.y);
+                        rightNeighbor = new Vector2Int(position.x + 1, position.y);
+                        upNeighbor = new Vector2Int(position.x, position.y + 1);
+                        downNeighbor = new Vector2Int(position.x, position.y - 1);
+
+                        if(upNeighbor.y < mapHeight && SampleGrid(upNeighbor) == GridType.Wall)
+                        {
+                            wallDictionary[upNeighbor].material = transRightPieceMat;
+                        }
+                        if (rightNeighbor.x < mapWidth && SampleGrid(rightNeighbor) == GridType.Wall)
+                        {
+                            wallDictionary[rightNeighbor].material = transRightPieceMat;
+                        }
+                        if (leftNeighbor.x >= 0 && SampleGrid(leftNeighbor) == GridType.Wall)
+                        {
+                            wallDictionary[leftNeighbor].material = transLeftPieceMat;
+                        }
+                        if (downNeighbor.y >= 0 && SampleGrid(downNeighbor) == GridType.Wall)
+                        {
+                            wallDictionary[downNeighbor].material = transLeftPieceMat;
+                        }
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < transitionWalls.Count; i++)
+        {
+            SetGridAtPosition(transitionWalls[i], GridType.Wall);
+        }
+    }
+    #endregion
 
     public void SetGridAtPosition(Vector3 pos, GridType gridType)
     {
@@ -530,7 +797,10 @@ public class Map : MonoBehaviour
                     }
                     else
                     {
-                        Gizmos.color = Color.red;
+                        if(SampleGrid(new Vector2Int(x, y)) == GridType.CorruptedWall)
+                            Gizmos.color = Color.black;
+                        else
+                            Gizmos.color = Color.red;
                     }
 
                     Gizmos.DrawWireCube(worldPos, Vector3.one * size);
