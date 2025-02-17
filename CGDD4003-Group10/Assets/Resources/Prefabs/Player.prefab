@@ -5839,6 +5839,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3250980994337835122}
   - component: {fileID: 6221754044492916589}
+  - component: {fileID: 8716377312564550643}
   m_Layer: 0
   m_Name: GunPivot
   m_TagString: Untagged
@@ -5883,6 +5884,56 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8716377312564550643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2684850791168310037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c79141584370e2d44b4b80c864ff53cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 2865670225406934770}
+  railgun: {fileID: 917571589808840270}
+  muzzleFlash: {fileID: 4081292405791273416}
+  overheatSmoke1: {fileID: 7853135021082110637}
+  overheatSmoke2: {fileID: 6705103988746412882}
+  updateInterval: 0.075
+  chargeBarUpdateInterval: 0.05
+  timerUpdateInterval: 0.5
+  gunTimerOffset: 0.05
+  exhauseEmissionMinIntensity: 0
+  exhauseEmissionMaxIntensity: 22
+  overheatWarningThreshold: 0.391
+  overheatWarningBlinkInterval: 0.2
+  overheatWarningBlinkEmissionIntensity: 15
+  chargeEffectStart: {fileID: 6232015556247727719}
+  chargeEffectEnd: {fileID: 3031602957020574291}
+  chargeEffects:
+  - {fileID: 8570369096183300212}
+  - {fileID: 7881324399192314816}
+  - {fileID: 827486598954162991}
+  - {fileID: 6213103824951823087}
+  - {fileID: 4281092497126693417}
+  - {fileID: 8138631466210121864}
+  - {fileID: 371217069220971859}
+  - {fileID: 14985478088745561}
+  - {fileID: 8774072334426247170}
+  baseRailgun: {fileID: 8142909936792114868}
+  mergedRailgun: {fileID: 200698138701615828}
+  chargeBarrelMat: {fileID: 2100000, guid: d9f24d3c1e2cd5d458cb46909b26a3b6, type: 2}
+  chasisMat: {fileID: 2100000, guid: 0f47b28263fffc14ab9df4cfeed17a12, type: 2}
+  chargeIndicatorMat: {fileID: 2100000, guid: 55c833edda71aac40bcef36f4b77777d, type: 2}
+  shotChargeBarMat: {fileID: 2100000, guid: 9745cd148ba67b14a80bcb92a48ad027, type: 2}
+  overheatWarningMat: {fileID: 2100000, guid: ad771835c0f907b4b95f0f8de8a35662, type: 2}
+  batteryMat: {fileID: 2100000, guid: 5836313decf149e4ba40b6ea797b8ae0, type: 2}
+  chargeBarPanel: {fileID: 2100000, guid: 664375e3738d3ed4e869caa48981fa86, type: 2}
+  railgunChargeIndicatorPanel: {fileID: 2100000, guid: 2b7edaac45e5b6941895e66a2f1dcd7b, type: 2}
+  chargeEffectMat: {fileID: 2100000, guid: b001c3690e8d0e84cab7eb3edae43957, type: 2}
+  railgunMuzzleFlash: {fileID: 2100000, guid: 2d849873dedda904fa601ec60b2c4684, type: 2}
 --- !u!1 &2755950835253967001
 GameObject:
   m_ObjectHideFlags: 0
@@ -6746,14 +6797,14 @@ GameObject:
   - component: {fileID: 743185093512582757}
   - component: {fileID: 7913088612209654388}
   - component: {fileID: 6250517065606112619}
+  - component: {fileID: 6954913835686620882}
+  - component: {fileID: 4994861013660818205}
   - component: {fileID: 7441008017772949912}
   - component: {fileID: 1318178161834631250}
   - component: {fileID: 2865670225406934770}
   - component: {fileID: 6532150692148206727}
   - component: {fileID: 6717606324952877450}
-  - component: {fileID: 4507674535604613185}
-  - component: {fileID: 59560998165607546}
-  - component: {fileID: 6954913835686620882}
+  - component: {fileID: 4203800203965799948}
   - component: {fileID: 4790564691503176113}
   m_Layer: 10
   m_Name: Player
@@ -6840,6 +6891,105 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &6954913835686620882
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5301077504717036913}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9275f73cea637564db8566fa0fbc96d7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4994861013660818205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5301077504717036913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 9c6dc45ee6276944a86589d37663a7a9, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2865670225406934770}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a018e7c5-66b4-4bc0-bf52-3b2db0fd68cb
+    m_ActionName: Player/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2865670225406934770}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnLook
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3d403fe2-58d7-4bce-82e8-5498a71d08b9
+    m_ActionName: Player/Look[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2865670225406934770}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnFire
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f3b1d9ca-c568-4b47-b729-29357f919640
+    m_ActionName: Player/Fire[/Mouse/leftButton]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!136 &7441008017772949912
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -6910,8 +7060,10 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   paused: 0
   sensitivity: 4
-  weaponInfos: []
-  weapons: []
+  weaponInfos:
+  - {fileID: 11400000, guid: f82b6092a401f3f40bc6a6b84346f51b, type: 2}
+  weapons:
+  - {fileID: 917571589808840270}
   gunshotSFX: {fileID: 8300000, guid: 7d12aadad7324e54cb0527a4aa37974c, type: 3}
   stunShotSFX: {fileID: 8300000, guid: e6632061aefa7cb42a2c40edface1fab, type: 3}
   overheatSFX: {fileID: 8300000, guid: d7b88653a125e3f448e614ee531e815d, type: 3}
@@ -6922,9 +7074,9 @@ MonoBehaviour:
   weaponChargeReadySound: {fileID: 3699499008970315720}
   railgunAlertMessage: Advanced Targeting System Activated
   railgunAlertLength: 1.5
-  railGunVFX: {fileID: 4507674535604613185}
+  railGunVFX: {fileID: 0}
   wallHitEffect: {fileID: 6679666813536499760, guid: 1510669aa8237614a82d9d8137e99440, type: 3}
-  railgunAnimator: {fileID: 6221754044492916589}
+  gunAnimator: {fileID: 6221754044492916589}
   chargeTime: 0.5
   maxWeaponTemp: 7
   overheatSpeed: 4
@@ -6939,7 +7091,7 @@ MonoBehaviour:
   targetingMask:
     serializedVersion: 2
     m_Bits: 86336
-  stungunVFX: {fileID: 59560998165607546}
+  stungunVFX: {fileID: 8618817765172795398}
   stungunAnimator: {fileID: 3176158172579412883}
   timeBtwStunShots: 0
   pelletsPerStunAmmo: 10
@@ -7038,7 +7190,7 @@ MonoBehaviour:
   targetDifficultyMedium: {r: 1, g: 1, b: 1, a: 1}
   targetDifficultyHard: {r: 1, g: 0.91437024, b: 0, a: 1}
   tempColorSave: {r: 0, g: 0, b: 0, a: 0}
---- !u!114 &4507674535604613185
+--- !u!114 &4203800203965799948
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7047,92 +7199,94 @@ MonoBehaviour:
   m_GameObject: {fileID: 5301077504717036913}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c79141584370e2d44b4b80c864ff53cd, type: 3}
+  m_Script: {fileID: 11500000, guid: e7a83ce50345fdb41ab82a3afb016454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 2865670225406934770}
-  muzzleFlash: {fileID: 4081292405791273416}
-  overheatSmoke1: {fileID: 7853135021082110637}
-  overheatSmoke2: {fileID: 6705103988746412882}
-  updateInterval: 0.075
-  chargeBarUpdateInterval: 0.05
-  timerUpdateInterval: 0.5
-  gunTimerOffset: 0.05
-  exhauseEmissionMinIntensity: 0
-  exhauseEmissionMaxIntensity: 22
-  overheatWarningThreshold: 0.391
-  overheatWarningBlinkInterval: 0.2
-  overheatWarningBlinkEmissionIntensity: 15
-  chargeEffectStart: {fileID: 6232015556247727719}
-  chargeEffectEnd: {fileID: 3031602957020574291}
-  chargeEffects:
-  - {fileID: 8570369096183300212}
-  - {fileID: 7881324399192314816}
-  - {fileID: 827486598954162991}
-  - {fileID: 6213103824951823087}
-  - {fileID: 4281092497126693417}
-  - {fileID: 8138631466210121864}
-  - {fileID: 371217069220971859}
-  - {fileID: 14985478088745561}
-  - {fileID: 8774072334426247170}
-  baseRailgun: {fileID: 8142909936792114868}
-  mergedRailgun: {fileID: 200698138701615828}
-  chargeBarrelMat: {fileID: 2100000, guid: d9f24d3c1e2cd5d458cb46909b26a3b6, type: 2}
-  chasisMat: {fileID: 2100000, guid: 0f47b28263fffc14ab9df4cfeed17a12, type: 2}
-  chargeIndicatorMat: {fileID: 2100000, guid: 55c833edda71aac40bcef36f4b77777d, type: 2}
-  shotChargeBarMat: {fileID: 2100000, guid: 9745cd148ba67b14a80bcb92a48ad027, type: 2}
-  overheatWarningMat: {fileID: 2100000, guid: ad771835c0f907b4b95f0f8de8a35662, type: 2}
-  batteryMat: {fileID: 2100000, guid: 5836313decf149e4ba40b6ea797b8ae0, type: 2}
-  chargeBarPanel: {fileID: 2100000, guid: 664375e3738d3ed4e869caa48981fa86, type: 2}
-  railgunChargeIndicatorPanel: {fileID: 2100000, guid: 2b7edaac45e5b6941895e66a2f1dcd7b, type: 2}
-  chargeEffectMat: {fileID: 2100000, guid: b001c3690e8d0e84cab7eb3edae43957, type: 2}
-  railgunMuzzleFlash: {fileID: 2100000, guid: 2d849873dedda904fa601ec60b2c4684, type: 2}
---- !u!114 &59560998165607546
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5301077504717036913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c9cea953319ffd429c7db3596d160b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerController: {fileID: 2865670225406934770}
-  baseStungun: {fileID: 3087477177954422826}
-  mergedStungun: {fileID: 5345447390018179077}
-  stunMuzzleFlash: {fileID: 340231341265847883}
-  fillColors:
-  - {r: 0.07450981, g: 0.07450981, b: 0.07450981, a: 0}
-  - {r: 0, g: 0.14509805, b: 0.16862746, a: 0}
-  - {r: 0, g: 0.27450982, b: 0.32156864, a: 0}
-  - {r: 0, g: 0.48235294, b: 0.5647059, a: 0}
-  canFireEmission: 1.63
-  cantFireEmission: 1.63
-  stunContainerMat: {fileID: 2100000, guid: 927f122aaed6f964d8c0efade3dc5420, type: 2}
-  stungunMuzzleFlash: {fileID: 2100000, guid: bcfda14c7672f6e4695288c009e1a7d7, type: 2}
---- !u!95 &6954913835686620882
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5301077504717036913}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9275f73cea637564db8566fa0fbc96d7, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  difficultySettings:
+  - timerProbability:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    baseCorruptionTimer: 5
+    levelTimerMultiplier: 0.9
+  - timerProbability:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    baseCorruptionTimer: 5
+    levelTimerMultiplier: 0.9
+  - timerProbability:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    baseCorruptionTimer: 5
+    levelTimerMultiplier: 0.9
+  weaponInfos:
+  - {fileID: 11400000, guid: f82b6092a401f3f40bc6a6b84346f51b, type: 2}
+  overlapCubeSize: 4
+  overlapCheckMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &4790564691503176113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7366,6 +7520,7 @@ GameObject:
   m_Component:
   - component: {fileID: 547570625388888621}
   - component: {fileID: 3176158172579412883}
+  - component: {fileID: 8618817765172795398}
   m_Layer: 0
   m_Name: StunGun Pivot
   m_TagString: Untagged
@@ -7411,6 +7566,31 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8618817765172795398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6704805296735850020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c9cea953319ffd429c7db3596d160b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 2865670225406934770}
+  baseStungun: {fileID: 3087477177954422826}
+  mergedStungun: {fileID: 5345447390018179077}
+  stunMuzzleFlash: {fileID: 340231341265847883}
+  fillColors:
+  - {r: 0.07450981, g: 0.07450981, b: 0.07450981, a: 0}
+  - {r: 0, g: 0.14509805, b: 0.16862746, a: 0}
+  - {r: 0, g: 0.27450982, b: 0.32156864, a: 0}
+  - {r: 0, g: 0.48235294, b: 0.5647059, a: 0}
+  canFireEmission: 1.63
+  cantFireEmission: 1.63
+  stunContainerMat: {fileID: 2100000, guid: 927f122aaed6f964d8c0efade3dc5420, type: 2}
+  stungunMuzzleFlash: {fileID: 2100000, guid: bcfda14c7672f6e4695288c009e1a7d7, type: 2}
 --- !u!1 &6764550269619494555
 GameObject:
   m_ObjectHideFlags: 0
@@ -12839,7 +13019,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7753078315509055809}
   - component: {fileID: 917571589808840270}
-  - component: {fileID: 8135887001269351815}
   m_Layer: 0
   m_Name: Railgun
   m_TagString: Untagged
@@ -12880,6 +13059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 011651aabe5a95d4199066f9283c7cb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponInfo: {fileID: 11400000, guid: f82b6092a401f3f40bc6a6b84346f51b, type: 2}
   gunshotSFX: {fileID: 8300000, guid: 7d12aadad7324e54cb0527a4aa37974c, type: 3}
   overheatSFX: {fileID: 8300000, guid: d7b88653a125e3f448e614ee531e815d, type: 3}
   chargeupSFX: {fileID: 8300000, guid: 27e053d7820d30a4daa607d7f3cf2882, type: 3}
@@ -12887,10 +13067,9 @@ MonoBehaviour:
   weaponSound: {fileID: 4648173346818715503}
   weaponChargeSound: {fileID: 6888799441730200325}
   weaponChargeReadySound: {fileID: 3699499008970315720}
-  railgunInfo: {fileID: 11400000, guid: f82b6092a401f3f40bc6a6b84346f51b, type: 2}
   railgunAlertMessage: Advanced Targeting System Activated
   railgunAlertLength: 1.25
-  railGunVFX: {fileID: 8135887001269351815}
+  railGunVFX: {fileID: 8716377312564550643}
   wallHitEffect: {fileID: 6679666813536499760, guid: 1510669aa8237614a82d9d8137e99440, type: 3}
   railgunAnimator: {fileID: 6221754044492916589}
   chargeTime: 0.5
@@ -12906,55 +13085,6 @@ MonoBehaviour:
   targetingMask:
     serializedVersion: 2
     m_Bits: 86336
---- !u!114 &8135887001269351815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8243696478966758294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c79141584370e2d44b4b80c864ff53cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerController: {fileID: 2865670225406934770}
-  muzzleFlash: {fileID: 4081292405791273416}
-  overheatSmoke1: {fileID: 7853135021082110637}
-  overheatSmoke2: {fileID: 6705103988746412882}
-  updateInterval: 0.075
-  chargeBarUpdateInterval: 0.05
-  timerUpdateInterval: 0.5
-  gunTimerOffset: 0.05
-  exhauseEmissionMinIntensity: 0
-  exhauseEmissionMaxIntensity: 22
-  overheatWarningThreshold: 0.391
-  overheatWarningBlinkInterval: 0.2
-  overheatWarningBlinkEmissionIntensity: 15
-  chargeEffectStart: {fileID: 6232015556247727719}
-  chargeEffectEnd: {fileID: 3031602957020574291}
-  chargeEffects:
-  - {fileID: 8570369096183300212}
-  - {fileID: 7881324399192314816}
-  - {fileID: 827486598954162991}
-  - {fileID: 6213103824951823087}
-  - {fileID: 4281092497126693417}
-  - {fileID: 8138631466210121864}
-  - {fileID: 371217069220971859}
-  - {fileID: 14985478088745561}
-  - {fileID: 8774072334426247170}
-  baseRailgun: {fileID: 8142909936792114868}
-  mergedRailgun: {fileID: 200698138701615828}
-  chargeBarrelMat: {fileID: 2100000, guid: d9f24d3c1e2cd5d458cb46909b26a3b6, type: 2}
-  chasisMat: {fileID: 2100000, guid: 0f47b28263fffc14ab9df4cfeed17a12, type: 2}
-  chargeIndicatorMat: {fileID: 2100000, guid: 55c833edda71aac40bcef36f4b77777d, type: 2}
-  shotChargeBarMat: {fileID: 2100000, guid: 9745cd148ba67b14a80bcb92a48ad027, type: 2}
-  overheatWarningMat: {fileID: 2100000, guid: ad771835c0f907b4b95f0f8de8a35662, type: 2}
-  batteryMat: {fileID: 2100000, guid: 5836313decf149e4ba40b6ea797b8ae0, type: 2}
-  chargeBarPanel: {fileID: 2100000, guid: 664375e3738d3ed4e869caa48981fa86, type: 2}
-  railgunChargeIndicatorPanel: {fileID: 2100000, guid: 2b7edaac45e5b6941895e66a2f1dcd7b, type: 2}
-  chargeEffectMat: {fileID: 2100000, guid: b001c3690e8d0e84cab7eb3edae43957, type: 2}
-  railgunMuzzleFlash: {fileID: 2100000, guid: 2d849873dedda904fa601ec60b2c4684, type: 2}
 --- !u!1 &8743253528910096737
 GameObject:
   m_ObjectHideFlags: 0

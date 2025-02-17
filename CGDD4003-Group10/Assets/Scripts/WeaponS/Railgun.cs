@@ -37,6 +37,12 @@ public class Railgun : Weapon
     private bool overheated = false;
     private bool weaponDecharging = false;
 
+    public float WeaponCharge { get => weaponCharge; }
+    public float WeaponDecharge { get => weaponDecharge; }
+    public float WeaponTemp01 { get => (weaponTemp / maxWeaponTemp); }
+    public bool Overheated { get => overheated; }
+    public bool WeaponDecharging { get => weaponDecharging; }
+
     private bool canFire = true;
 
     bool chargeReady;
@@ -322,7 +328,7 @@ public class Railgun : Weapon
                         Ghost.HitInformation hitInformation = targetAreaCollider.OnShot(weaponInfo.damageMultiplier);
                         Score.AddToScore(Color.gray, (hitInformation.pointWorth + hitInformation.targetArea.pointsAddition));
 
-                        //SpawnBlood(hitInformation.bigBlood, hitInformation.smallBlood, hitInformation.targetArea.difficulty, hit);
+                        SpawnBlood(hitInformation.bigBlood, hitInformation.smallBlood, hitInformation.targetArea.difficulty, hit);
                     }
                     else if (bossCollider != null)
                     {
@@ -356,5 +362,32 @@ public class Railgun : Weapon
     public override void OnPassiveEvent()
     {
         CheckWeaponTemp();
+    }
+
+    public override void ResetWeapon()
+    {
+        weaponTemp = 0;
+        weaponCharge = 0;
+        weaponDecharge = 0;
+        overheated = false;
+        weaponDecharging = false;
+        railGunVFX.ActivateEffects();
+    }
+
+    public override void OnNoMouseEvent()
+    {
+        if(!overheated)
+        {
+            if (weaponCharge > 0)
+            {
+                weaponCharge -= (Time.deltaTime * (1 / (chargeTime / 2)));
+                weaponTemp -= Time.deltaTime * (overheatSpeed * 2);
+            }
+            else
+            {
+                weaponTemp = 0;
+                weaponCharge = 0;
+            }
+        }
     }
 }

@@ -7,7 +7,7 @@ public class WeaponPickup : MonoBehaviour
     [SerializeField] bool canBeCorrupted;
     [SerializeField] SpriteRenderer inGameSprite;
     [SerializeField] SpriteRenderer miniMapGameSprite;
-    public bool CanBeCorrupted { get; private set; }
+    public bool CanBeCorrupted { get => canBeCorrupted; }
     public bool isCorrupted;
 
     AudioSource playerMusic;
@@ -30,5 +30,11 @@ public class WeaponPickup : MonoBehaviour
         {
             playerMusic.volume = originalVol * Mathf.Log(Vector3.Distance(this.transform.position, playerPosition), rolloffStartDistance * 5);
         }
+    }
+
+    public void SetDisplaySprite(Sprite sprite)
+    {
+        inGameSprite.sprite = sprite;
+        miniMapGameSprite.sprite = sprite;
     }
 }

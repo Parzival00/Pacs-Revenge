@@ -5,6 +5,7 @@ using UnityEngine;
 public class RailgunVFX : MonoBehaviour
 {
     [SerializeField] PlayerController playerController;
+    [SerializeField] Railgun railgun;
     [SerializeField] Animator muzzleFlash;
     [SerializeField] ParticleSystem overheatSmoke1;
     [SerializeField] ParticleSystem overheatSmoke2;
@@ -122,6 +123,7 @@ public class RailgunVFX : MonoBehaviour
 
     public void ActivateEffects()
     {
+
         Init();
 
         StartCoroutine(GunActive());
@@ -134,21 +136,21 @@ public class RailgunVFX : MonoBehaviour
         WaitForSeconds waitInterval = new WaitForSeconds(chargeBarUpdateInterval);
         while (PlayerController.gunActivated)
         {
-            if (!playerController.Overheated)
+            if (!railgun.Overheated)
             {
-                shotChargeBarMat.SetFloat("_ChargeAmount", playerController.WeaponCharge);
+                shotChargeBarMat.SetFloat("_ChargeAmount", railgun.WeaponCharge);
                 
-                if (!overheatWarningIsBlinking && playerController.WeaponTemp01 >= overheatWarningThreshold)
+                if (!overheatWarningIsBlinking && railgun.WeaponTemp01 >= overheatWarningThreshold)
                 {
                     StartCoroutine(OverheatWarningBlink());
                 } 
-                else if(playerController.WeaponTemp01 < overheatWarningThreshold) 
+                else if(railgun.WeaponTemp01 < overheatWarningThreshold) 
                 {
                     overheatWarningMat.SetFloat("_EmissionIntensity", 0);
                 }
             } else
             {
-                shotChargeBarMat.SetFloat("_ChargeAmount", playerController.WeaponTemp01);
+                shotChargeBarMat.SetFloat("_ChargeAmount", railgun.WeaponTemp01);
             }
 
             yield return waitInterval;
@@ -160,27 +162,27 @@ public class RailgunVFX : MonoBehaviour
         WaitForSeconds waitInterval = new WaitForSeconds(updateInterval);
         while (PlayerController.gunActivated)
         {
-            if (!playerController.Overheated)
+            if (!railgun.Overheated)
             {
-                if (playerController.WeaponDecharging)
+                if (railgun.WeaponDecharging)
                 {
                     chargeBarrelMat.SetFloat("_Decharge", 1);
-                    chargeBarrelMat.SetFloat("_DechargeAmount", playerController.WeaponDecharge);
-                    CheckChargeEffects(playerController.WeaponDecharge, true);
+                    chargeBarrelMat.SetFloat("_DechargeAmount", railgun.WeaponDecharge);
+                    CheckChargeEffects(railgun.WeaponDecharge, true);
 
                     chasisMat.SetFloat("_EmissionIntensity",
-                        exhauseEmissionMinIntensity + Mathf.Min(playerController.WeaponTemp01, playerController.WeaponCharge) * (exhauseEmissionMaxIntensity - exhauseEmissionMinIntensity));
+                        exhauseEmissionMinIntensity + Mathf.Min(railgun.WeaponTemp01, railgun.WeaponCharge) * (exhauseEmissionMaxIntensity - exhauseEmissionMinIntensity));
                 }
                 else
                 {
                     chargeBarrelMat.SetFloat("_Decharge", 0);
 
-                    CheckChargeEffects(playerController.WeaponCharge, false);
+                    CheckChargeEffects(railgun.WeaponCharge, false);
 
                     chasisMat.SetFloat("_EmissionIntensity",
-                        exhauseEmissionMinIntensity + playerController.WeaponTemp01 * (exhauseEmissionMaxIntensity - exhauseEmissionMinIntensity));
+                        exhauseEmissionMinIntensity + railgun.WeaponTemp01 * (exhauseEmissionMaxIntensity - exhauseEmissionMinIntensity));
                 }
-                chargeBarrelMat.SetFloat("_ChargeAmount", playerController.WeaponCharge);
+                chargeBarrelMat.SetFloat("_ChargeAmount", railgun.WeaponCharge);
 
 
                 if (overheatSmoke1.isPlaying)
@@ -196,10 +198,10 @@ public class RailgunVFX : MonoBehaviour
             }
             else
             {
-                chargeBarrelMat.SetFloat("_ChargeAmount", playerController.WeaponTemp01);
+                chargeBarrelMat.SetFloat("_ChargeAmount", railgun.WeaponTemp01);
                 chasisMat.SetFloat("_EmissionIntensity", 
-                    exhauseEmissionMinIntensity + playerController.WeaponTemp01 * (exhauseEmissionMaxIntensity - exhauseEmissionMinIntensity));
-                CheckChargeEffects(playerController.WeaponTemp01, false);
+                    exhauseEmissionMinIntensity + railgun.WeaponTemp01 * (exhauseEmissionMaxIntensity - exhauseEmissionMinIntensity));
+                CheckChargeEffects(railgun.WeaponTemp01, false);
 
                 if (!overheatSmoke1.isPlaying)
                 {
@@ -215,6 +217,7 @@ public class RailgunVFX : MonoBehaviour
 
             yield return waitInterval;
         }
+        print("Gun Active");
     }
 
     void CheckChargeEffects(float threshold, bool greaterThan)
@@ -254,6 +257,7 @@ public class RailgunVFX : MonoBehaviour
         WaitForSeconds waitInterval = new WaitForSeconds(timerUpdateInterval);
         while (PlayerController.gunActivated)
         {
+            print("Gun Timer going");
             chargeIndicatorMat.SetFloat("_ChargeAmount", playerController.GunTimer01 + gunTimerOffset);
             yield return waitInterval;
         }
@@ -273,7 +277,7 @@ public class RailgunVFX : MonoBehaviour
         overheatWarningIsBlinking = true;
 
         bool blinkOn = true;
-        while (playerController.WeaponTemp01 >= overheatWarningThreshold && PlayerController.gunActivated && !playerController.Overheated)
+        while (railgun.WeaponTemp01 >= overheatWarningThreshold && PlayerController.gunActivated && !railgun.Overheated)
         {
             if(blinkOn)
             {
@@ -288,7 +292,7 @@ public class RailgunVFX : MonoBehaviour
             yield return waitInterval;
         }
 
-        if(!playerController.Overheated)
+        if(!railgun.Overheated)
             overheatWarningMat.SetFloat("_EmissionIntensity", 0);
 
         overheatWarningIsBlinking = false;

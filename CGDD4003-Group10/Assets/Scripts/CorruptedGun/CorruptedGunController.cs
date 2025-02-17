@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CorruptedGunController : MonoBehaviour
 {
+    [System.Serializable]
     struct DifficultySetting
     {
         public AnimationCurve timerProbability;
@@ -15,6 +16,10 @@ public class CorruptedGunController : MonoBehaviour
     [SerializeField] int overlapCubeSize = 4;
     [SerializeField] LayerMask overlapCheckMask;
     DifficultySetting currentSettings;
+
+    WeaponInfo currentWeaponInfo;
+
+    public CorruptedGun corruptedGun { get; private set; }
 
     WeaponPickup[] weaponPickups;
 
@@ -29,6 +34,14 @@ public class CorruptedGunController : MonoBehaviour
         corruptionTime = GetRandomCorruptionTime();
 
         weaponPickups = FindObjectsOfType<WeaponPickup>();
+        corruptedGun = FindObjectOfType<CorruptedGun>();
+
+        currentWeaponInfo = weaponInfos[PlayerPrefs.GetInt("Weapon")];
+
+        for (int i = 0; i < weaponPickups.Length; i++)
+        {
+            weaponPickups[i].SetDisplaySprite(currentWeaponInfo.gunIcon);
+        }
     }
 
     public float GetRandomCorruptionTime()
@@ -56,15 +69,19 @@ public class CorruptedGunController : MonoBehaviour
         spawningCorruptGun = true;
         WaitForSeconds wait = new WaitForSeconds(0.1f);
 
+
         while(spawningCorruptGun)
         {
             WeaponPickup weaponPickup = weaponPickups[Random.Range(0, weaponPickups.Length)];
-            if (weaponPickup.CanBeCorrupted)
+            if (weaponPickup != null && weaponPickup.CanBeCorrupted)
             {
                 Vector3 center = weaponPickup.transform.position;
                 Vector3 size = Vector3.one * 2 * overlapCubeSize;
+                print("Corrupt Gun");
+
                 if (!Physics.CheckBox(center, size / 2f, transform.rotation, overlapCheckMask))
                 {
+                    weaponPickup.SetDisplaySprite(currentWeaponInfo.corruptedGunIcon);
                     weaponPickup.isCorrupted = true;
                     spawningCorruptGun = false;
                     timer = 0;
@@ -72,5 +89,10 @@ public class CorruptedGunController : MonoBehaviour
             }
             yield return wait;
         }
+    }
+
+    public void DeactivateCorruptedGun()
+    {
+        StartCoroutine(corruptedGun.DeactivateEntrapment());
     }
 }

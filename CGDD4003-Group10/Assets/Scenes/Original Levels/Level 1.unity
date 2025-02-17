@@ -11724,9 +11724,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3009442871549127268, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3550454985558555889, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
       propertyPath: m_Name
       value: Weapon (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550454985558555889, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280146425761930447, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
+      propertyPath: canBeCorrupted
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7465043686356946606, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21566,6 +21578,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 552626917}
     - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: railGunVFX
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: shieldText
       value: 
       objectReference: {fileID: 791729930}
@@ -21581,6 +21597,14 @@ PrefabInstance:
       propertyPath: playerSpawnPoint
       value: 
       objectReference: {fileID: 1692905707}
+    - target: {fileID: 4203800203965799948, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: overlapCubeSize
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4507674535604613185, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4790564691503176113, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -26291,9 +26315,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3009442871549127268, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3550454985558555889, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
       propertyPath: m_Name
       value: Weapon (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550454985558555889, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280146425761930447, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
+      propertyPath: canBeCorrupted
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7465043686356946606, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -37786,9 +37822,21 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3009442871549127268, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3550454985558555889, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
       propertyPath: m_Name
       value: Weapon (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550454985558555889, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280146425761930447, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
+      propertyPath: canBeCorrupted
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7465043686356946606, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -39341,7 +39389,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: e093dd0a4ef463046a9311ffb905f80a, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: ec55163514dd3d643bfdd965360bc350, type: 2}
   m_BuildHeightMesh: 0
 --- !u!64 &1577671946
 MeshCollider:
@@ -47486,9 +47534,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3009442871549127268, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3550454985558555889, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
       propertyPath: m_Name
       value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550454985558555889, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280146425761930447, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
+      propertyPath: canBeCorrupted
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7465043686356946606, guid: bbaffda50ec33424ca8e3a5444a989cd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -54870,6 +54930,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MovingDoor
       objectReference: {fileID: 0}
+    - target: {fileID: 6072791671263646141, guid: 474eddc4b325eb5498ab516cfff935f3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -54886,6 +54950,10 @@ PrefabInstance:
     - target: {fileID: 425031449818759352, guid: 7bbe22bdc467e76459402416ae7c0452, type: 3}
       propertyPath: m_Name
       value: SpawnRoomBarrier
+      objectReference: {fileID: 0}
+    - target: {fileID: 425031449818759352, guid: 7bbe22bdc467e76459402416ae7c0452, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6503153694302767564, guid: 7bbe22bdc467e76459402416ae7c0452, type: 3}
       propertyPath: m_LocalPosition.x
@@ -54943,6 +55011,10 @@ PrefabInstance:
     - target: {fileID: 42242958485888764, guid: 3468fb066fa034442ba363c9ddf79a6a, type: 3}
       propertyPath: m_Name
       value: ExplosiveBarrel
+      objectReference: {fileID: 0}
+    - target: {fileID: 42242958485888764, guid: 3468fb066fa034442ba363c9ddf79a6a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5162740506163396674, guid: 3468fb066fa034442ba363c9ddf79a6a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -55040,6 +55112,10 @@ PrefabInstance:
     - target: {fileID: 2758796236523093737, guid: fbcba3a611cca9e4ab4b5065961be704, type: 3}
       propertyPath: m_Name
       value: LaserWall
+      objectReference: {fileID: 0}
+    - target: {fileID: 2758796236523093737, guid: fbcba3a611cca9e4ab4b5065961be704, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -55528,6 +55604,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ControllableDoor
       objectReference: {fileID: 0}
+    - target: {fileID: 1999597378129821033, guid: c3159f505cf2ea4479bc50abe556fb2a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2436519596183900257, guid: c3159f505cf2ea4479bc50abe556fb2a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 14
@@ -55624,6 +55704,10 @@ PrefabInstance:
     - target: {fileID: 7106844256706104327, guid: 6b19775359ab14b47982f78da51ac145, type: 3}
       propertyPath: m_Name
       value: ShockBarrel
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106844256706104327, guid: 6b19775359ab14b47982f78da51ac145, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -56246,6 +56330,10 @@ PrefabInstance:
     - target: {fileID: 7194477919464504075, guid: bec9cfa352cfec74a9ec7ceeec6693fe, type: 3}
       propertyPath: m_Name
       value: CaptureTentacles
+      objectReference: {fileID: 0}
+    - target: {fileID: 7194477919464504075, guid: bec9cfa352cfec74a9ec7ceeec6693fe, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
