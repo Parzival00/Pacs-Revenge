@@ -179,7 +179,7 @@ public class Map : MonoBehaviour
         }
         openMapLocations = tempList.ToArray();
 
-        CorruptMap(corruptionRangePerLevel, 5);
+        //CorruptMap(corruptionRangePerLevel, 5);
     }
 
     #region Map Corruption
