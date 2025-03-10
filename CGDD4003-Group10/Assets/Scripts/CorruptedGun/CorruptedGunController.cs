@@ -93,6 +93,7 @@ public class CorruptedGunController : MonoBehaviour
 
     public void DeactivateCorruptedGun()
     {
-        StartCoroutine(corruptedGun.DeactivateEntrapment());
+        if(corruptedGun)
+            StartCoroutine(corruptedGun.DeactivateEntrapment());
     }
 }

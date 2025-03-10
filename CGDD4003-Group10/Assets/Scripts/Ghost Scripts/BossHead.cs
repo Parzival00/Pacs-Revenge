@@ -17,6 +17,7 @@ public class BossHead : MonoBehaviour
     }
 
     Boss boss;
+    BossVFX bossVFX;
 
     [SerializeField] DifficultySettings[] difficultySettings;
     [SerializeField] int id;
@@ -36,6 +37,7 @@ public class BossHead : MonoBehaviour
     int newGhostsKilled = 0;
 
     bool shieldActive = true;
+    public bool ShieldActive { get => shieldActive; }
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +54,9 @@ public class BossHead : MonoBehaviour
         health = currentDifficultySettings.maxHealth;
 
         boss = GetComponentInParent<Boss>();
+        bossVFX = GetComponentInParent<BossVFX>();
+
+        bossVFX.SetPulseWeight(id, 0);
     }
 
     public void DeactivateShield()
@@ -65,6 +70,7 @@ public class BossHead : MonoBehaviour
     Coroutine deactivateCoroutine;
     IEnumerator ShieldDeactivate()
     {
+        bossVFX.SetPulseWeight(id, 1);
         shieldActive = false;
         float deactivateTimer = 0;
         while(deactivateTimer < currentDifficultySettings.shieldDeactivateLength)
@@ -74,6 +80,7 @@ public class BossHead : MonoBehaviour
         }
         shieldActive = !dead;
         ghostsKilled = newGhostsKilled;
+        bossVFX.SetPulseWeight(id, 0);
     }
 
     public int TakeDamage(float amount, float patienceMultiplier, int newGhostsKilled)

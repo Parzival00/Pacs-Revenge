@@ -5,6 +5,8 @@ using UnityEngine;
 public class BossCollider : MonoBehaviour
 {
     [SerializeField] int headID;
+    [SerializeField] SpriteRenderer outline;
+
     public int HeadID { get => headID; }
     public Boss boss { get; private set; }
 
@@ -19,5 +21,14 @@ public class BossCollider : MonoBehaviour
         {
             Destroy(c.gameObject);
         }
+    }
+
+    public TargetAreaCollider.TargetInfo OnTarget()
+    {
+        TargetAreaCollider.TargetInfo targetInfo;
+        targetInfo.outline = outline;
+        targetInfo.areaType = Ghost.TargetAreaType.Head;
+        targetInfo.areaDifficulty = Ghost.TargetAreaDifficulty.Hard;
+        return targetInfo;
     }
 }

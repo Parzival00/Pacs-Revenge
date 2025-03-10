@@ -518,6 +518,7 @@ public class PlayerController : MonoBehaviour
             //print("Targetting: " + hit.collider.gameObject.name);
 
             TargetAreaCollider targetAreaCollider = hit.collider.GetComponent<TargetAreaCollider>();
+            BossCollider bossCollider = hit.collider.GetComponent<BossCollider>();
 
             if (targetAreaCollider != null)
             {
@@ -527,7 +528,17 @@ public class PlayerController : MonoBehaviour
 
                 //Set TempColorSave Variable for Score method
                 tempColorSave = targetOutlineController.GetOutlineColor(target);
-            } else
+            } 
+            else if(bossCollider != null && bossCollider.boss.CheckHeadDamagable(bossCollider.HeadID))
+            {
+                TargetAreaCollider.TargetInfo target = bossCollider.OnTarget();
+                targetOutlineController.SetTargetOutline(target);
+                crosshair.color = targetingColor;
+
+                //Set TempColorSave Variable for Score method
+                tempColorSave = targetOutlineController.GetOutlineColor(target);
+            }
+            else
             {
                 crosshair.color = Color.white;
                 tempColorSave = Color.white;
@@ -844,7 +855,8 @@ public class PlayerController : MonoBehaviour
 
         //Disable corrupted gun in event of dying while trapped
         trapped = false;
-        corruptedGunController.DeactivateCorruptedGun();
+        if(corruptedGunController != null)
+            corruptedGunController.DeactivateCorruptedGun();
 
         if (gunActivated)
         {

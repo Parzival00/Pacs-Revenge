@@ -66,6 +66,7 @@ public class Boss : MonoBehaviour
 
     Animator animator;
     Rigidbody rb;
+    BossVFX bossVFX;
 
     Vector3 startPosition;
 
@@ -149,6 +150,7 @@ public class Boss : MonoBehaviour
     [SerializeField] AudioSource inkyDeath;
     [SerializeField] AudioSource pinkyDeath;
     [SerializeField] AudioSource clydeDeath;
+    [SerializeField] AudioSource shieldBreak;
 
     DifficultySettings currentDifficultySettings;
 
@@ -224,6 +226,8 @@ public class Boss : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
 
+        bossVFX = GetComponent<BossVFX>();
+
         currentRotationSmoothing = rotationSmoothing;
     }
 
@@ -263,6 +267,7 @@ public class Boss : MonoBehaviour
                 clydeHead.DeactivateShield();
                 break;
         }
+        if (shieldBreak) shieldBreak.Play();
     }
 
     void Act()
@@ -748,6 +753,22 @@ public class Boss : MonoBehaviour
 
         //Return the points awarded
         return hit;
+    }
+
+    public bool CheckHeadDamagable(int id)
+    {
+        switch(id)
+        {
+            case 0:
+                return !(inkyHead.ShieldActive || inkyHead.dead);
+            case 1:
+                return !(blinkyHead.ShieldActive || blinkyHead.dead);
+            case 2:
+                return !(pinkyHead.ShieldActive || pinkyHead.dead);
+            case 3:
+                return !(clydeHead.ShieldActive || clydeHead.dead);
+        }
+        return false;
     }
 
     //Head got killed
