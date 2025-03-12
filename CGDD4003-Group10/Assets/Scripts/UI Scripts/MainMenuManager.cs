@@ -37,6 +37,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Slider pickupVolume;
     [SerializeField] Slider uiVolume;
     [SerializeField] Slider miscVolume;
+
     [Header("Audio Tests")]
     [SerializeField] AudioSource masterSource;
     [SerializeField] AudioSource musicSource;
@@ -56,6 +57,14 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject shooting;
     [SerializeField] GameObject enemies;
     [SerializeField] GameObject endConditions;
+
+    [Header("WeaponSelect Screen")]
+    [SerializeField] WeaponInfo[] weaponInfos;
+    [SerializeField] Image weaponImage;
+    [SerializeField] TMP_Text weaponName;
+    [SerializeField] GameObject weaponSelectScreen;
+    int weaponSelection;
+
     [Header("End Statistics Menus")]
     [SerializeField] GameObject gameOverScreen;
     [SerializeField] GameObject endStatsScreen;
@@ -108,6 +117,14 @@ public class MainMenuManager : MonoBehaviour
         if (gameOverScreen != null && endStatsScreen != null) 
         {
             LoadEndStatistics();
+        }
+
+        if (SceneManager.GetActiveScene().name == "Main Menu")
+        {
+            weaponSelection = 0;
+            PlayerPrefs.SetInt("Weapon", weaponSelection);
+            weaponImage.sprite = weaponInfos[weaponSelection].gunIcon;
+            weaponName.text = weaponInfos[weaponSelection].weaponName;
         }
     }
 
@@ -268,17 +285,17 @@ public class MainMenuManager : MonoBehaviour
                 SaveSettings();
                 options.SetActive(false);
                 menu.SetActive(true);
-                if(difficultyScreen)
-                    difficultyScreen?.SetActive(false);
+                if(difficultyScreen) difficultyScreen?.SetActive(false);
                 if (achievementsScreen) achievementsScreen.SetActive(false);
+                if (weaponSelectScreen) weaponSelectScreen.SetActive(false);
 
                 break;
             case 2:
                 howToPlayUI.SetActive(false);
                 menu.SetActive(true);
-                if (difficultyScreen)
-                    difficultyScreen?.SetActive(false);
+                if (difficultyScreen) difficultyScreen?.SetActive(false);
                 if(achievementsScreen) achievementsScreen.SetActive(false);
+                if (weaponSelectScreen) weaponSelectScreen.SetActive(false);
                 break;
         }
     }
@@ -324,6 +341,7 @@ public class MainMenuManager : MonoBehaviour
         options.SetActive(false);
         difficultyScreen.SetActive(true);
         achievementsScreen.SetActive(false);
+        weaponSelectScreen.SetActive(false);
     }
     public void DisplayAchievementsScreen()
     {
@@ -333,8 +351,19 @@ public class MainMenuManager : MonoBehaviour
         options.SetActive(false);
         difficultyScreen.SetActive(false);
         achievementsScreen.SetActive(true);
+        weaponSelectScreen.SetActive(false);
 
         achievementDisplay.DisplayAchievements();
+    }
+    public void DisplayWeaponSelectScreen()
+    {
+        UIAudio.PlayOneShot(buttonClick);
+        menu.SetActive(false);
+        howToPlayUI.SetActive(false);
+        options.SetActive(false);
+        difficultyScreen.SetActive(false);
+        achievementsScreen.SetActive(false);
+        weaponSelectScreen.SetActive(true);
     }
 
     public void SetResolution(int res)
@@ -366,6 +395,18 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
+    public void NavigateWeaponSelection(int dir)
+    {
+        weaponSelection += dir;
+        if (weaponSelection < 0) weaponSelection = weaponInfos.Length - 1;
+        weaponSelection = weaponSelection % weaponInfos.Length;
+
+        weaponImage.sprite = weaponInfos[weaponSelection].gunIcon;
+        weaponName.text = weaponInfos[weaponSelection].weaponName;
+
+        PlayerPrefs.SetInt("Weapon", weaponSelection);
+    }
+
     public void SetDifficulty(int value)
     {
         UIAudio.PlayOneShot(buttonClick);
@@ -374,6 +415,7 @@ public class MainMenuManager : MonoBehaviour
         //Wah Wah! achievement (Play Baby mode)
         AchievementManager.displayAchievement("Wah Wah!");
     }
+
     public void DisplayEndStatistics()
     {
         UIAudio.PlayOneShot(buttonClick);

@@ -95,6 +95,7 @@ public class Map : MonoBehaviour
             map[index.x, index.y] = GridType.Wall;
 
             MeshRenderer meshRend = wall.GetComponent<MeshRenderer>();
+            print(meshRend.gameObject);
             wallDictionary.Add(index, meshRend);
 
             if (meshRend.material == corruptedEndPieceMat ||
@@ -113,6 +114,7 @@ public class Map : MonoBehaviour
             map[index.x, index.y] = GridType.Wall;
 
             MeshRenderer meshRend = wall.GetComponent<MeshRenderer>();
+            print(meshRend.gameObject);
             wallDictionary.Add(index, meshRend);
 
             if (meshRend.material.name == corruptedEndPieceMat.name + " (Instance)" ||
@@ -179,7 +181,7 @@ public class Map : MonoBehaviour
         }
         openMapLocations = tempList.ToArray();
 
-        CorruptMap(corruptionRangePerLevel, 4);
+        //CorruptMap(corruptionRangePerLevel, 4);
     }
 
     #region Map Corruption

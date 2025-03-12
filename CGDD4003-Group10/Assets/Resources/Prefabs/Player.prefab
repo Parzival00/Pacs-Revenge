@@ -367,7 +367,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 4906052917739341744, guid: 28f800679063ee84fb2e3c41fee59bc0, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.022
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -6325,6 +6325,90 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6622275217034872740}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3673179542860927023
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8442718087572645350}
+  - component: {fileID: 8649144716541258764}
+  m_Layer: 10
+  m_Name: railgun_Sprite
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8442718087572645350
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3673179542860927023}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.3680002, y: 0.32800004, z: 0.028000534}
+  m_LocalScale: {x: 0.125, y: 0.125, z: 0.2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7753078315509055809}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &8649144716541258764
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3673179542860927023}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -1494922521, guid: 24f09752ebcaeb34eb1e58c435d80384, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 4.8, y: 2.7}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &3741585811432328052
 GameObject:
   m_ObjectHideFlags: 0
@@ -7007,9 +7091,9 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.6870153
+  m_Radius: 1.11
   m_Height: 3.458066
   m_Direction: 1
   m_Center: {x: 0, y: 0.6903007, z: 0}
@@ -7091,7 +7175,7 @@ MonoBehaviour:
   ammoText: {fileID: 0}
   shieldText: {fileID: 0}
   shieldAnimator: {fileID: 0}
-  deathAnimator: {fileID: 6954913835686620882}
+  deathAnimator: {fileID: 0}
   tutorial: {fileID: 0}
   deathSequenceLength: 2
   defaultPlayerLives: 3
@@ -7270,7 +7354,7 @@ MonoBehaviour:
     levelTimerMultiplier: 0.9
   weaponInfos:
   - {fileID: 11400000, guid: f82b6092a401f3f40bc6a6b84346f51b, type: 2}
-  overlapCubeSize: 4
+  overlapCubeSize: 2
   overlapCheckMask:
     serializedVersion: 2
     m_Bits: 1024
@@ -7281,7 +7365,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5301077504717036913}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa2f61c0ca1df8f43adbfff5f070f4c2, type: 3}
   m_Name: 
@@ -7620,10 +7704,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 4906052917739341744, guid: 28f800679063ee84fb2e3c41fee59bc0, type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 2ddbca51f67925841909d9a4be7ed16c, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
-  m_Pitch: 0.75
+  m_Volume: 0.05
+  m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -7666,7 +7750,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.277
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -13006,13 +13090,14 @@ GameObject:
   m_Component:
   - component: {fileID: 7753078315509055809}
   - component: {fileID: 917571589808840270}
+  - component: {fileID: 5177478277903064049}
   m_Layer: 0
   m_Name: Railgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7753078315509055809
 Transform:
   m_ObjectHideFlags: 0
@@ -13026,6 +13111,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8442718087572645350}
   - {fileID: 7832770314381792238}
   - {fileID: 2230086342936488411}
   - {fileID: 6383715556485767802}
@@ -13050,7 +13136,7 @@ MonoBehaviour:
   gunshotSFX: {fileID: 8300000, guid: 7d12aadad7324e54cb0527a4aa37974c, type: 3}
   overheatSFX: {fileID: 8300000, guid: d7b88653a125e3f448e614ee531e815d, type: 3}
   chargeupSFX: {fileID: 8300000, guid: 27e053d7820d30a4daa607d7f3cf2882, type: 3}
-  chargeReadySFX: {fileID: 8300000, guid: 9ba90408a0231ae4c9a948f2011c0451, type: 3}
+  chargeReadySFX: {fileID: 8300000, guid: 32c00bf7f39585b4d859d2b9cb3d062e, type: 3}
   weaponSound: {fileID: 4648173346818715503}
   weaponChargeSound: {fileID: 6888799441730200325}
   weaponChargeReadySound: {fileID: 3699499008970315720}
@@ -13072,6 +13158,27 @@ MonoBehaviour:
   targetingMask:
     serializedVersion: 2
     m_Bits: 86336
+--- !u!95 &5177478277903064049
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8243696478966758294}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a74552d911c0b444abac48b70d814e1d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8743253528910096737
 GameObject:
   m_ObjectHideFlags: 0
