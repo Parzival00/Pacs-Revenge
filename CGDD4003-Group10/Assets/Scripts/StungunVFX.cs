@@ -5,30 +5,31 @@ using UnityEngine;
 public class StungunVFX : MonoBehaviour
 {
     [SerializeField] PlayerController playerController;
-    [SerializeField] GameObject baseStungun;
+    /*[SerializeField] GameObject baseStungun;
     [SerializeField] GameObject mergedStungun;
     [SerializeField] SpriteRenderer stunMuzzleFlash;
     [SerializeField] Color[] fillColors;
     [SerializeField] float canFireEmission = 0.3f;
-    [SerializeField] float cantFireEmission = -0.32f;
+    [SerializeField] float cantFireEmission = -0.32f;*/
 
     [Header("Materials")]
-    [SerializeField] Material stunContainerMat;
-    [SerializeField] Material stungunMuzzleFlash;
+    [SerializeField] Material stunGunMat;
+    //[SerializeField] Material stunContainerMat;
+    //[SerializeField] Material stungunMuzzleFlash;
 
     // Start is called before the first frame update
     void Start()
     {
-        baseStungun.SetActive(true);
+        /*baseStungun.SetActive(true);
         mergedStungun.SetActive(false);
         stunMuzzleFlash.gameObject.SetActive(false);
 
-        stungunMuzzleFlash.SetFloat("_Alpha", 1f);
+        stungunMuzzleFlash.SetFloat("_Alpha", 1f);*/
     }
 
     private void Update()
     {
-        InvisibilityEffect();
+        /*InvisibilityEffect();
 
         if(playerController.StunGunCanFire)
         {
@@ -41,10 +42,22 @@ public class StungunVFX : MonoBehaviour
                 stunContainerMat.SetColor("_EmissionColor", fillColors[playerController.StunAmmoCount]);
 
             stunContainerMat.SetFloat("_EmissionIntensity", cantFireEmission);
+        }*/
+
+        if (!PlayerController.gunActivated)
+        {
+            if (PlayerController.invisibilityActivated)
+            {
+                stunGunMat.SetFloat("_Invisibility", 1);
+            }
+            else
+            {
+                stunGunMat.SetFloat("_Invisibility", 0);
+            }
         }
     }
 
-    bool invisibilityCheck = false;
+    /*bool invisibilityCheck = false;
     void InvisibilityEffect()
     {
         if (invisibilityCheck != PlayerController.invisibilityActivated)
@@ -66,15 +79,15 @@ public class StungunVFX : MonoBehaviour
         }
 
         invisibilityCheck = PlayerController.invisibilityActivated;
-    }
+    }*/
 
-    public void Shoot()
+    /*public void Shoot()
     {
         StartCoroutine(StunMuzzleFlash());
-    }
+    }*/
 
 
-    IEnumerator StunMuzzleFlash()
+    /*IEnumerator StunMuzzleFlash()
     {
         stunMuzzleFlash.gameObject.SetActive(true);
         stunMuzzleFlash.flipX = Random.Range(0, 2) == 1 ? true : false;
@@ -83,5 +96,5 @@ public class StungunVFX : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
         stunMuzzleFlash.gameObject.SetActive(false);
-    }
+    }*/
 }

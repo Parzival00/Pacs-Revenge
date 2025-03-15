@@ -298,13 +298,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 415941411200823525}
+  - component: {fileID: 2284988284448762272}
+  - component: {fileID: 2967567209251808172}
   m_Layer: 0
   m_Name: Stungun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &415941411200823525
 Transform:
   m_ObjectHideFlags: 0
@@ -319,10 +321,46 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3161891634272302423}
+  - {fileID: 7292730234432944367}
   - {fileID: 2419344005522852496}
   - {fileID: 4712182175592794815}
   m_Father: {fileID: 547570625388888621}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &2284988284448762272
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216297462127043291}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5aac3ddbd32b3db46b0d345a80d8c668, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2967567209251808172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216297462127043291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c9cea953319ffd429c7db3596d160b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 2865670225406934770}
+  stunGunMat: {fileID: 2100000, guid: dbbd6f500ec71ab4c8686ac3d5e406a8, type: 2}
 --- !u!1 &1374189418250977687
 GameObject:
   m_ObjectHideFlags: 0
@@ -5839,7 +5877,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3250980994337835122}
   - component: {fileID: 6221754044492916589}
-  - component: {fileID: 8716377312564550643}
   m_Layer: 0
   m_Name: GunPivot
   m_TagString: Untagged
@@ -5884,63 +5921,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8716377312564550643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2684850791168310037}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c79141584370e2d44b4b80c864ff53cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerController: {fileID: 2865670225406934770}
-  railgun: {fileID: 917571589808840270}
-  chargeTimeSprite1: {fileID: 0}
-  chargeTimeSprite2: {fileID: 0}
-  overheatSprite1: {fileID: 2762937568580741272}
-  overheatSprite2: {fileID: 747329762553903605}
-  chargeTimerAnimator: {fileID: 2534210703614157908}
-  railgunAnimator: {fileID: 5177478277903064049}
-  muzzleFlash: {fileID: 4081292405791273416}
-  overheatSmoke1: {fileID: 8760660562900851021}
-  overheatSmoke2: {fileID: 670388022904544303}
-  updateInterval: 0.075
-  chargeBarUpdateInterval: 0.05
-  timerUpdateInterval: 0.5
-  gunTimerOffset: 0.05
-  exhauseEmissionMinIntensity: 0
-  exhauseEmissionMaxIntensity: 22
-  overheatWarningThreshold: 0.391
-  overheatWarningBlinkInterval: 0.2
-  overheatWarningBlinkEmissionIntensity: 15
-  chargeEffectStart: {fileID: 6232015556247727719}
-  chargeEffectEnd: {fileID: 3031602957020574291}
-  chargeEffects:
-  - {fileID: 8570369096183300212}
-  - {fileID: 7881324399192314816}
-  - {fileID: 827486598954162991}
-  - {fileID: 6213103824951823087}
-  - {fileID: 4281092497126693417}
-  - {fileID: 8138631466210121864}
-  - {fileID: 371217069220971859}
-  - {fileID: 14985478088745561}
-  - {fileID: 8774072334426247170}
-  baseRailgun: {fileID: 8142909936792114868}
-  mergedRailgun: {fileID: 200698138701615828}
-  railgunMat: {fileID: 2100000, guid: 7f9bcd501044ac748a17e589cf1bf942, type: 2}
-  chargeBarrelMat: {fileID: 2100000, guid: d9f24d3c1e2cd5d458cb46909b26a3b6, type: 2}
-  chasisMat: {fileID: 2100000, guid: 0f47b28263fffc14ab9df4cfeed17a12, type: 2}
-  chargeIndicatorMat: {fileID: 2100000, guid: 55c833edda71aac40bcef36f4b77777d, type: 2}
-  shotChargeBarMat: {fileID: 2100000, guid: 9745cd148ba67b14a80bcb92a48ad027, type: 2}
-  overheatWarningMat: {fileID: 2100000, guid: ad771835c0f907b4b95f0f8de8a35662, type: 2}
-  batteryMat: {fileID: 2100000, guid: 5836313decf149e4ba40b6ea797b8ae0, type: 2}
-  chargeBarPanel: {fileID: 2100000, guid: 664375e3738d3ed4e869caa48981fa86, type: 2}
-  railgunChargeIndicatorPanel: {fileID: 2100000, guid: 2b7edaac45e5b6941895e66a2f1dcd7b, type: 2}
-  chargeEffectMat: {fileID: 2100000, guid: b001c3690e8d0e84cab7eb3edae43957, type: 2}
-  railgunMuzzleFlash: {fileID: 2100000, guid: 2d849873dedda904fa601ec60b2c4684, type: 2}
 --- !u!1 &2755950835253967001
 GameObject:
   m_ObjectHideFlags: 0
@@ -6343,7 +6323,7 @@ GameObject:
   - component: {fileID: 8442718087572645350}
   - component: {fileID: 8649144716541258764}
   - component: {fileID: 640315882813396018}
-  - component: {fileID: 2534210703614157908}
+  - component: {fileID: 4743401464375397829}
   m_Layer: 10
   m_Name: railgun_Sprite
   m_TagString: Untagged
@@ -6436,7 +6416,7 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
---- !u!95 &2534210703614157908
+--- !u!95 &4743401464375397829
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -7378,8 +7358,8 @@ MonoBehaviour:
   targetingMask:
     serializedVersion: 2
     m_Bits: 86336
-  stungunVFX: {fileID: 8618817765172795398}
-  stungunAnimator: {fileID: 3176158172579412883}
+  stungunVFX: {fileID: 2967567209251808172}
+  stungunAnimator: {fileID: 2284988284448762272}
   timeBtwStunShots: 0
   pelletsPerStunAmmo: 10
   bulletOrigin: {fileID: 4904277085903038529}
@@ -12728,7 +12708,6 @@ GameObject:
   m_Component:
   - component: {fileID: 547570625388888621}
   - component: {fileID: 3176158172579412883}
-  - component: {fileID: 8618817765172795398}
   m_Layer: 0
   m_Name: StunGun Pivot
   m_TagString: Untagged
@@ -12774,31 +12753,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8618817765172795398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6704805296735850020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c9cea953319ffd429c7db3596d160b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerController: {fileID: 2865670225406934770}
-  baseStungun: {fileID: 3087477177954422826}
-  mergedStungun: {fileID: 5345447390018179077}
-  stunMuzzleFlash: {fileID: 340231341265847883}
-  fillColors:
-  - {r: 0.07450981, g: 0.07450981, b: 0.07450981, a: 0}
-  - {r: 0, g: 0.14509805, b: 0.16862746, a: 0}
-  - {r: 0, g: 0.27450982, b: 0.32156864, a: 0}
-  - {r: 0, g: 0.48235294, b: 0.5647059, a: 0}
-  canFireEmission: 1.63
-  cantFireEmission: 1.63
-  stunContainerMat: {fileID: 2100000, guid: 927f122aaed6f964d8c0efade3dc5420, type: 2}
-  stungunMuzzleFlash: {fileID: 2100000, guid: bcfda14c7672f6e4695288c009e1a7d7, type: 2}
 --- !u!1 &6764550269619494555
 GameObject:
   m_ObjectHideFlags: 0
@@ -18227,6 +18181,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7753078315509055809}
   - component: {fileID: 917571589808840270}
+  - component: {fileID: 7417868300447986589}
   - component: {fileID: 5177478277903064049}
   m_Layer: 0
   m_Name: Railgun
@@ -18234,7 +18189,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7753078315509055809
 Transform:
   m_ObjectHideFlags: 0
@@ -18279,7 +18234,7 @@ MonoBehaviour:
   weaponChargeReadySound: {fileID: 3699499008970315720}
   railgunAlertMessage: Advanced Targeting System Activated
   railgunAlertLength: 1.25
-  railGunVFX: {fileID: 8716377312564550643}
+  railGunVFX: {fileID: 7417868300447986589}
   wallHitEffect: {fileID: 6679666813536499760, guid: 1510669aa8237614a82d9d8137e99440, type: 3}
   railgunAnimator: {fileID: 5177478277903064049}
   chargeTime: 0.5
@@ -18295,6 +18250,29 @@ MonoBehaviour:
   targetingMask:
     serializedVersion: 2
     m_Bits: 86336
+--- !u!114 &7417868300447986589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8243696478966758294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c79141584370e2d44b4b80c864ff53cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 2865670225406934770}
+  railgun: {fileID: 917571589808840270}
+  overheatWarningThreshold: 0.391
+  overheatWarningBlinkInterval: 0.2
+  overheatSprite1: {fileID: 2762937568580741272}
+  overheatSprite2: {fileID: 747329762553903605}
+  chargeTimerAnimator: {fileID: 4743401464375397829}
+  railgunAnimator: {fileID: 5177478277903064049}
+  overheatSmoke1: {fileID: 8760660562900851021}
+  overheatSmoke2: {fileID: 670388022904544303}
+  railgunMat: {fileID: 2100000, guid: 7f9bcd501044ac748a17e589cf1bf942, type: 2}
 --- !u!95 &5177478277903064049
 Animator:
   serializedVersion: 5
@@ -18400,6 +18378,103 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &8543019884830230885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7292730234432944367}
+  - component: {fileID: 8905222363647129144}
+  - component: {fileID: 947775382968978171}
+  m_Layer: 10
+  m_Name: stungun_Sprite
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7292730234432944367
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8543019884830230885}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.1320002, y: 0.29600003, z: -0.01299948}
+  m_LocalScale: {x: 0.125, y: 0.125, z: 0.19999999}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 415941411200823525}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &8905222363647129144
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8543019884830230885}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: dbbd6f500ec71ab4c8686ac3d5e406a8, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 1999219807, guid: 025b3f061538d824897d95ed290da310, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 4.8, y: 2.7}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!210 &947775382968978171
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8543019884830230885}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &8598709834538471052
 GameObject:
   m_ObjectHideFlags: 0
@@ -23561,11 +23636,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfca74af9aab50742a0acff29883151b, type: 3}
---- !u!1 &200698138701615828 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: bfca74af9aab50742a0acff29883151b, type: 3}
-  m_PrefabInstance: {fileID: 1011177092113067909}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &685344599783508078 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bfca74af9aab50742a0acff29883151b, type: 3}
@@ -23711,7 +23781,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 01a5d9a5859bc2b4ab385a1e13d5950f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -23721,11 +23791,6 @@ PrefabInstance:
 --- !u!4 &2419344005522852496 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 01a5d9a5859bc2b4ab385a1e13d5950f, type: 3}
-  m_PrefabInstance: {fileID: 2745372728597179771}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3087477177954422826 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 01a5d9a5859bc2b4ab385a1e13d5950f, type: 3}
   m_PrefabInstance: {fileID: 2745372728597179771}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3767429484876187994
@@ -23878,11 +23943,6 @@ PrefabInstance:
 --- !u!4 &4712182175592794815 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 77ed4a372fab5d44c96ad795b7359fb3, type: 3}
-  m_PrefabInstance: {fileID: 5111499564097973588}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5345447390018179077 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 77ed4a372fab5d44c96ad795b7359fb3, type: 3}
   m_PrefabInstance: {fileID: 5111499564097973588}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6420029517689821596
@@ -24417,11 +24477,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dff18f8dd9a8534b864d986eebf9f7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &8142909936792114868 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0858e11154f4ee94bb6fb7f945f76d6d, type: 3}
-  m_PrefabInstance: {fileID: 9061247536189352933}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8812064379245579278 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0858e11154f4ee94bb6fb7f945f76d6d, type: 3}

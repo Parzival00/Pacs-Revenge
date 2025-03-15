@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int pelletsPerStunAmmo = 10;
     [SerializeField] Transform bulletOrigin;
     [SerializeField] GameObject stunGun;
-    int ammoCount;
+    int stunAmmoCount;
     [SerializeField] int maxAmmoCount = 1;
     //The amount of pellets per ammo is set in the score script
     private float stunFireTimer;
@@ -83,9 +83,9 @@ public class PlayerController : MonoBehaviour
     public float GunTimer01 { get => (gunTimer / gunTimeAmount); }
 
     public bool StunGunCanFire { get; private set; }
-    public int StunAmmoCount { get => ammoCount; }
+    public int StunAmmoCount { get => stunAmmoCount; }
     public int StunAmmoPerPellets { get => pelletsPerStunAmmo; }
-    public bool StunGunAmmoEmpty { get => ammoCount <= 0; }
+    public bool StunGunAmmoEmpty { get => stunAmmoCount <= 0; }
 
     //shield settings
     int shieldsRemaining;
@@ -253,7 +253,9 @@ public class PlayerController : MonoBehaviour
 
         if (stungunAnimator != null)
         {
-            stungunAnimator.SetBool("Equipped", true);
+            stunGun.SetActive(true);
+            stungunAnimator.SetTrigger("Equip");
+            //stungunAnimator.SetBool("Equipped", true);
         }
         else
         {
@@ -468,25 +470,28 @@ public class PlayerController : MonoBehaviour
     void StungunFire()
     {
 
-        StunGunCanFire = stunFireTimer <= 0 && ammoCount > 0;
+        StunGunCanFire = stunFireTimer <= 0 && stunAmmoCount > 0;
 
-        if (stunFireTimer <= 0 && Input.GetMouseButtonDown(0) && ammoCount > 0)
+        if (stunFireTimer <= 0 && Input.GetMouseButtonDown(0) && stunAmmoCount > 0)
         {
             Instantiate(stunProjectile, bulletOrigin.position, bulletOrigin.rotation);
 
             Score.totalStunsFired++;
 
-            if (ammoCount == maxAmmoCount)
+            if (stunAmmoCount == maxAmmoCount)
                 pelletCountSinceLastShot = Score.pelletsCollected;
 
-            stungunVFX.Shoot();
+            //stungunVFX.Shoot();
             if (stungunAnimator != null)
+            {
                 stungunAnimator.SetTrigger("Shoot");
+                stungunAnimator.SetFloat("Charge", Mathf.Min(3, stunAmmoCount));
+            }
 
             stunFireTimer = timeBtwStunShots;
             weaponSound.PlayOneShot(stunShotSFX);
-            ammoCount--;
-            ammoText.text = "" + Mathf.RoundToInt(Mathf.Clamp(ammoCount + ((Score.pelletsCollected - pelletCountSinceLastShot) % pelletsPerStunAmmo) / (float)pelletsPerStunAmmo, 0, maxAmmoCount) * 100) + "%";
+            stunAmmoCount--;
+            ammoText.text = "" + Mathf.RoundToInt(Mathf.Clamp(stunAmmoCount + ((Score.pelletsCollected - pelletCountSinceLastShot) % pelletsPerStunAmmo) / (float)pelletsPerStunAmmo, 0, maxAmmoCount) * 100) + "%";
         }
         else if (stunFireTimer > 0)
         {
@@ -497,10 +502,13 @@ public class PlayerController : MonoBehaviour
     {
         if ((Score.pelletsCollected - pelletCountSinceLastShot) > 0 && (Score.pelletsCollected - pelletCountSinceLastShot) % pelletsPerStunAmmo == 0)
         {
-            if (ammoCount < maxAmmoCount)
-                ammoCount++;
+            if (stunAmmoCount < maxAmmoCount)
+            {
+                stunAmmoCount++;
+                stungunAnimator.SetFloat("Charge", Mathf.Min(3, stunAmmoCount));
+            }
         }
-        ammoText.text = "" + Mathf.RoundToInt(Mathf.Clamp(ammoCount + ((Score.pelletsCollected - pelletCountSinceLastShot) % pelletsPerStunAmmo) / (float)pelletsPerStunAmmo, 0, maxAmmoCount) * 100) + "%";
+        ammoText.text = "" + Mathf.RoundToInt(Mathf.Clamp(stunAmmoCount + ((Score.pelletsCollected - pelletCountSinceLastShot) % pelletsPerStunAmmo) / (float)pelletsPerStunAmmo, 0, maxAmmoCount) * 100) + "%";
     }
     #endregion
 
@@ -566,8 +574,10 @@ public class PlayerController : MonoBehaviour
 
         if (stungunAnimator != null)
         {
-            stungunAnimator.SetBool("Equipped", false);
-            yield return new WaitForSeconds(0.2f);
+            stungunAnimator.SetTrigger("Unequip");
+
+            yield return new WaitForSeconds(0.3f);
+            stunGun.SetActive(false);
         } else
         {
             stunGun.SetActive(false);
@@ -695,8 +705,10 @@ public class PlayerController : MonoBehaviour
 
         if (!inDeathSequence && stungunAnimator != null)
         {
-            stungunAnimator.SetBool("Equipped", true);
-            //yield return new WaitForSeconds(0.2f);
+            stunGun.SetActive(true);
+            stungunAnimator.SetTrigger("Equip");
+            stungunAnimator.SetFloat("Charge", Mathf.Min(3, stunAmmoCount));
+            yield return new WaitForSeconds(0.3f);
         } else
         {
             stunGun.SetActive(true);
@@ -867,7 +879,9 @@ public class PlayerController : MonoBehaviour
         {
             if (stungunAnimator != null)
             {
-                stungunAnimator.SetBool("Equipped", false);
+                stungunAnimator.SetTrigger("Unequip");
+                yield return new WaitForSeconds(0.3f);
+                stunGun.SetActive(false);
             }
             else
             {
@@ -949,7 +963,9 @@ public class PlayerController : MonoBehaviour
 
             if (stungunAnimator != null)
             {
-                stungunAnimator.SetBool("Equipped", true);
+                stunGun.SetActive(true);
+                stungunAnimator.SetFloat("Charge", Mathf.Min(3, stunAmmoCount));
+                stungunAnimator.SetTrigger("Equip");
             } else
             {
                 stunGun.SetActive(true);

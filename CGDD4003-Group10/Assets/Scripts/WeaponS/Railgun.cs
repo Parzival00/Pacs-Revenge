@@ -105,7 +105,7 @@ public class Railgun : Weapon
                     }
                 }
 
-                railGunVFX.Shoot(hit, weaponRange);
+                //railGunVFX.Shoot(hit, weaponRange);
                 railgunAnimator.SetTrigger("Shoot1");
                 Score.totalShotsFired++;
                 StartCoroutine(Decharge());
@@ -354,7 +354,7 @@ public class Railgun : Weapon
                     }
                 }
 
-                railGunVFX.Shoot(hit, weaponRange);
+                //railGunVFX.Shoot(hit, weaponRange);
                 railgunAnimator.SetTrigger("Shoot1");
                 Score.totalShotsFired++;
                 StartCoroutine(Decharge());
@@ -379,7 +379,7 @@ public class Railgun : Weapon
         weaponDecharge = 0;
         overheated = false;
         weaponDecharging = false;
-        railGunVFX.ActivateEffects();
+        //railGunVFX.ActivateEffects();
     }
 
     public override void OnNoMouseEvent()
