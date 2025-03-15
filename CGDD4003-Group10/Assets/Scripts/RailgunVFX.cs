@@ -6,9 +6,19 @@ public class RailgunVFX : MonoBehaviour
 {
     [SerializeField] PlayerController playerController;
     [SerializeField] Railgun railgun;
-    [SerializeField] Animator muzzleFlash;
+
+    [Header("References")]
+    [SerializeField] SpriteRenderer chargeTimeSprite1;
+    [SerializeField] SpriteRenderer chargeTimeSprite2;
+    [SerializeField] SpriteRenderer overheatSprite1;
+    [SerializeField] SpriteRenderer overheatSprite2;
+    [SerializeField] Animator chargeTimerAnimator;
+    [SerializeField] Animator railgunAnimator;
     [SerializeField] ParticleSystem overheatSmoke1;
     [SerializeField] ParticleSystem overheatSmoke2;
+
+    [Header("Old Settings")]
+    [SerializeField] Animator muzzleFlash;
     [SerializeField] float updateInterval = 0.05f;
     [SerializeField] float chargeBarUpdateInterval = 0.05f;
     [SerializeField] float timerUpdateInterval = 0.5f;
@@ -27,6 +37,7 @@ public class RailgunVFX : MonoBehaviour
     bool overheatWarningIsBlinking = false;
 
     [Header("Materials")]
+    [SerializeField] Material railgunMat;
     [SerializeField] Material chargeBarrelMat;
     [SerializeField] Material chasisMat;
     [SerializeField] Material chargeIndicatorMat;
@@ -45,7 +56,7 @@ public class RailgunVFX : MonoBehaviour
         if (playerController == null)
             playerController = FindObjectOfType<PlayerController>();
 
-        Init();
+        /*Init();
 
         baseRailgun.SetActive(true);
         mergedRailgun.SetActive(false);
@@ -55,13 +66,13 @@ public class RailgunVFX : MonoBehaviour
         chargeEffectMat.SetFloat("_Alpha", 1);
         chargeBarPanel.SetFloat("_Alpha", 1);
         railgunChargeIndicatorPanel.SetFloat("_Alpha", 1);
-        railgunMuzzleFlash.SetFloat("_Alpha", 1f);
+        railgunMuzzleFlash.SetFloat("_Alpha", 1f);*/
     }
 
 
     void Init()
     {
-        chargeBarrelMat.SetFloat("_ChargeAmount", 0);
+        /*chargeBarrelMat.SetFloat("_ChargeAmount", 0);
         chargeBarrelMat.SetFloat("_DechargeAmount", 0);
         chargeBarrelMat.SetFloat("_Decharge", 0);
 
@@ -80,12 +91,56 @@ public class RailgunVFX : MonoBehaviour
         for (int i = 0; i < chargeEffects.Length; i++)
         {
             chargeEffects[i].gameObject.SetActive(false);
-        }
+        }*/
     }
 
     private void Update()
     {
-        InvisibilityEffect();
+        //InvisibilityEffect();
+
+        if (PlayerController.gunActivated)
+        {
+            railgunAnimator.SetFloat("Charge", railgun.WeaponCharge);
+            chargeTimerAnimator.SetFloat("Timer", 1 - playerController.GunTimer01);
+
+            if (!overheatWarningIsBlinking && railgun.WeaponTemp01 >= overheatWarningThreshold)
+            {
+                StartCoroutine(OverheatWarningBlink());
+            }
+
+            if (railgun.Overheated)
+            {
+                if (!overheatSmoke1.isPlaying)
+                {
+                    overheatSmoke1.Play();
+                }
+                if (!overheatSmoke2.isPlaying)
+                {
+                    overheatSmoke2.Play();
+                }
+            }
+            else
+            {
+                if (overheatSmoke1.isPlaying)
+                {
+                    overheatSmoke1.Stop();
+                }
+                if (overheatSmoke2.isPlaying)
+                {
+                    overheatSmoke2.Stop();
+                    var main = overheatSmoke2.main;
+                }
+            }
+
+            if (PlayerController.invisibilityActivated)
+            {
+                railgunMat.SetFloat("_Invisibility", 1);
+            }
+            else
+            {
+                railgunMat.SetFloat("_Invisibility", 0);
+            }
+        }
     }
 
     void InvisibilityEffect()
@@ -93,7 +148,7 @@ public class RailgunVFX : MonoBehaviour
         if (!PlayerController.gunActivated)
             return;
 
-        if (PlayerController.invisibilityActivated)
+        /*if (PlayerController.invisibilityActivated)
         {
             baseRailgun.SetActive(false);
             mergedRailgun.SetActive(true);
@@ -118,17 +173,17 @@ public class RailgunVFX : MonoBehaviour
             chargeBarPanel.SetFloat("_Alpha", 1);
             railgunChargeIndicatorPanel.SetFloat("_Alpha", 1);
             railgunMuzzleFlash.SetFloat("_Alpha", 1f);
-        }
+        }*/
     }
 
     public void ActivateEffects()
     {
 
-        Init();
+        //Init();
 
-        StartCoroutine(GunActive());
-        StartCoroutine(GunActiveChargeBar());
-        StartCoroutine(GunActiveTimer());
+        //StartCoroutine(GunActive());
+        //StartCoroutine(GunActiveChargeBar());
+        //StartCoroutine(GunActiveTimer());
     }
 
     IEnumerator GunActiveChargeBar()
@@ -136,7 +191,7 @@ public class RailgunVFX : MonoBehaviour
         WaitForSeconds waitInterval = new WaitForSeconds(chargeBarUpdateInterval);
         while (PlayerController.gunActivated)
         {
-            if (!railgun.Overheated)
+            /*if (!railgun.Overheated)
             {
                 shotChargeBarMat.SetFloat("_ChargeAmount", railgun.WeaponCharge);
                 
@@ -151,7 +206,7 @@ public class RailgunVFX : MonoBehaviour
             } else
             {
                 shotChargeBarMat.SetFloat("_ChargeAmount", railgun.WeaponTemp01);
-            }
+            }*/
 
             yield return waitInterval;
         }
@@ -162,7 +217,7 @@ public class RailgunVFX : MonoBehaviour
         WaitForSeconds waitInterval = new WaitForSeconds(updateInterval);
         while (PlayerController.gunActivated)
         {
-            if (!railgun.Overheated)
+            /*if (!railgun.Overheated)
             {
                 if (railgun.WeaponDecharging)
                 {
@@ -213,7 +268,7 @@ public class RailgunVFX : MonoBehaviour
                     overheatSmoke2.Play();
                     var main = overheatSmoke2.main;
                 }
-            }
+            }*/
 
             yield return waitInterval;
         }
@@ -222,7 +277,7 @@ public class RailgunVFX : MonoBehaviour
 
     void CheckChargeEffects(float threshold, bool greaterThan)
     {
-        float dstBtwStartEnd = chargeEffectEnd.localPosition.z - chargeEffectStart.localPosition.z;
+        /*float dstBtwStartEnd = chargeEffectEnd.localPosition.z - chargeEffectStart.localPosition.z;
 
         for (int i = 0; i < chargeEffects.Length; i++)
         {
@@ -249,10 +304,10 @@ public class RailgunVFX : MonoBehaviour
                     chargeEffects[i].gameObject.SetActive(false);
                 }
             }
-        }
+        }*/
     }
 
-    IEnumerator GunActiveTimer()
+    /*IEnumerator GunActiveTimer()
     {
         WaitForSeconds waitInterval = new WaitForSeconds(timerUpdateInterval);
         while (PlayerController.gunActivated)
@@ -267,7 +322,7 @@ public class RailgunVFX : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         Init();
-    }
+    }*/
 
 
     IEnumerator OverheatWarningBlink()
@@ -281,26 +336,34 @@ public class RailgunVFX : MonoBehaviour
         {
             if(blinkOn)
             {
-                overheatWarningMat.SetFloat("_EmissionIntensity", overheatWarningBlinkEmissionIntensity);
+                overheatSprite1.enabled = true;
+                overheatSprite2.enabled = true;
+                //overheatWarningMat.SetFloat("_EmissionIntensity", overheatWarningBlinkEmissionIntensity);
             } 
             else
             {
-                overheatWarningMat.SetFloat("_EmissionIntensity", 0);
+                overheatSprite1.enabled = false;
+                overheatSprite2.enabled = false;
+                //overheatWarningMat.SetFloat("_EmissionIntensity", 0);
             }
 
             blinkOn = !blinkOn;
             yield return waitInterval;
         }
 
-        if(!railgun.Overheated)
-            overheatWarningMat.SetFloat("_EmissionIntensity", 0);
+        if (!railgun.Overheated)
+        {
+            overheatSprite1.enabled = false;
+            overheatSprite2.enabled = false;
+            //overheatWarningMat.SetFloat("_EmissionIntensity", 0);
+        }
 
         overheatWarningIsBlinking = false;
     }
 
     public void Shoot(RaycastHit hitInfo, float range)
     {
-        muzzleFlash.gameObject.SetActive(true);
-        muzzleFlash.SetTrigger("MuzzleFlash");
+        //muzzleFlash.gameObject.SetActive(true);
+        //muzzleFlash.SetTrigger("MuzzleFlash");
     }
 }

@@ -106,7 +106,7 @@ public class Railgun : Weapon
                 }
 
                 railGunVFX.Shoot(hit, weaponRange);
-                railgunAnimator.SetTrigger("Shoot");
+                railgunAnimator.SetTrigger("Shoot1");
                 Score.totalShotsFired++;
                 StartCoroutine(Decharge());
             }
@@ -220,6 +220,7 @@ public class Railgun : Weapon
             Score.timesOverheated++;
 
             overheated = true;
+            railgunAnimator.SetBool("Overheat", true);
             //weaponSound.volume = .9f;
             weaponSound.PlayOneShot(overheatSFX);
             //weaponSound.volume = .1f;
@@ -232,12 +233,19 @@ public class Railgun : Weapon
         }
         else if (overheated && !Input.GetMouseButton(0))
         {
+            railgunAnimator.SetBool("Overheat", false);
             /*if (doTutorials && Score.timesOverheated <= 2 && tutorial)
             {
                 //tutorial.ToggleOverheatPrompt(false);
             }*/
 
             weaponTemp -= Time.deltaTime * cooldownSpeed;
+
+            railgunAnimator.SetFloat("CooldownSpeed", 1 / (maxWeaponTemp / cooldownSpeed));
+        }
+        else if (overheated && Input.GetMouseButton(0))
+        {
+            railgunAnimator.SetFloat("CooldownSpeed", 0f);
         }
     }
 
@@ -347,7 +355,7 @@ public class Railgun : Weapon
                 }
 
                 railGunVFX.Shoot(hit, weaponRange);
-                railgunAnimator.SetTrigger("Shoot");
+                railgunAnimator.SetTrigger("Shoot1");
                 Score.totalShotsFired++;
                 StartCoroutine(Decharge());
             }

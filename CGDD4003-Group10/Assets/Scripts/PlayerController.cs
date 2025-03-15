@@ -600,8 +600,8 @@ public class PlayerController : MonoBehaviour
 
         if (gunAnimator != null)
         {
-            gunAnimator.ResetTrigger("UnequipGun");
-            gunAnimator.SetTrigger("EquipGun");
+            gunAnimator.ResetTrigger("Unequip");
+            gunAnimator.SetTrigger("Equip");
         }
 
         foreach (Ghost ghost in ghosts)
@@ -648,7 +648,6 @@ public class PlayerController : MonoBehaviour
     public IEnumerator DeactivateGun()
     {
         canFire = false;
-        currentWeapon.gameObject.SetActive(false);
         hud.SetActive(false);
 
         musicPlayer.Stop();
@@ -665,11 +664,13 @@ public class PlayerController : MonoBehaviour
 
         if (gunAnimator != null)
         {
-            gunAnimator.ResetTrigger("EquipGun");
-            gunAnimator.SetTrigger("UnequipGun");
+            gunAnimator.ResetTrigger("Equip");
+            gunAnimator.SetTrigger("Unequip");
 
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.3f);
         }
+
+        currentWeapon.gameObject.SetActive(false);
 
         foreach (Ghost ghost in ghosts)
         {
@@ -1078,6 +1079,12 @@ public class PlayerController : MonoBehaviour
 
     #region Speed Power-Up
     Coroutine speedPowerUp;
+
+    public PlayerController(Animator gunAnimator)
+    {
+        this.gunAnimator = gunAnimator;
+    }
+
     public void ActivateSpeed()
     {
         if (speedPowerUpSource != null)
