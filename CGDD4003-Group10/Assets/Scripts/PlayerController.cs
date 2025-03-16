@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Weapon Audio")]
     [SerializeField] AudioClip stunShotSFX;
+    [SerializeField] AudioClip stunShotEmpty;
     [SerializeField] AudioSource weaponSound;
 
 
@@ -472,26 +473,33 @@ public class PlayerController : MonoBehaviour
 
         StunGunCanFire = stunFireTimer <= 0 && stunAmmoCount > 0;
 
-        if (stunFireTimer <= 0 && Input.GetMouseButtonDown(0) && stunAmmoCount > 0)
+        if (stunFireTimer <= 0 && Input.GetMouseButtonDown(0))
         {
-            Instantiate(stunProjectile, bulletOrigin.position, bulletOrigin.rotation);
-
-            Score.totalStunsFired++;
-
-            if (stunAmmoCount == maxAmmoCount)
-                pelletCountSinceLastShot = Score.pelletsCollected;
-
-            //stungunVFX.Shoot();
-            if (stungunAnimator != null)
+            if (stunAmmoCount > 0)
             {
-                stungunAnimator.SetTrigger("Shoot");
-                stungunAnimator.SetFloat("Charge", Mathf.Min(3, stunAmmoCount));
-            }
+                Instantiate(stunProjectile, bulletOrigin.position, bulletOrigin.rotation);
 
-            stunFireTimer = timeBtwStunShots;
-            weaponSound.PlayOneShot(stunShotSFX);
-            stunAmmoCount--;
-            ammoText.text = "" + Mathf.RoundToInt(Mathf.Clamp(stunAmmoCount + ((Score.pelletsCollected - pelletCountSinceLastShot) % pelletsPerStunAmmo) / (float)pelletsPerStunAmmo, 0, maxAmmoCount) * 100) + "%";
+                Score.totalStunsFired++;
+
+                if (stunAmmoCount == maxAmmoCount)
+                    pelletCountSinceLastShot = Score.pelletsCollected;
+
+                //stungunVFX.Shoot();
+                if (stungunAnimator != null)
+                {
+                    stungunAnimator.SetTrigger("Shoot");
+                    stungunAnimator.SetFloat("Charge", Mathf.Min(3, stunAmmoCount));
+                }
+
+                stunFireTimer = timeBtwStunShots;
+                weaponSound.PlayOneShot(stunShotSFX);
+                stunAmmoCount--;
+                ammoText.text = "" + Mathf.RoundToInt(Mathf.Clamp(stunAmmoCount + ((Score.pelletsCollected - pelletCountSinceLastShot) % pelletsPerStunAmmo) / (float)pelletsPerStunAmmo, 0, maxAmmoCount) * 100) + "%";
+            }
+            else
+            {
+                weaponSound.PlayOneShot(stunShotEmpty);
+            }
         }
         else if (stunFireTimer > 0)
         {

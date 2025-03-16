@@ -75,7 +75,6 @@ public class CorruptedGunController : MonoBehaviour
         while(spawningCorruptGun)
         {
             WeaponPickup weaponPickup = weaponPickups[Random.Range(0, weaponPickups.Length)];
-            print(weaponPickup.gameObject.name);
             if (weaponPickup != null && weaponPickup.CanBeCorrupted)
             {
                 Vector3 center = weaponPickup.transform.position;
