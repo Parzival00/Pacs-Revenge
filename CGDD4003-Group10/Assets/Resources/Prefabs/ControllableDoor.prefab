@@ -75,9 +75,14 @@ MonoBehaviour:
   leverToDoor: {fileID: 2216066692524767483}
   doorUp: {fileID: 323885785103793398}
   doorDown: {fileID: 9125944554159919032}
+  overlapCheckMask:
+    serializedVersion: 2
+    m_Bits: 3072
+  overlapCubeLength: 3
   doorSpeed: 5
   leverResetTimer: 5
   doorResetTimer: 5
+  doorCooldownTimer: 3
 --- !u!135 &168389542725202475
 SphereCollider:
   m_ObjectHideFlags: 0

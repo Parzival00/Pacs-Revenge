@@ -58,7 +58,7 @@ public class Map : MonoBehaviour
     [SerializeField] bool visualizeMap;
     [SerializeField] bool visualizePlayerNextLocation;
 
-    void Start()
+    void Awake()
     {
         //Initialize map array
         map = new GridType[mapWidth, mapHeight];
@@ -98,10 +98,10 @@ public class Map : MonoBehaviour
             print(meshRend.gameObject);
             wallDictionary.Add(index, meshRend);
 
-            if (meshRend.material == corruptedEndPieceMat ||
-                meshRend.material == corruptedStraightPieceMat ||
-                meshRend.material == corruptedTPieceMat ||
-                meshRend.material == corruptedLPieceMat)
+            if (meshRend.sharedMaterial == corruptedEndPieceMat ||
+                meshRend.sharedMaterial == corruptedStraightPieceMat ||
+                meshRend.sharedMaterial == corruptedTPieceMat ||
+                meshRend.sharedMaterial == corruptedLPieceMat)
             {
                 map[index.x, index.y] = GridType.CorruptedWall;
                 corruptedWallCount++;
@@ -117,8 +117,8 @@ public class Map : MonoBehaviour
             print(meshRend.gameObject);
             wallDictionary.Add(index, meshRend);
 
-            if (meshRend.material.name == corruptedEndPieceMat.name + " (Instance)" ||
-                meshRend.material.name == corruptedStraightPieceMat.name + " (Instance)" /*||
+            if (meshRend.sharedMaterial.name == corruptedEndPieceMat.name ||
+                meshRend.sharedMaterial.name == corruptedStraightPieceMat.name /*||
                 meshRend.material.name == transLeftPieceMat.name + " (Instance)" ||
                 meshRend.material.name == transRightPieceMat.name + " (Instance)"*/)
             {
@@ -135,7 +135,7 @@ public class Map : MonoBehaviour
             MeshRenderer meshRend = wall.GetComponent<MeshRenderer>();
             wallDictionary.Add(index, meshRend);
 
-            if(meshRend.material.name == corruptedLPieceMat.name + " (Instance)")
+            if(meshRend.sharedMaterial.name == corruptedLPieceMat.name)
             {
                 map[index.x, index.y] = GridType.CorruptedWall;
                 corruptedWallCount++;
@@ -150,7 +150,7 @@ public class Map : MonoBehaviour
             MeshRenderer meshRend = wall.GetComponent<MeshRenderer>();
             wallDictionary.Add(index, meshRend);
 
-            if (meshRend.material.name == corruptedTPieceMat.name + " (Instance)")
+            if (meshRend.sharedMaterial.name == corruptedTPieceMat.name)
             {
                 map[index.x, index.y] = GridType.CorruptedWall;
                 corruptedWallCount++;

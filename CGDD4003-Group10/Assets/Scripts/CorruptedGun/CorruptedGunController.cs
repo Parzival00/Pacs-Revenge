@@ -46,8 +46,9 @@ public class CorruptedGunController : MonoBehaviour
 
     public float GetRandomCorruptionTime()
     {
+        print(Score.currentLevel);
         return currentSettings.baseCorruptionTimer 
-            * currentSettings.levelTimerMultiplier * Score.currentLevel 
+            * Mathf.Pow(currentSettings.levelTimerMultiplier , Score.currentLevel) 
             * currentSettings.timerProbability.Evaluate(Random.Range(0f, 1f));
     }
 
@@ -59,6 +60,7 @@ public class CorruptedGunController : MonoBehaviour
         if(timer >= corruptionTime)
         {
             timer = 0;
+            corruptionTime = GetRandomCorruptionTime();
             if (!spawningCorruptGun) StartCoroutine(SpawnCorruptGun());
         }
     }
@@ -73,19 +75,25 @@ public class CorruptedGunController : MonoBehaviour
         while(spawningCorruptGun)
         {
             WeaponPickup weaponPickup = weaponPickups[Random.Range(0, weaponPickups.Length)];
+            print(weaponPickup.gameObject.name);
             if (weaponPickup != null && weaponPickup.CanBeCorrupted)
             {
                 Vector3 center = weaponPickup.transform.position;
                 Vector3 size = Vector3.one * 2 * overlapCubeSize;
-                print("Corrupt Gun");
 
-                if (!Physics.CheckBox(center, size / 2f, transform.rotation, overlapCheckMask))
+                if (!Physics.CheckBox(center, size / 2f, weaponPickup.transform.rotation, overlapCheckMask))
                 {
+                    print("Corrupt Gun");
+
                     weaponPickup.SetDisplaySprite(currentWeaponInfo.corruptedGunIcon);
                     weaponPickup.isCorrupted = true;
                     spawningCorruptGun = false;
                     timer = 0;
                 }
+            }
+            else
+            {
+                spawningCorruptGun = false;
             }
             yield return wait;
         }

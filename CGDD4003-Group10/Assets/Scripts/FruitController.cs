@@ -288,7 +288,7 @@ public class FruitController : MonoBehaviour
     IEnumerator FruitSpawnAlert()
     {
         float messageDelayTimer = Time.time + messageDelayTimerAmount;
-        float lightningStrikeTimer = Time.time + intervalBtwLightningStrikes;
+        float lightningStrikeTimer = Time.time;
         float messageTimer = 0;
 
         bool alertMessegeSent = false;
