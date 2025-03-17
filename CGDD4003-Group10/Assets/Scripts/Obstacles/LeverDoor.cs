@@ -31,7 +31,7 @@ public class LeverDoor : MonoBehaviour
     int leverState = 1;
     int currentDoorState = 1;
 
-    bool canOpenDoor;
+    bool canCloseDoor;
 
     float doorCloseTimer,intervalTimer,cooldownTimer;
 
@@ -59,8 +59,11 @@ public class LeverDoor : MonoBehaviour
 
         doorCloseTimer = 0;
 
-        canOpenDoor = true;
-        SetLeverState();
+        leverState = 1;
+        currentDoorState = 1;
+
+        canCloseDoor = true;
+        //SetLeverState();
     }
 
 
@@ -68,22 +71,22 @@ public class LeverDoor : MonoBehaviour
     {
         //CheckDoorState();
 
-        if (currentDoorState == 1)
+        if (currentDoorState == 0)
         {
 
-            if (doorCloseTimer > doorResetTimer && canOpenDoor)
+            if (doorCloseTimer > doorResetTimer && canCloseDoor)
             {
-                StartCoroutine(CloseDoor());
+                StartCoroutine(OpenDoor());
 
-                canOpenDoor = false;
+                canCloseDoor = false;
             }
             doorCloseTimer += Time.deltaTime;
         }
         else
         {
-            if(cooldownTimer > doorCooldownTimer && !canOpenDoor)
+            if(cooldownTimer > doorCooldownTimer && !canCloseDoor)
             {
-                canOpenDoor = true;
+                canCloseDoor = true;
                 leverAnimation.SetBool("Cooldown", false);
             }
             cooldownTimer += Time.deltaTime;
@@ -124,7 +127,7 @@ public class LeverDoor : MonoBehaviour
         {
             leverState = 1;
         }*/
-        if (leverState == 1 && canOpenDoor) //Set Lever Off, then reset in certain amount of time
+        if (leverState == 1 && canCloseDoor) //Set Lever Off, then reset in certain amount of time
         {
             leverState = 0;
             leverAnimation.SetBool("On",true);
@@ -157,6 +160,8 @@ public class LeverDoor : MonoBehaviour
     {
         if (currentDoorState == 1) 
         {
+            doorClosed = false;
+
             WaitForSeconds checkWait = new WaitForSeconds(0.1f);
             Vector3 center = transform.position;
             Vector3 size = Vector3.one * map.Size * overlapCubeLength;
@@ -169,7 +174,6 @@ public class LeverDoor : MonoBehaviour
 
             currentDoorState = 0;
             doorAnimation.SetBool("Closed",true);
-            ResetLever();
             doorUp.Play();
 
             map.SetGridAtPosition(gridLoc, Map.GridType.Wall);
@@ -177,7 +181,7 @@ public class LeverDoor : MonoBehaviour
             yield return null;
             yield return new WaitUntil(() => doorClosed);
 
-            leverAnimation.SetBool("Cooldown", true);
+            //leverAnimation.SetBool("Cooldown", true);
 
             doorCloseTimer = 0;
             cooldownTimer = 0;
@@ -193,16 +197,20 @@ public class LeverDoor : MonoBehaviour
     {
         if (currentDoorState == 0) 
         {
+            doorOpened = false;
+
             currentDoorState = 1;
             doorAnimation.SetBool("Closed",false);
             doorCloseTimer = 0;
             cooldownTimer = 0;
             doorDown.Play();
+            ResetLever();
 
             yield return null;
             yield return new WaitUntil(() => doorOpened);
 
             map.SetGridAtPosition(gridLoc, Map.GridType.Air);
+            leverAnimation.SetBool("Cooldown", true);
         }
     }
     bool doorOpened = false;
@@ -214,10 +222,10 @@ public class LeverDoor : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.gameObject.tag);
-        if (other.gameObject.tag == "Player" && canOpenDoor) 
+        if (other.gameObject.tag == "Player" && canCloseDoor) 
         {
             SetLeverState();
-            StartCoroutine(OpenDoor());
+            StartCoroutine(CloseDoor());
         }
     }
     /*public void OnCollisionEnter(Collision other)

@@ -275,6 +275,7 @@ public class PlayerController : MonoBehaviour
 
         canMove = true;
         canFire = true;
+        canBeDamaged = true;
 
         if (Score.currentLevel == 1)
         {
@@ -498,7 +499,9 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                stungunAnimator.SetTrigger("Empty");
                 weaponSound.PlayOneShot(stunShotEmpty);
+                stunFireTimer = timeBtwStunShots;
             }
         }
         else if (stunFireTimer > 0)
