@@ -7064,6 +7064,7 @@ GameObject:
   - component: {fileID: 6717606324952877450}
   - component: {fileID: 4203800203965799948}
   - component: {fileID: 4790564691503176113}
+  - component: {fileID: 245287490932414882}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -7209,12 +7210,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 245287490932414882}
+        m_TargetAssemblyTypeName: CinematicPlayerController, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: a018e7c5-66b4-4bc0-bf52-3b2db0fd68cb
     m_ActionName: Player/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2865670225406934770}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnLook
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 245287490932414882}
+        m_TargetAssemblyTypeName: CinematicPlayerController, Assembly-CSharp
         m_MethodName: OnLook
         m_Mode: 0
         m_Arguments:
@@ -7556,6 +7581,26 @@ MonoBehaviour:
   customPostProcess: {fileID: 2100000, guid: 00830592538978e40b43e1c030980aaa, type: 2}
   defaultFogDistance: 19.5
   bossFogDistance: 35
+--- !u!114 &245287490932414882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5301077504717036913}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 267cd9cd8ee939e4db10635264b02d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCam: {fileID: 2701049378798147818}
+  playerT: {fileID: 743185093512582757}
+  moveSpeed: 20
+  lookSpeed: 20
+  hideUI: 0
+  hideObjects:
+  - {fileID: 2684850791168310037}
+  - {fileID: 6704805296735850020}
 --- !u!1 &5465787359837868252
 GameObject:
   m_ObjectHideFlags: 0
