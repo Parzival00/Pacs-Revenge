@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip overheatSFX;
     [SerializeField] AudioClip chargeupSFX;
     [SerializeField] AudioClip chargeReadySFX;
+    [SerializeField] AudioClip railgunPickupSFX;
     [SerializeField] AudioSource weaponSound;
     [SerializeField] AudioSource weaponChargeSound;
     [SerializeField] AudioSource weaponChargeReadySound;
@@ -156,6 +157,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float powerMusicVolBoost;
     [SerializeField] AudioClip powerMusic;
     [SerializeField] AudioClip gameStart;
+    [SerializeField] AudioClip bossFightMusic;
+    [SerializeField] AudioClip backgroundMusic;
     [SerializeField] AudioSource musicPlayer;
 
     [Header("Insanity Ending Settings")]
@@ -314,6 +317,15 @@ public class PlayerController : MonoBehaviour
 
         invisibilityActivated = false;
 
+        if(Score.bossEnding)
+        {
+            musicPlayer.clip = bossFightMusic;
+        }
+        else
+        {
+            musicPlayer.clip = backgroundMusic;
+        }
+
         musicPlayer.PlayOneShot(gameStart);
 
         LivesText.text = "" + playerLives;
@@ -351,10 +363,15 @@ public class PlayerController : MonoBehaviour
             PauseGame();
         }
 
-        if (!musicPlayer.isPlaying)
+        if (!musicPlayer.isPlaying && !Score.bossEnding)
         {
             musicPlayer.Play();
             musicPlayer.loop = true;
+        }
+        else if (!musicPlayer.isPlaying && Score.startBossTimer)
+        {
+            musicPlayer.Play();
+            musicPlayer.loop = false;
         }
 
         if (!Score.insanityEnding)
@@ -806,9 +823,16 @@ public class PlayerController : MonoBehaviour
         if (hudMessenger)
             hudMessenger.Display(railgunAlertMessage, railgunAlertLength);
 
-        musicPlayer.Stop();
-        musicPlayer.PlayOneShot(powerMusic);
-        //musicPlayer.volume = musicPlayer.volume * powerMusicVolBoost;
+        if (Score.bossEnding)
+        {
+            weaponSound.PlayOneShot(railgunPickupSFX);
+        }
+        else
+        {
+            musicPlayer.Stop();
+            musicPlayer.PlayOneShot(powerMusic);
+            //musicPlayer.volume = musicPlayer.volume * powerMusicVolBoost;
+        }
 
         if (railgunAnimator != null)
         {
@@ -872,9 +896,11 @@ public class PlayerController : MonoBehaviour
         gun.SetActive(false);
         hud.SetActive(false);
 
-        musicPlayer.Stop();
-
-        //musicPlayer.volume = musicPlayer.volume / powerMusicVolBoost;
+        if(!Score.bossEnding)
+        {
+            musicPlayer.Stop();
+            //musicPlayer.volume = musicPlayer.volume / powerMusicVolBoost;
+        }
 
         //Activates Stun-Gun again
         //stunGun.SetActive(true);

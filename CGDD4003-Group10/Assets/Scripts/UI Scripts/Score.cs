@@ -71,7 +71,7 @@ public class Score : MonoBehaviour
 
     float bossTimer;
 
-    bool startBossTimer;
+    public static bool startBossTimer { get; set; }
 
     //Various Stats
     public static int totalGhostKilled { get;  set; }
