@@ -148,13 +148,10 @@ public class FruitController : MonoBehaviour
     {
         if (!fruitActivated)
         {
-            fruitSpriteRenderer.enabled = true;
-            minimapFruitSpriteRenderer.enabled = true;
 
-            fruitCollectionCollider.enabled = true;
 
             fruitActivated = true;
-            pedastalMinimapSprite.SetActive(false);
+            //pedastalMinimapSprite.SetActive(false);
 
             if (alertMessage != null)
                 fruitSpawnAlertCoroutine = StartCoroutine(FruitSpawnAlert());
@@ -291,7 +288,7 @@ public class FruitController : MonoBehaviour
     IEnumerator FruitSpawnAlert()
     {
         float messageDelayTimer = Time.time + messageDelayTimerAmount;
-        float lightningStrikeTimer = Time.time + intervalBtwLightningStrikes;
+        float lightningStrikeTimer = Time.time;
         float messageTimer = 0;
 
         bool alertMessegeSent = false;
@@ -307,6 +304,17 @@ public class FruitController : MonoBehaviour
                 //lightningBeam?.Play();
                 lightningStrike.SetActive(false);
                 lightningStrike.SetActive(true);
+
+                yield return new WaitForSeconds(0.3f);
+
+                if(i == 1)
+                {
+                    fruitSpriteRenderer.enabled = true;
+                    minimapFruitSpriteRenderer.enabled = true;
+
+                    fruitCollectionCollider.enabled = true;
+                    pedastalMinimapSprite.SetActive(false);
+                }
 
                 if (lightningSoundSource.clip != null)
                     lightningSoundSource.Play();

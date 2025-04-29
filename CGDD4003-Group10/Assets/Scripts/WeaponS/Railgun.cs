@@ -24,9 +24,7 @@ public class Railgun : Weapon
     [SerializeField] float overheatSpeed = 1;
     [SerializeField] float cooldownSpeed = 1;
     [SerializeField] float dechargeTime = .25f;
-    [SerializeField] float gunTimeAmount = 5f;
     [SerializeField] Camera fpsCam;
-    [SerializeField] WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
     [SerializeField] float camShakeFrequency = 1f;
     [SerializeField] float camShakeDuration = 0.4f;
     [SerializeField] CameraShake camShake;
@@ -38,6 +36,12 @@ public class Railgun : Weapon
     private float weaponTemp;
     private bool overheated = false;
     private bool weaponDecharging = false;
+
+    public float WeaponCharge { get => weaponCharge; }
+    public float WeaponDecharge { get => weaponDecharge; }
+    public float WeaponTemp01 { get => (weaponTemp / maxWeaponTemp); }
+    public bool Overheated { get => overheated; }
+    public bool WeaponDecharging { get => weaponDecharging; }
 
     private bool canFire = true;
 
@@ -80,7 +84,7 @@ public class Railgun : Weapon
 
                     if (targetAreaCollider != null && captureTentacle == null)
                     {
-                        Ghost.HitInformation hitInformation = targetAreaCollider.OnShot();
+                        Ghost.HitInformation hitInformation = targetAreaCollider.OnShot(weaponInfo.damageMultiplier);
                         Score.AddToScore(Color.gray, (hitInformation.pointWorth + hitInformation.targetArea.pointsAddition));
 
                         //SpawnBlood(hitInformation.bigBlood, hitInformation.smallBlood, hitInformation.targetArea.difficulty, hit);
@@ -101,8 +105,8 @@ public class Railgun : Weapon
                     }
                 }
 
-                railGunVFX.Shoot(hit, weaponRange);
-                railgunAnimator.SetTrigger("Shoot");
+                //railGunVFX.Shoot(hit, weaponRange);
+                railgunAnimator.SetTrigger("Shoot1");
                 Score.totalShotsFired++;
                 StartCoroutine(Decharge());
             }
@@ -146,7 +150,7 @@ public class Railgun : Weapon
             {
                 if (chargeReady == false)
                 {
-                    weaponChargeReadySound.PlayOneShot(chargeReadySFX);
+                    //weaponChargeReadySound.PlayOneShot(chargeReadySFX);
                     chargeReady = true;
                 }
                 /*if (doTutorials && Score.totalShotsFired <= 0 && tutorial)
@@ -216,6 +220,7 @@ public class Railgun : Weapon
             Score.timesOverheated++;
 
             overheated = true;
+            railgunAnimator.SetBool("Overheat", true);
             //weaponSound.volume = .9f;
             weaponSound.PlayOneShot(overheatSFX);
             //weaponSound.volume = .1f;
@@ -228,12 +233,19 @@ public class Railgun : Weapon
         }
         else if (overheated && !Input.GetMouseButton(0))
         {
+            railgunAnimator.SetBool("Overheat", false);
             /*if (doTutorials && Score.timesOverheated <= 2 && tutorial)
             {
                 //tutorial.ToggleOverheatPrompt(false);
             }*/
 
             weaponTemp -= Time.deltaTime * cooldownSpeed;
+
+            railgunAnimator.SetFloat("CooldownSpeed", 1 / (maxWeaponTemp / cooldownSpeed));
+        }
+        else if (overheated && Input.GetMouseButton(0))
+        {
+            railgunAnimator.SetFloat("CooldownSpeed", 0f);
         }
     }
 
@@ -321,14 +333,14 @@ public class Railgun : Weapon
 
                     if (targetAreaCollider != null && captureTentacle == null)
                     {
-                        Ghost.HitInformation hitInformation = targetAreaCollider.OnShot();
+                        Ghost.HitInformation hitInformation = targetAreaCollider.OnShot(weaponInfo.damageMultiplier);
                         Score.AddToScore(Color.gray, (hitInformation.pointWorth + hitInformation.targetArea.pointsAddition));
 
-                        //SpawnBlood(hitInformation.bigBlood, hitInformation.smallBlood, hitInformation.targetArea.difficulty, hit);
+                        SpawnBlood(hitInformation.bigBlood, hitInformation.smallBlood, hitInformation.targetArea.difficulty, hit);
                     }
                     else if (bossCollider != null)
                     {
-                        Boss.BossHitInformation hitInformation = bossCollider.boss.GotHit(hit.point, bossCollider.HeadID);
+                        Boss.BossHitInformation hitInformation = bossCollider.boss.GotHit(hit.point, bossCollider.HeadID, weaponInfo.damageMultiplier);
                         if (hitInformation.pointWorth > 0)
                             Score.AddToScore(Color.gray, hitInformation.pointWorth);
                     }
@@ -342,8 +354,8 @@ public class Railgun : Weapon
                     }
                 }
 
-                railGunVFX.Shoot(hit, weaponRange);
-                railgunAnimator.SetTrigger("Shoot");
+                //railGunVFX.Shoot(hit, weaponRange);
+                railgunAnimator.SetTrigger("Shoot1");
                 Score.totalShotsFired++;
                 StartCoroutine(Decharge());
             }
@@ -358,5 +370,32 @@ public class Railgun : Weapon
     public override void OnPassiveEvent()
     {
         CheckWeaponTemp();
+    }
+
+    public override void ResetWeapon()
+    {
+        weaponTemp = 0;
+        weaponCharge = 0;
+        weaponDecharge = 0;
+        overheated = false;
+        weaponDecharging = false;
+        //railGunVFX.ActivateEffects();
+    }
+
+    public override void OnNoMouseEvent()
+    {
+        if(!overheated)
+        {
+            if (weaponCharge > 0)
+            {
+                weaponCharge -= (Time.deltaTime * (1 / (chargeTime / 2)));
+                weaponTemp -= Time.deltaTime * (overheatSpeed * 2);
+            }
+            else
+            {
+                weaponTemp = 0;
+                weaponCharge = 0;
+            }
+        }
     }
 }

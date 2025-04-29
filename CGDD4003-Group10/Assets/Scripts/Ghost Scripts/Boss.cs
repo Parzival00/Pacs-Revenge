@@ -54,7 +54,7 @@ public class Boss : MonoBehaviour
         public float slamThreshold;
         public float slamStunLength;
         [Header("Damage Settings")]
-        public float baseRailgunDamage;
+        public float baseDamage;
         [Tooltip("Multiplier to the damage based on the amount of ghosts of a particular kind you kill before shooting the corresponding head")]
         public float patienceMultiplier;
     }
@@ -66,6 +66,7 @@ public class Boss : MonoBehaviour
 
     Animator animator;
     Rigidbody rb;
+    BossVFX bossVFX;
 
     Vector3 startPosition;
 
@@ -149,6 +150,7 @@ public class Boss : MonoBehaviour
     [SerializeField] AudioSource inkyDeath;
     [SerializeField] AudioSource pinkyDeath;
     [SerializeField] AudioSource clydeDeath;
+    [SerializeField] AudioSource shieldBreak;
 
     DifficultySettings currentDifficultySettings;
 
@@ -224,6 +226,8 @@ public class Boss : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
 
+        bossVFX = GetComponent<BossVFX>();
+
         currentRotationSmoothing = rotationSmoothing;
     }
 
@@ -263,6 +267,7 @@ public class Boss : MonoBehaviour
                 clydeHead.DeactivateShield();
                 break;
         }
+        if (shieldBreak) shieldBreak.Play();
     }
 
     void Act()
@@ -686,7 +691,7 @@ public class Boss : MonoBehaviour
     }
 
     //Boss was hit with the railgun
-    public BossHitInformation GotHit(Vector3 hitPosition, int headID)
+    public BossHitInformation GotHit(Vector3 hitPosition, int headID, float damageMultiplier = 1)
     {
         BossHitInformation hit = new BossHitInformation();
         hit.pointWorth = 0;
@@ -697,16 +702,16 @@ public class Boss : MonoBehaviour
             switch (headID)
             {
                 case 0:
-                    hit.pointWorth = inkyHead.TakeDamage(currentDifficultySettings.baseRailgunDamage, currentDifficultySettings.patienceMultiplier, inkysKilled);
+                    hit.pointWorth = inkyHead.TakeDamage(currentDifficultySettings.baseDamage * damageMultiplier, currentDifficultySettings.patienceMultiplier, inkysKilled);
                     break;
                 case 1:
-                    hit.pointWorth = blinkyHead.TakeDamage(currentDifficultySettings.baseRailgunDamage, currentDifficultySettings.patienceMultiplier, blinkysKilled);
+                    hit.pointWorth = blinkyHead.TakeDamage(currentDifficultySettings.baseDamage * damageMultiplier, currentDifficultySettings.patienceMultiplier, blinkysKilled);
                     break;
                 case 2:
-                    hit.pointWorth = pinkyHead.TakeDamage(currentDifficultySettings.baseRailgunDamage, currentDifficultySettings.patienceMultiplier, pinkysKilled);
+                    hit.pointWorth = pinkyHead.TakeDamage(currentDifficultySettings.baseDamage * damageMultiplier, currentDifficultySettings.patienceMultiplier, pinkysKilled);
                     break;
                 case 3:
-                    hit.pointWorth = clydeHead.TakeDamage(currentDifficultySettings.baseRailgunDamage, currentDifficultySettings.patienceMultiplier, clydesKilled);
+                    hit.pointWorth = clydeHead.TakeDamage(currentDifficultySettings.baseDamage * damageMultiplier, currentDifficultySettings.patienceMultiplier, clydesKilled);
                     break;
             }
         }
@@ -748,6 +753,22 @@ public class Boss : MonoBehaviour
 
         //Return the points awarded
         return hit;
+    }
+
+    public bool CheckHeadDamagable(int id)
+    {
+        switch(id)
+        {
+            case 0:
+                return !(inkyHead.ShieldActive || inkyHead.dead);
+            case 1:
+                return !(blinkyHead.ShieldActive || blinkyHead.dead);
+            case 2:
+                return !(pinkyHead.ShieldActive || pinkyHead.dead);
+            case 3:
+                return !(clydeHead.ShieldActive || clydeHead.dead);
+        }
+        return false;
     }
 
     //Head got killed

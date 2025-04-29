@@ -65,9 +65,10 @@ public class CorruptedGun : MonoBehaviour
     }
 
     Coroutine deactivation;
-    IEnumerator DeactivateEntrapment()
+    public IEnumerator DeactivateEntrapment()
     {
-        player.SetTrapped(false);
+        if (player)
+            player.SetTrapped(false);
 
         yield return new WaitForSeconds(1f);
 

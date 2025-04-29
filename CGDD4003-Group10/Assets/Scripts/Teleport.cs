@@ -6,6 +6,7 @@ public class Teleport : MonoBehaviour
 {
     [SerializeField] Transform destination;
     [SerializeField] Vector3 destinationOffset;
+    [SerializeField] AudioSource teleportSound;
 
     Map map;
 
@@ -50,6 +51,8 @@ public class Teleport : MonoBehaviour
                 {
                     ghost.SetPosition(new Vector3(destination.position.x, other.transform.position.y, destination.position.z) + destinationOffset);
                 }
+                teleportSound.spatialBlend = 1.0f;
+                teleportSound.Play();
             }
         }
         else if (other.tag == "Player")
@@ -63,6 +66,8 @@ public class Teleport : MonoBehaviour
                     player.SetPosition(GetValidSpace());
                 else
                     player.SetPosition(new Vector3(destination.position.x, other.transform.position.y, destination.position.z) + destinationOffset);
+                teleportSound.spatialBlend = 0f;
+                teleportSound.Play();
             }
                 
         }
