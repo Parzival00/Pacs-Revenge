@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class Railgun : Weapon
@@ -81,6 +82,7 @@ public class Railgun : Weapon
                     TargetAreaCollider targetAreaCollider = hit.collider.GetComponent<TargetAreaCollider>();
                     BossCollider bossCollider = hit.collider.GetComponent<BossCollider>();
                     CaptureTentacle captureTentacle = hit.collider.GetComponent<CaptureTentacle>();
+                    Barrel barrel = hit.collider.GetComponent<Barrel>();
 
                     if (targetAreaCollider != null && captureTentacle == null)
                     {
@@ -98,6 +100,12 @@ public class Railgun : Weapon
                     else if (captureTentacle != null)
                     {
                         captureTentacle.TakeDamage(50);
+                    }
+                    else if (barrel != null && barrel.gameObject.tag == "ExplosiveBarrel")
+                    {
+                        //Debug.Log("Barrel has been hit?");
+                        //Debug.Log(barrel.name + " has been hit!");
+                        barrel.Explosion();
                     }
                     else
                     {
@@ -330,6 +338,7 @@ public class Railgun : Weapon
                     TargetAreaCollider targetAreaCollider = hit.collider.GetComponent<TargetAreaCollider>();
                     BossCollider bossCollider = hit.collider.GetComponent<BossCollider>();
                     CaptureTentacle captureTentacle = hit.collider.GetComponent<CaptureTentacle>();
+                    Barrel barrel = hit.collider.GetComponent<Barrel>();
 
                     if (targetAreaCollider != null && captureTentacle == null)
                     {
@@ -347,6 +356,12 @@ public class Railgun : Weapon
                     else if (captureTentacle != null)
                     {
                         captureTentacle.TakeDamage(50);
+                    }
+                    else if (barrel != null && barrel.gameObject.tag == "ExplosiveBarrel")
+                    {
+                        //Debug.Log("Barrel has been hit?");
+                        //Debug.Log(barrel.name + " has been hit!");
+                        barrel.Explosion();
                     }
                     else
                     {

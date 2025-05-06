@@ -1019,7 +1019,11 @@ public class Ghost : MonoBehaviour
 
         Destroy(gameObject);
     }
-
+    public TargetAreaType barrelDamage() 
+    {
+        TargetAreaType tp = TargetAreaType.Head;
+        return tp;
+    }
     //Debug Function
     private void OnDrawGizmos()
     {
