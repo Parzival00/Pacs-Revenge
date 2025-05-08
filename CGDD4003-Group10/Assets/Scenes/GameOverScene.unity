@@ -2129,7 +2129,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 2412752374166463850, guid: 28f800679063ee84fb2e3c41fee59bc0, type: 2}
   m_audioClip: {fileID: 8300000, guid: 7aca5eb339549b74193b71dfed3c055c, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.19
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -8408,6 +8408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 982280112}
   destinationOffset: {x: -1.25, y: 0, z: 0}
+  teleportSound: {fileID: 0}
 --- !u!65 &267891423
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36817,6 +36818,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 267891421}
   destinationOffset: {x: 1.25, y: 0, z: 0}
+  teleportSound: {fileID: 0}
 --- !u!1 &985526810
 GameObject:
   m_ObjectHideFlags: 0
@@ -45086,7 +45088,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5301077504717036913, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
-      insertIndex: 6
+      insertIndex: 5
       addedObject: {fileID: 1862071249}
     - targetCorrespondingSourceObject: {fileID: 5301077504717036913, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       insertIndex: -1
@@ -45479,6 +45481,10 @@ MonoBehaviour:
   shooting: {fileID: 0}
   enemies: {fileID: 0}
   endConditions: {fileID: 0}
+  weaponInfos: []
+  weaponImage: {fileID: 0}
+  weaponName: {fileID: 0}
+  weaponSelectScreen: {fileID: 0}
   gameOverScreen: {fileID: 1664350601}
   endStatsScreen: {fileID: 32443542}
   playTime: {fileID: 1786523445}
@@ -72300,6 +72306,20 @@ MonoBehaviour:
   mapHeight: 29
   centerOffset: {x: 0, y: 0, z: 0}
   startGridFromOrigin: 0
+  gradualCorruption: 0
+  corruptionRangePerLevel: 2
+  startWithRandCorruption: 0
+  startCorruptionCount: 1
+  endPieceMat: {fileID: 0}
+  straightPieceMat: {fileID: 0}
+  tPieceMat: {fileID: 0}
+  lPieceMat: {fileID: 0}
+  corruptedEndPieceMat: {fileID: 0}
+  corruptedStraightPieceMat: {fileID: 0}
+  corruptedTPieceMat: {fileID: 0}
+  corruptedLPieceMat: {fileID: 0}
+  transLeftPieceMat: {fileID: 0}
+  transRightPieceMat: {fileID: 0}
   visualizePlayerGridLocation: 0
   visualizeMap: 0
   visualizePlayerNextLocation: 0

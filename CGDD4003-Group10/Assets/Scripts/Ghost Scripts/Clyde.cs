@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Clyde : Ghost
@@ -16,8 +14,8 @@ public class Clyde : Ghost
         Vector2Int clydeGridPosition = map.GetGridLocation(transform.position);
 
         Vector2Int newTargetPosition;
-        
-        if (Vector2Int.Distance(playerGridPosition,clydeGridPosition) < radiusToAvoidPlayer)
+
+        if (Vector2Int.Distance(playerGridPosition, clydeGridPosition) < radiusToAvoidPlayer)
         {
             newTargetPosition = map.GetGridLocation(scatterTarget.position);
         }
@@ -27,7 +25,7 @@ public class Clyde : Ghost
         }
 
         targetGridPosition = map.CheckEdgePositions(transform.position, newTargetPosition);
-        
+
 
         Move(false);
 
@@ -152,7 +150,7 @@ public class Clyde : Ghost
     }
     public override void InitiateScatter()
     {
-        if(currentMode == Mode.Chase)
+        if (currentMode == Mode.Chase)
         {
             currentMode = Mode.Scatter;
             if ((int)Random.Range(0, randomTurnRange) == 1)

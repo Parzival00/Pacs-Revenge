@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -17,7 +15,7 @@ public class GlobalAudioController : MonoBehaviour
         print("Applied Audio Settings");
 
         if (PlayerPrefs.HasKey("MastVolume"))
-            mix.SetFloat( "MasterVol", PlayerPrefs.GetFloat("MastVolume"));
+            mix.SetFloat("MasterVol", PlayerPrefs.GetFloat("MastVolume"));
 
         if (PlayerPrefs.HasKey("MusVolume"))
             mix.SetFloat("MusicVol", PlayerPrefs.GetFloat("MusVolume"));
