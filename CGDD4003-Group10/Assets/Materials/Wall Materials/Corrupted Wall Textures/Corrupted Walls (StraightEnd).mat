@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Corrupted Walls (T-Piece)
+  m_Name: Corrupted Walls (StraightEnd)
   m_Shader: {fileID: -6465566751694194690, guid: 3f9a8f3993338884ca3e4a0124e61dbc, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -73,11 +73,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 45988eff4fb52f144891909663eec441, type: 3}
+        m_Texture: {fileID: 2800000, guid: 09dcbf200fb318a458da33a192ff2404, type: 3}
         m_Scale: {x: 1, y: 2}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalTex:
+        m_Texture: {fileID: 2800000, guid: e261388586a4da747b9d7fb9f0868813, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -126,6 +130,7 @@ Material:
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
+    - _NormalIntensity: 1.84
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _QueueControl: 0
