@@ -105,7 +105,7 @@ public class Railgun : Weapon
                     {
                         //Debug.Log("Barrel has been hit?");
                         //Debug.Log(barrel.name + " has been hit!");
-                        barrel.Explosion();
+                        barrel.StartExplosion();
                     }
                     else
                     {
@@ -361,7 +361,7 @@ public class Railgun : Weapon
                     {
                         //Debug.Log("Barrel has been hit?");
                         //Debug.Log(barrel.name + " has been hit!");
-                        barrel.Explosion();
+                        barrel.StartExplosion();
                     }
                     else
                     {

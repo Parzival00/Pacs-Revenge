@@ -774,7 +774,7 @@ public class PlayerController : MonoBehaviour
                         print("shields: " + shieldsRemaining);
 
                         //stun ghost
-                        other.SendMessage("FreezeGhost");
+                        ghost.FreezeGhost();
 
                         if (shieldsRemaining <= 0)
                         {

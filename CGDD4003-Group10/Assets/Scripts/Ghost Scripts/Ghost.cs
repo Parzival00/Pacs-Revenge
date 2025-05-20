@@ -260,7 +260,7 @@ public class Ghost : MonoBehaviour
                 Respawn();
                 break;
             case Mode.Freeze:
-                Freeze();
+                //Freeze();
                 break;
             case Mode.Flinch:
                 Flinch();
@@ -319,7 +319,6 @@ public class Ghost : MonoBehaviour
         chaseSoundSource.loop = true;
         chaseSoundSource.clip = chaseSoundFar;
 
-
         if (distToPlayer < dstToBlendToCloseSound)
         {
             chaseSoundSource.pitch = closePitch;
@@ -359,6 +358,7 @@ public class Ghost : MonoBehaviour
             return false;
 
         navMesh.enabled = true;
+        navMesh.isStopped = false;
 
         bool turnedAround = false;
 
@@ -438,6 +438,12 @@ public class Ghost : MonoBehaviour
         return turnedAround;
     }
 
+    public void TeleportGhost(Vector3 destination, Vector3 destinationOffset)
+    {
+        currentDirection = new Vector2Int(destinationOffset.x > 0 ? 1 : (destinationOffset.x < 0 ? -1 : 0), destinationOffset.z > 0 ? 1 : (destinationOffset.z < 0 ? -1 : 0));
+        SetPosition(new Vector3(destination.x, transform.position.y, destination.z) + destinationOffset);
+    }
+
     //Mode at the games start to keep ghost unactive until the required pellets are collected
     protected virtual void Dormant()
     {
@@ -451,7 +457,8 @@ public class Ghost : MonoBehaviour
     float flinchTimer;
     protected virtual void Flinch()
     {
-        navMesh.enabled = false;
+        navMesh.isStopped = true;
+        //navMesh.enabled = true;
 
         if(!isFlinching)
         {
@@ -642,7 +649,8 @@ public class Ghost : MonoBehaviour
         hitSoundSource.PlayOneShot(deathSound);
         spriteController.DeactivateColliders();
 
-        navMesh.enabled = false;
+        navMesh.isStopped = true;
+        //navMesh.enabled = false;
 
         stunEffect.SetActive(false);
 
@@ -655,7 +663,6 @@ public class Ghost : MonoBehaviour
         if(!Score.bossEnding)
             deadMinimapIcon.SetActive(true);
         
-
         WaitForSeconds deathWait = new WaitForSeconds(3f);
 
         yield return deathWait;
@@ -671,7 +678,8 @@ public class Ghost : MonoBehaviour
 
             yield return new WaitForSeconds(0.5f);
 
-            navMesh.enabled = true;
+            //navMesh.enabled = true;
+            navMesh.isStopped = false;
 
             Vector2Int respawnPointGridPos = map.GetGridLocation(respawnPoint.position);
             navMesh.SetDestination(map.GetWorldFromGrid(respawnPointGridPos));
@@ -753,8 +761,8 @@ public class Ghost : MonoBehaviour
     public void StopGhost()
     {
         currentMode = Mode.Reseting;
-        navMesh.enabled = false;
-        
+        navMesh.isStopped = true;
+        //navMesh.enabled = false;
     }
 
     /// <summary>
@@ -793,7 +801,8 @@ public class Ghost : MonoBehaviour
 
         yield return wait;
 
-        navMesh.enabled = true;
+        //navMesh.enabled = true;
+        navMesh.isStopped = false;
 
         stunEffect.SetActive(false);
 
@@ -808,17 +817,26 @@ public class Ghost : MonoBehaviour
     #endregion
 
     #region Freeze/Stun Ghosts
-    public void FreezeGhost()
+    /*public void FreezeGhost()
+    {
+        FreezeGhost(-1);
+    }*/
+    public void FreezeGhost(float freezeLength = -1)
     {
         if (currentMode == Mode.Scatter || currentMode == Mode.Chase || currentMode == Mode.InvisibilityPowerUp || currentMode == Mode.BossfightMove)
         {
             freezeTimer = freezeTime;
             previousMode = currentMode;
             currentMode = Mode.Freeze;
-            navMesh.enabled = false;
+            navMesh.isStopped = true;
+            //navMesh.enabled = false;
             stunEffect.SetActive(true);
             chaseSoundSource.Stop();
             zapSoundSource.PlayOneShot(stunnedSound);
+
+            freezeTimer = freezeLength < 0 ? freezeTime : freezeLength;
+
+            Freeze();
         }
     }
 
@@ -830,7 +848,8 @@ public class Ghost : MonoBehaviour
     {
         if (currentMode == Mode.Freeze)
         {
-            navMesh.enabled = true;
+            //navMesh.enabled = true;
+            navMesh.isStopped = false;
             chaseSoundSource.Play();
             stunEffect.SetActive(false);
 
@@ -943,6 +962,9 @@ public class Ghost : MonoBehaviour
 
             currentMode = Mode.Respawn;
             hit.pointWorth = pointWorth;
+
+            navMesh.isStopped = true;
+            //navMesh.enabled = false;
         }
         else
         {
@@ -983,8 +1005,9 @@ public class Ghost : MonoBehaviour
     /// </summary>
     public void SetPosition(Vector3 pos)
     {
-        navMesh.enabled = false;
-        transform.position = pos;
+        //navMesh.enabled = false;
+        navMesh.isStopped = true;
+        navMesh.Warp(pos);
     }
 
     private void RotateGhostIcons()
@@ -1004,7 +1027,8 @@ public class Ghost : MonoBehaviour
 
     public virtual void PermenantDeath()
     {
-        navMesh.enabled = false;
+        navMesh.isStopped = true;
+        //navMesh.enabled = false;
 
         float spawnRadius = 0.6f;
 

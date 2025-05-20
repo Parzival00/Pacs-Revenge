@@ -49,7 +49,7 @@ public class Teleport : MonoBehaviour
                 }
                 else
                 {
-                    ghost.SetPosition(new Vector3(destination.position.x, other.transform.position.y, destination.position.z) + destinationOffset);
+                    ghost.TeleportGhost(new Vector3(destination.position.x, other.transform.position.y, destination.position.z), destinationOffset);
                 }
                 teleportSound.spatialBlend = 1.0f;
                 teleportSound.Play();

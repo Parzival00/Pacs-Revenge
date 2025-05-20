@@ -6,9 +6,12 @@ public class Barrel : MonoBehaviour
 {
     Animator barrelAnimation;
     BoxCollider barrelCollider;
-    [SerializeField]
-    float range;
-    float explosionPower = 5f;
+    [SerializeField] float range;
+    [SerializeField] float explosionDelay = 0.5f;
+    [SerializeField] float explosionPower = 5f;
+    [SerializeField] float stunLength = 5f;
+    bool exploding = false;
+
     public enum state 
     {
         stable,
@@ -18,6 +21,7 @@ public class Barrel : MonoBehaviour
     {
         barrelAnimation = GetComponent<Animator>();
         barrelCollider = GetComponent<BoxCollider>();
+        exploding = false;
     }
 
     
@@ -26,11 +30,20 @@ public class Barrel : MonoBehaviour
         
     }
 
+    public void StartExplosion()
+    {
+        if (!exploding)
+        {
+            Invoke("Explosion", explosionDelay);
+            exploding = true;
+        }
+    }
+
     public void Explosion() 
     {
         barrelAnimation.SetTrigger("Explode");
         //Debug.Log("Barrel Should Explode");
-        barrelCollider.enabled = false;
+        //barrelCollider.enabled = false;
 
         //Gather things in radius by collider
         Collider[] objectInRange = Physics.OverlapSphere(transform.position, range);
@@ -50,7 +63,8 @@ public class Barrel : MonoBehaviour
                         moveBody.AddExplosionForce(explosionPower, transform.position, range, 2.0f);
                     }*/
                     //Debug.Log(ob.name);
-                    switch (ob.gameObject.name) 
+                    ob.gameObject.GetComponent<Ghost>().FreezeGhost(stunLength);
+                    /*switch (ob.gameObject.name) 
                     {
                         case "Blinky":
                             ob.gameObject.GetComponent<Blinky>().FreezeGhost();
@@ -65,7 +79,7 @@ public class Barrel : MonoBehaviour
                         case "Clyde":
                             ob.gameObject.GetComponent<Clyde>().FreezeGhost();
                             break;
-                    }
+                    }*/
                 }
                 else if (ob.gameObject.name.Contains("ShockBarrel"))
                 {
@@ -73,7 +87,7 @@ public class Barrel : MonoBehaviour
                     {
                         moveBody.AddExplosionForce(explosionPower, transform.position, range, 2.0f);
                     }*/
-                    ob.GetComponent<Barrel>().Explosion();
+                    ob.GetComponent<Barrel>().StartExplosion();
                 }
             }
         }
@@ -85,12 +99,9 @@ public class Barrel : MonoBehaviour
 
                 if (ob.gameObject.tag == "Enemy")
                 {
-                    if (ob.gameObject.GetComponent<Rigidbody>() != null)
-                    {
-                        moveBody.AddExplosionForce(explosionPower, transform.position, range, 2.0f);
-                    }
 
-                    switch (ob.gameObject.name)
+                    ob.gameObject.GetComponent<Ghost>().GotHit(ob.gameObject.GetComponent<Ghost>().barrelDamage());
+                    /*switch (ob.gameObject.name)
                     {
                         case "Blinky":
                             ob.gameObject.GetComponent<Blinky>().GotHit(ob.gameObject.GetComponent<Blinky>().barrelDamage());
@@ -109,15 +120,19 @@ public class Barrel : MonoBehaviour
                             ob.gameObject.GetComponent<Clyde>().GotHit(ob.gameObject.GetComponent<Clyde>().barrelDamage());
                             Ghost.TargetArea c = ob.GetComponent<Clyde>().GetTargetArea(ob.gameObject.GetComponent<Clyde>().barrelDamage());
                             break;
+                    }*/
+                    if (ob.gameObject.GetComponent<Rigidbody>() != null)
+                    {
+                        moveBody.AddExplosionForce(explosionPower * 20, transform.position, range, 2.0f);
                     }
                 }
                 else if (ob.gameObject.name.Contains("ExplosiveBarrel"))
                 {
                     if (ob.gameObject.GetComponent<Rigidbody>() != null)
                     {
-                        moveBody.AddExplosionForce(explosionPower, transform.position, range, 2.0f);
+                        moveBody.AddExplosionForce(explosionPower * 20, transform.position, range, 2.0f);
                     }
-                    ob.GetComponent<Barrel>().Explosion();
+                    ob.GetComponent<Barrel>().StartExplosion();
                 }
                 else if (ob.gameObject.name.Contains("Player"))
                 {
@@ -137,7 +152,7 @@ public class Barrel : MonoBehaviour
             //Debug.Log("---- this is the " + other.gameObject.name);
 
             Destroy(other.gameObject);
-            Explosion();
+            StartExplosion();
         }  
     }
     private void OnDrawGizmos()
