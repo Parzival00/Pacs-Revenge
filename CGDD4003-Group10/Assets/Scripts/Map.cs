@@ -57,6 +57,9 @@ public class Map : MonoBehaviour
     [SerializeField] bool visualizePlayerGridLocation;
     [SerializeField] bool visualizeMap;
     [SerializeField] bool visualizePlayerNextLocation;
+    [SerializeField] bool visualizePathToPlayer;
+    [SerializeField] Vector2Int debugPos;
+    [SerializeField] Vector2Int debugDir = new Vector2Int(0, 1);
 
     void Awake()
     {
@@ -395,7 +398,7 @@ public class Map : MonoBehaviour
     /// </summary>
     public GridType SampleGrid(Vector2Int pos)
     {
-        if (pos.x >= mapWidth || pos.y >= mapHeight)
+        if (pos.x >= mapWidth || pos.y >= mapHeight || pos.x < 0 || pos.y < 0)
             return GridType.Wall;
         return map[Mathf.Clamp(pos.x, 0, mapWidth - 1), Mathf.Clamp(pos.y, 0, mapHeight - 1)];
     }
@@ -405,7 +408,7 @@ public class Map : MonoBehaviour
     public GridType SampleGrid(Vector3 pos)
     {
         Vector2Int gridLoc = GetGridLocation(pos);
-        if (gridLoc.x >= mapWidth || gridLoc.y >= mapHeight)
+        if (gridLoc.x >= mapWidth || gridLoc.y >= mapHeight || gridLoc.x < 0 || gridLoc.y < 0)
             return GridType.Wall;
         return map[Mathf.Clamp(gridLoc.x, 0, mapWidth - 1), Mathf.Clamp(gridLoc.y, 0, mapHeight - 1)];
     }
@@ -748,6 +751,136 @@ public class Map : MonoBehaviour
         }
     }
 
+    public Vector2Int GetNextGridDirSmart(Vector2Int currentPos, Vector2Int currentDir, Vector2Int targetPos, int lookAhead = 8)
+    {
+        //Vector2Int nextGridPos = currentPos + currentDir;
+        //nextGridPos = Clamp(nextGridPos);
+
+        //KeyValuePair<Vector2Int, Vector2Int>[] neighbors = GetNeighbors(currentPos, currentDir);
+
+        //if (neighbors.Length == 0 || neighbors == null) return (Vector2Int.zero, Vector2Int.zero);
+
+        Dictionary<Vector2Int, bool> visited = new Dictionary<Vector2Int, bool>();
+
+        PriorityQueue.Element closest = new PriorityQueue.Element(currentPos, currentDir, (targetPos - currentPos).sqrMagnitude, null);
+
+        PriorityQueue queue = new PriorityQueue(closest, lookAhead * lookAhead);
+        PriorityQueue.Element current = null;
+        int iterations = 0;
+        while (queue.count > 0 && iterations < lookAhead * lookAhead)
+        {
+            current = queue.Dequeue();
+
+            if (current.gridPos == targetPos) break;
+
+            KeyValuePair<Vector2Int, Vector2Int>[] neighbors = GetNeighbors(current.gridPos, current.currentDir, iterations != 0, true);
+            if (neighbors == null || neighbors.Length == 0) continue;
+
+            for (int i = 0; i < neighbors.Length; i++)
+            {
+                if (visited.ContainsKey(neighbors[i].Key)) continue;
+
+                float distToTarget = (targetPos - neighbors[i].Key).sqrMagnitude;
+                float distFromStart = (currentPos - neighbors[i].Key).sqrMagnitude;
+                PriorityQueue.Element newElement = new PriorityQueue.Element(neighbors[i].Key, neighbors[i].Value, distToTarget + distFromStart, current);
+                queue.Enqueue(newElement);
+                visited.Add(neighbors[i].Key, true);
+
+                //if (newElement.cost < closest.cost)
+                //    closest = newElement;
+            }
+
+            iterations++;
+        }
+
+
+        //return (current.gridPos, current.currentDir);
+        //return current;
+        return current.currentDir;
+    }
+    public PriorityQueue.Element GetNextGridDirSmart(Vector2Int currentPos, Vector2Int currentDir, Vector2Int targetPos, bool debug, int lookAhead = 8) 
+    {
+        //Vector2Int nextGridPos = currentPos + currentDir;
+        //nextGridPos = Clamp(nextGridPos);
+
+        //KeyValuePair<Vector2Int, Vector2Int>[] neighbors = GetNeighbors(currentPos, currentDir);
+
+        //if (neighbors.Length == 0 || neighbors == null) return (Vector2Int.zero, Vector2Int.zero);
+
+        Dictionary<Vector2Int, bool> visited = new Dictionary<Vector2Int, bool>();
+
+        PriorityQueue.Element closest = new PriorityQueue.Element(currentPos, currentDir, (targetPos - currentPos).sqrMagnitude, null);
+
+        PriorityQueue queue = new PriorityQueue(closest, lookAhead * lookAhead);
+        PriorityQueue.Element current = null;
+        int iterations = 0;
+        while (queue.count > 0 && iterations < lookAhead * lookAhead)
+        {
+            current = queue.Dequeue();
+
+            if (current.gridPos == targetPos) break;
+
+            KeyValuePair<Vector2Int, Vector2Int>[] neighbors = GetNeighbors(current.gridPos, current.currentDir, iterations != 0, true);
+            if (neighbors == null || neighbors.Length == 0) continue;
+
+            for (int i = 0; i < neighbors.Length; i++)
+            {
+                if (visited.ContainsKey(neighbors[i].Key)) continue;
+
+                float distToTarget = (targetPos - neighbors[i].Key).sqrMagnitude;
+                float distFromStart = (currentPos - neighbors[i].Key).sqrMagnitude;
+                PriorityQueue.Element newElement = new PriorityQueue.Element(neighbors[i].Key, neighbors[i].Value, distToTarget + distFromStart, current);
+                queue.Enqueue(newElement);
+                visited.Add(neighbors[i].Key, true);
+
+                //if (newElement.cost < closest.cost)
+                //    closest = newElement;
+            }
+
+            iterations++;
+        }
+
+
+        //return (current.gridPos, current.currentDir);
+        return current;
+        //return current.currentDir;
+    }
+
+    public KeyValuePair<Vector2Int, Vector2Int>[] GetNeighbors(Vector2Int currentPos, Vector2Int currentDir, bool keepSameDir = false, bool canTurnAround = false)
+    {
+        List<KeyValuePair<Vector2Int, Vector2Int>> neighbors = new List<KeyValuePair<Vector2Int, Vector2Int>>();
+
+        //Check North
+        if(SampleGrid(currentPos + new Vector2Int(0, 1)) == GridType.Air && (currentDir.x * 0 + currentDir.y * 1 >= 0 || canTurnAround))
+        {
+            neighbors.Add(new KeyValuePair<Vector2Int, Vector2Int>(currentPos + new Vector2Int(0, 1), keepSameDir ? currentDir : new Vector2Int(0, 1)));
+        }
+
+        //Check South
+        if (SampleGrid(currentPos + new Vector2Int(0, -1)) == GridType.Air && (currentDir.x * 0 + currentDir.y * -1 >= 0 || canTurnAround))
+        {
+            neighbors.Add(new KeyValuePair<Vector2Int, Vector2Int>(currentPos + new Vector2Int(0, -1), keepSameDir ? currentDir : new Vector2Int(0, -1)));
+        }
+
+        //Check East
+        if (SampleGrid(currentPos + new Vector2Int(1, 0)) == GridType.Air && (currentDir.x * 1 + currentDir.y * 0 >= 0 || canTurnAround))
+        {
+            neighbors.Add(new KeyValuePair<Vector2Int, Vector2Int>(currentPos + new Vector2Int(1, 0), keepSameDir ? currentDir : new Vector2Int(1, 0)));
+        }
+
+        //Check West
+        if (SampleGrid(currentPos + new Vector2Int(-1, 0)) == GridType.Air && (currentDir.x * -1 + currentDir.y * 0 >= 0 || canTurnAround))
+        {
+            neighbors.Add(new KeyValuePair<Vector2Int, Vector2Int>(currentPos + new Vector2Int(-1, 0), keepSameDir ? currentDir : new Vector2Int(-1, 0)));
+        }
+
+        return neighbors.ToArray();
+    }
+    Vector2Int Clamp(Vector2Int gridPos)
+    {
+        return new Vector2Int(Mathf.Clamp(gridPos.x, 0, mapWidth - 1), Mathf.Clamp(gridPos.y, 0, mapHeight - 1));
+    }
+
     //Debug Function
     private void OnDrawGizmos()
     {
@@ -781,6 +914,33 @@ public class Map : MonoBehaviour
             Gizmos.DrawWireCube(worldPos, Vector3.one * size / 2);
         }
 
+        if(map != null && visualizePathToPlayer && player)
+        {
+            Vector3 offset = Vector3.zero;
+            if (!startGridFromOrigin)
+                offset = -new Vector3(mapWidth, 0, mapHeight) / 2f * size;
+
+            Vector2Int gridLocation = GetGridLocation(player.position);
+
+            PriorityQueue.Element current = GetNextGridDirSmart(debugPos, debugDir, gridLocation, true, 10);
+
+            while(current.parent != null)
+            {
+                Vector3 worldPosNextGrid = new Vector3(current.gridPos.x, 0, current.gridPos.y) * size + offset + transform.position + centerOffset;
+
+                Gizmos.color = Color.green;
+                Gizmos.DrawWireCube(worldPosNextGrid, Vector3.one * size / 2);
+                current = current.parent;
+            }
+
+            Vector3 worldPosDebug = new Vector3(debugPos.x, 0, debugPos.y) * size + offset + transform.position + centerOffset;
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(worldPosDebug, Vector3.one * size / 3);
+
+            //Gizmos.DrawLine(worldPosDebug, worldPosDebug + new Vector3(nextGrid.Item2.x, 0, nextGrid.Item2.y));
+        }
+
         if (visualizeMap && map != null)
         {
             for (int y = 0; y < mapHeight; y++)
@@ -806,10 +966,119 @@ public class Map : MonoBehaviour
                     }
 
                     Gizmos.DrawWireCube(worldPos, Vector3.one * size);
-
                 }
             }
         }
+    }
+}
 
+public class PriorityQueue
+{
+    public class Element
+    {
+        public Element parent;
+        public Vector2Int gridPos;
+        public Vector2Int currentDir;
+        public float cost;
+
+        public Element(Vector2Int gridPos, Vector2Int currentDir, float cost, Element parent)
+        {
+            this.parent = parent;
+            this.gridPos = gridPos;
+            this.currentDir = currentDir;
+            this.cost = cost;
+        }
+    }
+
+    int currentHeapSize = 1;
+    Element[] heap;
+
+    public int count { get => currentHeapSize; }
+
+    public PriorityQueue(Element start, int startSize)
+    {
+        currentHeapSize = 1;
+        heap = new Element[startSize];
+        heap[0] = start;
+    }
+
+    void Swap(ref Element a, ref Element b)
+    {
+        Element temp = a;
+        a = b;
+        b = temp;
+    }
+    void Resize()
+    {
+        Element[] newHeap = new Element[heap.Length * 2];
+        for (int i = 0; i < heap.Length; i++)
+        {
+            newHeap[i] = heap[i];
+        }
+        heap = newHeap;
+    }
+
+    public int Parent(int index)
+    {
+        return (index - 1) / 2;
+    }
+    public int LeftChild(int index)
+    {
+        return 2 * index + 1;
+    }
+    public int RightChild(int index)
+    {
+        return 2 * index + 2;
+    }
+
+    public void Enqueue(Element element)
+    {
+        if(currentHeapSize == heap.Length)
+        {
+            Resize();
+        }
+        int i = currentHeapSize;
+        heap[i] = element;
+        currentHeapSize++;
+
+        while(i != 0 && heap[i].cost < heap[Parent(i)].cost)
+        {
+            Swap(ref heap[i], ref heap[Parent(i)]);
+            i = Parent(i);
+        }
+    }
+
+    public Element Dequeue()
+    {
+        Element root = heap[0];
+
+        int i = 0;
+        heap[0] = heap[currentHeapSize - 1];
+        currentHeapSize--;
+
+        while(i < currentHeapSize)
+        {
+            int left = LeftChild(i);
+            int right = RightChild(i);
+            int min = i;
+            if(left < currentHeapSize && heap[min].cost > heap[left].cost)
+            {
+                min = left;
+            }
+            if (right < currentHeapSize && heap[min].cost > heap[right].cost)
+            {
+                min = right;
+            }
+            if(min != i)
+            {
+                Swap(ref heap[i], ref heap[min]);
+                i = min;
+            } else
+            {
+                break;
+            }
+        }
+
+        return root;
     }
 }

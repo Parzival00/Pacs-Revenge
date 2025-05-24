@@ -369,12 +369,60 @@ public class Ghost : MonoBehaviour
             float angleToRight = Vector2.Dot(currentDirection, Vector2.right);
             float angleToLeft = Vector2.Dot(currentDirection, Vector2.left);
 
-            float distToTargetFromNext = Mathf.Infinity;
-
+            Vector2Int desiredNextDirection = currentGridPosition;
             Vector2Int desiredNextGridPosition = currentGridPosition;
-            Vector2Int desiredNextDirection = currentDirection;
 
-            if((canTurnAround || angleToUp >= -0.1f) && map.SampleGrid(currentGridPosition + Vector2Int.up) == Map.GridType.Air)
+            if (canTurnAround)
+            {
+                desiredNextDirection = map.GetNextGridDirSmart(currentGridPosition, currentDirection, targetGridPosition, 8);
+                desiredNextGridPosition = currentGridPosition + desiredNextDirection;
+            }
+            else
+            {
+                KeyValuePair<Vector2Int, Vector2Int>[] neighbors = map.GetNeighbors(currentGridPosition, currentDirection, false, false);
+
+                if(neighbors.Length == 1)
+                {
+                    desiredNextDirection = neighbors[0].Value;
+                    desiredNextGridPosition = currentGridPosition + desiredNextDirection;
+                }
+                else
+                {
+                    desiredNextDirection = map.GetNextGridDirSmart(currentGridPosition, currentDirection, targetGridPosition, 8);
+
+                    if(currentDirection.x * desiredNextDirection.x + currentDirection.y * desiredNextDirection.y < -0.1f)
+                    {
+                        print($"Next Direction: {desiredNextDirection}");
+                        for (int i = 0; i < neighbors.Length; i++)
+                        {
+                            if(map.SampleGrid(neighbors[i].Key) == Map.GridType.Air)
+                            {
+                                desiredNextDirection = neighbors[i].Value;
+                                desiredNextGridPosition = currentGridPosition + desiredNextDirection;
+
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        desiredNextGridPosition = currentGridPosition + desiredNextDirection;
+                    }
+
+                    if (desiredNextGridPosition == currentGridPosition && map.SampleGrid(currentGridPosition - currentDirection) == Map.GridType.Air)
+                    {
+                        Vector2Int nextGridBack = currentGridPosition - currentDirection;
+                        desiredNextGridPosition = nextGridBack;
+                        desiredNextDirection = -currentDirection;
+                    }
+                }
+            }
+
+
+
+            //(Vector2Int, Vector2Int)next = map.GetNextGridPositionSmart(currentGridPosition, currentDirection, targetGridPosition, false, 10);
+
+            /*if((canTurnAround || angleToUp >= -0.1f) && map.SampleGrid(currentGridPosition + Vector2Int.up) == Map.GridType.Air)
             {
                 Vector2Int nextGridPosUp = currentGridPosition + Vector2Int.up;
                 float distanceToUp = Vector2Int.Distance(nextGridPosUp, targetGridPosition);
@@ -426,7 +474,13 @@ public class Ghost : MonoBehaviour
                 Vector2Int nextGridBack = currentGridPosition - currentDirection;
                 desiredNextGridPosition = nextGridBack;
                 desiredNextDirection = -currentDirection;
-            }
+            }*/
+
+            /*if (currentGridPosition + next.Item2 == currentGridPosition && map.SampleGrid(currentGridPosition - currentDirection) == Map.GridType.Air)
+            {
+                Vector2Int nextGridBack = currentGridPosition - currentDirection;
+                next.Item2 = -currentDirection;
+            }*/
 
             nextGridPosition = desiredNextGridPosition;
             turnedAround = Vector2.Dot(currentDirection, desiredNextDirection) < -0.1f;
@@ -1055,6 +1109,12 @@ public class Ghost : MonoBehaviour
         {
             Gizmos.color = Color.red;
             Gizmos.DrawCube(map.GetWorldFromGrid(targetGridPosition), Vector3.one);
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawCube(map.GetWorldFromGrid(currentGridPosition), Vector3.one);
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(map.GetWorldFromGrid(currentGridPosition), map.GetWorldFromGrid(currentGridPosition) + new Vector3(currentDirection.x, 0, currentDirection.y));
 
             Gizmos.color = Color.white;
         }

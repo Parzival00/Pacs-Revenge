@@ -46,7 +46,7 @@ public class CorruptedGunController : MonoBehaviour
 
     public float GetRandomCorruptionTime()
     {
-        print(Score.currentLevel);
+        //print(Score.currentLevel);
         return currentSettings.baseCorruptionTimer 
             * Mathf.Pow(currentSettings.levelTimerMultiplier , Score.currentLevel) 
             * currentSettings.timerProbability.Evaluate(Random.Range(0f, 1f));
