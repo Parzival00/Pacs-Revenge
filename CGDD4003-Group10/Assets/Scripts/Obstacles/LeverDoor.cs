@@ -7,6 +7,7 @@ public class LeverDoor : MonoBehaviour
 {
     [Header("Door Controls")]
     [SerializeField] GameObject currentDoor;
+    [SerializeField] Animator[] leverAnimators;
     [SerializeField] GameObject leverToDoor;
 
     [SerializeField] AudioSource doorUp;
@@ -15,7 +16,6 @@ public class LeverDoor : MonoBehaviour
     [SerializeField] LayerMask overlapCheckMask;
     [SerializeField] int overlapCubeLength = 3;
 
-    Animator leverAnimation;
     Animator doorAnimation;
 
     Map map;
@@ -48,14 +48,14 @@ public class LeverDoor : MonoBehaviour
         //Get Animators
         doorAnimation = GetComponent<Animator>();
         Debug.Log("door animation obtained");
-        foreach (Transform l in this.transform) 
+        /*foreach (Transform l in this.transform) 
         {
             if (l.gameObject.name == "ControllableDoorLever") 
             {
-                leverAnimation = l.GetComponent<Animator>();
+                leverAnimators = l.GetComponent<Animator>();
                 Debug.Log("lever animation obtained");
             }
-        }
+        }*/
 
         doorCloseTimer = 0;
 
@@ -87,7 +87,10 @@ public class LeverDoor : MonoBehaviour
             if(cooldownTimer > doorCooldownTimer && !canCloseDoor)
             {
                 canCloseDoor = true;
-                leverAnimation.SetBool("Cooldown", false);
+                foreach(Animator leverAnimator in leverAnimators)
+                {
+                    leverAnimator.SetBool("Cooldown", false);
+                }
             }
             cooldownTimer += Time.deltaTime;
         }
@@ -130,8 +133,11 @@ public class LeverDoor : MonoBehaviour
         if (leverState == 1 && canCloseDoor) //Set Lever Off, then reset in certain amount of time
         {
             leverState = 0;
-            leverAnimation.SetBool("On",true);
-            leverAnimation.SetBool("Cooldown",true);
+            foreach (Animator leverAnimator in leverAnimators)
+            {
+                leverAnimator.SetBool("On", true);
+                leverAnimator.SetBool("Cooldown", true);
+            }
             //Invoke("ResetLever", leverResetTimer);
         }
         //yield return new WaitForSeconds(5f);
@@ -142,8 +148,12 @@ public class LeverDoor : MonoBehaviour
         if (leverState == 0) //Set Lever back on
         {
             leverState = 1;
-            leverAnimation.SetBool("On", false);
-            leverAnimation.SetBool("Cooldown", false);
+            
+            foreach (Animator leverAnimator in leverAnimators)
+            {
+                leverAnimator.SetBool("On", false);
+                leverAnimator.SetBool("Cooldown", false);
+            }
         }
         
     }
@@ -210,7 +220,11 @@ public class LeverDoor : MonoBehaviour
             yield return new WaitUntil(() => doorOpened);
 
             map.SetGridAtPosition(gridLoc, Map.GridType.Air);
-            leverAnimation.SetBool("Cooldown", true);
+
+            foreach (Animator leverAnimator in leverAnimators)
+            {
+                leverAnimator.SetBool("Cooldown", true);
+            }
         }
     }
     bool doorOpened = false;

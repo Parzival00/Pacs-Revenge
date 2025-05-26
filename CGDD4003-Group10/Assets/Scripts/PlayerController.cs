@@ -485,16 +485,17 @@ public class PlayerController : MonoBehaviour
                 if (stunAmmoCount == maxAmmoCount)
                     pelletCountSinceLastShot = Score.pelletsCollected;
 
+                stunAmmoCount--;
+
                 //stungunVFX.Shoot();
                 if (stungunAnimator != null)
                 {
                     stungunAnimator.SetTrigger("Shoot");
-                    stungunAnimator.SetFloat("Charge", Mathf.Min(3, stunAmmoCount));
+                    Invoke("SetChargeAnimator", 32f / 60);
                 }
 
                 stunFireTimer = timeBtwStunShots;
                 weaponSound.PlayOneShot(stunShotSFX);
-                stunAmmoCount--;
                 ammoText.text = "" + Mathf.RoundToInt(Mathf.Clamp(stunAmmoCount + ((Score.pelletsCollected - pelletCountSinceLastShot) % pelletsPerStunAmmo) / (float)pelletsPerStunAmmo, 0, maxAmmoCount) * 100) + "%";
             }
             else
@@ -520,6 +521,14 @@ public class PlayerController : MonoBehaviour
             }
         }
         ammoText.text = "" + Mathf.RoundToInt(Mathf.Clamp(stunAmmoCount + ((Score.pelletsCollected - pelletCountSinceLastShot) % pelletsPerStunAmmo) / (float)pelletsPerStunAmmo, 0, maxAmmoCount) * 100) + "%";
+    }
+    //An animation event to set the charge float to ensure consistency
+    public void SetChargeAnimator()
+    {
+        if (stungunAnimator != null)
+        {
+            stungunAnimator.SetFloat("Charge", Mathf.Min(3, stunAmmoCount));
+        }
     }
     #endregion
 
