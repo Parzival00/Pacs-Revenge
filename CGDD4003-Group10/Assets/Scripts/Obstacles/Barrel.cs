@@ -145,7 +145,7 @@ public class Barrel : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log(other.gameObject.name + " has hit the barrel");
-        if (transform.name.Contains("ShockBarrel") && (other.gameObject.tag == "Stun" || other.gameObject.name == "StunShot")) 
+        if (/*transform.name.Contains("ShockBarrel") && */(other.gameObject.tag == "Stun" || other.gameObject.name == "StunShot")) 
         {
             //Debug.Log("this is the " + transform.name);
 

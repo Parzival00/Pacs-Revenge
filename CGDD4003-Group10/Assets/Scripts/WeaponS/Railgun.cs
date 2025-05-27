@@ -357,7 +357,7 @@ public class Railgun : Weapon
                     {
                         captureTentacle.TakeDamage(50);
                     }
-                    else if (barrel != null && barrel.gameObject.tag == "ExplosiveBarrel")
+                    else if (barrel != null && (barrel.gameObject.tag == "ExplosiveBarrel" || barrel.gameObject.tag == "ShockBarrel"))
                     {
                         //Debug.Log("Barrel has been hit?");
                         //Debug.Log(barrel.name + " has been hit!");

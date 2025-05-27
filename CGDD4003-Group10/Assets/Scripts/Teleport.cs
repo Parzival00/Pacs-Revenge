@@ -45,7 +45,8 @@ public class Teleport : MonoBehaviour
                 //gets random destination if ghost uses the corrupted portal
                 if (this.tag.Equals("CorruptedTeleport"))
                 {
-                    ghost.SetPosition(GetValidSpace());
+                    //ghost.SetPosition(GetValidSpace());
+                    return;
                 }
                 else
                 {

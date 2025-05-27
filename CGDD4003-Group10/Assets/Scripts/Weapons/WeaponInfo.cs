@@ -10,4 +10,7 @@ public class WeaponInfo : ScriptableObject
     public string weaponName;
     public string weaponDescription;
     public float damageMultiplier;
+    [Range(0, 10)] public int damageRating;
+    [Range(0, 10)] public int speedRating;
+    [Range(0, 10)] public int rangeRating;
 }

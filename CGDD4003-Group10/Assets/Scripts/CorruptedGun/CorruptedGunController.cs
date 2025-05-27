@@ -72,7 +72,7 @@ public class CorruptedGunController : MonoBehaviour
         WaitForSeconds wait = new WaitForSeconds(0.1f);
 
 
-        while(spawningCorruptGun)
+        while(spawningCorruptGun && weaponPickups.Length > 0)
         {
             WeaponPickup weaponPickup = weaponPickups[Random.Range(0, weaponPickups.Length)];
             if (weaponPickup != null && weaponPickup.CanBeCorrupted)

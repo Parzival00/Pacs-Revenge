@@ -20,6 +20,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject difficultyScreen;
     [SerializeField] GameObject howToPlayUI;
     [SerializeField] GameObject achievementsScreen;
+    [SerializeField] GameObject introSkipScreen;
     [SerializeField] AchievementDisplay achievementDisplay;
 
     [Header("Resolution Settings")]
@@ -62,6 +63,10 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] WeaponInfo[] weaponInfos;
     [SerializeField] Image weaponImage;
     [SerializeField] TMP_Text weaponName;
+    [SerializeField] TMP_Text weaponDescription;
+    [SerializeField] Image damageSlider;
+    [SerializeField] Image speedSlider;
+    [SerializeField] Image rangeSlider;
     [SerializeField] GameObject weaponSelectScreen;
     int weaponSelection;
 
@@ -88,7 +93,8 @@ public class MainMenuManager : MonoBehaviour
         audioController = GameObject.FindObjectOfType<GlobalAudioController>();
 
         if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "GameOverScene" || 
-            SceneManager.GetActiveScene().name == "ScoreScreen" || SceneManager.GetActiveScene().name == "Credits" || SceneManager.GetActiveScene().name == "End")
+            SceneManager.GetActiveScene().name == "ScoreScreen" || SceneManager.GetActiveScene().name == "Credits" || 
+            SceneManager.GetActiveScene().name == "End" || SceneManager.GetActiveScene().name == "Start")
         {
             Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.None;
@@ -121,10 +127,9 @@ public class MainMenuManager : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "Main Menu")
         {
-            weaponSelection = 0;
+            weaponSelection = PlayerPrefs.GetInt("Weapon", 0);
             PlayerPrefs.SetInt("Weapon", weaponSelection);
-            weaponImage.sprite = weaponInfos[weaponSelection].gunIcon;
-            weaponName.text = weaponInfos[weaponSelection].weaponName;
+            NavigateWeaponSelection(0);
         }
     }
 
@@ -305,6 +310,7 @@ public class MainMenuManager : MonoBehaviour
         menu.SetActive(false);
         howToPlayUI.SetActive(true);
         achievementsScreen.SetActive(false);
+        introSkipScreen.SetActive(false);
 
     }
     public void ToMovementPage() 
@@ -342,6 +348,7 @@ public class MainMenuManager : MonoBehaviour
         difficultyScreen.SetActive(true);
         achievementsScreen.SetActive(false);
         weaponSelectScreen.SetActive(false);
+        introSkipScreen.SetActive(false);
     }
     public void DisplayAchievementsScreen()
     {
@@ -352,6 +359,7 @@ public class MainMenuManager : MonoBehaviour
         difficultyScreen.SetActive(false);
         achievementsScreen.SetActive(true);
         weaponSelectScreen.SetActive(false);
+        introSkipScreen.SetActive(false);
 
         achievementDisplay.DisplayAchievements();
     }
@@ -364,6 +372,18 @@ public class MainMenuManager : MonoBehaviour
         difficultyScreen.SetActive(false);
         achievementsScreen.SetActive(false);
         weaponSelectScreen.SetActive(true);
+        introSkipScreen.SetActive(false);
+    }
+    public void DisplayIntroSkipScreen()
+    {
+        UIAudio.PlayOneShot(buttonClick);
+        menu.SetActive(false);
+        howToPlayUI.SetActive(false);
+        options.SetActive(false);
+        difficultyScreen.SetActive(false);
+        achievementsScreen.SetActive(false);
+        weaponSelectScreen.SetActive(false);
+        introSkipScreen.SetActive(true);
     }
 
     public void SetResolution(int res)
@@ -403,13 +423,18 @@ public class MainMenuManager : MonoBehaviour
 
         weaponImage.sprite = weaponInfos[weaponSelection].gunIcon;
         weaponName.text = weaponInfos[weaponSelection].weaponName;
+        weaponDescription.text = weaponInfos[weaponSelection].weaponDescription;
+
+        damageSlider.fillAmount = weaponInfos[weaponSelection].damageRating / 10f;
+        speedSlider.fillAmount = weaponInfos[weaponSelection].speedRating / 10f;
+        rangeSlider.fillAmount = weaponInfos[weaponSelection].rangeRating / 10f;
 
         PlayerPrefs.SetInt("Weapon", weaponSelection);
     }
 
     public void SetDifficulty(int value)
     {
-        UIAudio.PlayOneShot(buttonClick);
+        //UIAudio.PlayOneShot(buttonClick);
         Score.SetDifficulty(value);
 
         //Wah Wah! achievement (Play Baby mode)

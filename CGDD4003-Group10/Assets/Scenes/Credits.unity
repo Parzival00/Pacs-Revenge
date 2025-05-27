@@ -357,8 +357,8 @@ MonoBehaviour:
 
     Ben Hedges'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -382,8 +382,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -558,6 +558,8 @@ MonoBehaviour:
   options: {fileID: 0}
   difficultyScreen: {fileID: 0}
   howToPlayUI: {fileID: 0}
+  achievementsScreen: {fileID: 0}
+  achievementDisplay: {fileID: 0}
   screenResolution: {fileID: 0}
   fov: {fileID: 0}
   fullScreenToggle: {fileID: 0}
@@ -584,6 +586,14 @@ MonoBehaviour:
   shooting: {fileID: 0}
   enemies: {fileID: 0}
   endConditions: {fileID: 0}
+  weaponInfos: []
+  weaponImage: {fileID: 0}
+  weaponName: {fileID: 0}
+  weaponDescription: {fileID: 0}
+  damageSlider: {fileID: 0}
+  speedSlider: {fileID: 0}
+  rangeSlider: {fileID: 0}
+  weaponSelectScreen: {fileID: 0}
   gameOverScreen: {fileID: 0}
   endStatsScreen: {fileID: 0}
   playTime: {fileID: 0}
@@ -1068,8 +1078,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Lead Music Composer
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1093,8 +1103,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1464,8 +1474,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Lead Programmer
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1489,8 +1499,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1600,8 +1610,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1625,8 +1635,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1734,8 +1744,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Playtesters
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1759,8 +1769,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1868,8 +1878,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Lead UI Programmer
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1893,8 +1903,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2323,8 +2333,8 @@ MonoBehaviour:
 
     Pop sound - deraj freesound.org'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2348,8 +2358,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 35
-  m_fontSizeBase: 35
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2457,8 +2467,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Toby Mose
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2482,8 +2492,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2756,8 +2766,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Sounds
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2781,8 +2791,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2890,8 +2900,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Thank you for Playing
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2915,8 +2925,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 106.7
-  m_fontSizeBase: 106.7
+  m_fontSize: 123
+  m_fontSizeBase: 123
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3024,8 +3034,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: return
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: da765e03739ed4543a826f0b93132604, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: da765e03739ed4543a826f0b93132604, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3039,7 +3049,7 @@ MonoBehaviour:
     topLeft: {r: 1, g: 0, b: 0, a: 1}
     topRight: {r: 0.754717, g: 0, b: 0, a: 1}
     bottomLeft: {r: 0.41509432, g: 0, b: 0, a: 1}
-    bottomRight: {r: 0.41568628, g: 0, b: 0, a: 1}
+    bottomRight: {r: 0.8018868, g: 0, b: 0, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -3426,8 +3436,8 @@ MonoBehaviour:
   m_text: "Our classmates\nJake\nKenshin\nJoshua\nEthan\nDavid\nSamuel\nMatthew\nBrian\nDylan
     \nJoey\nCole"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3451,8 +3461,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3560,8 +3570,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 2D/3D Artists
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3585,8 +3595,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3769,8 +3779,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Programmers
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3794,8 +3804,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3907,8 +3917,8 @@ MonoBehaviour:
 
     Brandon Dominguez'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3932,8 +3942,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4129,8 +4139,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Toby Mose
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4154,8 +4164,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4395,8 +4405,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Lead Artist
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4420,8 +4430,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4529,8 +4539,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Luke Gamage
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4554,8 +4564,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4799,8 +4809,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4824,8 +4834,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5103,8 +5113,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: SFX Artists
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5128,8 +5138,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5243,8 +5253,8 @@ MonoBehaviour:
 
     Luke Gamage'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5268,8 +5278,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5377,8 +5387,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Grace Sinclair
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5402,8 +5412,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5548,8 +5558,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Incantations
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5573,8 +5583,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5682,8 +5692,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Lead SFX Artist
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5707,8 +5717,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5816,8 +5826,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Brandon Dominguez
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5841,8 +5851,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5950,8 +5960,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Team Leader
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5975,8 +5985,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.69
-  m_fontSizeBase: 56.69
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

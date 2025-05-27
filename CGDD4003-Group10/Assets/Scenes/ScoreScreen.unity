@@ -636,6 +636,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1842343543}
   destinationOffset: {x: 1.25, y: 0, z: 0}
+  teleportSound: {fileID: 0}
 --- !u!65 &11266494
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14482,8 +14483,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Hi-Score
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: da765e03739ed4543a826f0b93132604, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: da765e03739ed4543a826f0b93132604, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -14507,7 +14508,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 54.55
+  m_fontSize: 42.1
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -15512,6 +15513,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 982280112}
   destinationOffset: {x: -1.25, y: 0, z: 0}
+  teleportSound: {fileID: 0}
 --- !u!65 &267891423
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -57444,6 +57446,8 @@ MonoBehaviour:
   options: {fileID: 0}
   difficultyScreen: {fileID: 0}
   howToPlayUI: {fileID: 0}
+  achievementsScreen: {fileID: 0}
+  achievementDisplay: {fileID: 0}
   screenResolution: {fileID: 0}
   fov: {fileID: 0}
   fullScreenToggle: {fileID: 0}
@@ -57470,6 +57474,14 @@ MonoBehaviour:
   shooting: {fileID: 0}
   enemies: {fileID: 0}
   endConditions: {fileID: 0}
+  weaponInfos: []
+  weaponImage: {fileID: 0}
+  weaponName: {fileID: 0}
+  weaponDescription: {fileID: 0}
+  damageSlider: {fileID: 0}
+  speedSlider: {fileID: 0}
+  rangeSlider: {fileID: 0}
+  weaponSelectScreen: {fileID: 0}
   gameOverScreen: {fileID: 0}
   endStatsScreen: {fileID: 0}
   playTime: {fileID: 0}
@@ -63404,9 +63416,26 @@ MonoBehaviour:
   mapHeight: 29
   centerOffset: {x: 0, y: 0, z: 0}
   startGridFromOrigin: 0
+  gradualCorruption: 0
+  corruptionRangePerLevel: 2
+  startWithRandCorruption: 0
+  startCorruptionCount: 1
+  endPieceMat: {fileID: 0}
+  straightPieceMat: {fileID: 0}
+  tPieceMat: {fileID: 0}
+  lPieceMat: {fileID: 0}
+  corruptedEndPieceMat: {fileID: 0}
+  corruptedStraightPieceMat: {fileID: 0}
+  corruptedTPieceMat: {fileID: 0}
+  corruptedLPieceMat: {fileID: 0}
+  transLeftPieceMat: {fileID: 0}
+  transRightPieceMat: {fileID: 0}
   visualizePlayerGridLocation: 0
   visualizeMap: 0
   visualizePlayerNextLocation: 0
+  visualizePathToPlayer: 0
+  debugPos: {x: 0, y: 0}
+  debugDir: {x: 0, y: 1}
 --- !u!1 &964765308
 GameObject:
   m_ObjectHideFlags: 0
@@ -65217,6 +65246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 267891421}
   destinationOffset: {x: 1.25, y: 0, z: 0}
+  teleportSound: {fileID: 0}
 --- !u!1 &983866181
 GameObject:
   m_ObjectHideFlags: 0
@@ -77620,7 +77650,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1171679011}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -77628,8 +77658,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 19.683998, y: 0}
+  m_SizeDelta: {x: 39.368, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1171679013
 MonoBehaviour:
@@ -77653,8 +77683,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Main Menu
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: da765e03739ed4543a826f0b93132604, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: da765e03739ed4543a826f0b93132604, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -77678,8 +77708,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.3
-  m_fontSizeBase: 39.3
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -90947,8 +90977,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -90972,8 +91002,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 27
+  m_fontSizeBase: 27
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -90982,7 +91012,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 10
   m_wordSpacing: 3
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -120690,8 +120720,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 77.3}
-  m_SizeDelta: {x: 200, y: 17.65}
+  m_AnchoredPosition: {x: 0, y: 85.92}
+  m_SizeDelta: {x: 275.72, y: 28.49}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1822494460
 MonoBehaviour:
@@ -120715,8 +120745,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter your first 3 initials
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: da765e03739ed4543a826f0b93132604, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: da765e03739ed4543a826f0b93132604, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: eb6006890b697744bbd9a7cd01786bf0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -120740,11 +120770,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 17.65
+  m_fontSize: 18.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 16.07
+  m_fontSizeMin: 11.26
   m_fontSizeMax: 72
   m_fontStyle: 16
   m_HorizontalAlignment: 2
@@ -122133,6 +122163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 11266492}
   destinationOffset: {x: -1.25, y: 0, z: 0}
+  teleportSound: {fileID: 0}
 --- !u!65 &1842343545
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -130211,9 +130242,26 @@ MonoBehaviour:
   mapHeight: 29
   centerOffset: {x: 0, y: 0, z: 0}
   startGridFromOrigin: 0
+  gradualCorruption: 0
+  corruptionRangePerLevel: 2
+  startWithRandCorruption: 0
+  startCorruptionCount: 1
+  endPieceMat: {fileID: 0}
+  straightPieceMat: {fileID: 0}
+  tPieceMat: {fileID: 0}
+  lPieceMat: {fileID: 0}
+  corruptedEndPieceMat: {fileID: 0}
+  corruptedStraightPieceMat: {fileID: 0}
+  corruptedTPieceMat: {fileID: 0}
+  corruptedLPieceMat: {fileID: 0}
+  transLeftPieceMat: {fileID: 0}
+  transRightPieceMat: {fileID: 0}
   visualizePlayerGridLocation: 0
   visualizeMap: 0
   visualizePlayerNextLocation: 0
+  visualizePathToPlayer: 0
+  debugPos: {x: 0, y: 0}
+  debugDir: {x: 0, y: 1}
 --- !u!4 &1980276348
 Transform:
   m_ObjectHideFlags: 0
@@ -133487,8 +133535,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Score: '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 695f12f2741503b408731347a9084dcd, type: 2}
-  m_sharedMaterial: {fileID: 1300021658653402226, guid: 695f12f2741503b408731347a9084dcd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
+  m_sharedMaterial: {fileID: -8736061703625176074, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -133512,8 +133560,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60.8
-  m_fontSizeBase: 60.8
+  m_fontSize: 57
+  m_fontSizeBase: 57
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

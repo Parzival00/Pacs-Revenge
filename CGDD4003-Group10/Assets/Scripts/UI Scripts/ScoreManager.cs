@@ -45,7 +45,7 @@ public class ScoreManager : MonoBehaviour
         }
         public override string ToString()
         {
-            return string.Format("{0,-4}{1,4}", $"{this.playerRank}.", this.name) + string.Format("{0,13}", this.playerScore);// this.playerRank + ".   " + this.name + "   " + this.playerScore;
+            return string.Format("{0,-4}{1,4}", $"{this.playerRank}.", this.name) + string.Format("{0,10}", this.playerScore);// this.playerRank + ".   " + this.name + "   " + this.playerScore;
         }
         public string ToFileFormat()
         {
