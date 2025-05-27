@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class DisplayGameScene : MonoBehaviour
+public class TransitionEffect : MonoBehaviour
 {
     [SerializeField] GameObject gameSceneTexture;
     [SerializeField] GameObject deathSceneTexture;
@@ -44,6 +44,16 @@ public class DisplayGameScene : MonoBehaviour
             currentTransitionalMat.SetFloat("_TransitionProgress", 0);
             StartCoroutine(Transition());
         }
+    }
+
+    public void DeathTransition()
+    {
+        currentTransitionalMat = deathTransitionMat;
+        deathSceneTexture.SetActive(true);
+        gameSceneTexture.SetActive(false);
+
+        currentTransitionalMat.SetFloat("_TransitionProgress", 0);
+        StartCoroutine(Transition());
     }
 
     IEnumerator Transition()

@@ -99,6 +99,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] TMP_Text shieldText;
     [SerializeField] ShieldEffectAnimator shieldAnimator;
     [SerializeField] Animator deathAnimator;
+    [SerializeField] TransitionEffect transitionEffect;
     [SerializeField] TutorialController tutorial;
     bool doTutorials;
 
@@ -923,6 +924,7 @@ public class PlayerController : MonoBehaviour
 
         WaitForSeconds deathTimer = new WaitForSeconds(deathSequenceLength / 2);
 
+        deathAnimator.gameObject.SetActive(true);
         deathAnimator.SetTrigger("Death");
 
         if (faceController)
@@ -975,6 +977,8 @@ public class PlayerController : MonoBehaviour
         else
         {
             deathAnimator.SetTrigger("FadeOut");
+            deathAnimator.gameObject.SetActive(false);
+            transitionEffect.DeathTransition();
 
             if (faceController)
                 faceController.Respawn();

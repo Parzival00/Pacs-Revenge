@@ -297,7 +297,7 @@ public class Railgun : Weapon
             {
                 if (chargeReady == false)
                 {
-                    weaponChargeReadySound.PlayOneShot(chargeReadySFX);
+                    //weaponChargeReadySound.PlayOneShot(chargeReadySFX);
                     chargeReady = true;
                 }
                 /*if (doTutorials && Score.totalShotsFired <= 0 && tutorial)
