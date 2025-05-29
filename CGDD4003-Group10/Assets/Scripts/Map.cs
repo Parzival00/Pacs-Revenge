@@ -117,7 +117,7 @@ public class Map : MonoBehaviour
             map[index.x, index.y] = GridType.Wall;
 
             MeshRenderer meshRend = wall.GetComponent<MeshRenderer>();
-            print(meshRend.gameObject);
+            //print(meshRend.gameObject);
             wallDictionary.Add(index, meshRend);
 
             if (meshRend.sharedMaterial.name == corruptedEndPieceMat.name ||

@@ -334,16 +334,11 @@ public class PlayerController : MonoBehaviour
                     if (holdingFire) currentWeapon.OnMouseEvent();
                     else currentWeapon.OnNoMouseEvent();
                 }
-                else
-                {
-                    StungunFire();
-                }
+                //else
+                //{
+                //    StungunFire();
+                //}
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            PauseGame();
         }
 
         if (!musicPlayer.isPlaying)
@@ -356,6 +351,12 @@ public class PlayerController : MonoBehaviour
             DisplayPlayerShields();
     }
 
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        PauseGame();
+        
+    }
+
 
     #region Move and Look
     public void OnMove(InputAction.CallbackContext context)
@@ -364,7 +365,7 @@ public class PlayerController : MonoBehaviour
     }
     public void OnLook(InputAction.CallbackContext context)
     {
-        mousePosition = context.ReadValue<Vector2>() * 0.1f;
+        mousePosition = context.ReadValue<Vector2>() * 0.5f;
     }
 
     Vector2 mousePosition;
@@ -451,17 +452,24 @@ public class PlayerController : MonoBehaviour
     #region Gun Functionality
     public void OnFire(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started)
+        if (gunActivated)
         {
-            holdingFire = true;
+            if (context.phase == InputActionPhase.Started)
+            {
+                holdingFire = true;
 
-            if (!MainMenuManager.isGamePaused && canFire && gunActivated) currentWeapon.OnMouseDownEvent();
+                if (!MainMenuManager.isGamePaused && canFire && gunActivated) currentWeapon.OnMouseDownEvent();
+            }
+            else if (context.phase == InputActionPhase.Performed)
+            {
+                holdingFire = false;
+
+                if (!MainMenuManager.isGamePaused && canFire && gunActivated) currentWeapon.OnMouseUpEvent();
+            }
         }
-        else if (context.phase == InputActionPhase.Performed)
+        else
         {
-            holdingFire = false;
-
-            if (!MainMenuManager.isGamePaused && canFire && gunActivated) currentWeapon.OnMouseUpEvent();
+            StungunFire();
         }
     }
     #endregion
@@ -475,7 +483,7 @@ public class PlayerController : MonoBehaviour
 
         StunGunCanFire = stunFireTimer <= 0 && stunAmmoCount > 0;
 
-        if (stunFireTimer <= 0 && Input.GetMouseButtonDown(0))
+        if (stunFireTimer <= 0)
         {
             if (stunAmmoCount > 0)
             {
