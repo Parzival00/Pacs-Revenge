@@ -154,22 +154,31 @@ public class Ghost : MonoBehaviour
     void Start()
     {
         if (navMesh == null)
+        {
             navMesh = GetComponent<NavMeshAgent>();
+        }
 
         if (map == null)
+        {
             map = GameObject.FindObjectOfType<Map>();
+        }
 
         if (player == null)
+        {
             player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        }
 
         if (spriteController == null)
+        {
             spriteController = GetComponentInChildren<GhostSpriteController>();
+        }
 
 
         if (Score.difficulty < difficultySettings.Length)
         {
             currentDifficultySettings = difficultySettings[Score.difficulty];
-        } else
+        } 
+        else
         {
             currentDifficultySettings = difficultySettings[0];
         }
@@ -180,7 +189,10 @@ public class Ghost : MonoBehaviour
         ghostHealth = currentDifficultySettings.health;
 
         speed *= 1 + (Score.bossEnding ?  -0.2f : levelSpeedIncrease * (Score.currentLevel - 1));
-        if (Score.bossEnding && Score.bossTimerEnded) speed *= 1.5f; 
+        if (Score.bossEnding && Score.bossTimerEnded)
+        {
+            speed *= 1.5f;
+        }
         navMesh.speed = speed;
 
         stunEffect.SetActive(false);
@@ -291,9 +303,13 @@ public class Ghost : MonoBehaviour
         spriteController.BossfightSpawnEnd();
 
         if (PlayerController.invisibilityActivated)
+        {
             currentMode = Mode.InvisibilityPowerUp;
+        }
         else
+        {
             currentMode = Mode.BossfightMove;
+        }
     }
 
     //Chase the player
@@ -355,7 +371,9 @@ public class Ghost : MonoBehaviour
     protected bool Move(bool canTurnAround)
     {
         if (currentMode != Mode.Chase && currentMode != Mode.Scatter && currentMode != Mode.InvisibilityPowerUp && currentMode != Mode.BossfightMove && currentMode != Mode.CorruptionEnding)
+        {
             return false;
+        }
 
         navMesh.enabled = true;
         navMesh.isStopped = false;
@@ -503,8 +521,10 @@ public class Ghost : MonoBehaviour
     {
         spriteController.DeactivateColliders();
 
-        if(Score.pelletsCollected >= pelletsNeededToStart && !Score.insanityEnding)
+        if (Score.pelletsCollected >= pelletsNeededToStart && !Score.insanityEnding)
+        {
             currentMode = Mode.Exiting;
+        }
     }
 
     bool isFlinching = false;
@@ -633,7 +653,8 @@ public class Ghost : MonoBehaviour
                 currentDirection = Vector2Int.left;
                 nextGridPosition = spawnExitGridPosition + Vector2Int.left;
             }
-        } else
+        }
+        else
         {
             currentMode = Mode.Chase;
 
@@ -785,7 +806,8 @@ public class Ghost : MonoBehaviour
             }
 
             lastTargetGridPosition = new Vector2Int(-1, -1);
-        } else
+        } 
+        else
         {
             Destroy(gameObject);
         }
@@ -827,7 +849,9 @@ public class Ghost : MonoBehaviour
     public void ResetGhost()
     {
         if (resetCoroutine != null)
+        {
             StopCoroutine(resetCoroutine);
+        }
 
         if (startedRespawnSequence && respawnCoroutine != null)
         {
@@ -910,19 +934,28 @@ public class Ghost : MonoBehaviour
             if (Score.bossEnding)
             {
                 if (PlayerController.invisibilityActivated)
+                {
                     currentMode = Mode.InvisibilityPowerUp;
+                }
                 else
+                {
                     currentMode = Mode.BossfightMove;
-                
+                }    
             }
             else
             {
                 if (PlayerController.gunActivated)
+                {
                     currentMode = Mode.Scatter;
+                }
                 else if (PlayerController.invisibilityActivated)
+                {
                     currentMode = Mode.InvisibilityPowerUp;
+                }
                 else
+                {
                     currentMode = Mode.Chase;
+                }
             }
         }
         freezeTimer = freezeTime;
@@ -960,8 +993,10 @@ public class Ghost : MonoBehaviour
     #region Invisibility Power-Up
     public void ActivatedInvisibilityPowerUp()
     {
-        if(currentMode == Mode.Scatter || currentMode == Mode.Chase || currentMode == Mode.BossfightMove)
+        if (currentMode == Mode.Scatter || currentMode == Mode.Chase || currentMode == Mode.BossfightMove)
+        {
             currentMode = Mode.InvisibilityPowerUp;
+        }
     }
 
     public void InvisibilityPowerUp()
@@ -979,9 +1014,13 @@ public class Ghost : MonoBehaviour
         if(!PlayerController.invisibilityActivated)
         {
             if (Score.bossEnding)
+            {
                 currentMode = Mode.BossfightMove;
+            }
             else
+            {
                 currentMode = Mode.Chase;
+            }
         }
     }
     #endregion
@@ -1037,9 +1076,11 @@ public class Ghost : MonoBehaviour
 
             GameObject go = Instantiate(scoreIncrementPrefab, spawnPoint, scoreIncrementPrefab.transform.rotation);
             ScoreIncrementDisplay display = go.GetComponent<ScoreIncrementDisplay>();
-            if (display) display.SetText((hit.pointWorth + hit.targetArea.pointsAddition).ToString());
+            if (display)
+            {
+                display.SetText((hit.pointWorth + hit.targetArea.pointsAddition).ToString());
+            }
         }
-
         return hit;
     }
 
@@ -1048,7 +1089,8 @@ public class Ghost : MonoBehaviour
         if(targetAreaDirectory.ContainsKey(targetAreaType))
         {
             return targetAreaDirectory[targetAreaType].difficulty;
-        } else
+        } 
+        else
         {
             return TargetAreaDifficulty.Easy;
         }
