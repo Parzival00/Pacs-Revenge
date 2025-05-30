@@ -1,45 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Barrel : MonoBehaviour
 {
     Animator barrelAnimation;
     BoxCollider barrelCollider;
+    AudioSource boom;
     [SerializeField] float range;
     [SerializeField] float explosionDelay = 0.5f;
     [SerializeField] float explosionPower = 5f;
     [SerializeField] float stunLength = 5f;
     bool exploding = false;
 
-    public enum state 
+    public enum state
     {
         stable,
         unstable
     }
+
     void Start()
     {
         barrelAnimation = GetComponent<Animator>();
         barrelCollider = GetComponent<BoxCollider>();
+        boom = GetComponent<AudioSource>();
         exploding = false;
-    }
-
-    
-    void Update()
-    {
-        
     }
 
     public void StartExplosion()
     {
         if (!exploding)
         {
+            boom.Play();
             Invoke("Explosion", explosionDelay);
             exploding = true;
         }
     }
 
-    public void Explosion() 
+    public void Explosion()
     {
         barrelAnimation.SetTrigger("Explode");
         //Debug.Log("Barrel Should Explode");
@@ -54,7 +50,7 @@ public class Barrel : MonoBehaviour
             foreach (Collider ob in objectInRange)
             {
                 Rigidbody moveBody = ob.gameObject.GetComponent<Rigidbody>();
-              
+
                 //Explosion effect on enemy/other barrels
                 if (ob.gameObject.tag == "Enemy")
                 {
@@ -91,7 +87,7 @@ public class Barrel : MonoBehaviour
                 }
             }
         }
-        else if (transform.name.Contains("ExplosiveBarrel")) 
+        else if (transform.name.Contains("ExplosiveBarrel"))
         {
             foreach (Collider ob in objectInRange)
             {
@@ -140,12 +136,12 @@ public class Barrel : MonoBehaviour
                 }
             }
         }
-            
+
     }
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log(other.gameObject.name + " has hit the barrel");
-        if (/*transform.name.Contains("ShockBarrel") && */(other.gameObject.tag == "Stun" || other.gameObject.name == "StunShot")) 
+        if (/*transform.name.Contains("ShockBarrel") && */(other.gameObject.tag == "Stun" || other.gameObject.name == "StunShot"))
         {
             //Debug.Log("this is the " + transform.name);
 
@@ -153,10 +149,10 @@ public class Barrel : MonoBehaviour
 
             Destroy(other.gameObject);
             StartExplosion();
-        }  
+        }
     }
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position,range);
+        Gizmos.DrawWireSphere(transform.position, range);
     }
 }
