@@ -36,12 +36,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool paused;
     [SerializeField] float sensitivity;
 
-
     [Header("Weapon Audio")]
     [SerializeField] AudioClip stunShotSFX;
     [SerializeField] AudioClip stunShotEmpty;
     [SerializeField] AudioSource weaponSound;
-
 
     [Header("Weapon Settings")]
     [SerializeField] WeaponInfo[] weaponInfos;
@@ -56,8 +54,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] CameraShake camShake;
     [SerializeField] float weaponRange;
     [SerializeField] LayerMask targetingMask;
-    CorruptedGunController corruptedGunController;
 
+    CorruptedGunController corruptedGunController;
     Weapon currentWeapon;
 
     public CameraShake CamShake { get => camShake; }
@@ -200,7 +198,9 @@ public class PlayerController : MonoBehaviour
             canMove = true;
 
             if (corruptionEffect == null)
+            { 
                 corruptionEffect = FindObjectOfType<PlayerCorruptionEffect>();
+            }
 
             mainMenuManager = FindObjectOfType<MainMenuManager>();
 
@@ -210,7 +210,10 @@ public class PlayerController : MonoBehaviour
             {
                 ApplyGameSettings();
             }
-            else AudioListener.volume = 50;
+            else
+            {
+                AudioListener.volume = 50;
+            }
         }
 
     }
@@ -226,32 +229,42 @@ public class PlayerController : MonoBehaviour
         hudMessenger = FindObjectOfType<HUDMessenger>();
 
         if (extraLifeFlash == null)
+        {
             extraLifeFlash = GameObject.FindGameObjectWithTag("ExtraLifeFlash")?.GetComponent<Image>();
+        }
 
         if (extraLifeFlash != null)
+        {
             extraLifeFlash.gameObject.SetActive(false);
+        }
 
         speed = baseSpeed;
-
         stunProjectile = Resources.Load<Projectile>("StunShot");
-
         faceController = FindObjectOfType<FaceController>();
 
         if (hud == null)
+        {
             hud = GameObject.FindGameObjectWithTag("HUD");
+        }
 
         if (crosshair == null)
+        {
             crosshair = GameObject.FindGameObjectWithTag("Crosshair").GetComponent<Image>();
+        }
 
         gunActivated = false;
         currentWeapon.gameObject.SetActive(false);
         hud.SetActive(false);
 
         if (animator == null)
+        {
             animator = GetComponent<Animator>();
+        }
 
         if (deathAnimator == null)
+        {
             deathAnimator = GameObject.FindGameObjectWithTag("DeathAnimator").GetComponent<Animator>();
+        }
 
         if (stungunAnimator != null)
         {
@@ -265,7 +278,9 @@ public class PlayerController : MonoBehaviour
         }
 
         if (shieldAnimator == null)
+        {
             shieldAnimator = FindObjectOfType<ShieldEffectAnimator>();
+        }
 
         ghosts = new Ghost[4];
         ghosts = FindObjectsOfType<Ghost>();
@@ -281,7 +296,8 @@ public class PlayerController : MonoBehaviour
         if (Score.currentLevel == 1)
         {
             playerLives = defaultPlayerLives;
-        } else
+        } 
+        else
         {
             playerLives = PlayerPrefs.GetInt("Lives");
             switch (Score.difficulty)
@@ -321,7 +337,9 @@ public class PlayerController : MonoBehaviour
             {
                 MouseControl();
                 if(!trapped)
+                {
                     MovementControl();
+                }
             }
 
             if (canFire)
@@ -331,8 +349,14 @@ public class PlayerController : MonoBehaviour
                     OutlineTargetEnemy();
                     currentWeapon.OnPassiveEvent();
 
-                    if (holdingFire) currentWeapon.OnMouseEvent();
-                    else currentWeapon.OnNoMouseEvent();
+                    if (holdingFire)
+                    {
+                        currentWeapon.OnMouseEvent();
+                    }
+                    else
+                    {
+                        currentWeapon.OnNoMouseEvent();
+                    }
                 }
                 //else
                 //{
@@ -348,13 +372,14 @@ public class PlayerController : MonoBehaviour
         }
 
         if (!Score.insanityEnding)
+        {
             DisplayPlayerShields();
+        }
     }
 
     public void OnPause(InputAction.CallbackContext context)
     {
         PauseGame();
-        
     }
 
 
@@ -374,13 +399,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void MouseControl()
     {
-
         cameraPitch -= mousePosition.y * sensitivity * Mathf.Min(0.01f, Time.deltaTime) * 30f * Time.timeScale;
         cameraPitch = Mathf.Clamp(cameraPitch, -35.0f, 50.0f);
 
         playerCam.localEulerAngles = Vector3.right * cameraPitch;
         playerT.Rotate(Vector3.up * mousePosition.x * sensitivity * Mathf.Min(0.01f, Time.deltaTime) * 30f * Time.timeScale);
-
     }
 
     Vector2 targetDirection;
@@ -458,7 +481,10 @@ public class PlayerController : MonoBehaviour
             {
                 holdingFire = true;
 
-                if (!MainMenuManager.isGamePaused && canFire && gunActivated) currentWeapon.OnMouseDownEvent();
+                if (!MainMenuManager.isGamePaused && canFire && gunActivated)
+                {
+                    currentWeapon.OnMouseDownEvent();
+                }
             }
             else if (context.phase == InputActionPhase.Performed)
             {
@@ -492,7 +518,9 @@ public class PlayerController : MonoBehaviour
                 Score.totalStunsFired++;
 
                 if (stunAmmoCount == maxAmmoCount)
+                {
                     pelletCountSinceLastShot = Score.pelletsCollected;
+                }
 
                 stunAmmoCount--;
 
@@ -599,7 +627,9 @@ public class PlayerController : MonoBehaviour
     IEnumerator ActivateGun()
     {
         if (gunTimerCoroutine != null)
+        {
             StopCoroutine(gunTimerCoroutine);
+        }
 
         if (stungunAnimator != null)
         {
@@ -607,7 +637,8 @@ public class PlayerController : MonoBehaviour
 
             yield return new WaitForSeconds(0.3f);
             stunGun.SetActive(false);
-        } else
+        } 
+        else
         {
             stunGun.SetActive(false);
         }
@@ -628,10 +659,14 @@ public class PlayerController : MonoBehaviour
         //stunGun.SetActive(false);
 
         if (faceController)
+        {
             faceController.RailgunPickup();
+        }
 
         if (hudMessenger)
+        {
             hudMessenger.Display(railgunAlertMessage, railgunAlertLength);
+        }
 
         musicPlayer.Stop();
         musicPlayer.PlayOneShot(powerMusic);
@@ -738,7 +773,8 @@ public class PlayerController : MonoBehaviour
             stungunAnimator.SetTrigger("Equip");
             stungunAnimator.SetFloat("Charge", Mathf.Min(3, stunAmmoCount));
             yield return new WaitForSeconds(0.3f);
-        } else
+        } 
+        else
         {
             stunGun.SetActive(true);
         }
@@ -897,8 +933,10 @@ public class PlayerController : MonoBehaviour
 
         //Disable corrupted gun in event of dying while trapped
         trapped = false;
-        if(corruptedGunController != null)
+        if (corruptedGunController != null)
+        {
             corruptedGunController.DeactivateCorruptedGun();
+        }
 
         if (gunActivated)
         {
@@ -919,10 +957,14 @@ public class PlayerController : MonoBehaviour
         }
 
         if (invisibilityActivated)
+        {
             DeactivateInvisibility();
+        }
 
         if (speedBoostActivated)
+        {
             DeactivateSpeed();
+        }
 
         //Stop all of the ghosts' movements
         foreach (Ghost g in ghosts)
@@ -936,20 +978,26 @@ public class PlayerController : MonoBehaviour
         deathAnimator.SetTrigger("Death");
 
         if (faceController)
+        {
             faceController.Die();
+        }
 
         yield return deathTimer;
-
         yield return deathTimer;
-
         yield return deathTimer;
 
         if (Score.bossEnding)
         {
             BossSpawner bossSpawner = FindObjectOfType<BossSpawner>();
-            if (bossSpawner) bossSpawner.ResetGhosts();
+            if (bossSpawner)
+            {
+                bossSpawner.ResetGhosts();
+            }
             Boss boss = FindObjectOfType<Boss>();
-            if (boss) boss.ResetBoss();
+            if (boss)
+            {
+                boss.ResetBoss();
+            }
         }
         else
         {
@@ -989,7 +1037,9 @@ public class PlayerController : MonoBehaviour
             transitionEffect.DeathTransition();
 
             if (faceController)
+            {
                 faceController.Respawn();
+            }
 
             yield return deathTimer;
 
@@ -998,7 +1048,8 @@ public class PlayerController : MonoBehaviour
                 stunGun.SetActive(true);
                 stungunAnimator.SetFloat("Charge", Mathf.Min(3, stunAmmoCount));
                 stungunAnimator.SetTrigger("Equip");
-            } else
+            } 
+            else
             {
                 stunGun.SetActive(true);
             }
@@ -1018,17 +1069,23 @@ public class PlayerController : MonoBehaviour
         Score.totalShieldsRecieved++;
         print("shields: " + shieldsRemaining);
         if (shieldAnimator != null && shieldsRemaining == 1)
+        {
             shieldAnimator.PlayShieldUp();
+        }
     }
 
     #region Extra Life
     public void AddLives()
     {
         if (extraLifeSource != null)
+        {
             extraLifeSource.PlayOneShot(extraLifeSound);
+        }
 
         if (extraLifeFlash != null)
+        {
             StartCoroutine(ExtraLifeFlash());
+        }
 
         playerLives++;
         LivesText.text = "" + playerLives;
@@ -1071,7 +1128,6 @@ public class PlayerController : MonoBehaviour
         color = extraLifeFlash.color;
         color.a = alpha;
         extraLifeFlash.color = color;
-
         extraLifeFlash.gameObject.SetActive(false);
     }
     public void DisplayPlayerShields()
@@ -1097,12 +1153,16 @@ public class PlayerController : MonoBehaviour
 
 
         if (invisibilityPowerUpCoroutine != null)
+        {
             StopCoroutine(invisibilityPowerUpCoroutine);
+        }
 
         invisibilityPowerUpCoroutine = StartCoroutine(InvisibilityPowerUp());
 
         if (invisibilitySource != null)
+        {
             invisibilitySource.PlayOneShot(invisibilityActivate);
+        }
     }
 
     IEnumerator InvisibilityPowerUp()
@@ -1116,12 +1176,16 @@ public class PlayerController : MonoBehaviour
     public void DeactivateInvisibility()
     {
         if (invisibilityPowerUpCoroutine != null)
+        {
             StopCoroutine(invisibilityPowerUpCoroutine);
+        }
 
         invisibilityActivated = false;
 
         if (invisibilitySource != null)
+        {
             invisibilitySource.PlayOneShot(invisibilityDeactivate);
+        }
     }
     #endregion
 
@@ -1136,13 +1200,19 @@ public class PlayerController : MonoBehaviour
     public void ActivateSpeed()
     {
         if (speedPowerUpSource != null)
+        {
             speedPowerUpSource.PlayOneShot(speedActivate);
+        }
 
         if (speedBoostActivated)
+        {
             DeactivateSpeed();
+        }
 
         if (speedPowerUp != null)
+        {
             StopCoroutine(speedPowerUp);
+        }
 
         speedPowerUp = StartCoroutine(SpeedBoost());
     }
@@ -1158,7 +1228,9 @@ public class PlayerController : MonoBehaviour
         if (speedBoostActivated)
         {
             if (speedPowerUpSource != null)
+            {
                 speedPowerUpSource.PlayOneShot(speedDeactivate);
+            }
 
             DeactivateSpeed();
         }
@@ -1207,10 +1279,14 @@ public class PlayerController : MonoBehaviour
     public void ApplyGameSettings()
     {
         if (PlayerPrefs.HasKey("FOV"))
+        {
             playerCam.GetComponent<Camera>().fieldOfView = PlayerPrefs.GetFloat("FOV");
-        
+        }
+
         if (PlayerPrefs.HasKey("Sensitivity"))
+        {
             sensitivity = PlayerPrefs.GetFloat("Sensitivity") / 5f;
+        }
 
         doTutorials = !PlayerPrefs.HasKey("TutorialPrompts") || PlayerPrefs.GetInt("TutorialPrompts") == 1;
     }
