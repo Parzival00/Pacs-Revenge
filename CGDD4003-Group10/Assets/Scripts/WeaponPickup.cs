@@ -91,13 +91,15 @@ public class WeaponPickup : MonoBehaviour
         }
 
         if (distToCorruption <= minDistForCorruption)
+        {
             canBeCorrupted = true;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(this.transform.position, playerPosition) <= rolloffStartDistance && !PlayerController.gunActivated)
+        if (Vector3.Distance(this.transform.position, playerPosition) <= rolloffStartDistance && !PlayerController.gunActivated && !Score.bossEnding)
         {
             playerMusic.volume = originalVol * Mathf.Log(Vector3.Distance(this.transform.position, playerPosition), rolloffStartDistance * 5);
         }

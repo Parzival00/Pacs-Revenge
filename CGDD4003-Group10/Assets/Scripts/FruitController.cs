@@ -52,6 +52,7 @@ public class FruitController : MonoBehaviour
     [SerializeField] ParticleSystem lightningBeam;
     [SerializeField] GameObject lightningStrike; 
     [SerializeField] AudioSource lightningSoundSource;
+    [SerializeField] AudioClip lightningStrikeSfx;
     [SerializeField] float alertVisibleTimerAmount = 3;
     [SerializeField] float messageDelayTimerAmount = 2;
     [SerializeField] int numberOfLightningStrikes = 5;
@@ -306,6 +307,7 @@ public class FruitController : MonoBehaviour
                 lightningStrike.SetActive(true);
 
                 yield return new WaitForSeconds(0.3f);
+                lightningSoundSource.PlayOneShot(lightningStrikeSfx);
 
                 if(i == 1)
                 {
@@ -315,9 +317,6 @@ public class FruitController : MonoBehaviour
                     fruitCollectionCollider.enabled = true;
                     pedastalMinimapSprite.SetActive(false);
                 }
-
-                if (lightningSoundSource.clip != null)
-                    lightningSoundSource.Play();
 
                 lightningStrikeTimer = Time.time + intervalBtwLightningStrikes;
             }

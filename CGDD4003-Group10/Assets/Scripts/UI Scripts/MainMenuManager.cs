@@ -81,7 +81,6 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] TMP_Text livesUsed;
     [SerializeField] TMP_Text totalPellets;
 
-
     GlobalAudioController audioController;
     PlayerController player;
 
@@ -99,7 +98,8 @@ public class MainMenuManager : MonoBehaviour
             Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-        } else
+        } 
+        else
         {
             Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.Locked;
@@ -107,10 +107,14 @@ public class MainMenuManager : MonoBehaviour
 
             isGamePaused = false;
 
-            if(options != null)
+            if (options != null)
+            {
                 options?.SetActive(false);
-            if(menu != null)
+            }
+            if (menu != null)
+            {
                 menu?.SetActive(false);
+            }
         }
 
         /*if (screenResolution != null)
