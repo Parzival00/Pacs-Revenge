@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -80,6 +81,14 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] TMP_Text shieldUsed;
     [SerializeField] TMP_Text livesUsed;
     [SerializeField] TMP_Text totalPellets;
+
+    [Header("Starting UI Buttons")]
+    [SerializeField] GameObject mainMenuStart;
+    [SerializeField] GameObject weaponSelectStart;
+    [SerializeField] GameObject difficultySelectStart;
+    [SerializeField] GameObject optionsStart;
+    [SerializeField] GameObject skipIntroStart;
+    [SerializeField] GameObject pauseGameStart;
 
     GlobalAudioController audioController;
     PlayerController player;
@@ -205,6 +214,12 @@ public class MainMenuManager : MonoBehaviour
         menu.SetActive(false);
         options.SetActive(true);
 
+        //Clear Selected
+        EventSystem.current.SetSelectedGameObject(null);
+
+        //Select default starting button
+        EventSystem.current.SetSelectedGameObject(optionsStart);
+
         fov.value = PlayerPrefs.GetFloat("FOV", 70);
         MouseSensitivity.value = PlayerPrefs.GetFloat("Sensitivity", 100);
         masterVolume.value = PlayerPrefs.GetFloat("MastVolume", masterVolume.value >= 0 ? masterVolume.value / 4 : masterVolume.value);
@@ -266,8 +281,20 @@ public class MainMenuManager : MonoBehaviour
 
         isGamePaused = true;
 
+        //Clear Selected
+        EventSystem.current.SetSelectedGameObject(null);
+
+        //Select default starting button
+        EventSystem.current.SetSelectedGameObject(pauseGameStart);
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        //Clear Selected
+        EventSystem.current.SetSelectedGameObject(null);
+
+        //Select default starting button
+        EventSystem.current.SetSelectedGameObject(pauseGameStart);
     }
     public void ResumeGame() 
     {
@@ -292,6 +319,13 @@ public class MainMenuManager : MonoBehaviour
         {
             case 1:
                 SaveSettings();
+
+                //Clear Selected
+                EventSystem.current.SetSelectedGameObject(null);
+
+                //Select default starting button
+                EventSystem.current.SetSelectedGameObject(mainMenuStart);
+
                 options.SetActive(false);
                 menu.SetActive(true);
                 if(difficultyScreen) difficultyScreen?.SetActive(false);
@@ -302,6 +336,13 @@ public class MainMenuManager : MonoBehaviour
             case 2:
                 howToPlayUI.SetActive(false);
                 menu.SetActive(true);
+
+                //Clear Selected
+                EventSystem.current.SetSelectedGameObject(null);
+
+                //Select default starting button
+                EventSystem.current.SetSelectedGameObject(weaponSelectStart);
+
                 if (difficultyScreen) difficultyScreen?.SetActive(false);
                 if(achievementsScreen) achievementsScreen.SetActive(false);
                 if (weaponSelectScreen) weaponSelectScreen.SetActive(false);
@@ -345,6 +386,12 @@ public class MainMenuManager : MonoBehaviour
     }
     public void DisplayDifficultyScreen()
     {
+        //Clear Selected
+        EventSystem.current.SetSelectedGameObject(null);
+
+        //Select default starting button
+        EventSystem.current.SetSelectedGameObject(difficultySelectStart);
+
         UIAudio.PlayOneShot(buttonClick);
         menu.SetActive(false);
         howToPlayUI.SetActive(false);
@@ -369,6 +416,12 @@ public class MainMenuManager : MonoBehaviour
     }
     public void DisplayWeaponSelectScreen()
     {
+        //Clear Selected
+        EventSystem.current.SetSelectedGameObject(null);
+
+        //Select default starting button
+        EventSystem.current.SetSelectedGameObject(weaponSelectStart);
+
         UIAudio.PlayOneShot(buttonClick);
         menu.SetActive(false);
         howToPlayUI.SetActive(false);
@@ -380,6 +433,12 @@ public class MainMenuManager : MonoBehaviour
     }
     public void DisplayIntroSkipScreen()
     {
+        //Clear Selected
+        EventSystem.current.SetSelectedGameObject(null);
+
+        //Select default starting button
+        EventSystem.current.SetSelectedGameObject(skipIntroStart);
+
         UIAudio.PlayOneShot(buttonClick);
         menu.SetActive(false);
         howToPlayUI.SetActive(false);
