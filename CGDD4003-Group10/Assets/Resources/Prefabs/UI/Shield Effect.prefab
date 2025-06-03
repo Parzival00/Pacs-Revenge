@@ -101,7 +101,8 @@ MonoBehaviour:
   shieldSource: {fileID: 3094094244296726429}
   shieldActivate: {fileID: 8300000, guid: 8d5ade214a8d6ba45a44ee35312c6c7a, type: 3}
   shieldDeactivate: {fileID: 8300000, guid: 1dc26c3ae76efd046a66f563d385f750, type: 3}
-  shieldBreak: {fileID: 8300000, guid: 028db069831750c4486bbdb47fdbf6b2, type: 3}
+  shieldBreak_Full: {fileID: 8300000, guid: ee8153186d1cb8b4c8fc906eb26815b8, type: 3}
+  shieldBreak_Partial: {fileID: 8300000, guid: 9b8cdf9eb61d13b4c8a96cfd631cf20e, type: 3}
 --- !u!1 &8789649537667429712
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +151,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 7131999003614377871, guid: 28f800679063ee84fb2e3c41fee59bc0, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.1
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -3024,7 +3024,10 @@ MonoBehaviour:
   scoreIncrementSpawnArea: {fileID: 2052171424438145827}
   flinchLength: 0.5
   faceForwardForDeath: 1
-  BosssfightMode: 0
+  BossfightMode: 0
+  enemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 2048
   player: {fileID: 0}
   scatterTarget: {fileID: 0}
   respawnPoint: {fileID: 0}
@@ -3048,6 +3051,7 @@ MonoBehaviour:
   dashSpeedMultiplier: 1.5
   dashTime: 3
   dashCooldown: 5
+  aggroDistThreshold: 2
 --- !u!1 &4970443601975460288
 GameObject:
   m_ObjectHideFlags: 0

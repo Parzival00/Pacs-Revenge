@@ -6,6 +6,8 @@ public class Clyde : Ghost
     [SerializeField] int radiusToAvoidPlayer = 4;
     [SerializeField] int randomTurnRange; //1 out of randomTurnRange (Must be > 1)
     [SerializeField] float randomCooldown;
+    [Tooltip("The distance for which Clyde will target the player instead of ahead of the player")]
+    [SerializeField] float aggroDistThreshold = 2f;
     protected float cooldownTimer;
     protected bool flipped;
     protected override void Chase()
@@ -18,6 +20,11 @@ public class Clyde : Ghost
         if (Vector2Int.Distance(playerGridPosition, clydeGridPosition) < radiusToAvoidPlayer)
         {
             newTargetPosition = map.GetGridLocation(scatterTarget.position);
+
+            if (Vector2Int.Distance(playerGridPosition, currentGridPosition) < aggroDistThreshold)
+            {
+                newTargetPosition = playerGridPosition;
+            }
         }
         else
         {
@@ -44,7 +51,18 @@ public class Clyde : Ghost
 
         targetGridPosition = playerGridPosition;
 
-        scatterMove(false);
+        bool turnedAround = false;
+
+        if ((int)Random.Range(0, randomTurnRange) == 1 && Vector2Int.Distance(playerGridPosition, currentGridPosition) < radiusToAvoidPlayer && !flipped)
+        {
+            currentDirection = -currentDirection;
+            nextGridPosition = map.GetNextGridPosition(currentGridPosition, currentDirection, true, true);
+            turnedAround = true;
+            flipped = true;
+            cooldownTimer = randomCooldown;
+            print("Rando");
+        }
+        Move(!turnedAround);
 
         lastTargetGridPosition = targetGridPosition;
         PlayChaseSound();

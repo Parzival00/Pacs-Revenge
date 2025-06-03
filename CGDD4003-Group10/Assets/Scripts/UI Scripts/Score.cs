@@ -49,6 +49,7 @@ public class Score : MonoBehaviour
     [SerializeField] float bossFightStartDelay = 15f;
     [SerializeField] float bossFightPortalMaxSize = 15f;
     [SerializeField] DifficultySettings[] difficultySettings;
+    [SerializeField] bool demo;
 
     Vector3 bossfightPortalStartSize;
 
@@ -441,16 +442,20 @@ public class Score : MonoBehaviour
 
         wonLevel = true;
 
+        hudMessenger.Display("Level Cleared", 2f);
+
         float audioLevel = 1;
         while(audioLevel > 0)
         {
             AudioListener.volume = audioLevel;
-            audioLevel -= 4 * Time.deltaTime;
+            audioLevel -= 0.5f * Time.deltaTime;
             yield return null;
         }
 
         audioLevel = 0;
         AudioListener.volume = audioLevel;
+
+        yield return new WaitForSeconds(0.25f);
 
         if (!playerDied && !insanityEnding)
         {
@@ -479,8 +484,13 @@ public class Score : MonoBehaviour
         }
         else
         {
-
-            if (currentLevel == 8)
+            if(demo && currentLevel == 2)
+            {
+                PlayerPrefs.SetInt("Ending", 1);
+                totalTimePlayed += Time.time - sceneStartTime;
+                SceneManager.LoadScene("DemoEnd");
+            }
+            else if (currentLevel == 8)
             {
                 if (fruitsCollected >= 14)
                 {

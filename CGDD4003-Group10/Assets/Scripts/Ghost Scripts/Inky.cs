@@ -10,6 +10,8 @@ public class Inky : Ghost
     [SerializeField] protected float dashSpeedMultiplier;
     [SerializeField] protected float dashTime;
     [SerializeField] protected float dashCooldown;
+    [Tooltip("The distance for which Clyde will target the player instead of ahead of the player")]
+    [SerializeField] float aggroDistThreshold = 2f;
     protected float cooldownTimer;
     protected float dashTimer;
     protected bool canDash;
@@ -31,6 +33,11 @@ public class Inky : Ghost
         Vector2Int newRayAhead = new Vector2Int(Mathf.RoundToInt(fromBlinkyToPlayerAhead.x * targetRayMultiplier), Mathf.RoundToInt(fromBlinkyToPlayerAhead.y * targetRayMultiplier));
 
         Vector2Int newTargetGridPosition = map.GetGridPositionAhead(blinkyGridPosition, newRayAhead, true, true);
+
+        if (Vector2Int.Distance(playerGridPosition, currentGridPosition) < aggroDistThreshold)
+        {
+            newTargetGridPosition = playerGridPosition;
+        }
 
         targetGridPosition = map.CheckEdgePositions(transform.position, newTargetGridPosition);// + rand;
 

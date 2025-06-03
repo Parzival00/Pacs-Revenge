@@ -45480,6 +45480,12 @@ MonoBehaviour:
   shieldUsed: {fileID: 748562695}
   livesUsed: {fileID: 1370230426}
   totalPellets: {fileID: 123762802}
+  mainMenuStart: {fileID: 0}
+  weaponSelectStart: {fileID: 0}
+  difficultySelectStart: {fileID: 0}
+  optionsStart: {fileID: 0}
+  skipIntroStart: {fileID: 0}
+  pauseGameStart: {fileID: 0}
 --- !u!1 &1256352335
 GameObject:
   m_ObjectHideFlags: 0
@@ -68010,6 +68016,7 @@ MonoBehaviour:
   bossFightStartDelay: 15
   bossFightPortalMaxSize: 15
   difficultySettings: []
+  demo: 0
 --- !u!95 &1862071256
 Animator:
   serializedVersion: 5

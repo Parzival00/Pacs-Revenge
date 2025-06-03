@@ -87,7 +87,8 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Wall" || (canHitPlayer && other.tag == "Player") || (canHitFloor && other.tag == "Floor"))
+        if (other.tag == "Wall" || other.tag == "Corner" || other.tag == "T Wall" || other.tag == "Straight" || 
+            (canHitPlayer && other.tag == "Player") || (canHitFloor && other.tag == "Floor"))
         {
             move = false;
             animator.SetTrigger("Destroy");

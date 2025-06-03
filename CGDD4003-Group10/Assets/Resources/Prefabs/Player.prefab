@@ -6302,6 +6302,7 @@ GameObject:
   - component: {fileID: 8649144716541258764}
   - component: {fileID: 640315882813396018}
   - component: {fileID: 4743401464375397829}
+  - component: {fileID: 7107578712239581087}
   m_Layer: 10
   m_Name: railgun_Sprite
   m_TagString: Untagged
@@ -6415,6 +6416,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7107578712239581087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3673179542860927023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1909d5368df29074abe8413b041a61ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0.15, y: -0.05}
 --- !u!1 &3741585811432328052
 GameObject:
   m_ObjectHideFlags: 0
@@ -7460,6 +7474,7 @@ MonoBehaviour:
   - difficultyLevel: 2
     bossStungunRechargeRate: 3.5
     bossTimerAmount: 8
+  demo: 0
 --- !u!114 &6717606324952877450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18408,6 +18423,7 @@ GameObject:
   - component: {fileID: 7292730234432944367}
   - component: {fileID: 8905222363647129144}
   - component: {fileID: 947775382968978171}
+  - component: {fileID: 5857491573248043173}
   m_Layer: 10
   m_Name: stungun_Sprite
   m_TagString: Untagged
@@ -18494,6 +18510,19 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &5857491573248043173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8543019884830230885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1909d5368df29074abe8413b041a61ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0.15, y: -0.05}
 --- !u!1 &8598709834538471052
 GameObject:
   m_ObjectHideFlags: 0
