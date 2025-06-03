@@ -141,6 +141,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float powerMusicVolBoost;
     [SerializeField] AudioClip powerMusic;
     [SerializeField] AudioClip gameStart;
+    [SerializeField] AudioClip bossFightMusic;
     [SerializeField] AudioSource musicPlayer;
 
     [Header("Insanity Ending Settings")]
@@ -367,6 +368,10 @@ public class PlayerController : MonoBehaviour
 
         if (!musicPlayer.isPlaying)
         {
+            if(Score.bossEnding)
+            {
+                musicPlayer.clip = bossFightMusic;
+            }
             musicPlayer.Play();
             musicPlayer.loop = true;
         }
@@ -662,10 +667,16 @@ public class PlayerController : MonoBehaviour
         {
             stunGun.SetActive(false);
         }
+
         if (Score.bossEnding)
         {
             WeaponSpawner ws = FindObjectOfType<WeaponSpawner>();
             ws.Reset();
+        }
+        else
+        {
+            musicPlayer.Stop();
+            musicPlayer.PlayOneShot(powerMusic);
         }
 
         canFire = false;
@@ -687,10 +698,6 @@ public class PlayerController : MonoBehaviour
         {
             hudMessenger.Display(railgunAlertMessage, railgunAlertLength);
         }
-
-        musicPlayer.Stop();
-        musicPlayer.PlayOneShot(powerMusic);
-        //musicPlayer.volume = musicPlayer.volume * powerMusicVolBoost;
 
         if (gunAnimator != null)
         {
@@ -747,7 +754,10 @@ public class PlayerController : MonoBehaviour
         holdingFire = false;
         hud.SetActive(false);
 
-        musicPlayer.Stop();
+        if (!Score.bossEnding)
+        {
+            musicPlayer.Stop();
+        }
 
         //musicPlayer.volume = musicPlayer.volume / powerMusicVolBoost;
 

@@ -92,7 +92,6 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject pauseGameStart;
 
     public static Action OnOptionsChanged;
-
     GlobalAudioController audioController;
     PlayerController player;
 
@@ -110,7 +109,8 @@ public class MainMenuManager : MonoBehaviour
             Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-        } else
+        } 
+        else
         {
             Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.Locked;

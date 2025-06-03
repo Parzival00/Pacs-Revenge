@@ -6,12 +6,14 @@ public class CaptureTentacle : MonoBehaviour
 {
     Animator tentacleAnimator;
     Collider collider;
+    AudioSource audio;
 
     CorruptedGun corruptedGun;
 
     [SerializeField] int babyHealth = 25;
     [SerializeField] int normalHealth = 50;
     [SerializeField] int nightmareHealth = 75;
+    [SerializeField] AudioClip deathSound;
 
     int currentHealth;
 
@@ -39,6 +41,7 @@ public class CaptureTentacle : MonoBehaviour
         tentacleAnimator = GetComponent<Animator>();
         collider = GetComponent<Collider>();
         corruptedGun = GetComponentInParent<CorruptedGun>();
+        audio = GetComponent<AudioSource>();
 
         collider.enabled = false;
     }
@@ -61,6 +64,7 @@ public class CaptureTentacle : MonoBehaviour
         {
             tentacleAnimator.ResetTrigger("Reset");
             tentacleAnimator.SetTrigger("Death");
+            audio.PlayOneShot(deathSound);
             collider.enabled = false;
 
             corruptedGun.TentacleKilled();
