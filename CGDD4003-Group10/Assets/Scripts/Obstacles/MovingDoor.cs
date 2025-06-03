@@ -117,7 +117,7 @@ public class MovingDoor : MonoBehaviour
         yield return new WaitUntil(() => doorClosed);
 
         timer = 0;
-        intervalTime = Random.Range(intervalTimes.x, intervalTimes.y);
+        intervalTime = Random.Range(intervalTimes.x, intervalTimes.y) * 0.75f;
     }
 
     private void OnDrawGizmosSelected()

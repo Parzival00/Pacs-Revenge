@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using UnityEngine.EventSystems;
+using System;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -90,6 +91,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject skipIntroStart;
     [SerializeField] GameObject pauseGameStart;
 
+    public static Action OnOptionsChanged;
     GlobalAudioController audioController;
     PlayerController player;
 
@@ -102,7 +104,7 @@ public class MainMenuManager : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "GameOverScene" || 
             SceneManager.GetActiveScene().name == "ScoreScreen" || SceneManager.GetActiveScene().name == "Credits" || 
-            SceneManager.GetActiveScene().name == "End" || SceneManager.GetActiveScene().name == "Start")
+            SceneManager.GetActiveScene().name == "End" || SceneManager.GetActiveScene().name == "Start" || SceneManager.GetActiveScene().name == "DemoEnd")
         {
             Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.None;
@@ -118,11 +120,11 @@ public class MainMenuManager : MonoBehaviour
 
             if (options != null)
             {
-                options?.SetActive(false);
+                options.SetActive(false);
             }
             if (menu != null)
             {
-                menu?.SetActive(false);
+                menu.SetActive(false);
             }
         }
 
@@ -163,22 +165,39 @@ public class MainMenuManager : MonoBehaviour
 
         SetResolution(screenResolution.value);
 
-        if(fullScreenToggle.isOn)
+        if (fullScreenToggle.isOn)
+        {
             PlayerPrefs.SetInt("Fullscreen", 1);
+        }
         else
+        {
             PlayerPrefs.SetInt("Fullscreen", 0);
+        }
 
         if (viewBobbingToggle.isOn)
+        {
             PlayerPrefs.SetInt("HeadBob", 1);
+        }
         else
+        {
             PlayerPrefs.SetInt("HeadBob", 0);
+        }
 
         PlayerPrefs.Save();
 
-        if(player!=null)
+        if (player != null)
+        {
             player.ApplyGameSettings();
+        }
         if (audioController != null)
+        {
             audioController.ApplyAudioSettings();
+        }
+
+        if(OnOptionsChanged != null)
+        {
+            OnOptionsChanged.Invoke();
+        }
     }
 
     public void LoadGameScene(int sceneIndex) 
@@ -241,20 +260,13 @@ public class MainMenuManager : MonoBehaviour
 
         screenResolution.value = PlayerPrefs.GetInt("Resolution", 0);
 
-        if(PlayerPrefs.GetInt("Fullscreen", 1) == 1)
-            fullScreenToggle.isOn = true;
-        else
-            fullScreenToggle.isOn = false;
+        fullScreenToggle.isOn = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
+        viewBobbingToggle.isOn = PlayerPrefs.GetInt("HeadBob", 1) == 1;
 
-        if (PlayerPrefs.GetInt("HeadBob", 1) == 1)
-            viewBobbingToggle.isOn = true;
-        else
-            viewBobbingToggle.isOn = false;
-
-        if (!PlayerPrefs.HasKey("TutorialPrompts") || PlayerPrefs.GetInt("TutorialPrompts") == 1)
+        /*if (!PlayerPrefs.HasKey("TutorialPrompts") || PlayerPrefs.GetInt("TutorialPrompts") == 1)
             tutorialToggle.isOn = true;
         else
-            tutorialToggle.isOn = false;
+            tutorialToggle.isOn = false;*/
     }
     public void DisplayScoreBoard() 
     {
@@ -306,7 +318,9 @@ public class MainMenuManager : MonoBehaviour
         isGamePaused = false;
 
         if (options.activeSelf)
+        {
             SaveSettings();
+        }
 
         options.SetActive(false);
         menu.SetActive(false);
@@ -480,8 +494,16 @@ public class MainMenuManager : MonoBehaviour
 
     public void NavigateWeaponSelection(int dir)
     {
+        if(dir != 0)
+        {
+            UIAudio.PlayOneShot(buttonClick);
+        }
+
         weaponSelection += dir;
-        if (weaponSelection < 0) weaponSelection = weaponInfos.Length - 1;
+        if (weaponSelection < 0)
+        {
+            weaponSelection = weaponInfos.Length - 1;
+        }
         weaponSelection = weaponSelection % weaponInfos.Length;
 
         weaponImage.sprite = weaponInfos[weaponSelection].gunIcon;

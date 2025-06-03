@@ -6429,7 +6429,8 @@ GameObject:
   - component: {fileID: 8442718087572645350}
   - component: {fileID: 8649144716541258764}
   - component: {fileID: 640315882813396018}
-  - component: {fileID: 4743401464375397829}
+  - component: {fileID: 7107578712239581087}
+  - component: {fileID: 636064426818915026}
   m_Layer: 10
   m_Name: railgun_Sprite
   m_TagString: Untagged
@@ -6499,7 +6500,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -148443900, guid: 24f09752ebcaeb34eb1e58c435d80384, type: 3}
+  m_Sprite: {fileID: -752978582, guid: 24f09752ebcaeb34eb1e58c435d80384, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6522,7 +6523,20 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
---- !u!95 &4743401464375397829
+--- !u!114 &7107578712239581087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3673179542860927023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1909d5368df29074abe8413b041a61ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0.15, y: -0.05}
+--- !u!95 &636064426818915026
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -7590,6 +7604,7 @@ MonoBehaviour:
   - difficultyLevel: 2
     bossStungunRechargeRate: 3.5
     bossTimerAmount: 8
+  demo: 0
 --- !u!114 &6717606324952877450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18417,7 +18432,7 @@ MonoBehaviour:
   overheatWarningBlinkInterval: 0.2
   overheatSprite1: {fileID: 2762937568580741272}
   overheatSprite2: {fileID: 747329762553903605}
-  chargeTimerAnimator: {fileID: 4743401464375397829}
+  chargeTimerAnimator: {fileID: 636064426818915026}
   railgunAnimator: {fileID: 5177478277903064049}
   overheatSmoke1: {fileID: 8760660562900851021}
   overheatSmoke2: {fileID: 670388022904544303}
@@ -18538,6 +18553,7 @@ GameObject:
   - component: {fileID: 7292730234432944367}
   - component: {fileID: 8905222363647129144}
   - component: {fileID: 947775382968978171}
+  - component: {fileID: 5857491573248043173}
   m_Layer: 10
   m_Name: stungun_Sprite
   m_TagString: Untagged
@@ -18624,6 +18640,19 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &5857491573248043173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8543019884830230885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1909d5368df29074abe8413b041a61ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0.15, y: -0.05}
 --- !u!1 &8598709834538471052
 GameObject:
   m_ObjectHideFlags: 0

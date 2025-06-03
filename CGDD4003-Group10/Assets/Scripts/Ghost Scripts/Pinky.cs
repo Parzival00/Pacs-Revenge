@@ -8,6 +8,8 @@ public class Pinky : Ghost
     [SerializeField] int spacesAheadOfPlayer = 2;
     [SerializeField] float radiusToAvoidPlayer;
     [SerializeField] float turnCooldown;
+    [Tooltip("The distance for which Pinky will target the player instead of ahead of the player")]
+    [SerializeField] float aggroDistThreshold = 2f;
     protected float cooldownTimer;
     protected bool justFlippedDirection;
 
@@ -23,6 +25,11 @@ public class Pinky : Ghost
         Vector2Int playerGridPosition = map.GetPlayerPosition();
         Vector2Int playerGridDir = map.GetGridSpaceDirection(player.forward);
         Vector2Int pinkyGridTarget = map.GetGridPositionAhead(playerGridPosition, playerGridDir, spacesAheadOfPlayer, true, false);
+
+        if(Vector2Int.Distance(playerGridPosition, currentGridPosition) < aggroDistThreshold)
+        {
+            pinkyGridTarget = playerGridPosition;
+        }
 
         if (originalMode)
         {

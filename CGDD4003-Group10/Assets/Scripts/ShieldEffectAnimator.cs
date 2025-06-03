@@ -18,7 +18,8 @@ public class ShieldEffectAnimator : MonoBehaviour
     [SerializeField] AudioSource shieldSource;
     [SerializeField] AudioClip shieldActivate;
     [SerializeField] AudioClip shieldDeactivate;
-    [SerializeField] AudioClip shieldBreak;
+    [SerializeField] AudioClip shieldBreak_Full;
+    [SerializeField] AudioClip shieldBreak_Partial;
 
     bool isAnimating = false;
 
@@ -41,7 +42,9 @@ public class ShieldEffectAnimator : MonoBehaviour
         yield return new WaitUntil(() => isAnimating == false);
 
         if (shieldSource != null)
+        {
             shieldSource.PlayOneShot(shieldActivate);
+        }
 
         isAnimating = true;
 
@@ -97,7 +100,9 @@ public class ShieldEffectAnimator : MonoBehaviour
         yield return new WaitUntil(() => isAnimating == false);
 
         if (shieldSource != null)
+        {
             shieldSource.PlayOneShot(shieldDeactivate);
+        }
 
         isAnimating = true;
 
@@ -140,7 +145,9 @@ public class ShieldEffectAnimator : MonoBehaviour
         yield return new WaitUntil(() => isAnimating == false);
 
         if (shieldSource != null)
-            shieldSource.PlayOneShot(shieldBreak);
+        {
+            shieldSource.PlayOneShot(shieldBreak_Full);
+        }
 
         isAnimating = true;
 
@@ -170,6 +177,14 @@ public class ShieldEffectAnimator : MonoBehaviour
         shieldEffect.SetInt("_Active", 0);
 
         isAnimating = false;
+    }
+
+    public void PlayShieldBreakPartial()
+    {
+        if (shieldSource != null)
+        {
+            shieldSource.PlayOneShot(shieldBreak_Partial);
+        }
     }
 
     private void OnApplicationQuit()

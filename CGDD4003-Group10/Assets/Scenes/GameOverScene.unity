@@ -24702,7 +24702,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 19.34906, y: -175}
+  m_AnchoredPosition: {x: 19.34906, y: -185}
   m_SizeDelta: {x: 430.1498, y: 80.6531}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &700272730
@@ -45480,6 +45480,12 @@ MonoBehaviour:
   shieldUsed: {fileID: 748562695}
   livesUsed: {fileID: 1370230426}
   totalPellets: {fileID: 123762802}
+  mainMenuStart: {fileID: 0}
+  weaponSelectStart: {fileID: 0}
+  difficultySelectStart: {fileID: 0}
+  optionsStart: {fileID: 0}
+  skipIntroStart: {fileID: 0}
+  pauseGameStart: {fileID: 0}
 --- !u!1 &1256352335
 GameObject:
   m_ObjectHideFlags: 0
@@ -68010,6 +68016,7 @@ MonoBehaviour:
   bossFightStartDelay: 15
   bossFightPortalMaxSize: 15
   difficultySettings: []
+  demo: 0
 --- !u!95 &1862071256
 Animator:
   serializedVersion: 5
@@ -73181,7 +73188,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 19.34906, y: -250}
+  m_AnchoredPosition: {x: 19.34906, y: -273}
   m_SizeDelta: {x: 430.1498, y: 80.6531}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1995354044

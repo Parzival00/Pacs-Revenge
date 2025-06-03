@@ -100,7 +100,8 @@ public class Ghost : MonoBehaviour
     [SerializeField] protected BoxCollider scoreIncrementSpawnArea;
     [SerializeField] protected float flinchLength = 0.5f;
     [SerializeField] protected bool faceForwardForDeath = true;
-    [SerializeField] protected bool BosssfightMode = false;
+    [SerializeField] protected bool BossfightMode = false;
+    [SerializeField] protected LayerMask enemyLayerMask;
     protected bool forceRespawn = false;
     protected float ghostHealth;
     protected float levelSpeedIncrease = 0.03f;
@@ -795,7 +796,7 @@ public class Ghost : MonoBehaviour
 
             if (currentMode == Mode.Respawn)
             {
-                if (BosssfightMode)
+                if (BossfightMode)
                 {
                     currentMode = Mode.Dormant;
                 }
@@ -873,6 +874,8 @@ public class Ghost : MonoBehaviour
     Coroutine resetCoroutine;
     IEnumerator ResetSequence()
     {
+        chaseSoundSource.Stop();
+
         SetPosition(respawnPoint.position);
 
         WaitForSeconds wait = new WaitForSeconds(5f);
@@ -986,6 +989,17 @@ public class Ghost : MonoBehaviour
         {
             Destroy(c.gameObject);
             FreezeGhost();
+
+            //Freeze nearby ghosts as well
+            Collider[] nearbyObjs = Physics.OverlapBox(transform.position, Vector3.one * map.Size, Quaternion.identity, enemyLayerMask);
+            for (int i = 0; i < nearbyObjs.Length; i++)
+            {
+                if(nearbyObjs[i].CompareTag("Enemy"))
+                {
+                    Ghost nearbyGhost = nearbyObjs[i].GetComponent<Ghost>();
+                    nearbyGhost.FreezeGhost();
+                }
+            }
         }
     }
     #endregion
@@ -1048,16 +1062,25 @@ public class Ghost : MonoBehaviour
         ghostHealth -= currentHitArea.healthValue * damageMultiplier;
         //print("subtracted: " + currentHitArea.healthValue + " health: " + ghostHealth);
 
-        if (ghostHealth <= 0 && currentMode != Mode.Respawn)
+        if (ghostHealth <= 0)
         {
-            //print("respawning");
-            ghostHealth = 100;
+            if (currentMode != Mode.Respawn)
+            {
+                //print("respawning");
+                ghostHealth = 100;
 
-            currentMode = Mode.Respawn;
-            hit.pointWorth = pointWorth;
+                currentMode = Mode.Respawn;
+                hit.pointWorth = pointWorth;
 
-            navMesh.isStopped = true;
-            //navMesh.enabled = false;
+                navMesh.isStopped = true;
+                //navMesh.enabled = false;
+            }
+            else
+            {
+                //This condition means the ghost was hit when already dying
+                ghostHealth = 100;
+                return hit;
+            }
         }
         else
         {

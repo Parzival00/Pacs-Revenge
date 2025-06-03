@@ -384,7 +384,10 @@ public class PlayerController : MonoBehaviour
 
     public void OnPause(InputAction.CallbackContext context)
     {
-        PauseGame();
+        if (context.phase == InputActionPhase.Started)
+        {
+            PauseGame();
+        }
     }
 
 
@@ -459,7 +462,10 @@ public class PlayerController : MonoBehaviour
         {
             if (shieldAnimator != null && shieldsRemaining > 0)
             {
-                if (gunActivated) lostShield = true;
+                if (gunActivated)
+                {
+                    lostShield = true;
+                }
 
                 shieldsRemaining--;
                 print("shields: " + shieldsRemaining);
@@ -467,6 +473,10 @@ public class PlayerController : MonoBehaviour
                 if (shieldsRemaining <= 0)
                 {
                     shieldAnimator.PlayShieldBreak();
+                }
+                else
+                {
+                    shieldAnimator.PlayShieldBreakPartial();
                 }
             }
 
@@ -480,27 +490,36 @@ public class PlayerController : MonoBehaviour
     #region Gun Functionality
     public void OnFire(InputAction.CallbackContext context)
     {
-        if (gunActivated)
+        if (!MainMenuManager.isGamePaused)
         {
-            if (context.phase == InputActionPhase.Started)
+            if (gunActivated)
             {
-                holdingFire = true;
-
-                if (!MainMenuManager.isGamePaused && canFire && gunActivated)
+                if (context.phase == InputActionPhase.Started)
                 {
-                    currentWeapon.OnMouseDownEvent();
+                    holdingFire = true;
+
+                    if (!MainMenuManager.isGamePaused && canFire && gunActivated)
+                    {
+                        currentWeapon.OnMouseDownEvent();
+                    }
+                }
+                else if (context.phase == InputActionPhase.Performed)
+                {
+                    holdingFire = false;
+
+                    if (!MainMenuManager.isGamePaused && canFire && gunActivated)
+                    {
+                        currentWeapon.OnMouseUpEvent();
+                    }
                 }
             }
-            else if (context.phase == InputActionPhase.Performed)
+            else
             {
-                holdingFire = false;
-
-                if (!MainMenuManager.isGamePaused && canFire && gunActivated) currentWeapon.OnMouseUpEvent();
+                if (context.phase == InputActionPhase.Started)
+                {
+                    StungunFire();
+                }
             }
-        }
-        else
-        {
-            StungunFire();
         }
     }
     #endregion
@@ -626,6 +645,7 @@ public class PlayerController : MonoBehaviour
 
     #region Gun Powerup Functions
     Coroutine gunTimerCoroutine;
+    Coroutine gunActivateCoroutine;
     /// <summary>
     /// Activates the gun and any related visuals and start the gun timer coroutine
     /// </summary>
@@ -699,6 +719,8 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
+        gunActivateCoroutine = null;
+
         /*if (doTutorials && gunActivated && Score.totalShotsFired <= 0 && tutorial)
         {
             //tutorial.ToggleShootPrompt(true);
@@ -729,6 +751,7 @@ public class PlayerController : MonoBehaviour
     public IEnumerator DeactivateGun()
     {
         canFire = false;
+        holdingFire = false;
         hud.SetActive(false);
 
         if (!Score.bossEnding)
@@ -740,6 +763,11 @@ public class PlayerController : MonoBehaviour
 
         //Activates Stun-Gun again
         //stunGun.SetActive(true);
+
+        if(gunActivateCoroutine != null)
+        {
+            StopCoroutine(gunActivateCoroutine);
+        }
 
         if (gunTimerCoroutine != null)
         {
@@ -809,7 +837,7 @@ public class PlayerController : MonoBehaviour
                 corruptedGunController.corruptedGun.ActivateEntrapment(this);
             }
             Destroy(other.gameObject);
-            StartCoroutine(ActivateGun());
+            gunActivateCoroutine = StartCoroutine(ActivateGun());
         }
 
         if (other.tag == "Enemy")
@@ -844,6 +872,10 @@ public class PlayerController : MonoBehaviour
                         {
                             //baseSpeed -= gunSpeedMultiplier;
                             shieldAnimator.PlayShieldBreak();
+                        }
+                        else
+                        {
+                            shieldAnimator.PlayShieldBreakPartial();
                         }
                     }
                 }
@@ -888,6 +920,10 @@ public class PlayerController : MonoBehaviour
                     {
                         shieldAnimator.PlayShieldBreak();
                     }
+                    else
+                    {
+                        shieldAnimator.PlayShieldBreakPartial();
+                    }
                 }
 
                 canBeDamaged = false;
@@ -924,6 +960,10 @@ public class PlayerController : MonoBehaviour
                     {
                         shieldAnimator.PlayShieldBreak();
                     }
+                    else
+                    {
+                        shieldAnimator.PlayShieldBreakPartial();
+                    }
                 }
 
                 canBeDamaged = false;
@@ -940,6 +980,12 @@ public class PlayerController : MonoBehaviour
         canMove = false;
         character.enabled = false;
         canFire = false;
+
+        //Stop all of the ghosts' movements
+        foreach (Ghost g in ghosts)
+        {
+            g.StopGhost();
+        }
 
         //Disable corrupted gun in event of dying while trapped
         trapped = false;
@@ -974,12 +1020,6 @@ public class PlayerController : MonoBehaviour
         if (speedBoostActivated)
         {
             DeactivateSpeed();
-        }
-
-        //Stop all of the ghosts' movements
-        foreach (Ghost g in ghosts)
-        {
-            g.StopGhost();
         }
 
         WaitForSeconds deathTimer = new WaitForSeconds(deathSequenceLength / 2);
@@ -1275,10 +1315,12 @@ public class PlayerController : MonoBehaviour
         if (!MainMenuManager.isGamePaused)
         {
             mainMenuManager.PauseGame();
+            musicPlayer.Pause();
         }
         else
         {
             mainMenuManager.ResumeGame();
+            musicPlayer.UnPause();
         }
     }
 
