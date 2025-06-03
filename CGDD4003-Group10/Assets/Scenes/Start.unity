@@ -468,6 +468,7 @@ MonoBehaviour:
   difficultyScreen: {fileID: 0}
   howToPlayUI: {fileID: 0}
   achievementsScreen: {fileID: 0}
+  introSkipScreen: {fileID: 0}
   achievementDisplay: {fileID: 0}
   screenResolution: {fileID: 0}
   fov: {fileID: 0}
@@ -512,6 +513,12 @@ MonoBehaviour:
   shieldUsed: {fileID: 0}
   livesUsed: {fileID: 0}
   totalPellets: {fileID: 0}
+  mainMenuStart: {fileID: 0}
+  weaponSelectStart: {fileID: 0}
+  difficultySelectStart: {fileID: 0}
+  optionsStart: {fileID: 0}
+  skipIntroStart: {fileID: 0}
+  pauseGameStart: {fileID: 0}
 --- !u!114 &67537909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -968,7 +975,7 @@ MonoBehaviour:
   beginningText:
     paragraphs:
     - The year is 2090. Venus has been colonized and is the key to space travel due
-      to a new element that was found. Venumian, a bright yellow material.
+      to a new element that was found. Virellium, a bright yellow material.
     - However, while this element holds energy levels unseen. It calls forth something
       darker. Something that should have never been uncovered.
     - The primary research facility located in Sector 0 was the first to succumb
