@@ -64,6 +64,7 @@ public class CaptureTentacle : MonoBehaviour
         {
             tentacleAnimator.ResetTrigger("Reset");
             tentacleAnimator.SetTrigger("Death");
+            audio.PlayOneShot(deathSound);
             collider.enabled = false;
 
             corruptedGun.TentacleKilled();
