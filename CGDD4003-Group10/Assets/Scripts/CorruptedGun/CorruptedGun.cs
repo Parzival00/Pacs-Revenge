@@ -6,8 +6,10 @@ public class CorruptedGun : MonoBehaviour
 {
     [SerializeField] CaptureTentacle[] tentacles;
     [SerializeField] bool activate;
+    [SerializeField] AudioClip activateSound;
 
     PlayerController player;
+    AudioSource audio;
 
     int totalTentacleAmount;
     int killedTentacleCount;
@@ -17,6 +19,7 @@ public class CorruptedGun : MonoBehaviour
     {
         tentacles = GetComponentsInChildren<CaptureTentacle>();
         totalTentacleAmount = tentacles.Length;
+        audio = GetComponent<AudioSource>();
 
         killedTentacleCount = 0;
 
@@ -37,11 +40,16 @@ public class CorruptedGun : MonoBehaviour
 
     public void ActivateEntrapment(PlayerController player)
     {
-        if (deactivation != null) StopCoroutine(deactivation);
+        if (deactivation != null)
+        {
+            StopCoroutine(deactivation);
+        }
 
         this.player = player;
 
         transform.position = player.transform.position;
+
+        audio.PlayOneShot(activateSound);
 
         player.SetTrapped(true);
 
