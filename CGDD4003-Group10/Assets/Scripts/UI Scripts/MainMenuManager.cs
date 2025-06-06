@@ -92,6 +92,10 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject pauseGameStart;
 
     public static Action OnOptionsChanged;
+    public static Action OnPause;
+    public static Action OnResume;
+
+
     GlobalAudioController audioController;
     PlayerController player;
 
@@ -307,6 +311,11 @@ public class MainMenuManager : MonoBehaviour
 
         //Select default starting button
         EventSystem.current.SetSelectedGameObject(pauseGameStart);
+
+        if(OnPause != null)
+        {
+            OnPause.Invoke();
+        }
     }
     public void ResumeGame() 
     {
@@ -324,6 +333,11 @@ public class MainMenuManager : MonoBehaviour
 
         options.SetActive(false);
         menu.SetActive(false);
+
+        if (OnResume != null)
+        {
+            OnResume.Invoke();
+        }
     }
 
     public void ReturnToMainMenu(int whichMenu)
@@ -506,15 +520,28 @@ public class MainMenuManager : MonoBehaviour
         }
         weaponSelection = weaponSelection % weaponInfos.Length;
 
-        weaponImage.sprite = weaponInfos[weaponSelection].gunIcon;
-        weaponName.text = weaponInfos[weaponSelection].weaponName;
-        weaponDescription.text = weaponInfos[weaponSelection].weaponDescription;
+        if (weaponSelection == 0)
+        {
+            weaponImage.sprite = weaponInfos[weaponSelection].gunIcon;
+            weaponImage.color = Color.white;
+            weaponName.text = weaponInfos[weaponSelection].weaponName;
+            weaponDescription.text = weaponInfos[weaponSelection].weaponDescription;
 
-        damageSlider.fillAmount = weaponInfos[weaponSelection].damageRating / 10f;
-        speedSlider.fillAmount = weaponInfos[weaponSelection].speedRating / 10f;
-        rangeSlider.fillAmount = weaponInfos[weaponSelection].rangeRating / 10f;
+            damageSlider.fillAmount = weaponInfos[weaponSelection].damageRating / 10f;
+            speedSlider.fillAmount = weaponInfos[weaponSelection].speedRating / 10f;
+            rangeSlider.fillAmount = weaponInfos[weaponSelection].rangeRating / 10f;
 
-        PlayerPrefs.SetInt("Weapon", weaponSelection);
+            PlayerPrefs.SetInt("Weapon", weaponSelection);
+        } else
+        {
+            weaponImage.sprite = weaponInfos[weaponSelection].gunIcon;
+            weaponImage.color = Color.black;
+            weaponName.text = "???";
+            weaponDescription.text = "Classified";
+            damageSlider.fillAmount = 0 / 10f;
+            speedSlider.fillAmount = 0 / 10f;
+            rangeSlider.fillAmount = 0 / 10f;
+        }
     }
 
     public void SetDifficulty(int value)

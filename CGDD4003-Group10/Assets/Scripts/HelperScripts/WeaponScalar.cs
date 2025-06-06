@@ -24,4 +24,13 @@ public class WeaponScalar : MonoBehaviour
         transform.localScale = defaultScale + Vector3.one * 0.035f * ((fov - 70) / 10f);
         transform.localPosition = defaultPosition + (Vector3)offset * ((fov - 70) / (120 - 70));
     }
+
+    public void OnDestroy()
+    {
+        MainMenuManager.OnOptionsChanged -= ScaleWeapon;
+    }
+    public void OnDisable()
+    {
+        MainMenuManager.OnOptionsChanged -= ScaleWeapon;
+    }
 }

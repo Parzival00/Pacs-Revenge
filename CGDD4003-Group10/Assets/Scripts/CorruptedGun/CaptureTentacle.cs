@@ -43,7 +43,7 @@ public class CaptureTentacle : MonoBehaviour
         corruptedGun = GetComponentInParent<CorruptedGun>();
         audio = GetComponent<AudioSource>();
 
-        collider.enabled = false;
+        collider.enabled = true;
     }
 
     public void ActivateTentacle()

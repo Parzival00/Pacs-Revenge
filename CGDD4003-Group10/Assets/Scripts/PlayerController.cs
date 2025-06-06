@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool paused;
     [SerializeField] float sensitivity;
 
+    float fov;
+
     [Header("Weapon Audio")]
     [SerializeField] AudioClip stunShotSFX;
     [SerializeField] AudioClip stunShotEmpty;
@@ -217,6 +219,8 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        MainMenuManager.OnPause += PauseMusic;
+        MainMenuManager.OnResume += ResumeMusic;
     }
 
     private void Init()
@@ -366,14 +370,20 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (!musicPlayer.isPlaying)
+        if (!musicPlayer.isPlaying && !MainMenuManager.isGamePaused)
         {
             if(Score.bossEnding)
             {
                 musicPlayer.clip = bossFightMusic;
+                musicPlayer.Play();
+                musicPlayer.loop = true;
             }
-            musicPlayer.Play();
-            musicPlayer.loop = true;
+            else if (!gunActivated)
+            {
+                musicPlayer.Play();
+                musicPlayer.loop = true;
+            }
+            
         }
 
         if (!Score.insanityEnding)
@@ -408,7 +418,7 @@ public class PlayerController : MonoBehaviour
     void MouseControl()
     {
         cameraPitch -= mousePosition.y * sensitivity * Mathf.Min(0.01f, Time.deltaTime) * 30f * Time.timeScale;
-        cameraPitch = Mathf.Clamp(cameraPitch, -35.0f, 50.0f);
+        cameraPitch = Mathf.Clamp(cameraPitch, -35.0f + (fov - 70) / 1.5f, 50.0f);
 
         playerCam.localEulerAngles = Vector3.right * cameraPitch;
         playerT.Rotate(Vector3.up * mousePosition.x * sensitivity * Mathf.Min(0.01f, Time.deltaTime) * 30f * Time.timeScale);
@@ -1315,12 +1325,10 @@ public class PlayerController : MonoBehaviour
         if (!MainMenuManager.isGamePaused)
         {
             mainMenuManager.PauseGame();
-            musicPlayer.Pause();
         }
         else
         {
             mainMenuManager.ResumeGame();
-            musicPlayer.UnPause();
         }
     }
 
@@ -1332,12 +1340,13 @@ public class PlayerController : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("FOV"))
         {
-            playerCam.GetComponent<Camera>().fieldOfView = PlayerPrefs.GetFloat("FOV");
+            fov = PlayerPrefs.GetFloat("FOV");
+            playerCam.GetComponent<Camera>().fieldOfView = fov;
         }
 
         if (PlayerPrefs.HasKey("Sensitivity"))
         {
-            sensitivity = PlayerPrefs.GetFloat("Sensitivity") / 5f;
+            sensitivity = PlayerPrefs.GetFloat("Sensitivity") / 20f;
         }
 
         doTutorials = !PlayerPrefs.HasKey("TutorialPrompts") || PlayerPrefs.GetInt("TutorialPrompts") == 1;
@@ -1354,6 +1363,18 @@ public class PlayerController : MonoBehaviour
         baseSpeed += sprintMultiplier * 2;
         corruptionEffect.StartCorruption();
         //corruptedView.SetFloat("_Strength", 0.1f);
+    }
+
+    public void PauseMusic()
+    {
+        if (gunActivated && !Score.bossEnding)
+        {
+            musicPlayer.Pause();
+        }
+    }
+    public void ResumeMusic()
+    {
+        musicPlayer.UnPause();
     }
 
     IEnumerator InsanityEnd()
@@ -1384,5 +1405,16 @@ public class PlayerController : MonoBehaviour
         {
             other.GetComponent<DoorControl>().ActivateDoor();
         }
+    }
+
+    private void OnDisable()
+    {
+        MainMenuManager.OnPause -= PauseMusic;
+        MainMenuManager.OnResume -= ResumeMusic;
+    }
+    private void OnDestroy()
+    {
+        MainMenuManager.OnPause -= PauseMusic;
+        MainMenuManager.OnResume -= ResumeMusic;
     }
 }
