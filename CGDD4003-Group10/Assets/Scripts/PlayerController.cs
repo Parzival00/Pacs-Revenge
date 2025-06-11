@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Weapon[] weapons;
     [SerializeField] string railgunAlertMessage = "Advanced Targeting System Activated";
     [SerializeField] float railgunAlertLength = 2;
-    [SerializeField] Animator gunAnimator;
     [SerializeField] float gunTimeAmount = 5f;
     [SerializeField] Camera fpsCam;
     [SerializeField] float camShakeFrequency = 1f;
@@ -709,11 +708,8 @@ public class PlayerController : MonoBehaviour
             hudMessenger.Display(railgunAlertMessage, railgunAlertLength);
         }
 
-        if (gunAnimator != null)
-        {
-            gunAnimator.ResetTrigger("Unequip");
-            gunAnimator.SetTrigger("Equip");
-        }
+        currentWeapon.GunAnimator.ResetTrigger("Unequip");
+        currentWeapon.GunAnimator.SetTrigger("Equip");
 
         foreach (Ghost ghost in ghosts)
         {
@@ -784,13 +780,10 @@ public class PlayerController : MonoBehaviour
             StopCoroutine(gunTimerCoroutine);
         }
 
-        if (gunAnimator != null)
-        {
-            gunAnimator.ResetTrigger("Equip");
-            gunAnimator.SetTrigger("Unequip");
+        currentWeapon.GunAnimator.ResetTrigger("Equip");
+        currentWeapon.GunAnimator.SetTrigger("Unequip");
 
-            yield return new WaitForSeconds(0.3f);
-        }
+        yield return new WaitForSeconds(0.3f);
 
         currentWeapon.gameObject.SetActive(false);
 
@@ -1251,12 +1244,6 @@ public class PlayerController : MonoBehaviour
 
     #region Speed Power-Up
     Coroutine speedPowerUp;
-
-    public PlayerController(Animator gunAnimator)
-    {
-        this.gunAnimator = gunAnimator;
-    }
-
     public void ActivateSpeed()
     {
         if (speedPowerUpSource != null)

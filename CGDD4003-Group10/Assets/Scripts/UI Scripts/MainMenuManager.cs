@@ -520,7 +520,7 @@ public class MainMenuManager : MonoBehaviour
         }
         weaponSelection = weaponSelection % weaponInfos.Length;
 
-        if (weaponSelection == 0)
+        if (weaponSelection <= 1)
         {
             weaponImage.sprite = weaponInfos[weaponSelection].gunIcon;
             weaponImage.color = Color.white;

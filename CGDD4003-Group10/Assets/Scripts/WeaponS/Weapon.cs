@@ -5,6 +5,8 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour
 {
     [SerializeField] protected WeaponInfo weaponInfo;
+    [SerializeField] protected Animator gunAnimator;
+    public Animator GunAnimator { get => gunAnimator; }
 
     public bool gunActivated { get; private set; }
     protected float gunTimer;

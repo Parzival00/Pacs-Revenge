@@ -538,7 +538,7 @@ public class Ghost : MonoBehaviour
         if(!isFlinching)
         {
             isFlinching = true;
-            flinchTimer = Time.time + flinchLength;
+            //flinchTimer = Time.time + flinchLength;
         }
 
         if(isFlinching && Time.time >= flinchTimer)
@@ -1086,6 +1086,7 @@ public class Ghost : MonoBehaviour
         {
             previousMode = currentMode;
             hitSoundSource.PlayOneShot(hitSound);
+            flinchTimer = Time.time + flinchLength * damageMultiplier;
             currentMode = Mode.Flinch;
         }
 
