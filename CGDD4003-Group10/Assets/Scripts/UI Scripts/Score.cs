@@ -519,6 +519,22 @@ public class Score : MonoBehaviour
             else
             {
                 totalTimePlayed += Time.time - sceneStartTime;
+
+                SaveData.updateLevel(SceneManager.GetActiveScene().buildIndex);
+
+                switch (SceneManager.GetActiveScene().buildIndex)
+                {
+                    case 2:
+                        SaveData.addWeaponUnlock("Rifle");
+                        break;
+                    case 5: 
+                        SaveData.addWeaponUnlock("Shotgun");
+                        break;
+                    //Can add more weapons here later...
+                }
+
+                SaveData.Save();
+
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
         }
