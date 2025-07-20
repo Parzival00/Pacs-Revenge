@@ -472,12 +472,13 @@ public class Score : MonoBehaviour
             if (bossEnding)
             {
                 PlayerPrefs.SetInt("Ending", 0);
-
+                SaveData.updateLevel(0);
                 totalTimePlayed += Time.time - sceneStartTime;
                 SceneManager.LoadScene("End");
             }
             else
             {
+                SaveData.updateLevel(0);
                 GameEnd();
             }
         }
@@ -487,6 +488,7 @@ public class Score : MonoBehaviour
             {
                 PlayerPrefs.SetInt("Ending", 1);
                 totalTimePlayed += Time.time - sceneStartTime;
+                SaveData.updateLevel(0);
                 SceneManager.LoadScene("DemoEnd");
             }
             else if (currentLevel == 8)
@@ -505,14 +507,14 @@ public class Score : MonoBehaviour
             else if (bossEnding)
             {
                 PlayerPrefs.SetInt("Ending", 1);
-
+                SaveData.updateLevel(0);
                 totalTimePlayed += Time.time - sceneStartTime;
                 SceneManager.LoadScene("End");
             }
             else if (insanityEnding)
             {
                 PlayerPrefs.SetInt("Ending", 2);
-
+                SaveData.updateLevel(0);
                 totalTimePlayed += Time.time - sceneStartTime;
                 SceneManager.LoadScene("End");
             }
