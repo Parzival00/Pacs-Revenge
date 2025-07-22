@@ -136,14 +136,14 @@ public class RailgunVFX : MonoBehaviour
                 }
             }
 
-            if (PlayerController.invisibilityActivated)
+            /*if (PlayerController.invisibilityActivated)
             {
                 railgunMat.SetFloat("_Invisibility", 1);
             }
             else
             {
                 railgunMat.SetFloat("_Invisibility", 0);
-            }
+            }*/
         }
     }
 

@@ -1066,6 +1066,7 @@ public class Ghost : MonoBehaviour
         {
             if (currentMode != Mode.Respawn)
             {
+                print($"{name} is dying!");
                 //print("respawning");
                 ghostHealth = 100;
 
@@ -1084,7 +1085,11 @@ public class Ghost : MonoBehaviour
         }
         else
         {
-            previousMode = currentMode;
+            if (currentMode != Mode.Flinch)
+            {
+                previousMode = currentMode;
+            }
+
             hitSoundSource.PlayOneShot(hitSound);
             flinchTimer = Time.time + flinchLength * damageMultiplier;
             currentMode = Mode.Flinch;

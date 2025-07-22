@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Rifle : Weapon
 {
@@ -18,6 +19,11 @@ public class Rifle : Weapon
     [SerializeField] Camera fpsCam;
     [SerializeField] CameraShake camShake;
     [SerializeField] LayerMask targetingMask;
+    [SerializeField] TMP_Text ammoCounter;
+    [SerializeField] Animator batteryAnimator;
+    [SerializeField] Animator reloadingAnimator;
+    [SerializeField] Color normalAmmoCounterColor;
+    [SerializeField] Color invisibleAmmoCounterColor;
 
     private float fireRate;
     private float fireRateTimer;
@@ -38,6 +44,9 @@ public class Rifle : Weapon
                 camShake.ShakeCamera(camShakeFrequency, 0.5f, camShakeDuration);
             }
 
+            gunAnimator.SetBool("Shooting", true);
+
+            //Insert audio here
             //weaponSound.Stop();
             //weaponSound.PlayOneShot(gunshotSFX);
 
@@ -81,11 +90,12 @@ public class Rifle : Weapon
                 }
             }
 
-            gunAnimator.SetTrigger("Shoot");
             Score.totalShotsFired++;
 
             ammoCount--;
             fireRateTimer = 0;
+
+            ammoCounter.text = ammoCount.ToString();
 
             if (ammoCount == 0)
             {
@@ -99,6 +109,7 @@ public class Rifle : Weapon
         float reloadTimer = 0;
 
         gunAnimator.SetBool("Reloading", true);
+        gunAnimator.SetBool("Shooting", false);
 
         print("Reloading Rifle");
 
@@ -106,6 +117,7 @@ public class Rifle : Weapon
         {
             yield return null;
             reloadTimer += Time.deltaTime;
+            reloadingAnimator.SetFloat("Reloading", reloadTimer / reloadTime);
         }
 
         gunAnimator.SetBool("Reloading", false);
@@ -113,11 +125,14 @@ public class Rifle : Weapon
         print("Reloading Rifle Completed");
 
         ammoCount = maxAmmoCount;
+
+        ammoCounter.text = ammoCount.ToString();
     }
 
     public override void OnMouseUpEvent()
     {
         //throw new System.NotImplementedException();
+        gunAnimator.SetBool("Shooting", false);
     }
 
     public override void OnNoMouseEvent()
@@ -133,7 +148,26 @@ public class Rifle : Weapon
     public override void ResetWeapon()
     {
         ammoCount = maxAmmoCount;
+        ammoCounter.text = ammoCount.ToString();
         fireRateTimer = 0;
         fireRate = 1 / (2 * weaponInfo.shootSpeed);
+    }
+
+    public override void OnTimerEvent(float progress)
+    {
+        batteryAnimator.SetFloat("Charge", progress);
+    }
+
+    public override void OnInvisibilityStart()
+    {
+        base.OnInvisibilityStart();
+
+        ammoCounter.color = invisibleAmmoCounterColor;
+    }
+    public override void OnInvisibilityEnd()
+    {
+        base.OnInvisibilityEnd();
+
+        ammoCounter.color = normalAmmoCounterColor;
     }
 }

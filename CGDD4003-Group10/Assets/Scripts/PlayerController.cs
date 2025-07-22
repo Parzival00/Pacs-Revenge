@@ -711,6 +711,15 @@ public class PlayerController : MonoBehaviour
         currentWeapon.GunAnimator.ResetTrigger("Unequip");
         currentWeapon.GunAnimator.SetTrigger("Equip");
 
+        if (invisibilityActivated)
+        {
+            currentWeapon.OnInvisibilityStart();
+        }
+        else
+        {
+            currentWeapon.OnInvisibilityEnd();
+        }
+
         foreach (Ghost ghost in ghosts)
         {
             ghost.InitiateScatter();
@@ -744,6 +753,7 @@ public class PlayerController : MonoBehaviour
         while (gunTimer >= 0)
         {
             gunTimer -= Time.deltaTime;
+            currentWeapon.OnTimerEvent(gunTimer / gunTimeAmount);
             yield return null;
         }
 
@@ -1216,6 +1226,8 @@ public class PlayerController : MonoBehaviour
         {
             invisibilitySource.PlayOneShot(invisibilityActivate);
         }
+
+        currentWeapon.OnInvisibilityStart();
     }
 
     IEnumerator InvisibilityPowerUp()
@@ -1239,6 +1251,8 @@ public class PlayerController : MonoBehaviour
         {
             invisibilitySource.PlayOneShot(invisibilityDeactivate);
         }
+
+        currentWeapon.OnInvisibilityEnd();
     }
     #endregion
 
