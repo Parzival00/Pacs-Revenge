@@ -85,6 +85,8 @@ public class MainMenuManager : MonoBehaviour
 
     [Header("Starting UI Buttons")]
     [SerializeField] GameObject mainMenuStart;
+    [SerializeField] TMP_Text mainMenuContinue;
+    [SerializeField] Button continueButton;
     [SerializeField] GameObject weaponSelectStart;
     [SerializeField] GameObject difficultySelectStart;
     [SerializeField] GameObject optionsStart;
@@ -105,6 +107,7 @@ public class MainMenuManager : MonoBehaviour
 
         player = GameObject.FindObjectOfType<PlayerController>();
         audioController = GameObject.FindObjectOfType<GlobalAudioController>();
+        SaveData.Load();
 
         if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "GameOverScene" || 
             SceneManager.GetActiveScene().name == "ScoreScreen" || SceneManager.GetActiveScene().name == "Credits" || 
@@ -146,6 +149,12 @@ public class MainMenuManager : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "Main Menu")
         {
+            if (SaveData.getSaveExists() && SaveData.getLevel() > 1)//enables the continue game button and its visuals if there is a save file present
+            {
+                continueButton.enabled = true;
+                mainMenuContinue.color = new Color(255,255,255,255);
+            }
+
             weaponSelection = PlayerPrefs.GetInt("Weapon", 0);
             PlayerPrefs.SetInt("Weapon", weaponSelection);
             NavigateWeaponSelection(0);
@@ -229,6 +238,17 @@ public class MainMenuManager : MonoBehaviour
         UIAudio.PlayOneShot(buttonClick);
         yield return new WaitForSecondsRealtime(0.3f);
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void ContinueGame()
+    {
+        SaveData.Load();
+
+        Score.SetDifficulty(SaveData.getDifficulty());
+        weaponSelection = SaveData.getCurrentWeapon();
+        print("Setting difficulty to " + SaveData.getDifficulty() + " Setting weapon to " + weaponSelection);
+
+        SceneManager.LoadScene(SaveData.getLevel());
     }
 
     public void DisplayOptions() 
@@ -532,6 +552,7 @@ public class MainMenuManager : MonoBehaviour
             rangeSlider.fillAmount = weaponInfos[weaponSelection].rangeRating / 10f;
 
             PlayerPrefs.SetInt("Weapon", weaponSelection);
+            SaveData.updateCurrentWeapon(weaponSelection);
         } else
         {
             weaponImage.sprite = weaponInfos[weaponSelection].gunIcon;
@@ -548,9 +569,13 @@ public class MainMenuManager : MonoBehaviour
     {
         //UIAudio.PlayOneShot(buttonClick);
         Score.SetDifficulty(value);
+        SaveData.updateCurrentDifficulty(value);
 
         //Wah Wah! achievement (Play Baby mode)
-        AchievementManager.displayAchievement("Wah Wah!");
+        if(value == 0)
+        {
+            AchievementManager.displayAchievement("Wah Wah!");
+        }
     }
 
     public void DisplayEndStatistics()

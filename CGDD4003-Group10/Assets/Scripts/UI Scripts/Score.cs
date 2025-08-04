@@ -87,6 +87,11 @@ public class Score : MonoBehaviour
 
     float bossStungunRechargeTimer;
 
+    private void OnApplicationQuit()
+    {
+        SaveData.Save();
+    }
+
     void Awake()
     {
         pelletsCollected = 0;
@@ -527,10 +532,10 @@ public class Score : MonoBehaviour
                 switch (SceneManager.GetActiveScene().buildIndex)
                 {
                     case 2:
-                        SaveData.addWeaponUnlock("Rifle");
+                        SaveData.addWeaponUnlock(1);
                         break;
                     case 5: 
-                        SaveData.addWeaponUnlock("Shotgun");
+                        SaveData.addWeaponUnlock(2);
                         break;
                     //Can add more weapons here later...
                 }

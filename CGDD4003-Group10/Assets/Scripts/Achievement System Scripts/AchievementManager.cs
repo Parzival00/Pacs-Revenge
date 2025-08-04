@@ -28,7 +28,7 @@ public class AchievementManager
     static void Load()
     {
         saveFile = Application.persistentDataPath + "/achievements.json";
-        Debug.Log(saveFile);
+        //Debug.Log(saveFile);
         //populates every achievement to the potential list if there is no file found
         if(!File.Exists(saveFile))
         {
@@ -52,22 +52,22 @@ public class AchievementManager
         {
             string[] jsonLines = File.ReadAllLines(saveFile);
             endings = JsonUtility.FromJson<sInt>(jsonLines[0]);
-            Debug.Log(endings.value);
+            //Debug.Log(endings.value);
             deaths = JsonUtility.FromJson<sInt>(jsonLines[1]);
-            Debug.Log(deaths.value);
+            //Debug.Log(deaths.value);
             fruitCollected = JsonUtility.FromJson<sInt>(jsonLines[2]);
-            Debug.Log(fruitCollected.value);
+           // Debug.Log(fruitCollected.value);
             for (int i = 3; i < jsonLines.Length; i++)
             {
                 Achievement a = JsonUtility.FromJson<Achievement>(jsonLines[i]);
                 if(a.collected)
                 {
-                    Debug.Log(a.title + " was collected");
+                    //Debug.Log(a.title + " was collected");
                     collected.Add(a);
                 }
                 else
                 {
-                    Debug.Log(a.title + " was not collected");
+                    //Debug.Log(a.title + " was not collected");
                     potential.Add(a);
                 }
             }
