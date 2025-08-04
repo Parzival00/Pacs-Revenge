@@ -1,12 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
-using static UnityEngine.GraphicsBuffer;
 using UnityEngine.InputSystem;
-//using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerController : MonoBehaviour
 {
@@ -323,7 +319,24 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        shieldsRemaining = 0;
+        switch(Score.difficulty)
+        {
+            case 0:
+                for (int i = 0; i < 2; i++)
+                {
+                    AddShields();
+                }
+                break;
+            case 1:
+                for (int i = 0; i < 1; i++)
+                {
+                    AddShields();
+                }
+                break;
+            case 2:
+                shieldsRemaining = 0;
+                break;
+        }
 
         invisibilityActivated = false;
 
@@ -362,10 +375,6 @@ public class PlayerController : MonoBehaviour
                         currentWeapon.OnNoMouseEvent();
                     }
                 }
-                //else
-                //{
-                //    StungunFire();
-                //}
             }
         }
 
@@ -1312,6 +1321,10 @@ public class PlayerController : MonoBehaviour
         transform.position = pos;
     }
 
+    /// <summary>
+    /// Mark player as trapped when picking up corrupted gun
+    /// </summary>
+    /// <param name="trapped"></param>
     public void SetTrapped(bool trapped)
     {
         this.trapped = trapped;
