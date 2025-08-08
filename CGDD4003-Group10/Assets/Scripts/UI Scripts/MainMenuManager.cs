@@ -567,6 +567,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void SetDifficulty(int value)
     {
+        print("selected weapon: " + PlayerPrefs.GetInt("Weapon"));
         //UIAudio.PlayOneShot(buttonClick);
         Score.SetDifficulty(value);
         SaveData.updateCurrentDifficulty(value);

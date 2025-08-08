@@ -21,8 +21,7 @@ public static class SaveData
         currentWeapon = new sInt(0);
         currentDifficulty = new sInt(0);
         unlockedWeapons = new List<sInt>();
-        unlockedWeapons.Add(new sInt(2));
-        unlockedWeapons.Add(new sInt(3));
+        unlockedWeapons.Add(new sInt(0));
 
         Debug.Log(saveFile);
     }
@@ -52,7 +51,7 @@ public static class SaveData
             }
 
 
-            PlayerPrefs.SetInt("Weapon", currentWeapon.value);
+            //PlayerPrefs.SetInt("Weapon", currentWeapon.value);
 
             Debug.Log("Current level: " + currentLevelIndex.value + "\nCurrently equipped weapon: " + currentWeapon.value + "\nNumber of weapons Unlocked: " + unlockedWeapons.Count);
         }
@@ -75,6 +74,12 @@ public static class SaveData
 
         File.WriteAllLines(saveFile, jsonLines);
     }
+
+    public static void ClearSave()
+    {
+        File.Delete(saveFile);
+    }
+
     #region setters
     public static void updateLevel(int level)
     {

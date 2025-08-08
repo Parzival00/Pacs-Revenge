@@ -176,6 +176,9 @@ public class PlayerController : MonoBehaviour
         AudioListener.volume = 1;
 
         weaponIndex = PlayerPrefs.GetInt("Weapon");
+
+        print("Weapon index: " + weaponIndex);
+
         currentWeapon = weapons[weaponIndex];
 
         if (!Score.insanityEnding)
@@ -1099,6 +1102,7 @@ public class PlayerController : MonoBehaviour
             //end game scene
             //corruptedView.SetFloat("_Strength", 0);
             //Score.GameEnd();
+            SaveData.ClearSave();
             Score score = FindObjectOfType<Score>();
             StartCoroutine(score.SceneEnd(true));
         }
