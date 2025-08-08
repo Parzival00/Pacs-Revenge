@@ -1,12 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
-using static UnityEngine.GraphicsBuffer;
 using UnityEngine.InputSystem;
-//using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerController : MonoBehaviour
 {
@@ -48,7 +44,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Weapon[] weapons;
     [SerializeField] string railgunAlertMessage = "Advanced Targeting System Activated";
     [SerializeField] float railgunAlertLength = 2;
-    [SerializeField] Animator gunAnimator;
     [SerializeField] float gunTimeAmount = 5f;
     [SerializeField] Camera fpsCam;
     [SerializeField] float camShakeFrequency = 1f;
@@ -324,7 +319,24 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        shieldsRemaining = 0;
+        switch(Score.difficulty)
+        {
+            case 0:
+                for (int i = 0; i < 2; i++)
+                {
+                    AddShields();
+                }
+                break;
+            case 1:
+                for (int i = 0; i < 1; i++)
+                {
+                    AddShields();
+                }
+                break;
+            case 2:
+                shieldsRemaining = 0;
+                break;
+        }
 
         invisibilityActivated = false;
 
@@ -363,10 +375,6 @@ public class PlayerController : MonoBehaviour
                         currentWeapon.OnNoMouseEvent();
                     }
                 }
-                //else
-                //{
-                //    StungunFire();
-                //}
             }
         }
 
@@ -709,10 +717,16 @@ public class PlayerController : MonoBehaviour
             hudMessenger.Display(railgunAlertMessage, railgunAlertLength);
         }
 
-        if (gunAnimator != null)
+        currentWeapon.GunAnimator.ResetTrigger("Unequip");
+        currentWeapon.GunAnimator.SetTrigger("Equip");
+
+        if (invisibilityActivated)
         {
-            gunAnimator.ResetTrigger("Unequip");
-            gunAnimator.SetTrigger("Equip");
+            currentWeapon.OnInvisibilityStart();
+        }
+        else
+        {
+            currentWeapon.OnInvisibilityEnd();
         }
 
         foreach (Ghost ghost in ghosts)
@@ -748,6 +762,7 @@ public class PlayerController : MonoBehaviour
         while (gunTimer >= 0)
         {
             gunTimer -= Time.deltaTime;
+            currentWeapon.OnTimerEvent(gunTimer / gunTimeAmount);
             yield return null;
         }
 
@@ -784,13 +799,10 @@ public class PlayerController : MonoBehaviour
             StopCoroutine(gunTimerCoroutine);
         }
 
-        if (gunAnimator != null)
-        {
-            gunAnimator.ResetTrigger("Equip");
-            gunAnimator.SetTrigger("Unequip");
+        currentWeapon.GunAnimator.ResetTrigger("Equip");
+        currentWeapon.GunAnimator.SetTrigger("Unequip");
 
-            yield return new WaitForSeconds(0.3f);
-        }
+        yield return new WaitForSeconds(0.3f);
 
         currentWeapon.gameObject.SetActive(false);
 
@@ -1223,6 +1235,8 @@ public class PlayerController : MonoBehaviour
         {
             invisibilitySource.PlayOneShot(invisibilityActivate);
         }
+
+        currentWeapon.OnInvisibilityStart();
     }
 
     IEnumerator InvisibilityPowerUp()
@@ -1246,17 +1260,13 @@ public class PlayerController : MonoBehaviour
         {
             invisibilitySource.PlayOneShot(invisibilityDeactivate);
         }
+
+        currentWeapon.OnInvisibilityEnd();
     }
     #endregion
 
     #region Speed Power-Up
     Coroutine speedPowerUp;
-
-    public PlayerController(Animator gunAnimator)
-    {
-        this.gunAnimator = gunAnimator;
-    }
-
     public void ActivateSpeed()
     {
         if (speedPowerUpSource != null)
@@ -1311,6 +1321,10 @@ public class PlayerController : MonoBehaviour
         transform.position = pos;
     }
 
+    /// <summary>
+    /// Mark player as trapped when picking up corrupted gun
+    /// </summary>
+    /// <param name="trapped"></param>
     public void SetTrapped(bool trapped)
     {
         this.trapped = trapped;

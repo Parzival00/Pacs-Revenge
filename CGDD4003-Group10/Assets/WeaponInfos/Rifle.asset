@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9c5b87abfc19d54184073bf0136ab3d, type: 3}
   m_Name: Rifle
   m_EditorClassIdentifier: 
-  gunIcon: {fileID: 21300000, guid: 04d2c847e75f85243983833fc81c1442, type: 3}
-  corruptedGunIcon: {fileID: 21300000, guid: 04d2c847e75f85243983833fc81c1442, type: 3}
+  gunIcon: {fileID: 21300000, guid: 2ee0f0e63d2b4e5419f3d7834074f45c, type: 3}
+  corruptedGunIcon: {fileID: 21300000, guid: 9ed080592845bd846b1c33348733c16e, type: 3}
   weaponName: Rifle
-  weaponDescription: A powerful weapon that once charged releases an incredible shot
-    dealing high damage. Beware of overheating.
-  damageMultiplier: 1
-  damageRating: 0
-  speedRating: 0
-  rangeRating: 0
+  weaponDescription: A staple of modern armies, this weapon featiures a fast rate
+    of fire with moderate damage.
+  damageMultiplier: 0.2
+  scoreMultiplier: 0.1
+  shootSpeed: 2
+  damageRating: 2
+  speedRating: 8
+  rangeRating: 4

@@ -5,9 +5,15 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour
 {
     [SerializeField] protected WeaponInfo weaponInfo;
+    [SerializeField] protected Animator gunAnimator;
+    public Animator GunAnimator { get => gunAnimator; }
+
+    [Header("Invisibility Power-up")]
+    [SerializeField] protected Material gunMaterial;
 
     public bool gunActivated { get; private set; }
     protected float gunTimer;
+    protected float gunTimeAmount;
 
     protected PlayerController playerController;
 
@@ -22,6 +28,7 @@ public abstract class Weapon : MonoBehaviour
     Coroutine gunTimerCoroutine;
     protected IEnumerator GunTimer(float gunTimeAmount)
     {
+        this.gunTimeAmount = gunTimeAmount;
         gunTimer = gunTimeAmount;
 
         while (gunTimer >= 0)
@@ -32,6 +39,7 @@ public abstract class Weapon : MonoBehaviour
 
         StartCoroutine(playerController.DeactivateGun());
         gunTimer = gunTimeAmount;
+
     }
     public void DeactivateGun()
     {
@@ -60,6 +68,22 @@ public abstract class Weapon : MonoBehaviour
     /// This event is called every frame
     /// </summary>
     public abstract void OnPassiveEvent();
+
+    /// <summary>
+    /// This event is called while the timer is active
+    /// </summary>
+    public virtual void OnTimerEvent(float progress)
+    {
+    }
+
+    public virtual void OnInvisibilityStart()
+    {
+        gunMaterial.SetFloat("_Invisibility", 1);
+    }
+    public virtual void OnInvisibilityEnd()
+    {
+        gunMaterial.SetFloat("_Invisibility", 0);
+    }
 
     public virtual void SpawnBlood(GameObject bigBlood, GameObject smallBlood, Ghost.TargetAreaDifficulty difficulty, RaycastHit hit)
     {
