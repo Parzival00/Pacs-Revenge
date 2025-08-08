@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using System;
 
@@ -149,7 +150,7 @@ public class MainMenuManager : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "Main Menu")
         {
-            if (SaveData.getSaveExists() && SaveData.getLevel() > 1)//enables the continue game button and its visuals if there is a save file present
+            if (SaveData.getSaveExists() && SaveData.getLevel() > 0)//enables the continue game button and its visuals if there is a save file present
             {
                 continueButton.enabled = true;
                 mainMenuContinue.color = new Color(255,255,255,255);
@@ -440,6 +441,8 @@ public class MainMenuManager : MonoBehaviour
         //Select default starting button
         EventSystem.current.SetSelectedGameObject(difficultySelectStart);
 
+        SaveData.updateLevel(1);
+
         UIAudio.PlayOneShot(buttonClick);
         menu.SetActive(false);
         howToPlayUI.SetActive(false);
@@ -533,14 +536,21 @@ public class MainMenuManager : MonoBehaviour
             UIAudio.PlayOneShot(buttonClick);
         }
 
+        List<int> weaponsUnlocked = new List<int>();
+        foreach(sInt s in SaveData.getWeaponsUnlocked())
+        {
+            weaponsUnlocked.Add(s.value);
+        }
+
         weaponSelection += dir;
+
         if (weaponSelection < 0)
         {
             weaponSelection = weaponInfos.Length - 1;
         }
         weaponSelection = weaponSelection % weaponInfos.Length;
 
-        if (weaponSelection <= 2)
+        if (weaponsUnlocked.Contains(weaponSelection))
         {
             weaponImage.sprite = weaponInfos[weaponSelection].gunIcon;
             weaponImage.color = Color.white;

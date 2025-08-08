@@ -133,6 +133,7 @@ public class Score : MonoBehaviour
 
             fruitsCollected = 0;
             PlayerPrefs.SetInt("FruitsCollected", fruitsCollected);
+            SaveData.updateLevel(1);
         }
         else
         {
@@ -474,16 +475,15 @@ public class Score : MonoBehaviour
 
         if (playerDied)
         {
+            SaveData.ClearSave();
             if (bossEnding)
             {
                 PlayerPrefs.SetInt("Ending", 0);
-                SaveData.updateLevel(0);
                 totalTimePlayed += Time.time - sceneStartTime;
                 SceneManager.LoadScene("End");
             }
             else
             {
-                SaveData.updateLevel(0);
                 GameEnd();
             }
         }
@@ -493,7 +493,7 @@ public class Score : MonoBehaviour
             {
                 PlayerPrefs.SetInt("Ending", 1);
                 totalTimePlayed += Time.time - sceneStartTime;
-                SaveData.updateLevel(0);
+                SaveData.ClearSave();
                 SceneManager.LoadScene("DemoEnd");
             }
             else if (currentLevel == 8)
@@ -512,14 +512,14 @@ public class Score : MonoBehaviour
             else if (bossEnding)
             {
                 PlayerPrefs.SetInt("Ending", 1);
-                SaveData.updateLevel(0);
+                SaveData.ClearSave();
                 totalTimePlayed += Time.time - sceneStartTime;
                 SceneManager.LoadScene("End");
             }
             else if (insanityEnding)
             {
                 PlayerPrefs.SetInt("Ending", 2);
-                SaveData.updateLevel(0);
+                SaveData.ClearSave();
                 totalTimePlayed += Time.time - sceneStartTime;
                 SceneManager.LoadScene("End");
             }
@@ -527,7 +527,7 @@ public class Score : MonoBehaviour
             {
                 totalTimePlayed += Time.time - sceneStartTime;
 
-                SaveData.updateLevel(SceneManager.GetActiveScene().buildIndex);
+                SaveData.updateLevel(SceneManager.GetActiveScene().buildIndex + 1);
 
                 switch (SceneManager.GetActiveScene().buildIndex)
                 {

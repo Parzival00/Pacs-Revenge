@@ -7,6 +7,7 @@ using System.IO;
 public static class SaveData
 {
     static string saveFile;
+    static string weaponsFile;
 
     static List<sInt> unlockedWeapons = new List<sInt>();
     static sInt currentLevelIndex;
@@ -15,13 +16,31 @@ public static class SaveData
 
     static SaveData()
     {
-        saveFile = saveFile = Application.persistentDataPath + "/playerData.json";
+        saveFile = Application.persistentDataPath + "/playerData.json";
+        weaponsFile = Application.persistentDataPath + "/weapons.json";
 
         currentLevelIndex = new sInt(0);
         currentWeapon = new sInt(0);
         currentDifficulty = new sInt(0);
         unlockedWeapons = new List<sInt>();
-        unlockedWeapons.Add(new sInt(0));
+
+
+        if (File.Exists(weaponsFile))
+        {
+            string[] jsonLines = File.ReadAllLines(weaponsFile);
+
+            for (int i = 0; i < jsonLines.Length; i++)
+            {
+                unlockedWeapons.Add(JsonUtility.FromJson<sInt>(jsonLines[i]));
+            }
+        }
+        else
+        {
+            unlockedWeapons.Add(new sInt(0));
+            List<string> jsonLines = new List<string>();
+            jsonLines.Add(JsonUtility.ToJson(unlockedWeapons[0]));
+            File.WriteAllLines(weaponsFile, jsonLines);
+        }
 
         Debug.Log(saveFile);
     }
@@ -45,12 +64,6 @@ public static class SaveData
             currentWeapon = JsonUtility.FromJson<sInt>(jsonLines[lineIndex++]);
             currentDifficulty = JsonUtility.FromJson<sInt>(jsonLines[lineIndex++]);
 
-            for(int i = lineIndex; i < jsonLines.Length; i++)
-            {
-                unlockedWeapons.Add(JsonUtility.FromJson<sInt>(jsonLines[i]));
-            }
-
-
             //PlayerPrefs.SetInt("Weapon", currentWeapon.value);
 
             Debug.Log("Current level: " + currentLevelIndex.value + "\nCurrently equipped weapon: " + currentWeapon.value + "\nNumber of weapons Unlocked: " + unlockedWeapons.Count);
@@ -61,16 +74,14 @@ public static class SaveData
     {
         Debug.Log("Saving...");
         Debug.Log("Current level: " + currentLevelIndex + "\nCurrently equipped weapon: " + currentWeapon + "\nNumber of weapons Unlocked: " + unlockedWeapons.Count);
+
+        ClearSave();
+
         List<string> jsonLines = new List<string>();
         
         jsonLines.Add(JsonUtility.ToJson(currentLevelIndex));
         jsonLines.Add(JsonUtility.ToJson(currentWeapon));
         jsonLines.Add(JsonUtility.ToJson(currentDifficulty));
-
-        foreach(sInt w in unlockedWeapons)
-        {
-            jsonLines.Add(JsonUtility.ToJson(w));
-        }
 
         File.WriteAllLines(saveFile, jsonLines);
     }
@@ -88,11 +99,44 @@ public static class SaveData
 
     public static void addWeaponUnlock(sInt weapon)
     {
-        unlockedWeapons.Add(weapon);
+        bool unlockedAlready = false;
+        foreach(sInt w in unlockedWeapons)
+        {
+            if (w.value == weapon.value)
+            {
+                unlockedAlready = true;
+            }
+        }
+
+        if (!unlockedAlready)
+        {
+            unlockedWeapons.Add(weapon);
+
+            List<string> jsonLines = new List<string>();
+            jsonLines.Add(JsonUtility.ToJson(weapon));
+            File.WriteAllLines(weaponsFile, jsonLines);
+        }
     }
     public static void addWeaponUnlock(int weapon)
     {
-        unlockedWeapons.Add(new sInt(weapon));
+        bool unlockedAlready = false;
+        foreach (sInt w in unlockedWeapons)
+        {
+            if (w.value == weapon)
+            {
+                unlockedAlready = true;
+            }
+        }
+
+        if (!unlockedAlready)
+        {
+            sInt newWeapon = new sInt(weapon);
+            unlockedWeapons.Add(newWeapon);
+
+            List<string> jsonLines = new List<string>();
+            jsonLines.Add(JsonUtility.ToJson(newWeapon));
+            File.WriteAllLines(weaponsFile, jsonLines);
+        }
     }
 
     public static void updateCurrentDifficulty(int diffuculty)
@@ -126,6 +170,12 @@ public static class SaveData
     {
         return currentLevelIndex.value;
     }
+
+    public static List<sInt> getWeaponsUnlocked()
+    {
+        return unlockedWeapons;
+    }
+
     #endregion
 
 }
