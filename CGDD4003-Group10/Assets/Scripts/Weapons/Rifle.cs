@@ -1,14 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class Rifle : Weapon
 {
-    [Header("Weapon Audio")]
-    [SerializeField] AudioClip gunshotSFX;
-    [SerializeField] AudioSource weaponSound;
-
     [Header("Rifle Settings")]
     [SerializeField] int maxAmmoCount;
     [SerializeField] float weaponRange;

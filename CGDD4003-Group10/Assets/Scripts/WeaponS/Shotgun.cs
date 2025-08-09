@@ -1,14 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Shotgun : Weapon
 {
-    [Header("Weapon Audio")]
-    [SerializeField] AudioClip gunshotSFX;
-    [SerializeField] AudioSource weaponSound;
-
-    [Header("Rifle Settings")]
+    [Header("Shotgun Settings")]
     [SerializeField] int numOfShots = 8;
     [SerializeField] float shotSpread = 0.08f;
     [SerializeField] float cooldownTime = 1.5f;
@@ -36,6 +30,7 @@ public class Shotgun : Weapon
             gunAnimator.SetFloat("Speed", 1.5f / cooldownTime);
 
             //Insert audio here
+            weaponSound.PlayOneShot(gunshotSFX);
 
             for (int i = 0; i < numOfShots; i++)
             {

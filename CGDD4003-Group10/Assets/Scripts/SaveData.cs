@@ -48,6 +48,7 @@ public static class SaveData
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     public static void Load()
     {
+        Debug.Log(weaponsFile);
         if (!File.Exists(saveFile))
         {
             Debug.Log("Could not find save file... using default values");
