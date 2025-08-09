@@ -1125,6 +1125,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5352210608104562298}
+  - component: {fileID: 6198104848109179845}
   m_Layer: 0
   m_Name: ShottySprite
   m_TagString: Untagged
@@ -1148,6 +1149,20 @@ Transform:
   - {fileID: 7161199680911439539}
   m_Father: {fileID: 5888210266148260399}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6198104848109179845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812566837593044826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1909d5368df29074abe8413b041a61ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0.15, y: -0.05}
+  scaleOffset: 10
 --- !u!1 &1839861675381945140
 GameObject:
   m_ObjectHideFlags: 0
@@ -6217,7 +6232,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7222389153733952386
 Transform:
   m_ObjectHideFlags: 0
@@ -6312,7 +6327,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1909d5368df29074abe8413b041a61ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0.15, y: -0.05}
+  offset: {x: 0.5, y: -0.2}
+  scaleOffset: 10
 --- !u!1 &2423591759602035305
 GameObject:
   m_ObjectHideFlags: 0
@@ -7193,6 +7209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: {x: 0.15, y: -0.05}
+  scaleOffset: 10
 --- !u!95 &636064426818915026
 Animator:
   serializedVersion: 5
@@ -8032,6 +8049,7 @@ GameObject:
   - component: {fileID: 4203800203965799948}
   - component: {fileID: 4790564691503176113}
   - component: {fileID: 245287490932414882}
+  - component: {fileID: 6387655521267815315}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -8597,6 +8615,28 @@ MonoBehaviour:
   - {fileID: 6704805296735850020}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &6387655521267815315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5301077504717036913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61b951abdb96e3242b61e2248632b63e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dangerIndicatorMat: {fileID: 2100000, guid: 81c54df4a2e009541a07b7ac92395694, type: 2}
+  indicatorSettings:
+  - distanceThreshold: 15
+    indicatorActive: 1
+  - distanceThreshold: 8
+    indicatorActive: 1
+  - distanceThreshold: 0
+    indicatorActive: 0
+  alertRate: 30
+  dangerIndicatorAngleOffset: 45
 --- !u!1 &5352892317462480039
 GameObject:
   m_ObjectHideFlags: 0
@@ -19988,6 +20028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: {x: 0.15, y: -0.05}
+  scaleOffset: 10
 --- !u!1 &8598709834538471052
 GameObject:
   m_ObjectHideFlags: 0

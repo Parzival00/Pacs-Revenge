@@ -824,17 +824,20 @@ MonoBehaviour:
   difficultySettings:
   - difficultyLevel: 0
     health: 75
-    baseSpeed: 5
+    baseSpeed: 4.75
+    turnSpeed: 1.5
     respawnTimeDampener: 0
     levelSpeedIncrease: 0.01
   - difficultyLevel: 1
     health: 100
-    baseSpeed: 5.75
+    baseSpeed: 5.25
+    turnSpeed: 3.5
     respawnTimeDampener: 0.2
     levelSpeedIncrease: 0.02
   - difficultyLevel: 2
     health: 100
-    baseSpeed: 6
+    baseSpeed: 5.75
+    turnSpeed: 5
     respawnTimeDampener: 0.4
     levelSpeedIncrease: 0.04
   exitSpawnToRight: 1

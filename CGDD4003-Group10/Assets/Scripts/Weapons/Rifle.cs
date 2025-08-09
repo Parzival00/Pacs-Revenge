@@ -155,7 +155,8 @@ public class Rifle : Weapon
 
     public override void OnTimerEvent(float progress)
     {
-        batteryAnimator.SetFloat("Charge", progress);
+        if(batteryAnimator.enabled)
+            batteryAnimator.SetFloat("Charge", progress);
     }
 
     public override void OnInvisibilityStart()

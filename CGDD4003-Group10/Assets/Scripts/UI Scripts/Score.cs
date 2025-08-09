@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -86,6 +87,8 @@ public class Score : MonoBehaviour
     static float sceneStartTime;
 
     float bossStungunRechargeTimer;
+
+    public Action OnPelletPickup;
 
     void Awake()
     {
@@ -306,6 +309,8 @@ public class Score : MonoBehaviour
             timeSinceLastPellet = 0;
             AddToScore(Color.white, 50);
             playerController.CheckToAddStunAmmo();
+
+            OnPelletPickup?.Invoke();
 
             if (pelletsCollected >= totalPellets)
             {

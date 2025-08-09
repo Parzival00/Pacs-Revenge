@@ -29,6 +29,7 @@ public class Ghost : MonoBehaviour
         public int difficultyLevel;
         public int health;
         public float baseSpeed;
+        [Range(0, 10)] public float turnSpeed;
         [Range(0, 1)] public float respawnTimeDampener;
         [Range(0, 1)] public float levelSpeedIncrease;
     }
@@ -145,7 +146,9 @@ public class Ghost : MonoBehaviour
     protected Vector2Int currentGridPosition;
     protected Vector2Int nextGridPosition;
 
+    protected Vector2Int lastDirection;
     protected Vector2Int currentDirection;
+    protected Vector2Int nextDirection;
 
     //Target Area Variables
     protected Dictionary<TargetAreaType, TargetArea> targetAreaDirectory; //Dictionary to easily search up assigned target areas and their values
@@ -250,7 +253,7 @@ public class Ghost : MonoBehaviour
         Act();
         RotateGhostIcons();
 
-        lastGridPosition = currentGridPosition;
+        //lastGridPosition = currentGridPosition;
     }
 
     public void Act()
@@ -376,17 +379,17 @@ public class Ghost : MonoBehaviour
             return false;
         }
 
-        navMesh.enabled = true;
-        navMesh.isStopped = false;
+        if (navMesh.enabled)
+            navMesh.isStopped = false;
 
         bool turnedAround = false;
 
-        if (currentGridPosition != lastGridPosition || navMesh.remainingDistance < 0.1f)
+        if (currentGridPosition != lastGridPosition || (navMesh.enabled && navMesh.remainingDistance < 0.1f))
         {
-            float angleToUp = Vector2.Dot(currentDirection, Vector2.up);
-            float angleToDown = Vector2.Dot(currentDirection, Vector2.down);
-            float angleToRight = Vector2.Dot(currentDirection, Vector2.right);
-            float angleToLeft = Vector2.Dot(currentDirection, Vector2.left);
+            //float angleToUp = Vector2.Dot(currentDirection, Vector2.up);
+            //float angleToDown = Vector2.Dot(currentDirection, Vector2.down);
+            //float angleToRight = Vector2.Dot(currentDirection, Vector2.right);
+            //float angleToLeft = Vector2.Dot(currentDirection, Vector2.left);
 
             Vector2Int desiredNextDirection = currentGridPosition;
             Vector2Int desiredNextGridPosition = currentGridPosition;
@@ -411,7 +414,7 @@ public class Ghost : MonoBehaviour
 
                     if(currentDirection.x * desiredNextDirection.x + currentDirection.y * desiredNextDirection.y < -0.1f)
                     {
-                        print($"Next Direction: {desiredNextDirection}");
+                        //print($"Next Direction: {desiredNextDirection}");
                         for (int i = 0; i < neighbors.Length; i++)
                         {
                             if(map.SampleGrid(neighbors[i].Key) == Map.GridType.Air)
@@ -503,10 +506,26 @@ public class Ghost : MonoBehaviour
 
             nextGridPosition = desiredNextGridPosition;
             turnedAround = Vector2.Dot(currentDirection, desiredNextDirection) < -0.1f;
-            currentDirection = desiredNextDirection;
+            lastGridPosition = currentGridPosition;
+            lastDirection = currentDirection;
+            nextDirection = desiredNextDirection;
         }
 
-        navMesh.SetDestination(map.GetWorldFromGrid(nextGridPosition));
+        if (currentDirection == nextDirection)
+        {
+            navMesh.enabled = true;
+            navMesh.isStopped = false;
+            navMesh.SetDestination(map.GetWorldFromGrid(nextGridPosition));
+        }
+        else if (!navMesh.enabled || navMesh.remainingDistance < 0.1f)
+        {
+            navMesh.enabled = false;
+
+            Quaternion newRotation = Quaternion.FromToRotation(transform.forward, new Vector3(nextDirection.x, 0, nextDirection.y)) * transform.rotation;
+            transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, currentDifficultySettings.turnSpeed * Time.deltaTime * (Score.bossEnding ? 10 : 1));
+
+            currentDirection = map.GetGridSpaceDirection(transform.forward);
+        }
 
         return turnedAround;
     }
@@ -532,7 +551,8 @@ public class Ghost : MonoBehaviour
     float flinchTimer;
     protected virtual void Flinch()
     {
-        navMesh.isStopped = true;
+        if (navMesh.enabled)
+            navMesh.isStopped = true;
         //navMesh.enabled = true;
 
         if(!isFlinching)
@@ -725,7 +745,8 @@ public class Ghost : MonoBehaviour
         hitSoundSource.PlayOneShot(deathSound);
         spriteController.DeactivateColliders();
 
-        navMesh.isStopped = true;
+        if (navMesh.enabled)
+            navMesh.isStopped = true;
         //navMesh.enabled = false;
 
         stunEffect.SetActive(false);
@@ -754,7 +775,7 @@ public class Ghost : MonoBehaviour
 
             yield return new WaitForSeconds(0.5f);
 
-            //navMesh.enabled = true;
+            navMesh.enabled = true;
             navMesh.isStopped = false;
 
             Vector2Int respawnPointGridPos = map.GetGridLocation(respawnPoint.position);
@@ -838,7 +859,8 @@ public class Ghost : MonoBehaviour
     public void StopGhost()
     {
         currentMode = Mode.Reseting;
-        navMesh.isStopped = true;
+        if(navMesh.enabled)
+            navMesh.isStopped = true;
         //navMesh.enabled = false;
     }
 
@@ -909,7 +931,8 @@ public class Ghost : MonoBehaviour
             freezeTimer = freezeTime;
             previousMode = currentMode;
             currentMode = Mode.Freeze;
-            navMesh.isStopped = true;
+            if(navMesh.enabled)
+                navMesh.isStopped = true;
             //navMesh.enabled = false;
             stunEffect.SetActive(true);
             chaseSoundSource.Stop();
@@ -930,7 +953,8 @@ public class Ghost : MonoBehaviour
         if (currentMode == Mode.Freeze)
         {
             //navMesh.enabled = true;
-            navMesh.isStopped = false;
+            if(navMesh.enabled)
+                navMesh.isStopped = false;
             chaseSoundSource.Play();
             stunEffect.SetActive(false);
 
@@ -1073,7 +1097,8 @@ public class Ghost : MonoBehaviour
                 currentMode = Mode.Respawn;
                 hit.pointWorth = pointWorth;
 
-                navMesh.isStopped = true;
+                if (navMesh.enabled)
+                    navMesh.isStopped = true;
                 //navMesh.enabled = false;
             }
             else
@@ -1131,7 +1156,8 @@ public class Ghost : MonoBehaviour
     public void SetPosition(Vector3 pos)
     {
         //navMesh.enabled = false;
-        navMesh.isStopped = true;
+        if (navMesh.enabled)
+            navMesh.isStopped = true;
         navMesh.Warp(pos);
     }
 
@@ -1152,7 +1178,8 @@ public class Ghost : MonoBehaviour
 
     public virtual void PermenantDeath()
     {
-        navMesh.isStopped = true;
+        if (navMesh.enabled)
+            navMesh.isStopped = true;
         //navMesh.enabled = false;
 
         float spawnRadius = 0.6f;

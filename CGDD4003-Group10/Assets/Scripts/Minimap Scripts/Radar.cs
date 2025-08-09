@@ -9,6 +9,7 @@ public class Radar : MonoBehaviour
     [SerializeField] Transform radarObject;
     [SerializeField] GameObject radarLine;
     [SerializeField] GameObject indicator;
+    [SerializeField] GameObject arrowIndicator;
     [SerializeField] Transform player;
     [SerializeField] float rotationSpeed;
     [SerializeField] float trackingRadius;
@@ -94,6 +95,7 @@ public class Radar : MonoBehaviour
         } 
         else
         {
+            arrowIndicator.SetActive(false);
             radarIndicatorMat.SetFloat("_IndicatorActive", 0);
         }
     }
@@ -108,9 +110,11 @@ public class Radar : MonoBehaviour
         //print("Closest Pellet: " + closestPellet.transform.position);
         float angleToClosestPellet = 360 + Vector2.SignedAngle(new Vector2(player.forward.x, player.forward.z), dirToClosestPellet);
         //print("Angle to closest pellet: " + (angleToClosestPellet + radarIndicatorAngleOffset - 360));
-        radarIndicatorMat.SetFloat("_IndicatorAngle", (Mathf.Deg2Rad * (720 - angleToClosestPellet + radarIndicatorAngleOffset + 90)) / (Mathf.PI * 2));
+        float indicatorAngle = 690 - angleToClosestPellet + radarIndicatorAngleOffset;
+        arrowIndicator.SetActive(true);
+        arrowIndicator.transform.localRotation = Quaternion.AngleAxis(indicatorAngle, -Vector3.forward);
+        radarIndicatorMat.SetFloat("_IndicatorAngle", (Mathf.Deg2Rad * (720 - angleToClosestPellet + radarIndicatorAngleOffset + 80)) / (Mathf.PI * 2));
         radarIndicatorMat.SetFloat("_IndicatorActive", 1);
-
     }
 
     public void StartEnhancedRadar()

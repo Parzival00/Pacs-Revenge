@@ -46,7 +46,7 @@ public class Railgun : Weapon
     private bool canFire = true;
 
     bool chargeReady;
-    /// <summary>
+   /* /// <summary>
     /// When the left mouse button is pressed this generates a raycast to where the player was aiming.
     /// A sound effect is played and the raytrace is rendered
     /// </summary>
@@ -61,10 +61,10 @@ public class Railgun : Weapon
             {
                 if (camShake) camShake.ShakeCamera(camShakeFrequency, 0.5f, camShakeDuration);
 
-                /*if (Score.totalShotsFired <= 0 && tutorial)
+                *//*if (Score.totalShotsFired <= 0 && tutorial)
                 {
                     //tutorial.ToggleReleasePrompt(false);
-                }*/
+                }*//*
 
                 weaponSound.Stop();
                 weaponChargeSound.Stop();
@@ -132,10 +132,10 @@ public class Railgun : Weapon
 
             chargeReady = false;
 
-            /*if (Score.totalShotsFired <= 0 && tutorial)
+            *//*if (Score.totalShotsFired <= 0 && tutorial)
             {
                 //tutorial.ToggleShootPrompt(false);
-            }*/
+            }*//*
         }
         else if (Input.GetMouseButton(0) && !overheated)
         {
@@ -160,10 +160,10 @@ public class Railgun : Weapon
                     //weaponChargeReadySound.PlayOneShot(chargeReadySFX);
                     chargeReady = true;
                 }
-                /*if (doTutorials && Score.totalShotsFired <= 0 && tutorial)
+                *//*if (doTutorials && Score.totalShotsFired <= 0 && tutorial)
                 {
                     //tutorial.ToggleReleasePrompt(true);
-                }*/
+                }*//*
             }
 
             weaponTemp += (Time.deltaTime * (overheatSpeed));
@@ -181,7 +181,7 @@ public class Railgun : Weapon
                 weaponCharge = 0;
             }
         }
-    }
+    }*/
 
     /// <summary>
     /// Decharges the gun and acts as a shot cooldown

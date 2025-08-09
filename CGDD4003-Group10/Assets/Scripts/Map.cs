@@ -98,8 +98,8 @@ public class Map : MonoBehaviour
             map[index.x, index.y] = GridType.Wall;
 
             MeshRenderer meshRend = wall.GetComponent<MeshRenderer>();
-            print(meshRend.gameObject);
-            wallDictionary.Add(index, meshRend);
+            //print(meshRend.gameObject);
+            wallDictionary.TryAdd(index, meshRend);
 
             if (meshRend.sharedMaterial == corruptedEndPieceMat ||
                 meshRend.sharedMaterial == corruptedStraightPieceMat ||
@@ -118,7 +118,7 @@ public class Map : MonoBehaviour
 
             MeshRenderer meshRend = wall.GetComponent<MeshRenderer>();
             //print(meshRend.gameObject);
-            wallDictionary.Add(index, meshRend);
+            wallDictionary.TryAdd(index, meshRend);
 
             if (meshRend.sharedMaterial.name == corruptedEndPieceMat.name ||
                 meshRend.sharedMaterial.name == corruptedStraightPieceMat.name /*||
@@ -136,7 +136,7 @@ public class Map : MonoBehaviour
             map[index.x, index.y] = GridType.Wall;
 
             MeshRenderer meshRend = wall.GetComponent<MeshRenderer>();
-            wallDictionary.Add(index, meshRend);
+            wallDictionary.TryAdd(index, meshRend);
 
             if(meshRend.sharedMaterial.name == corruptedLPieceMat.name)
             {
@@ -151,7 +151,7 @@ public class Map : MonoBehaviour
             map[index.x, index.y] = GridType.Wall;
 
             MeshRenderer meshRend = wall.GetComponent<MeshRenderer>();
-            wallDictionary.Add(index, meshRend);
+            wallDictionary.TryAdd(index, meshRend);
 
             if (meshRend.sharedMaterial.name == corruptedTPieceMat.name)
             {

@@ -96,7 +96,7 @@ public class Clyde : Ghost
             turnedAround = true;
             flipped = true;
             cooldownTimer = randomCooldown;
-            print("Rando");
+            //print("Rando");
         }
         else if (currentGridPosition != lastGridPosition || navMesh.remainingDistance < 0.1f)
         {

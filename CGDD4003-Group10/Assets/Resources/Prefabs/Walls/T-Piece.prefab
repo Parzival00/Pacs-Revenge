@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8745031885845754222}
   - component: {fileID: 4596126947689956517}
   - component: {fileID: 1596878127182124056}
+  - component: {fileID: 9019476819791618641}
   m_Layer: 6
   m_Name: T-Piece
   m_TagString: T Wall
@@ -127,3 +128,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.0067292214, y: 0.02, z: 0.008038454}
   m_Center: {x: 0.000019667546, y: 0, z: -0.00097503746}
+--- !u!114 &9019476819791618641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5314729910960165322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
