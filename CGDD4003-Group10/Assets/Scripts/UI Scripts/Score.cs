@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -88,7 +87,10 @@ public class Score : MonoBehaviour
 
     float bossStungunRechargeTimer;
 
-    public Action OnPelletPickup;
+    private void OnApplicationQuit()
+    {
+        SaveData.Save();
+    }
 
     void Awake()
     {
@@ -98,7 +100,6 @@ public class Score : MonoBehaviour
 
         pelletsLeft = totalPellets - pelletsCollected;
 
-        string currentLevelName = SceneManager.GetActiveScene().name;
         currentLevel = SceneManager.GetActiveScene().buildIndex; //in the build settings, the game levels come right after the main menu so the build index corresponds with the level number
 
         difficulty = PlayerPrefs.GetInt("Difficulty");
@@ -119,7 +120,7 @@ public class Score : MonoBehaviour
                 break;
         }
 
-        if (currentLevelName == "Level 1 (New)")
+        if (currentLevel == 1)
         {
             score = 0;
             totalGhostKilled = 0;
@@ -132,14 +133,15 @@ public class Score : MonoBehaviour
 
             fruitsCollected = 0;
             PlayerPrefs.SetInt("FruitsCollected", fruitsCollected);
+            SaveData.updateLevel(1);
         }
         else
         {
             fruitsCollected = PlayerPrefs.GetInt("FruitsCollected");
         }
 
-        insanityEnding = currentLevelName == "InsanityEnding";
-        bossEnding = currentLevelName == "Bossfight";
+        insanityEnding = currentLevel == 9;
+        bossEnding = currentLevel == 10;
 
         playerController = this.gameObject.GetComponent<PlayerController>();
         gameSceneCamera = Camera.main;
@@ -311,8 +313,6 @@ public class Score : MonoBehaviour
             AddToScore(Color.white, 50);
             playerController.CheckToAddStunAmmo();
 
-            OnPelletPickup?.Invoke();
-
             if (pelletsCollected >= totalPellets)
             {
                 playerController.SaveLives();
@@ -475,16 +475,15 @@ public class Score : MonoBehaviour
 
         if (playerDied)
         {
+            SaveData.ClearSave();
             if (bossEnding)
             {
                 PlayerPrefs.SetInt("Ending", 0);
-                SaveData.updateLevel(0);
                 totalTimePlayed += Time.time - sceneStartTime;
                 SceneManager.LoadScene("End");
             }
             else
             {
-                SaveData.updateLevel(0);
                 GameEnd();
             }
         }
@@ -494,7 +493,7 @@ public class Score : MonoBehaviour
             {
                 PlayerPrefs.SetInt("Ending", 1);
                 totalTimePlayed += Time.time - sceneStartTime;
-                SaveData.updateLevel(0);
+                SaveData.ClearSave();
                 SceneManager.LoadScene("DemoEnd");
             }
             else if (currentLevel == 8)
@@ -513,14 +512,14 @@ public class Score : MonoBehaviour
             else if (bossEnding)
             {
                 PlayerPrefs.SetInt("Ending", 1);
-                SaveData.updateLevel(0);
+                SaveData.ClearSave();
                 totalTimePlayed += Time.time - sceneStartTime;
                 SceneManager.LoadScene("End");
             }
             else if (insanityEnding)
             {
                 PlayerPrefs.SetInt("Ending", 2);
-                SaveData.updateLevel(0);
+                SaveData.ClearSave();
                 totalTimePlayed += Time.time - sceneStartTime;
                 SceneManager.LoadScene("End");
             }
@@ -528,15 +527,15 @@ public class Score : MonoBehaviour
             {
                 totalTimePlayed += Time.time - sceneStartTime;
 
-                SaveData.updateLevel(SceneManager.GetActiveScene().buildIndex);
+                SaveData.updateLevel(SceneManager.GetActiveScene().buildIndex + 1);
 
                 switch (SceneManager.GetActiveScene().buildIndex)
                 {
                     case 2:
-                        SaveData.addWeaponUnlock("Rifle");
+                        SaveData.addWeaponUnlock(1);
                         break;
                     case 5: 
-                        SaveData.addWeaponUnlock("Shotgun");
+                        SaveData.addWeaponUnlock(2);
                         break;
                     //Can add more weapons here later...
                 }
