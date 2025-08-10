@@ -101,6 +101,7 @@ public class MainMenuManager : MonoBehaviour
 
     GlobalAudioController audioController;
     PlayerController player;
+    SteamIntegrationManager SIM;
 
     private void Awake()
     {
@@ -108,6 +109,7 @@ public class MainMenuManager : MonoBehaviour
 
         player = GameObject.FindObjectOfType<PlayerController>();
         audioController = GameObject.FindObjectOfType<GlobalAudioController>();
+        SIM = GameObject.FindObjectOfType<SteamIntegrationManager>();
         SaveData.Load();
 
         if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "GameOverScene" || 

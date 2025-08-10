@@ -129,6 +129,9 @@ public class AchievementManager
             icon.sprite = Resources.Load<Sprite>(current.imagePath);
             save(); //saves the new achievement to the save file
 
+            SteamIntegrationManager SIM = GameObject.FindObjectOfType<SteamIntegrationManager>();
+            SIM.UnlockAchievement(current.title);
+
             //Completionist Achievement (Get all other achievements)
             //Needs art to add the real achievement
             if (collected.Count <= 1)
