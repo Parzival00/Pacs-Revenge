@@ -12,6 +12,7 @@ Shader "Custom/RadarIndicator"
         _IndicatorFade("Indicator Width", Float) = 2
         _IndicatorIntensity("Indicator Intensity", Float) = 3.44
         _IndicatorActive("Inidactor Active?", Float) = 0
+        _MultiIndicator("Multi-Indicator", Integer) = 0
         _PixelWidth("Pixel Width", Integer) = 0
         _PixelHeight("Pixel Height", Integer) = 0
     }
@@ -30,6 +31,8 @@ Shader "Custom/RadarIndicator"
             #pragma fragment frag
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+
+            #define MAX_INDICATORS 8
 
             struct Attributes
             {
@@ -63,8 +66,11 @@ Shader "Custom/RadarIndicator"
                 float _IndicatorFade;
                 float _IndicatorIntensity;
                 float _IndicatorActive;
+                int _MultiIndicator;
                 int _PixelWidth;
                 int _PixelHeight;
+                float _IndicatorAngles[MAX_INDICATORS];
+                float _IndicatorActives[MAX_INDICATORS];
             CBUFFER_END
 
             Varyings vert(Attributes IN)
@@ -157,48 +163,82 @@ Shader "Custom/RadarIndicator"
                 uv.y = -uv.y;
                 float uv_angle = (atan2(uv.y, uv.x) + pi) / (pi * 2);
 
-                float current_indicator_angle = _IndicatorAngle % 1.0;
+                float4 final_color = color;
 
-                uv_angle = uv_angle - 1.0 * greater_than_angle(uv_angle, current_indicator_angle);
+                if (_MultiIndicator >= 1) {
+                    float final_alphas[MAX_INDICATORS];
+                    // Accumulate all indicator effects
+                    for (int i = 0; i < MAX_INDICATORS; i++) {
+                        final_alphas[i] = 0;
 
-                /*float3 color = SAMPLE_TEXTURE2D(_RenderTex, sampler_RenderTex, IN.uv);
+                        float current_indicator_angle = _IndicatorAngles[i] % 1.0;
+                        float current_uv_angle = uv_angle - 1.0 * greater_than_angle(uv_angle, current_indicator_angle);
 
-                color = lerp(color.rgb, _LineColor.rgb, _LineColor.a * greater_than_angle(uv_angle, current_line_angle - line_width));
-                color = lerp(color.rgb, _TrailColor.rgb, _TrailColor.a * max(0.0, (1.0 - (current_line_angle - uv_angle) / trail_width)));*/
+                        float fade = wedge_fade_variable_width(
+                            current_uv_angle,
+                            current_indicator_angle,
+                            len,
+                            _IndicatorLength * 0.1,   // width at center
+                            _IndicatorOuterLength * 0.1, // width at outer edge
+                            _IndicatorWedgeFadeOffset,
+                            _IndicatorFade,
+                            _IndicatorWedgePower
+                        );
 
-                //float4 line_color = float4(_LineColor.rgb, _LineColor.a * greater_than_angle(uv_angle, current_line_angle - line_width));
-                //float4 trail_color = float4(_TrailColor.rgb, _TrailColor.a * max(0.0, (1.0 - (current_line_angle - uv_angle) / trail_width)));
+                        if (fade > 0) {
+                            //final_colors[i].rgba = lerp(final_colors[i].rgba, _IndicatorColor.rgba, _IndicatorColor.a * fade * _IndicatorIntensity);
+                            final_alphas[i] = lerp(final_alphas[i], _IndicatorColor.a, _IndicatorColor.a * fade * _IndicatorIntensity) * _IndicatorActives[i];
+                        }
+                        //color.a *= _IndicatorActives[i];
+                    }
 
-                //float fade = two_sided_fade(
-                //    uv_angle,
-                //    current_indicator_angle,
-                //    _IndicatorLength / 10 // or whatever fade size you want
-                //);
+                    float combined_final_alpha = 0;
+                    for (int i = 0; i < MAX_INDICATORS; i++) {
+                        combined_final_alpha = max(combined_final_alpha, final_alphas[i]);
+                    }
 
-                //float fade = wedge_fade(
-                //    uv_angle,
-                //    current_indicator_angle,
-                //    _IndicatorLength * 0.5,    // half of total wedge width
-                //    _IndicatorFade             // fade zone size
-                //);
+                    final_color = _IndicatorColor * color;
+                    final_color.a = combined_final_alpha * color.a;
+                }
+                else {
+                    float current_indicator_angle = _IndicatorAngle % 1.0;
 
-                float fade = wedge_fade_variable_width(
-                    uv_angle,
-                    current_indicator_angle,
-                    len,                  // radius factor
-                    _IndicatorLength * 0.1,   // width at center
-                    _IndicatorOuterLength * 0.1, // width at outer edge
-                    _IndicatorWedgeFadeOffset,
-                    _IndicatorFade,
-                    _IndicatorWedgePower
-                );
+                    uv_angle = uv_angle - 1.0 * greater_than_angle(uv_angle, current_indicator_angle);
 
-                color *= float4(_IndicatorColor.rgb, _IndicatorColor.a * fade * _IndicatorIntensity);
+                    //float4 line_color = float4(_LineColor.rgb, _LineColor.a * greater_than_angle(uv_angle, current_line_angle - line_width));
+                    //float4 trail_color = float4(_TrailColor.rgb, _TrailColor.a * max(0.0, (1.0 - (current_line_angle - uv_angle) / trail_width)));
 
-                color.a *= _IndicatorActive;
+                    //float fade = two_sided_fade(
+                    //    uv_angle,
+                    //    current_indicator_angle,
+                    //    _IndicatorLength / 10 // or whatever fade size you want
+                    //);
+
+                    //float fade = wedge_fade(
+                    //    uv_angle,
+                    //    current_indicator_angle,
+                    //    _IndicatorLength * 0.5,    // half of total wedge width
+                    //    _IndicatorFade             // fade zone size
+                    //);
+
+                    float fade = wedge_fade_variable_width(
+                        uv_angle,
+                        current_indicator_angle,
+                        len,                  // radius factor
+                        _IndicatorLength * 0.1,   // width at center
+                        _IndicatorOuterLength * 0.1, // width at outer edge
+                        _IndicatorWedgeFadeOffset,
+                        _IndicatorFade,
+                        _IndicatorWedgePower
+                    );
+
+                    final_color *= float4(_IndicatorColor.rgb, _IndicatorColor.a * fade * _IndicatorIntensity);
+
+                    final_color.a *= _IndicatorActive;
+                }
 
                 //return float4(color.rgb, 1);
-                return color;
+                return final_color;
             }
             ENDHLSL
         }

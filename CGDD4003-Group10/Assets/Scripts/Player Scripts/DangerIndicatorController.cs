@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DangerIndicatorController : MonoBehaviour
 {
+    const int MAX_INDICATORS = 8;
+
     [System.Serializable]
     public struct IndicatorSettings
     {
@@ -26,6 +28,9 @@ public class DangerIndicatorController : MonoBehaviour
     float clostestGhostDistSqr;
 
     float distanceThresholdSqr;
+
+    float[] indicatorAngles = new float[MAX_INDICATORS];
+    float[] indicatorActiveArr = new float[MAX_INDICATORS];
 
     public IndicatorSettings GetIndicatorSettings(int index)
     {
@@ -85,34 +90,70 @@ public class DangerIndicatorController : MonoBehaviour
         {
             if (alertTimer <= 0)
             {
+                int count = 0;
                 clostestGhostDistSqr = float.MaxValue;
                 for (int i = 0; i < ghosts.Length; i++)
                 {
+                    if (ghosts[i].CurrentMode == Ghost.Mode.Respawn)
+                        continue;
+
                     float ghostDistSqr = (new Vector3(transform.position.x, 0, transform.position.z)
                         - new Vector3(ghosts[i].transform.position.x, 0, ghosts[i].transform.position.z)).sqrMagnitude;
 
-                    if (ghostDistSqr <= clostestGhostDistSqr && ghosts[i].CurrentMode != Ghost.Mode.Respawn)
+                    if (ghostDistSqr <= clostestGhostDistSqr)
                     {
-                        closestGhost = ghosts[i];
-                        clostestGhostDistSqr = ghostDistSqr;
+                        //closestGhost = ghosts[i];
+                        //clostestGhostDistSqr = ghostDistSqr;
+
+                        Vector2 dirToGhost = (new Vector2(ghosts[i].transform.position.x, ghosts[i].transform.position.z) -
+                            new Vector2(transform.position.x, transform.position.z)).normalized;
+
+                        float angleToGhost = 360 + Vector2.SignedAngle(
+                            new Vector2(transform.forward.x, transform.forward.z),
+                            dirToGhost
+                        );
+
+                        float indicatorAngle = 690 - angleToGhost + dangerIndicatorAngleOffset;
+                        float shaderAngle = (Mathf.Deg2Rad * (indicatorAngle + 80)) / (Mathf.PI * 2);
+
+                        float distFactor = Remap(
+                            Mathf.Clamp01(0.5f - ghostDistSqr / distanceThresholdSqr),
+                            0f, 0.5f, 0f, 1f
+                        );
+
+                        indicatorAngles[count] = shaderAngle;
+                        indicatorActiveArr[count] = Mathf.Lerp(0, 1, distFactor);
+
+                        count++;
                     }
                 }
 
-                if (clostestGhostDistSqr < distanceThresholdSqr)
+                for (int i = count; i < MAX_INDICATORS; i++)
                 {
-                    Vector2 dirToClosestGhost = (new Vector2(closestGhost.transform.position.x, closestGhost.transform.position.z) -
-                        new Vector2(transform.position.x, transform.position.z)).normalized;
-                    float angleToClosestPellet = 360 + Vector2.SignedAngle(new Vector2(transform.forward.x, transform.forward.z), dirToClosestGhost);
-
-                    float indicatorAngle = 690 - angleToClosestPellet + dangerIndicatorAngleOffset;
-
-                    dangerIndicatorMat.SetFloat("_IndicatorAngle", (Mathf.Deg2Rad * (indicatorAngle + 80)) / (Mathf.PI * 2));
-                    dangerIndicatorMat.SetFloat("_IndicatorActive", Mathf.Lerp(0, 1, Remap(Mathf.Clamp01(0.5f - clostestGhostDistSqr / distanceThresholdSqr), 0f, 0.5f, 0f, 1f)));
+                    indicatorAngles[i] = 0;
+                    indicatorActiveArr[i] = 0;
                 }
-                else
-                {
-                    dangerIndicatorMat.SetFloat("_IndicatorActive", 0);
-                }
+
+                dangerIndicatorMat.SetFloatArray("_IndicatorAngles", indicatorAngles);
+                dangerIndicatorMat.SetFloatArray("_IndicatorActives", indicatorActiveArr);
+
+                /* if (clostestGhostDistSqr < distanceThresholdSqr)
+                 {
+                     Vector2 dirToClosestGhost = (new Vector2(closestGhost.transform.position.x, closestGhost.transform.position.z) -
+                         new Vector2(transform.position.x, transform.position.z)).normalized;
+                     float angleToClosestPellet = 360 + Vector2.SignedAngle(new Vector2(transform.forward.x, transform.forward.z), dirToClosestGhost);
+
+                     float indicatorAngle = 690 - angleToClosestPellet + dangerIndicatorAngleOffset;
+
+                     dangerIndicatorMat.SetFloat("_IndicatorAngle", (Mathf.Deg2Rad * (indicatorAngle + 80)) / (Mathf.PI * 2));
+                     dangerIndicatorMat.SetFloat("_IndicatorActive", Mathf.Lerp(0, 1, Remap(Mathf.Clamp01(0.5f - clostestGhostDistSqr / distanceThresholdSqr), 0f, 0.5f, 0f, 1f)));
+                 }
+                 else
+                 {
+                     dangerIndicatorMat.SetFloat("_IndicatorActive", 0);
+                 }
+
+                 alertTimer = 1 / alertRate;*/
 
                 alertTimer = 1 / alertRate;
             }

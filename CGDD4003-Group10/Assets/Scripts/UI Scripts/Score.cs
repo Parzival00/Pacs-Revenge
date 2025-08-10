@@ -98,6 +98,7 @@ public class Score : MonoBehaviour
 
         pelletsLeft = totalPellets - pelletsCollected;
 
+        string currentLevelName = SceneManager.GetActiveScene().name;
         currentLevel = SceneManager.GetActiveScene().buildIndex; //in the build settings, the game levels come right after the main menu so the build index corresponds with the level number
 
         difficulty = PlayerPrefs.GetInt("Difficulty");
@@ -118,7 +119,7 @@ public class Score : MonoBehaviour
                 break;
         }
 
-        if (currentLevel == 1)
+        if (currentLevelName == "Level 1 (New)")
         {
             score = 0;
             totalGhostKilled = 0;
@@ -137,8 +138,8 @@ public class Score : MonoBehaviour
             fruitsCollected = PlayerPrefs.GetInt("FruitsCollected");
         }
 
-        insanityEnding = currentLevel == 9;
-        bossEnding = currentLevel == 10;
+        insanityEnding = currentLevelName == "InsanityEnding";
+        bossEnding = currentLevelName == "Bossfight";
 
         playerController = this.gameObject.GetComponent<PlayerController>();
         gameSceneCamera = Camera.main;

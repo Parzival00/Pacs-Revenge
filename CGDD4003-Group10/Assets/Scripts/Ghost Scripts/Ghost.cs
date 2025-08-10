@@ -621,6 +621,9 @@ public class Ghost : MonoBehaviour
     {
         startedExiting = true;
 
+        navMesh.enabled = true;
+        navMesh.isStopped = false;
+
         Vector2Int spawnExitGridPosition = map.GetGridLocation(spawnExit.position);
         navMesh.SetDestination(map.GetWorldFromGrid(spawnExitGridPosition));
 
@@ -904,7 +907,7 @@ public class Ghost : MonoBehaviour
 
         yield return wait;
 
-        //navMesh.enabled = true;
+        navMesh.enabled = true;
         navMesh.isStopped = false;
 
         stunEffect.SetActive(false);
