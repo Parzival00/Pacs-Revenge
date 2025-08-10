@@ -73,6 +73,7 @@ public class AchievementManager
             }
         }
     }
+
     /// <summary>
     /// Saves the current values of endings,  deaths, fruit collected, and the achievement lists to a json file.
     /// </summary>
@@ -92,6 +93,7 @@ public class AchievementManager
         }
         File.WriteAllLines(saveFile, jsonLines);
     }
+
     /// <summary>
     /// This method takes the title of an achievement. It then displays the achievement to the player and adds it to the collected list.
     /// </summary>
@@ -130,7 +132,9 @@ public class AchievementManager
             //Completionist Achievement (Get all other achievements)
             //Needs art to add the real achievement
             if (collected.Count <= 1)
+            {
                 displayAchievement("Completionist");
+            }   
         }
     }
     public static void addDeath()
@@ -141,12 +145,16 @@ public class AchievementManager
         int deathsRequired = 100;
 
         if (deaths.value >= deathsRequired)
+        {
             displayAchievement("OOF");
+        }
 
         //Seriously?? achievement (Die on baby mode)
         if (Score.difficulty == 0)
+        {
             displayAchievement("Seriously??");
-            
+        }
+
         save();
     }
 
