@@ -1,10 +1,9 @@
-using System.IO;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.IO;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
+
 //Had to make my own serializable int type bc normal ints dont work for json
 [System.Serializable]
 public class sInt
@@ -15,13 +14,27 @@ public class sInt
         value = i;
     }
 }
+[System.Serializable]
+public class sEndings
+{
+    public bool ending0;
+    public bool ending1;
+    public bool ending2;
+    public sEndings(bool e0, bool e1, bool e2)
+    {
+        this.ending0=e0;
+        this.ending1=e1;
+        this.ending2=e2;
+    }
+}
 public class AchievementManager
 {
     static string saveFile;
+    static string fruitFile;
     static List<Achievement> potential = new List<Achievement>();
     static List<Achievement> collected = new List<Achievement>();
 
-    static sInt endings;
+    static sEndings endings;
     static sInt deaths;
     static List<sInt> fruitCollected = new List<sInt>();
 
@@ -31,11 +44,12 @@ public class AchievementManager
     static void Load()
     {
         saveFile = Application.persistentDataPath + "/achievements.json";
+        fruitFile = Application.persistentDataPath + "/fruits.json";
         //Debug.Log(saveFile);
         //populates every achievement to the potential list if there is no file found
-        if(!File.Exists(saveFile))
+        if (!File.Exists(saveFile))
         {
-            endings = new sInt(0);
+            endings = new sEndings(false, false, false);
             deaths = new sInt(0);
             potential.Add(new Achievement("AchievementImages/triple_threat", "Triple Threat", "triple_threat", "Get all three endings", false));
             potential.Add(new Achievement("AchievementImages/victory", "You Made It!", "victory", "Beat the boss and win the game", false));
@@ -53,16 +67,28 @@ public class AchievementManager
         else
         {
             string[] jsonLines = File.ReadAllLines(saveFile);
-            endings = JsonUtility.FromJson<sInt>(jsonLines[0]);
-            //Debug.Log(endings.value);
+            endings = JsonUtility.FromJson<sEndings>(jsonLines[0]);
+            Debug.Log(endings.ending0);
             deaths = JsonUtility.FromJson<sInt>(jsonLines[1]);
             //Debug.Log(deaths.value);
-            fruitCollected = JsonUtility.FromJson<List<sInt>>(jsonLines[2]);
-           // Debug.Log(fruitCollected.value);
-            for (int i = 3; i < jsonLines.Length; i++)
+
+            if (!File.Exists(fruitFile))
+            {
+                fruitCollected = new List<sInt>();
+            }
+            else
+            {
+                string[] fruitLines = File.ReadAllLines(fruitFile);
+                foreach (string line in fruitLines)
+                {
+                    fruitCollected.Add(JsonUtility.FromJson<sInt>(line));
+                }
+            }
+
+            for (int i = 2; i < jsonLines.Length; i++)
             {
                 Achievement a = JsonUtility.FromJson<Achievement>(jsonLines[i]);
-                if(a.collected)
+                if (a.collected)
                 {
                     //Debug.Log(a.title + " was collected");
                     collected.Add(a);
@@ -81,10 +107,11 @@ public class AchievementManager
     /// </summary>
     public static void save()
     {
-        List<string> jsonLines = new List<string>();
-        jsonLines.Add(JsonUtility.ToJson(endings));
-        jsonLines.Add(JsonUtility.ToJson(deaths));
-        jsonLines.Add(JsonUtility.ToJson(fruitCollected));
+        List<string> jsonLines = new List<string>
+        {
+            JsonUtility.ToJson(endings),
+            JsonUtility.ToJson(deaths)
+        };
         foreach (Achievement a in potential)
         {
             jsonLines.Add(JsonUtility.ToJson(a));
@@ -94,6 +121,13 @@ public class AchievementManager
             jsonLines.Add(JsonUtility.ToJson(a));
         }
         File.WriteAllLines(saveFile, jsonLines);
+
+        jsonLines = new List<string>();
+        foreach(sInt f in fruitCollected)
+        {
+            jsonLines.Add(JsonUtility.ToJson(f));
+        }
+        File.WriteAllLines(fruitFile, jsonLines);
     }
 
     /// <summary>
@@ -135,11 +169,7 @@ public class AchievementManager
             SIM.UnlockAchievement(current.api_name);
 
             //Completionist Achievement (Get all other achievements)
-            //Needs art to add the real achievement
-            if (collected.Count <= 1)
-            {
-                displayAchievement("Completionist");
-            }   
+            SIM.checkCompletion();
         }
     }
 
@@ -158,17 +188,64 @@ public class AchievementManager
         save();
     }
 
-    public static void addFruit(sInt f)
+    public static void addFruit(int f)
     {
-        if (!fruitCollected.Contains<sInt>(f))
+        sInt sf = new sInt(f);
+        if (!fruitObtained(sf))
         {
-            fruitCollected.Append(f);
+            fruitCollected.Add(sf);
+            //Debug.Log(sf.value);
+            //foreach (var item in fruitCollected)
+            //    Debug.Log(item.value);
             SteamIntegrationManager SIM = GameObject.FindObjectOfType<SteamIntegrationManager>();
             SIM.addFruit();
         }
         save();
     }
 
+    public static void addEnding(int endingNum)
+    {
+        switch(endingNum)
+        {
+            case 0:
+                if(!endings.ending0)
+                {
+                    endings.ending0 = true;
+                    SteamIntegrationManager SIM = GameObject.FindObjectOfType<SteamIntegrationManager>();
+                    SIM.addEnding();
+                }
+                break;
+            case 1:
+                if (!endings.ending1)
+                {
+                    endings.ending1 = true;
+                    SteamIntegrationManager SIM = GameObject.FindObjectOfType<SteamIntegrationManager>();
+                    SIM.addEnding();
+                }
+                break;
+            case 2:
+                if (!endings.ending2)
+                {
+                    endings.ending2 = true;
+                    SteamIntegrationManager SIM = GameObject.FindObjectOfType<SteamIntegrationManager>();
+                    SIM.addEnding();
+                }
+                break;
+
+        }
+    }
+
+    private static bool fruitObtained(sInt f)
+    {
+        foreach (sInt item in fruitCollected)
+        {
+            if(item.value == f.value)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     public static List<Achievement> getPotentialAchievements()
     {
         return potential;

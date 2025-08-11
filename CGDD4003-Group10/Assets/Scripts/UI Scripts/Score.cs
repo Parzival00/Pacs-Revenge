@@ -483,6 +483,7 @@ public class Score : MonoBehaviour
             {
                 PlayerPrefs.SetInt("Ending", 0);
                 totalTimePlayed += Time.time - sceneStartTime;
+                AchievementManager.addEnding(0);
                 SceneManager.LoadScene("End");
             }
             else
@@ -517,6 +518,8 @@ public class Score : MonoBehaviour
                 PlayerPrefs.SetInt("Ending", 1);
                 SaveData.ClearSave();
                 totalTimePlayed += Time.time - sceneStartTime;
+                AchievementManager.displayAchievement("You Made It!");
+                AchievementManager.addEnding(1);
                 SceneManager.LoadScene("End");
             }
             else if (insanityEnding)
@@ -524,6 +527,8 @@ public class Score : MonoBehaviour
                 PlayerPrefs.SetInt("Ending", 2);
                 SaveData.ClearSave();
                 totalTimePlayed += Time.time - sceneStartTime;
+                AchievementManager.displayAchievement("Corruption");
+                AchievementManager.addEnding(2);
                 SceneManager.LoadScene("End");
             }
             else

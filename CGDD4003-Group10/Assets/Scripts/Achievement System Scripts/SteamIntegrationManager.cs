@@ -57,6 +57,7 @@ public class SteamIntegrationManager : MonoBehaviour
             achievement.Trigger();
         }
     }
+
     public void addDeath()
     {
         if (connectedToSteam)
@@ -78,6 +79,39 @@ public class SteamIntegrationManager : MonoBehaviour
             Steamworks.SteamUserStats.IndicateAchievementProgress("nom", Steamworks.SteamUserStats.GetStatInt("fruits"), 9);
         }
     }
+
+    public void addEnding()
+    {
+        if (connectedToSteam)
+        {
+            Steamworks.SteamUserStats.RequestCurrentStats();
+            Steamworks.SteamUserStats.AddStat("endings", 1);
+            Steamworks.SteamUserStats.StoreStats();
+            Steamworks.SteamUserStats.IndicateAchievementProgress("triple_threat", Steamworks.SteamUserStats.GetStatInt("endings"), 3);
+        }
+    }
+
+    public void checkCompletion()
+    {
+        if (connectedToSteam)
+        {
+            int numberUnlocked = 0;
+            int totalAchievements = 0;
+            Steamworks.SteamUserStats.RequestCurrentStats();
+            foreach (Steamworks.Data.Achievement a in Steamworks.SteamUserStats.Achievements)
+            {
+                totalAchievements++;
+                if(a.State)
+                {
+                    numberUnlocked++;
+                }
+            }
+            Steamworks.SteamUserStats.SetStat("achievements", numberUnlocked);
+            Steamworks.SteamUserStats.StoreStats();
+            Steamworks.SteamUserStats.IndicateAchievementProgress("completed", Steamworks.SteamUserStats.GetStatInt("achievements"), totalAchievements);
+        }
+    }
+
     // Call this before exiting the game
     public void DisconnectFromSteam()
     {

@@ -201,7 +201,7 @@ public class FruitController : MonoBehaviour
             fruitEatSource.PlayOneShot(fruitEat);
         }
 
-        AchievementManager.addFruit(new sInt(currentFruit.levelAppearance));
+        AchievementManager.addFruit(currentFruit.levelAppearance);
 
         DeactivateFruit();
 
