@@ -149,13 +149,13 @@ public class FruitController : MonoBehaviour
     {
         if (!fruitActivated)
         {
-
-
             fruitActivated = true;
             //pedastalMinimapSprite.SetActive(false);
 
             if (alertMessage != null)
+            {
                 fruitSpawnAlertCoroutine = StartCoroutine(FruitSpawnAlert());
+            }
         }
     }
 
@@ -189,7 +189,6 @@ public class FruitController : MonoBehaviour
     /// </summary>
     public FruitInfo CollectFruit()
     {
-
         FruitInfo fruitInfo;
         fruitInfo.pointsWorth = 0;
         fruitInfo.powerUp = PowerUpType.None;
@@ -201,6 +200,8 @@ public class FruitController : MonoBehaviour
 
             fruitEatSource.PlayOneShot(fruitEat);
         }
+
+        AchievementManager.addFruit(new sInt(currentFruit.levelAppearance));
 
         DeactivateFruit();
 

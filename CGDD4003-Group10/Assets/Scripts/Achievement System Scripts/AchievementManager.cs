@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Linq;
 //Had to make my own serializable int type bc normal ints dont work for json
 [System.Serializable]
 public class sInt
@@ -22,7 +23,9 @@ public class AchievementManager
 
     static sInt endings;
     static sInt deaths;
-    static sInt fruitCollected;
+    static List<sInt> fruitCollected = new List<sInt>();
+
+    static int deathsRequired = 100;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void Load()
@@ -34,19 +37,18 @@ public class AchievementManager
         {
             endings = new sInt(0);
             deaths = new sInt(0);
-            fruitCollected = new sInt(0);
-            potential.Add(new Achievement("AchievementImages/triple_threat", "Triple Threat", "Get all three endings", false));
-            potential.Add(new Achievement("AchievementImages/victory", "You Made It!", "Beat the boss and win the game", false));
-            potential.Add(new Achievement("AchievementImages/corrupted", "Corruption", "Sucumb to the corruption and slaughter them all", false));
-            potential.Add(new Achievement("AchievementImages/slow", "Too Slow!", "Fail to beat the boss in time", false));
-            potential.Add(new Achievement("AchievementImages/baby", "Wah Wah!", "Play on Baby mode", false));
-            potential.Add(new Achievement("AchievementImages/oof", "OOF", "Die x amount of times", false));
-            potential.Add(new Achievement("AchievementImages/dead_baby", "Seriously??", "Die on baby mode", false));
-            potential.Add(new Achievement("AchievementImages/massacre", "Massacre", "Kill x ghosts on one level", false));
-            potential.Add(new Achievement("AchievementImages/nom", "Nom Nom Nom", "Collect every kind of fruit", false));
-            potential.Add(new Achievement("AchievementImages/speakers", "Where's That Coming From?", "Check out the Boss' sound system", false));
-            potential.Add(new Achievement("AchievementImages/speed", "Speedrunner", "Beat the boss in x amount of time", false));
-            potential.Add(new Achievement("AchievementImages/completed", "Completionist", "Get all achievements", false));
+            potential.Add(new Achievement("AchievementImages/triple_threat", "Triple Threat", "triple_threat", "Get all three endings", false));
+            potential.Add(new Achievement("AchievementImages/victory", "You Made It!", "victory", "Beat the boss and win the game", false));
+            potential.Add(new Achievement("AchievementImages/corrupted", "Corruption", "corrupted", "Sucumb to the corruption and slaughter them all", false));
+            potential.Add(new Achievement("AchievementImages/slow", "Too Slow!", "slow", "Fail to beat the boss in time", false));
+            potential.Add(new Achievement("AchievementImages/baby", "Wah Wah!", "baby", "Play on Baby mode", false));
+            potential.Add(new Achievement("AchievementImages/oof", "OOF", "oof", "Die 100 times", false));
+            potential.Add(new Achievement("AchievementImages/dead_baby", "Seriously??", "dead_baby", "Die on baby mode", false));
+            potential.Add(new Achievement("AchievementImages/massacre", "Massacre", "massacre", "Kill 15 ghosts on one level", false));
+            potential.Add(new Achievement("AchievementImages/nom", "Nom Nom Nom", "nom", "Collect every kind of fruit", false));
+            potential.Add(new Achievement("AchievementImages/speakers", "Where's That Coming From?", "speakers", "Check out the Boss' sound system", false));
+            potential.Add(new Achievement("AchievementImages/speed", "Speedrunner", "speed", "Beat the boss with 2:30 or more left on the clock", false));
+            potential.Add(new Achievement("AchievementImages/completed", "Completionist", "completed", "Get all achievements", false));
         }
         else
         {
@@ -55,7 +57,7 @@ public class AchievementManager
             //Debug.Log(endings.value);
             deaths = JsonUtility.FromJson<sInt>(jsonLines[1]);
             //Debug.Log(deaths.value);
-            fruitCollected = JsonUtility.FromJson<sInt>(jsonLines[2]);
+            fruitCollected = JsonUtility.FromJson<List<sInt>>(jsonLines[2]);
            // Debug.Log(fruitCollected.value);
             for (int i = 3; i < jsonLines.Length; i++)
             {
@@ -130,7 +132,7 @@ public class AchievementManager
             save(); //saves the new achievement to the save file
 
             SteamIntegrationManager SIM = GameObject.FindObjectOfType<SteamIntegrationManager>();
-            SIM.UnlockAchievement(current.title);
+            SIM.UnlockAchievement(current.api_name);
 
             //Completionist Achievement (Get all other achievements)
             //Needs art to add the real achievement
@@ -140,17 +142,12 @@ public class AchievementManager
             }   
         }
     }
+
     public static void addDeath()
     {
         deaths.value = (deaths.value + 1);
-
-        //Oof achievement (Die a certain amount of times)
-        int deathsRequired = 100;
-
-        if (deaths.value >= deathsRequired)
-        {
-            displayAchievement("OOF");
-        }
+        SteamIntegrationManager SIM = GameObject.FindObjectOfType<SteamIntegrationManager>();
+        SIM.addDeath();
 
         //Seriously?? achievement (Die on baby mode)
         if (Score.difficulty == 0)
@@ -161,14 +158,14 @@ public class AchievementManager
         save();
     }
 
-    public static void addFruit()
+    public static void addFruit(sInt f)
     {
-        fruitCollected.value = (fruitCollected.value + 1);
-
-        //Nom Nom Nom achievement (Eat a fruit)
-        if (Score.difficulty == 0)
-            displayAchievement("Nom Nom Nom");
-        
+        if (!fruitCollected.Contains<sInt>(f))
+        {
+            fruitCollected.Append(f);
+            SteamIntegrationManager SIM = GameObject.FindObjectOfType<SteamIntegrationManager>();
+            SIM.addFruit();
+        }
         save();
     }
 
