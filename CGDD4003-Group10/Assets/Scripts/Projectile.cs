@@ -24,6 +24,9 @@ public class Projectile : MonoBehaviour
     [SerializeField] Collider impactCollider;
     [SerializeField] bool canHitPlayer = false;
     [SerializeField] bool orientToPlayerOnStart = false;
+    [SerializeField] bool isBossProjectile = false;
+    [SerializeField] AudioSource impactSound;
+    [SerializeField] AudioClip impactSoundClip;
 
     PlayerController player;
 
@@ -99,6 +102,7 @@ public class Projectile : MonoBehaviour
     IEnumerator ImpactRegister(float delay)
     {
         if (impactCollider) impactCollider.enabled = true;
+        impactSound.PlayOneShot(impactSoundClip);
         yield return null;
         yield return new WaitForSeconds(delay);
         if (impactCollider) impactCollider.enabled = false;

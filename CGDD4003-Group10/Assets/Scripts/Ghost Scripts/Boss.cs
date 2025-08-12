@@ -179,6 +179,7 @@ public class Boss : MonoBehaviour
             return inkyHead.Health + blinkyHead.Health + pinkyHead.Health + clydeHead.Health;
         }
     }
+
     public float BossMaxHealth
     {
         get
