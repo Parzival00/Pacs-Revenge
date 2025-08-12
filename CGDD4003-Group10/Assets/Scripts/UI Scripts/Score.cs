@@ -242,7 +242,8 @@ public class Score : MonoBehaviour
                         int seconds = Mathf.RoundToInt(bossTimer % 60f);
                         int minutes = Mathf.FloorToInt(bossTimer / 60);
                         bossFightTimerText.text = string.Format("{0:00.}", minutes) + ":" + string.Format("{0:00.}", seconds);
-                    } else
+                    } 
+                    else
                     {
                         bossFightTimerText.text ="00:00";
                     }
@@ -252,9 +253,13 @@ public class Score : MonoBehaviour
                 {
                     bossTimerEnded = true;
 
-                    if (!timerEndSequenceStarted) StartCoroutine(TimerEndSequence());
+                    if (!timerEndSequenceStarted)
+                    {
+                        StartCoroutine(TimerEndSequence());
+                    }
                 }
-            } else
+            }
+            else
             {
                 if (bossTimerParent) bossTimerParent.SetActive(false);
             }
@@ -267,6 +272,8 @@ public class Score : MonoBehaviour
         timerEndSequenceStarted = true;
 
         bossTimerEndRedFlash.gameObject.SetActive(true);
+
+        AchievementManager.displayAchievement("Too Slow!");
 
         float timer = 0;
         Color newColor = bossTimerEndRedFlash.color;
