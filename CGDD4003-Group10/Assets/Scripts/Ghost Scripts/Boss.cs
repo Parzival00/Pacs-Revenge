@@ -483,6 +483,7 @@ public class Boss : MonoBehaviour
     {
         if (damage == 7)
         {
+            clydeReleaseSound.Play();
             isAttacking = true;
             animator.SetTrigger("ClydeAttack");
 
