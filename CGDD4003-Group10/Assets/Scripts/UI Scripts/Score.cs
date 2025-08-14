@@ -15,9 +15,9 @@ public class Score : MonoBehaviour
     }
 
     public static int score { get; private set; }
-    public static int pelletsCollected {get; private set; }
+    public static int pelletsCollected { get; private set; }
     public static int pelletsLeft { get; private set; }
-    
+
     public static bool indicatorActive { get; private set; }
     public static int fruitsCollected { get; private set; }
     public static int currentLevel { get; private set; }
@@ -59,10 +59,11 @@ public class Score : MonoBehaviour
     private static Color currentTarget = Color.yellow;
     private float pointsIndicatorTimer = 0;
     private static int previousScore;
-    
+
     float timeSinceLastPellet;
 
     PlayerController playerController;
+
     Camera gameSceneCamera;
 
     HUDMessenger hudMessenger;
@@ -74,10 +75,11 @@ public class Score : MonoBehaviour
     public static bool startBossTimer { get; set; }
 
     //Various Stats
-    public static int totalGhostKilled { get;  set; }
+    public static int totalGhostKilled { get; set; }
+    static int ghostsKilledThisLevel;
     public static int totalPelletsCollected { get; private set; }
-    public static int totalShieldsRecieved { get;  set; }
-    public static int totalLivesConsumed { get;  set; }
+    public static int totalShieldsRecieved { get; set; }
+    public static int totalLivesConsumed { get; set; }
     public static int totalShotsFired { get; set; }
     public static int totalStunsFired { get; set; }
     public static float totalTimePlayed { get; private set; }
@@ -107,7 +109,7 @@ public class Score : MonoBehaviour
 
         difficulty = PlayerPrefs.GetInt("Difficulty");
 
-        switch(difficulty)
+        switch (difficulty)
         {
             case 0:
                 scoreMultiplier = 0.5f;
@@ -222,7 +224,7 @@ public class Score : MonoBehaviour
 
             bossStungunRechargeTimer -= Time.deltaTime;
 
-            if(bossStungunRechargeTimer <= 0)
+            if (bossStungunRechargeTimer <= 0)
             {
                 pelletsCollected++;
                 playerController.CheckToAddStunAmmo();
@@ -230,26 +232,30 @@ public class Score : MonoBehaviour
                 bossStungunRechargeTimer = currentDifficultySettings.bossStungunRechargeRate;
             }
 
-            if(startBossTimer == true && PlayerController.playerLives > 0 && !Boss.bossDead)
+            if (startBossTimer == true && PlayerController.playerLives > 0 && !Boss.bossDead)
             {
-                if (bossfightPortal) bossfightPortal.transform.localScale = Vector3.Lerp(bossfightPortalStartSize, Vector3.one * bossFightPortalMaxSize, bossfightProgress);
+                if (bossfightPortal)
+                {
+                    bossfightPortal.transform.localScale = Vector3.Lerp(bossfightPortalStartSize, Vector3.one * bossFightPortalMaxSize, bossfightProgress);
+                }
 
                 bossTimer -= Time.deltaTime;
-                if (bossFightTimerText) 
+
+                if (bossFightTimerText)
                 {
                     if (bossTimer > 0)
                     {
                         int seconds = Mathf.RoundToInt(bossTimer % 60f);
                         int minutes = Mathf.FloorToInt(bossTimer / 60);
                         bossFightTimerText.text = string.Format("{0:00.}", minutes) + ":" + string.Format("{0:00.}", seconds);
-                    } 
+                    }
                     else
                     {
                         bossFightTimerText.text ="00:00";
                     }
                 }
 
-                if(bossTimer <= 0)
+                if (bossTimer <= 0)
                 {
                     bossTimerEnded = true;
 
@@ -265,6 +271,7 @@ public class Score : MonoBehaviour
             }
         }
     }
+
     bool timerEndSequenceStarted = false;
 
     IEnumerator TimerEndSequence()
@@ -308,7 +315,7 @@ public class Score : MonoBehaviour
         bossTimerEndRedFlash.gameObject.SetActive(false);
     }
 
-    
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Pellet" && !insanityEnding)
@@ -334,7 +341,7 @@ public class Score : MonoBehaviour
         {
             FruitController fruitController = other.gameObject.GetComponent<FruitController>();
 
-            if(fruitController)
+            if (fruitController)
             {
                 if (insanityEnding)
                 {
@@ -393,7 +400,7 @@ public class Score : MonoBehaviour
         }
     }
 
-    void UpdateScore() 
+    void UpdateScore()
     {
         scoreUI.text = "" + score;
         //pointValueIndicator.text = "" + pointsIndicatorAmount;
@@ -420,17 +427,18 @@ public class Score : MonoBehaviour
         {
             pointValueIndicator.color = currentTarget;
             //pointValueIndicator.text = "+" + pointsIndicatorAmount;
-        } else
+        }
+        else
         {
             pointValueIndicator.text = "";
             pointsIndicatorAmount = 0;
         }
     }
 
-    public void UpdatePelletsRemaining() 
+    public void UpdatePelletsRemaining()
     {
-         pelletsLeft = totalPellets - pelletsCollected;
-         pelletRemaining.text = "" + pelletsLeft;
+        pelletsLeft = totalPellets - pelletsCollected;
+        pelletRemaining.text = "" + pelletsLeft;
     }
 
     public static void SetDifficulty(int value)
@@ -459,8 +467,11 @@ public class Score : MonoBehaviour
 
         hudMessenger.Display("Level Cleared", 2f);
 
+        //Resets every scene change
+        ghostsKilledThisLevel = 0;
+
         float audioLevel = 1;
-        while(audioLevel > 0)
+        while (audioLevel > 0)
         {
             AudioListener.volume = audioLevel;
             audioLevel -= 0.5f * Time.deltaTime;
@@ -500,7 +511,7 @@ public class Score : MonoBehaviour
         }
         else
         {
-            if(demo && currentLevel == 2)
+            if (demo && currentLevel == 2)
             {
                 PlayerPrefs.SetInt("Ending", 1);
                 totalTimePlayed += Time.time - sceneStartTime;
@@ -527,6 +538,10 @@ public class Score : MonoBehaviour
                 totalTimePlayed += Time.time - sceneStartTime;
                 AchievementManager.displayAchievement("You Made It!");
                 AchievementManager.addEnding(1);
+                if (bossTimer >= 150)
+                {
+                    AchievementManager.displayAchievement("Speedrunner");
+                }
                 SceneManager.LoadScene("End");
             }
             else if (insanityEnding)
@@ -549,10 +564,10 @@ public class Score : MonoBehaviour
                     case 2:
                         SaveData.addWeaponUnlock(1);
                         break;
-                    case 5: 
+                    case 5:
                         SaveData.addWeaponUnlock(2);
                         break;
-                    //Can add more weapons here later...
+                        //Can add more weapons here later...
                 }
 
                 SaveData.Save();
@@ -576,5 +591,15 @@ public class Score : MonoBehaviour
         SaveFruitsCollected();
         totalTimePlayed += Time.time - sceneStartTime;
         //SceneManager.LoadScene("GameOverScene");
+    }
+
+    public static void checkMassacre()
+    {
+        ghostsKilledThisLevel++;
+        Debug.Log(ghostsKilledThisLevel);
+        if (ghostsKilledThisLevel >= 15)
+        {
+            AchievementManager.displayAchievement("Massacre");
+        }
     }
 }

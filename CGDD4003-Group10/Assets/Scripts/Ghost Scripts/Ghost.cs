@@ -718,6 +718,7 @@ public class Ghost : MonoBehaviour
         //spriteRenderer.color = Color.black;
 
         Score.totalGhostKilled++;
+        Score.checkMassacre();
 
         if(Score.bossEnding)
         {
