@@ -655,8 +655,10 @@ public class Boss : MonoBehaviour
     private void InkyAttack()
     {
         if (attackChoices[0].weight > 0)
+        {
             attackChoices[0].weight = 0.3f; //Add weight to current attack to make it less likely to happen twice in a row
-
+        }
+        inkyReleaseSound.Play();
         Instantiate(inkyProjectile, inkyProjSpawn.position, transform.rotation);
     }
 
