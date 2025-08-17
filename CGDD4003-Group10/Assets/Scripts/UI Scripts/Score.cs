@@ -398,6 +398,11 @@ public class Score : MonoBehaviour
                 }
             }
         }
+
+        if (other.gameObject.tag == "Speaker")
+        {
+            AchievementManager.displayAchievement("Where's That Coming From?");
+        }
     }
 
     void UpdateScore()
