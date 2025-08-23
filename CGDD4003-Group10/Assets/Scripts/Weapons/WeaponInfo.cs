@@ -7,8 +7,8 @@ public class WeaponInfo : ScriptableObject
 {
     public Sprite gunIcon;
     public Sprite corruptedGunIcon;
-    public string weaponName;
-    public string weaponDescription;
+    public Localizer.TextIdentifier weaponName;
+    public Localizer.TextIdentifier weaponDescription;
     public float damageMultiplier;
     public float scoreMultiplier = 1;
     public float shootSpeed = 1;
