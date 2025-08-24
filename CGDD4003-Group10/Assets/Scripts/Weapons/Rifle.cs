@@ -1,13 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class Rifle : Weapon
 {
-    [Header("Weapon Audio")]
-    [SerializeField] AudioClip gunshotSFX;
-    [SerializeField] AudioSource weaponSound;
+    //[Header("Weapon Audio")]
+    [SerializeField] AudioClip reloadSound;
+    [SerializeField] AudioSource reloadSoundSource;
 
     [Header("Rifle Settings")]
     [SerializeField] int maxAmmoCount;
@@ -37,7 +36,7 @@ public class Rifle : Weapon
 
     public override void OnMouseEvent()
     {
-        if(fireRateTimer >= fireRate && ammoCount > 0)
+        if (fireRateTimer >= fireRate && ammoCount > 0)
         {
             if (camShake)
             {
@@ -47,8 +46,8 @@ public class Rifle : Weapon
             gunAnimator.SetBool("Shooting", true);
 
             //Insert audio here
-            //weaponSound.Stop();
-            //weaponSound.PlayOneShot(gunshotSFX);
+            weaponSound.Stop();
+            weaponSound.PlayOneShot(gunshotSFX);
 
             Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
             RaycastHit hit;
@@ -110,6 +109,8 @@ public class Rifle : Weapon
 
         gunAnimator.SetBool("Reloading", true);
         gunAnimator.SetBool("Shooting", false);
+
+        reloadSoundSource.PlayOneShot(reloadSound);
 
         print("Reloading Rifle");
 

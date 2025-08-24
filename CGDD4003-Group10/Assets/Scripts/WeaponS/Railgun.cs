@@ -1,16 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 public class Railgun : Weapon
 {
-    [Header("Weapon Audio")]
-    [SerializeField] AudioClip gunshotSFX;
+    //[Header("Weapon Audio")]
     [SerializeField] AudioClip overheatSFX;
     [SerializeField] AudioClip chargeupSFX;
     [SerializeField] AudioClip chargeReadySFX;
-    [SerializeField] AudioSource weaponSound;
     [SerializeField] AudioSource weaponChargeSound;
     [SerializeField] AudioSource weaponChargeReadySound;
 

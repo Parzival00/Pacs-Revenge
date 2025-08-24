@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
@@ -10,6 +9,10 @@ public abstract class Weapon : MonoBehaviour
 
     [Header("Invisibility Power-up")]
     [SerializeField] protected Material gunMaterial;
+
+    [Header("Weapon Audio")]
+    [SerializeField] protected AudioClip gunshotSFX;
+    [SerializeField] protected AudioSource weaponSound;
 
     public bool gunActivated { get; private set; }
     protected float gunTimer;

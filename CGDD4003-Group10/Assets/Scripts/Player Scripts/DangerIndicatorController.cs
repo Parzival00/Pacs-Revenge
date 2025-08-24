@@ -48,7 +48,10 @@ public class DangerIndicatorController : MonoBehaviour
     void Start()
     {
         ghosts = FindObjectsOfType<Ghost>();
-        closestGhost = ghosts[0];
+        if(ghosts.Length > 0)
+        {
+            closestGhost = ghosts[0];
+        }
 
         dangerIndicatorMat.SetFloat("_IndicatorActive", 0);
 
@@ -95,7 +98,9 @@ public class DangerIndicatorController : MonoBehaviour
                 for (int i = 0; i < ghosts.Length; i++)
                 {
                     if (ghosts[i].CurrentMode == Ghost.Mode.Respawn)
+                    {
                         continue;
+                    }
 
                     float ghostDistSqr = (new Vector3(transform.position.x, 0, transform.position.z)
                         - new Vector3(ghosts[i].transform.position.x, 0, ghosts[i].transform.position.z)).sqrMagnitude;

@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     [Header("Weapon Audio")]
     [SerializeField] AudioClip stunShotSFX;
     [SerializeField] AudioClip stunShotEmpty;
+    [SerializeField] AudioClip weaponActivateSound;
     [SerializeField] AudioSource weaponSound;
 
     [Header("Weapon Settings")]
@@ -176,6 +177,9 @@ public class PlayerController : MonoBehaviour
         AudioListener.volume = 1;
 
         weaponIndex = PlayerPrefs.GetInt("Weapon");
+
+        print("Weapon index: " + weaponIndex);
+
         currentWeapon = weapons[weaponIndex];
 
         if (!Score.insanityEnding)
@@ -690,6 +694,7 @@ public class PlayerController : MonoBehaviour
         {
             WeaponSpawner ws = FindObjectOfType<WeaponSpawner>();
             ws.Reset();
+            weaponSound.PlayOneShot(weaponActivateSound);
         }
         else
         {
@@ -1099,6 +1104,7 @@ public class PlayerController : MonoBehaviour
             //end game scene
             //corruptedView.SetFloat("_Strength", 0);
             //Score.GameEnd();
+            SaveData.ClearSave();
             Score score = FindObjectOfType<Score>();
             StartCoroutine(score.SceneEnd(true));
         }
