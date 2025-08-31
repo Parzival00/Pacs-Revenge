@@ -249,6 +249,7 @@ public class MainMenuManager : MonoBehaviour
 
         Score.SetDifficulty(SaveData.getDifficulty());
         weaponSelection = SaveData.getCurrentWeapon();
+        SaveData.getPlayerMetrics();
         print("Setting difficulty to " + SaveData.getDifficulty() + " Setting weapon to " + weaponSelection);
 
         SceneManager.LoadScene(SaveData.getLevel());
@@ -599,6 +600,8 @@ public class MainMenuManager : MonoBehaviour
     }
     public void LoadEndStatistics()
     {
+        string statsString = "Score: " + Score.score + "\nKills: " + Score.totalGhostKilled + "\nShots Fired: " + Score.totalShotsFired + "\nStuns Fired: " + Score.totalStunsFired + "\nShields Used: " + Score.totalShieldsRecieved + "\nDeaths: " + Score.totalLivesConsumed + "\nRun Time: " + Score.totalTimePlayed;
+        print(statsString);
         int hours = Mathf.RoundToInt(Score.totalTimePlayed / 60 / 60);
         int minutes = Mathf.RoundToInt(Score.totalTimePlayed / 60 % 60);
         int seconds = Mathf.RoundToInt(Score.totalTimePlayed % 60);

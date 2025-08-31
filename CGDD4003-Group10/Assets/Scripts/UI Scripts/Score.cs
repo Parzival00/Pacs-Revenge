@@ -457,6 +457,21 @@ public class Score : MonoBehaviour
         PlayerPrefs.SetInt("FruitsCollected", fruitsCollected);
     }
 
+    public static void UpdatePlayerStats(int savedScore, int kills, int shots, int stuns, int shields, int deaths, int pellets, int runtime)
+    {
+        score = savedScore;
+        totalGhostKilled = kills;
+        totalShotsFired = shots;
+        totalStunsFired = stuns;
+        totalShieldsRecieved = shields;
+        totalLivesConsumed = totalLivesConsumed;
+        totalPelletsCollected = pellets;
+        totalTimePlayed = (float)runtime;
+
+        string statsString = "Score: " + score + "\nKills: " + totalGhostKilled + "\nShots Fired: " + totalShotsFired + "\nStuns Fired: " + totalStunsFired + "\nShields Used: " + totalShieldsRecieved + "\nDeaths: " + totalLivesConsumed + "\nRun Time: " + totalTimePlayed;
+        print(statsString);
+    }
+
     public IEnumerator SceneEnd(bool playerDied)
     {
         if (!playerDied && !insanityEnding)
@@ -563,6 +578,7 @@ public class Score : MonoBehaviour
                 totalTimePlayed += Time.time - sceneStartTime;
 
                 SaveData.updateLevel(SceneManager.GetActiveScene().buildIndex + 1);
+                SaveData.updateStatuses(score, totalGhostKilled, totalShotsFired, totalStunsFired, totalShieldsRecieved, totalLivesConsumed, totalPelletsCollected, (int)totalTimePlayed);
 
                 switch (SceneManager.GetActiveScene().buildIndex)
                 {

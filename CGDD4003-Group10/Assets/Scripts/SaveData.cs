@@ -13,16 +13,33 @@ public static class SaveData
     static sInt currentLevelIndex;
     static sInt currentWeapon;
     static sInt currentDifficulty;
+    static sInt currentKillCount;
+    static sInt currentScore;
+    static sInt currentShotsFired;
+    static sInt currentStuns;
+    static sInt currentShieldsUsed;
+    static sInt currentDeathCount;
+    static sInt currentPelletsCollected;
+    static sInt currentRunTime;
 
     static SaveData()
     {
         saveFile = Application.persistentDataPath + "/playerData.json";
         weaponsFile = Application.persistentDataPath + "/weapons.json";
+        unlockedWeapons = new List<sInt>();
 
         currentLevelIndex = new sInt(0);
         currentWeapon = new sInt(0);
         currentDifficulty = new sInt(0);
-        unlockedWeapons = new List<sInt>();
+        currentKillCount = new sInt(0);
+        currentScore = new sInt(0);
+        currentShotsFired = new sInt(0);
+        currentStuns = new sInt(0);
+        currentShieldsUsed = new sInt(0);
+        currentDeathCount = new sInt(0);
+        currentPelletsCollected = new sInt(0);
+        currentRunTime = new sInt(0);
+
 
 
         if (File.Exists(weaponsFile))
@@ -64,8 +81,18 @@ public static class SaveData
             currentLevelIndex = JsonUtility.FromJson<sInt>(jsonLines[lineIndex++]);
             currentWeapon = JsonUtility.FromJson<sInt>(jsonLines[lineIndex++]);
             currentDifficulty = JsonUtility.FromJson<sInt>(jsonLines[lineIndex++]);
+            currentKillCount = JsonUtility.FromJson<sInt>(jsonLines[lineIndex++]);
+            currentScore = JsonUtility.FromJson<sInt>(jsonLines[lineIndex++]);
+            currentShotsFired = JsonUtility.FromJson<sInt>(jsonLines[lineIndex++]);
+            currentStuns = JsonUtility.FromJson<sInt>(jsonLines[lineIndex++]);
+            currentShieldsUsed = JsonUtility.FromJson<sInt>(jsonLines[lineIndex++]);
+            currentDeathCount = JsonUtility.FromJson<sInt>(jsonLines[lineIndex++]);
+            currentPelletsCollected = JsonUtility.FromJson<sInt>(jsonLines[lineIndex++]);
+            currentRunTime = JsonUtility.FromJson<sInt>(jsonLines[lineIndex++]);
 
             //PlayerPrefs.SetInt("Weapon", currentWeapon.value);
+
+            getPlayerMetrics();
 
             Debug.Log("Current level: " + currentLevelIndex.value + "\nCurrently equipped weapon: " + currentWeapon.value + "\nNumber of weapons Unlocked: " + unlockedWeapons.Count);
         }
@@ -83,6 +110,14 @@ public static class SaveData
         jsonLines.Add(JsonUtility.ToJson(currentLevelIndex));
         jsonLines.Add(JsonUtility.ToJson(currentWeapon));
         jsonLines.Add(JsonUtility.ToJson(currentDifficulty));
+        jsonLines.Add(JsonUtility.ToJson(currentKillCount));
+        jsonLines.Add(JsonUtility.ToJson(currentScore));
+        jsonLines.Add(JsonUtility.ToJson(currentShotsFired));
+        jsonLines.Add(JsonUtility.ToJson(currentStuns));
+        jsonLines.Add(JsonUtility.ToJson(currentShieldsUsed));
+        jsonLines.Add(JsonUtility.ToJson(currentDeathCount));
+        jsonLines.Add(JsonUtility.ToJson(currentPelletsCollected));
+        jsonLines.Add(JsonUtility.ToJson(currentRunTime));
 
         File.WriteAllLines(saveFile, jsonLines);
     }
@@ -149,6 +184,17 @@ public static class SaveData
     {
         currentWeapon.value = weapon;
     }
+
+    public static void updateStatuses(int score, int kills, int shots, int stuns, int shields, int deaths, int pellets, int runtime)
+    {
+        currentScore = new sInt(score);
+        currentKillCount = new sInt(kills);
+        currentShotsFired = new sInt(shots);
+        currentShieldsUsed = new sInt(shields);
+        currentDeathCount = new sInt(deaths);
+        currentDeathCount = new sInt(pellets);
+        currentRunTime = new sInt(runtime);
+    }
     #endregion
 
     #region getters
@@ -175,6 +221,12 @@ public static class SaveData
     public static List<sInt> getWeaponsUnlocked()
     {
         return unlockedWeapons;
+    }
+
+    public static void getPlayerMetrics()
+    {
+        Debug.Log("Getting Player metrics");
+        Score.UpdatePlayerStats(currentScore.value, currentKillCount.value, currentShotsFired.value, currentStuns.value, currentShieldsUsed.value, currentDeathCount.value, currentPelletsCollected.value, currentRunTime.value);
     }
 
     #endregion
