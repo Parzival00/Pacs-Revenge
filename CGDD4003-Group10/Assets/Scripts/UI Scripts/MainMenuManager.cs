@@ -556,8 +556,10 @@ public class MainMenuManager : MonoBehaviour
         {
             weaponImage.sprite = weaponInfos[weaponSelection].gunIcon;
             weaponImage.color = Color.white;
-            weaponName.text = weaponInfos[weaponSelection].weaponName;
-            weaponDescription.text = weaponInfos[weaponSelection].weaponDescription;
+            weaponName.text = Localizer.instance.GetLanguageText(weaponInfos[weaponSelection].weaponName);
+            weaponName.font = Localizer.instance.GetCurrentFont();
+            weaponDescription.text = Localizer.instance.GetLanguageText(weaponInfos[weaponSelection].weaponDescription);
+            weaponDescription.font = Localizer.instance.GetCurrentFont();
 
             damageSlider.fillAmount = weaponInfos[weaponSelection].damageRating / 10f;
             speedSlider.fillAmount = weaponInfos[weaponSelection].speedRating / 10f;
@@ -570,7 +572,8 @@ public class MainMenuManager : MonoBehaviour
             weaponImage.sprite = weaponInfos[weaponSelection].gunIcon;
             weaponImage.color = Color.black;
             weaponName.text = "???";
-            weaponDescription.text = "Classified";
+            weaponDescription.text = Localizer.instance.GetLanguageText(Localizer.TextIdentifier.UI_WeaponSelect_Classified);
+            weaponDescription.font = Localizer.instance.GetCurrentFont();
             damageSlider.fillAmount = 0 / 10f;
             speedSlider.fillAmount = 0 / 10f;
             rangeSlider.fillAmount = 0 / 10f;
