@@ -16,7 +16,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] AudioSource UIAudio;
     [SerializeField] AudioClip buttonClick;
     [SerializeField] AudioClip buttonHover;
-    
+
     [Header("Menu Screens")]
     [SerializeField] GameObject menu;
     [SerializeField] GameObject options;
@@ -55,6 +55,8 @@ public class MainMenuManager : MonoBehaviour
     [Header("GamePlay Settings")]
     [SerializeField] Slider MouseSensitivity;
     [SerializeField] Toggle viewBobbingToggle;
+    [SerializeField] TMP_Dropdown languageDropdown;
+    bool languagesLoaded = false;
 
     [Header("HowTo Screens")]
     [SerializeField] GameObject movement;
@@ -112,14 +114,14 @@ public class MainMenuManager : MonoBehaviour
         SIM = GameObject.FindObjectOfType<SteamIntegrationManager>();
         SaveData.Load();
 
-        if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "GameOverScene" || 
-            SceneManager.GetActiveScene().name == "ScoreScreen" || SceneManager.GetActiveScene().name == "Credits" || 
+        if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "GameOverScene" ||
+            SceneManager.GetActiveScene().name == "ScoreScreen" || SceneManager.GetActiveScene().name == "Credits" ||
             SceneManager.GetActiveScene().name == "End" || SceneManager.GetActiveScene().name == "Start" || SceneManager.GetActiveScene().name == "DemoEnd")
         {
             Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-        } 
+        }
         else
         {
             Time.timeScale = 1;
@@ -145,7 +147,7 @@ public class MainMenuManager : MonoBehaviour
                 SetResolution(screenResolution.value);
             });
         }*/
-        if (gameOverScreen != null && endStatsScreen != null) 
+        if (gameOverScreen != null && endStatsScreen != null)
         {
             LoadEndStatistics();
         }
@@ -155,12 +157,12 @@ public class MainMenuManager : MonoBehaviour
             if (SaveData.getSaveExists() && SaveData.getLevel() > 0)//enables the continue game button and its visuals if there is a save file present
             {
                 continueButton.enabled = true;
-                mainMenuContinue.color = new Color(255,255,255,255);
+                mainMenuContinue.color = new Color(255, 255, 255, 255);
             }
 
             weaponSelection = PlayerPrefs.GetInt("Weapon", 0);
             PlayerPrefs.SetInt("Weapon", weaponSelection);
-            NavigateWeaponSelection(0);
+            //NavigateWeaponSelection(0);
         }
     }
 
@@ -173,13 +175,16 @@ public class MainMenuManager : MonoBehaviour
         PlayerPrefs.SetFloat("WVolume", weaponVolume.value >= 0 ? weaponVolume.value / 4 : weaponVolume.value);
         PlayerPrefs.SetFloat("EVolume", enemyVolume.value >= 0 ? enemyVolume.value / 4 : enemyVolume.value);
         PlayerPrefs.SetFloat("PlVolume", playerVolume.value >= 0 ? playerVolume.value / 4 : playerVolume.value);
-        PlayerPrefs.SetFloat("PiVolume", pickupVolume.value >= 0 ? pickupVolume.value / 4: pickupVolume.value);
+        PlayerPrefs.SetFloat("PiVolume", pickupVolume.value >= 0 ? pickupVolume.value / 4 : pickupVolume.value);
         PlayerPrefs.SetFloat("UIVolume", uiVolume.value >= 0 ? uiVolume.value / 4 : uiVolume.value);
         PlayerPrefs.SetFloat("MiscVolume", miscVolume.value >= 0 ? miscVolume.value / 4 : miscVolume.value);
         PlayerPrefs.SetInt("Resolution", screenResolution.value);
         PlayerPrefs.SetInt("TutorialPrompts", tutorialToggle.isOn ? 1 : 0);
 
         SetResolution(screenResolution.value);
+        SetLanguage(languageDropdown.value);
+
+        PlayerPrefs.SetString("Language", SetLanguage(languageDropdown.value));
 
         if (fullScreenToggle.isOn)
         {
@@ -210,10 +215,29 @@ public class MainMenuManager : MonoBehaviour
             audioController.ApplyAudioSettings();
         }
 
-        if(OnOptionsChanged != null)
+        if (OnOptionsChanged != null)
         {
             OnOptionsChanged.Invoke();
         }
+    }
+
+    private string SetLanguage(int langInt)
+    {
+        string languageName = languageDropdown.options[langInt].text;
+        string languageCode = Localizer.instance.GetLanguageCodeFromName(languageName);
+        Localizer.instance.LoadDictionary(languageCode);
+        return languageCode;
+    }
+    private void LoadLanguages()
+    {
+        languageDropdown.ClearOptions();
+        string[] languageCodes = Localizer.instance.availableLanguageCodes;
+        List<string> languageNames = new List<string>();
+        for (int i = 0; i < languageCodes.Length; i++)
+        {
+            languageNames.Add(Localizer.instance.GetLanguageNameFromCode(languageCodes[i]));
+        }
+        languageDropdown.AddOptions(languageNames);
     }
 
     public void LoadGameScene(int sceneIndex) 
@@ -266,6 +290,23 @@ public class MainMenuManager : MonoBehaviour
 
         //Select default starting button
         EventSystem.current.SetSelectedGameObject(optionsStart);
+
+        if(!languagesLoaded)
+        {
+            LoadLanguages();
+            languagesLoaded = true;
+
+            string currentLanguageCode = PlayerPrefs.GetString("Language", "en");
+            for (int i = 0; i < languageDropdown.options.Count; i++)
+            {
+                string langCode = Localizer.instance.GetLanguageCodeFromName(languageDropdown.options[i].text);
+                if(langCode == currentLanguageCode)
+                {
+                    languageDropdown.value = i;
+                    break;
+                }
+            }
+        }
 
         fov.value = PlayerPrefs.GetFloat("FOV", 70);
         MouseSensitivity.value = PlayerPrefs.GetFloat("Sensitivity", 100);
@@ -370,8 +411,6 @@ public class MainMenuManager : MonoBehaviour
         switch (whichMenu)
         {
             case 1:
-                SaveSettings();
-
                 //Clear Selected
                 EventSystem.current.SetSelectedGameObject(null);
 
@@ -384,8 +423,11 @@ public class MainMenuManager : MonoBehaviour
                 if (achievementsScreen) achievementsScreen.SetActive(false);
                 if (weaponSelectScreen) weaponSelectScreen.SetActive(false);
 
+                SaveSettings();
+
                 break;
             case 2:
+                options.SetActive(false);
                 howToPlayUI.SetActive(false);
                 menu.SetActive(true);
 
@@ -484,6 +526,8 @@ public class MainMenuManager : MonoBehaviour
         achievementsScreen.SetActive(false);
         weaponSelectScreen.SetActive(true);
         introSkipScreen.SetActive(false);
+
+        NavigateWeaponSelection(0);
     }
     public void DisplayIntroSkipScreen()
     {
