@@ -9,7 +9,7 @@ public class CutsceneController : MonoBehaviour
     [System.Serializable]
     public struct CutsceneText
     {
-        public string[] paragraphs;
+        public Localizer.TextIdentifier[] paragraphs;
     }
 
     [Header("Cutscenes")]
@@ -65,13 +65,15 @@ public class CutsceneController : MonoBehaviour
         float timer = 0;
 
         textBox.text = "";
+        textBox.font = Localizer.instance.GetCurrentFont();
         for (int i = 0; i < cutsceneText.paragraphs.Length; i++)
         {
-            for (int e = 0; e < cutsceneText.paragraphs[i].Length; e++)
+            string paragraphText = Localizer.instance.GetLanguageText(cutsceneText.paragraphs[i]);
+            for (int e = 0; e < paragraphText.Length; e++)
             {
                 if (timer >= timeTillCanSkip) skipButton.SetActive(true);
 
-                textBox.text += cutsceneText.paragraphs[i][e];
+                textBox.text += paragraphText[e];
                 yield return writingWait;
                 timer += 1f / writingRate;
             }

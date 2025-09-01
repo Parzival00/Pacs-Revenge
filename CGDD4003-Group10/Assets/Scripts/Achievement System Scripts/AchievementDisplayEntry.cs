@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class AchievementDisplayEntry : MonoBehaviour
 {
@@ -14,8 +15,10 @@ public class AchievementDisplayEntry : MonoBehaviour
    public void Display(Achievement achievement)
     {
         icon.sprite = Resources.Load<Sprite>(achievement.imagePath);
+        Localizer.TextIdentifier descriptionIdentifier = (Localizer.TextIdentifier)Enum.Parse(typeof(Localizer.TextIdentifier), $"Achievement_Description_{achievement.api_name}");
         title.text = achievement.title;
-        description.text = achievement.description;
+        description.font = Localizer.instance.GetCurrentFont();
+        description.text = Localizer.instance.GetLanguageText(descriptionIdentifier);
 
         canvasGroup.alpha = achievement.collected ? 1f : 0.3f;
     }

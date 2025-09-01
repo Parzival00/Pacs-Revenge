@@ -115,7 +115,26 @@ public class Localizer : MonoBehaviour
         DemoEnd_Paragraph_0,
         DemoEnd_Paragraph_1,
         DemoEnd_Paragraph_2,
-        UI_WeaponSelect_Classified
+        UI_WeaponSelect_Classified,
+        Game_Corrupted_Objective,
+        Game_Fruit_Offering,
+        Game_Corrupted_Final_Offering,
+        Game_Level_Cleared,
+        UI_End_Shots_Fired,
+        UI_End_Kills,
+        UI_Highscore_Baby_Mode_Insult,
+        Achievement_Description_triple_threat,
+        Achievement_Description_victory,
+        Achievement_Description_corrupted,
+        Achievement_Description_slow,
+        Achievement_Description_baby,
+        Achievement_Description_oof,
+        Achievement_Description_dead_baby,
+        Achievement_Description_massacre,
+        Achievement_Description_nom,
+        Achievement_Description_speakers,
+        Achievement_Description_speed,
+        Achievement_Description_completed,
     }
 
     [System.Serializable]
@@ -299,7 +318,7 @@ public class Localizer : MonoBehaviour
                 }
                 else
                 {
-                    print($"{pairs[i + 0]}{pairs[i + 1]}{pairs[i + 2]}");
+                    //print($"{pairs[i + 0]}{pairs[i + 1]}{pairs[i + 2]}");
                     languageData.Add(pairs[i + 0].Trim(), pairs[i + 2].Trim());
                     i += 3;
                 }

@@ -233,7 +233,8 @@ public class ScoreManager : MonoBehaviour
     public void DisplayCurrentScore() 
     {
         int playerScore = Score.score;
-        currentPlayerScore.text = "Score: " + playerScore;
+        currentPlayerScore.font = Localizer.instance.GetCurrentFont();
+        currentPlayerScore.text = $"{Localizer.instance.GetLanguageText(Localizer.TextIdentifier.UI_HighScore_Score)}: " + playerScore;
     }
 
     Coroutine blinkCoroutine;

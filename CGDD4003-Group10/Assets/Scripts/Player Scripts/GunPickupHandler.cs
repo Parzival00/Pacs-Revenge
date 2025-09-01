@@ -133,7 +133,7 @@ public class GunPickupHandler : MonoBehaviour
 
         if (hudMessenger)
         {
-            hudMessenger.Display(railgunAlertMessage, railgunAlertLength);
+            //hudMessenger.Display(railgunAlertMessage, railgunAlertLength);
         }
 
         //playerCombat.CurrentWeapon.GunAnimator.ResetTrigger("Unequip");

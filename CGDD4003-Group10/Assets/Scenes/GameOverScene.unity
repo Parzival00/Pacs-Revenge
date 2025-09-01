@@ -3939,6 +3939,7 @@ GameObject:
   - component: {fileID: 146984418}
   - component: {fileID: 146984417}
   - component: {fileID: 146984416}
+  - component: {fileID: 146984419}
   m_Layer: 5
   m_Name: Save Score Button
   m_TagString: Untagged
@@ -4061,6 +4062,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 146984414}
   m_CullTransparentMesh: 1
+--- !u!114 &146984419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146984414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 252282891}
+  textIdentifier: 76
 --- !u!1 &150999167
 GameObject:
   m_ObjectHideFlags: 0
@@ -4147,6 +4162,7 @@ GameObject:
   - component: {fileID: 157987371}
   - component: {fileID: 157987373}
   - component: {fileID: 157987372}
+  - component: {fileID: 157987374}
   m_Layer: 5
   m_Name: Pellets
   m_TagString: Untagged
@@ -4270,6 +4286,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 157987370}
   m_CullTransparentMesh: 1
+--- !u!114 &157987374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157987370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 157987372}
+  textIdentifier: 85
 --- !u!1 &161113632
 GameObject:
   m_ObjectHideFlags: 0
@@ -6689,6 +6719,10 @@ PrefabInstance:
     - target: {fileID: 8994587365661692986, guid: 48a25a41d57d0974d96becd5c804cad3, type: 3}
       propertyPath: m_Name
       value: GameScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 8994587365661692986, guid: 48a25a41d57d0974d96becd5c804cad3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10591,6 +10625,7 @@ GameObject:
   - component: {fileID: 326174106}
   - component: {fileID: 326174105}
   - component: {fileID: 326174104}
+  - component: {fileID: 326174107}
   m_Layer: 5
   m_Name: Main Menu Button
   m_TagString: Untagged
@@ -10713,6 +10748,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 326174102}
   m_CullTransparentMesh: 1
+--- !u!114 &326174107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326174102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 1758326850}
+  textIdentifier: 77
 --- !u!1 &326539245
 GameObject:
   m_ObjectHideFlags: 0
@@ -11241,6 +11290,7 @@ GameObject:
   - component: {fileID: 335162084}
   - component: {fileID: 335162086}
   - component: {fileID: 335162085}
+  - component: {fileID: 335162087}
   m_Layer: 5
   m_Name: Kills
   m_TagString: Untagged
@@ -11314,8 +11364,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 90
-  m_fontSizeBase: 90
+  m_fontSize: 85
+  m_fontSizeBase: 85
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -11364,6 +11414,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 335162083}
   m_CullTransparentMesh: 1
+--- !u!114 &335162087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 335162083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 335162085}
+  textIdentifier: 112
 --- !u!1 &336095524
 GameObject:
   m_ObjectHideFlags: 0
@@ -16310,6 +16374,7 @@ GameObject:
   - component: {fileID: 502743735}
   - component: {fileID: 502743737}
   - component: {fileID: 502743736}
+  - component: {fileID: 502743738}
   m_Layer: 5
   m_Name: Shields
   m_TagString: Untagged
@@ -16383,8 +16448,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 90
-  m_fontSizeBase: 90
+  m_fontSize: 85
+  m_fontSizeBase: 85
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -16433,6 +16498,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 502743734}
   m_CullTransparentMesh: 1
+--- !u!114 &502743738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502743734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 502743736}
+  textIdentifier: 82
 --- !u!1 &503026774
 GameObject:
   m_ObjectHideFlags: 0
@@ -24677,6 +24756,7 @@ GameObject:
   - component: {fileID: 700272732}
   - component: {fileID: 700272731}
   - component: {fileID: 700272730}
+  - component: {fileID: 700272733}
   m_Layer: 5
   m_Name: End Stats Button
   m_TagString: Untagged
@@ -24799,6 +24879,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 700272728}
   m_CullTransparentMesh: 1
+--- !u!114 &700272733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700272728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 2119820331}
+  textIdentifier: 78
 --- !u!1 &701953979
 GameObject:
   m_ObjectHideFlags: 0
@@ -45459,6 +45553,7 @@ MonoBehaviour:
   miscSource: {fileID: 0}
   MouseSensitivity: {fileID: 0}
   viewBobbingToggle: {fileID: 0}
+  languageDropdown: {fileID: 0}
   movement: {fileID: 0}
   shooting: {fileID: 0}
   enemies: {fileID: 0}
@@ -45481,6 +45576,8 @@ MonoBehaviour:
   livesUsed: {fileID: 1370230426}
   totalPellets: {fileID: 123762802}
   mainMenuStart: {fileID: 0}
+  mainMenuContinue: {fileID: 0}
+  continueButton: {fileID: 0}
   weaponSelectStart: {fileID: 0}
   difficultySelectStart: {fileID: 0}
   optionsStart: {fileID: 0}
@@ -48421,6 +48518,7 @@ GameObject:
   - component: {fileID: 1313532268}
   - component: {fileID: 1313532267}
   - component: {fileID: 1313532266}
+  - component: {fileID: 1313532269}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -48542,6 +48640,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1313532264}
   m_CullTransparentMesh: 1
+--- !u!114 &1313532269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313532264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 1352884857}
+  textIdentifier: 84
 --- !u!1 &1319449502
 GameObject:
   m_ObjectHideFlags: 0
@@ -48990,6 +49102,7 @@ GameObject:
   - component: {fileID: 1328123395}
   - component: {fileID: 1328123394}
   - component: {fileID: 1328123393}
+  - component: {fileID: 1328123396}
   m_Layer: 5
   m_Name: Retry Button
   m_TagString: Untagged
@@ -49112,6 +49225,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1328123391}
   m_CullTransparentMesh: 1
+--- !u!114 &1328123396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328123391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 203623870}
+  textIdentifier: 75
 --- !u!1 &1329380172
 GameObject:
   m_ObjectHideFlags: 0
@@ -56203,6 +56330,7 @@ GameObject:
   - component: {fileID: 1512222256}
   - component: {fileID: 1512222258}
   - component: {fileID: 1512222257}
+  - component: {fileID: 1512222259}
   m_Layer: 5
   m_Name: Deaths
   m_TagString: Untagged
@@ -56276,8 +56404,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 90
-  m_fontSizeBase: 90
+  m_fontSize: 85
+  m_fontSizeBase: 85
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -56326,6 +56454,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1512222255}
   m_CullTransparentMesh: 1
+--- !u!114 &1512222259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512222255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 1512222257}
+  textIdentifier: 83
 --- !u!1001 &1514804736
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -63740,6 +63882,7 @@ GameObject:
   - component: {fileID: 1729355247}
   - component: {fileID: 1729355249}
   - component: {fileID: 1729355248}
+  - component: {fileID: 1729355250}
   m_Layer: 5
   m_Name: Time
   m_TagString: Untagged
@@ -63863,6 +64006,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1729355246}
   m_CullTransparentMesh: 1
+--- !u!114 &1729355250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1729355246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 1729355248}
+  textIdentifier: 86
 --- !u!1 &1729859356
 GameObject:
   m_ObjectHideFlags: 0
@@ -66455,6 +66612,7 @@ GameObject:
   - component: {fileID: 1807338827}
   - component: {fileID: 1807338829}
   - component: {fileID: 1807338828}
+  - component: {fileID: 1807338830}
   m_Layer: 5
   m_Name: RailGunFired
   m_TagString: Untagged
@@ -66528,8 +66686,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 90
-  m_fontSizeBase: 90
+  m_fontSize: 85
+  m_fontSizeBase: 85
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -66578,6 +66736,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1807338826}
   m_CullTransparentMesh: 1
+--- !u!114 &1807338830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807338826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 1807338828}
+  textIdentifier: 111
 --- !u!1 &1808954383
 GameObject:
   m_ObjectHideFlags: 0
@@ -73163,6 +73335,7 @@ GameObject:
   - component: {fileID: 1995354046}
   - component: {fileID: 1995354045}
   - component: {fileID: 1995354044}
+  - component: {fileID: 1995354047}
   m_Layer: 5
   m_Name: Quit Button
   m_TagString: Untagged
@@ -73285,6 +73458,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1995354042}
   m_CullTransparentMesh: 1
+--- !u!114 &1995354047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1995354042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 628873122}
+  textIdentifier: 79
 --- !u!1 &1995784989
 GameObject:
   m_ObjectHideFlags: 0
@@ -73986,6 +74173,7 @@ GameObject:
   - component: {fileID: 2033075618}
   - component: {fileID: 2033075620}
   - component: {fileID: 2033075619}
+  - component: {fileID: 2033075621}
   m_Layer: 5
   m_Name: StunsFired
   m_TagString: Untagged
@@ -74059,8 +74247,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 90
-  m_fontSizeBase: 90
+  m_fontSize: 85
+  m_fontSizeBase: 85
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -74109,6 +74297,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2033075617}
   m_CullTransparentMesh: 1
+--- !u!114 &2033075621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033075617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 2033075619}
+  textIdentifier: 81
 --- !u!1 &2037566603
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class ShowScore : MonoBehaviour
     private void Awake()
     {
         print(Score.score);
-        scoreText.text = "Score: " + Score.score;
+        scoreText.font = Localizer.instance.GetCurrentFont();
+        scoreText.text = $"{Localizer.instance.GetLanguageText(Localizer.TextIdentifier.UI_End_Score)}: " + Score.score;
     }
 }

@@ -492,6 +492,7 @@ MonoBehaviour:
   miscSource: {fileID: 0}
   MouseSensitivity: {fileID: 0}
   viewBobbingToggle: {fileID: 0}
+  languageDropdown: {fileID: 0}
   movement: {fileID: 0}
   shooting: {fileID: 0}
   enemies: {fileID: 0}
@@ -514,6 +515,8 @@ MonoBehaviour:
   livesUsed: {fileID: 0}
   totalPellets: {fileID: 0}
   mainMenuStart: {fileID: 0}
+  mainMenuContinue: {fileID: 0}
+  continueButton: {fileID: 0}
   weaponSelectStart: {fileID: 0}
   difficultySelectStart: {fileID: 0}
   optionsStart: {fileID: 0}
@@ -620,6 +623,7 @@ GameObject:
   - component: {fileID: 161782197}
   - component: {fileID: 161782196}
   - component: {fileID: 161782195}
+  - component: {fileID: 161782198}
   m_Layer: 5
   m_Name: Continue Button
   m_TagString: Untagged
@@ -766,6 +770,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 161782193}
   m_CullTransparentMesh: 1
+--- !u!114 &161782198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161782193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 718330180}
+  textIdentifier: 46
 --- !u!1 &185133684
 GameObject:
   m_ObjectHideFlags: 0
@@ -958,29 +976,13 @@ MonoBehaviour:
   writingRate: 20
   timeTillCanSkip: 3.5
   ending0Text:
-    paragraphs:
-    - yyyyyyyyyyyyyy
-    - hhhhhhhhhhhh
-    - cccccccccc
+    paragraphs: 000000000000000000000000
   ending1Text:
-    paragraphs:
-    - hhhhhhhhhhhhhhhh
-    - hhhhhhhhhhhh
-    - cccccccccc
+    paragraphs: 000000000000000000000000
   ending2Text:
-    paragraphs:
-    - nnnnnnnnnnnnnnn
-    - hhhhhhhhhhhh
-    - cccccccccc
+    paragraphs: 000000000000000000000000
   beginningText:
-    paragraphs:
-    - The year is 2090. Venus has been colonized and is the key to space travel due
-      to a new element that was found. Virellium, a bright yellow material.
-    - However, while this element holds energy levels unseen. It calls forth something
-      darker. Something that should have never been uncovered.
-    - The primary research facility located in Sector 0 was the first to succumb
-      to this evil. You must take back this facility at any cost before these creatures
-      of Hell destroy the world.
+    paragraphs: 5b0000005c0000005d000000
   credits: {fileID: 46735076}
   continueButton: {fileID: 161782193}
   creditsShowLength: 5
@@ -1944,6 +1946,7 @@ GameObject:
   - component: {fileID: 503404328}
   - component: {fileID: 503404327}
   - component: {fileID: 503404326}
+  - component: {fileID: 503404329}
   m_Layer: 5
   m_Name: Skip Button
   m_TagString: Untagged
@@ -2090,6 +2093,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 503404324}
   m_CullTransparentMesh: 1
+--- !u!114 &503404329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 503404324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 1344235112}
+  textIdentifier: 46
 --- !u!1 &515531404
 GameObject:
   m_ObjectHideFlags: 0

@@ -192,8 +192,8 @@ public class Score : MonoBehaviour
     {
         if (currentLevel <= 8)
         {
-            hudMessenger.Display("Level " + currentLevel, 3);
-            hudMessenger.Display("Collect all the pellets", 3);
+            hudMessenger.Display($"{Localizer.instance.GetLanguageText(Localizer.TextIdentifier.Game_Level)} " + currentLevel, 3);
+            hudMessenger.Display(Localizer.TextIdentifier.Game_Objective, 3);
         }
     }
 
@@ -356,7 +356,7 @@ public class Score : MonoBehaviour
                     playerController.EnableCorruptionEnding();
 
                     fruitController.CollectFruit();
-                    hudMessenger.CorruptedDisplay("Devour Them All!", 2);
+                    hudMessenger.CorruptedDisplay(Localizer.TextIdentifier.Game_Corrupted_Objective, 2);
                 }
                 else
                 {
@@ -368,22 +368,22 @@ public class Score : MonoBehaviour
                     {
                         case FruitController.PowerUpType.Shield:
                             playerController.AddShields();
-                            hudMessenger.Display("Shield Obtained", 1);
+                            hudMessenger.Display(Localizer.TextIdentifier.Game_Shield_Obtained, 1);
                             fruitsCollected++;
                             break;
                         case FruitController.PowerUpType.Invisibility:
-                            hudMessenger.Display("Invisibility Activated", 1);
+                            hudMessenger.Display(Localizer.TextIdentifier.Game_Invisibility_Active, 1);
                             playerController.ActivateInvisibility();
                             fruitsCollected++;
                             break;
                         case FruitController.PowerUpType.Speed:
-                            hudMessenger.Display("Speed Boost Activated", 1);
+                            hudMessenger.Display(Localizer.TextIdentifier.Game_Speed_Boost_Active, 1);
                             playerController.ActivateSpeed();
                             fruitsCollected++;
                             break;
                         case FruitController.PowerUpType.EnhancedRadar:
                             radarAudioSource.PlayOneShot(radarPing);
-                            hudMessenger.Display("Enhanced Radar Activated", 1);
+                            hudMessenger.Display(Localizer.TextIdentifier.Game_Enhanced_Radar_Active, 1);
                             Radar radar = GameObject.Find("Radar").GetComponent<Radar>();
                             radar.StartEnhancedRadar();
                             fruitsCollected++;
@@ -485,7 +485,7 @@ public class Score : MonoBehaviour
 
         wonLevel = true;
 
-        hudMessenger.Display("Level Cleared", 2f);
+        hudMessenger.Display(Localizer.TextIdentifier.Game_Level_Cleared, 2f);
 
         //Resets every scene change
         ghostsKilledThisLevel = 0;

@@ -26,6 +26,13 @@ public class HUDMessenger : MonoBehaviour
 
     Coroutine displayCoroutine;
 
+    public void Display(Localizer.TextIdentifier message, float length)
+    {
+        messages.Enqueue(new Message(Localizer.instance.GetLanguageText(message), length));
+
+        if (displayCoroutine == null)
+            displayCoroutine = StartCoroutine(DisplayMessage(displayBox, displaySpeed));
+    }
     public void Display(string message, float length)
     {
         messages.Enqueue(new Message(message, length));
@@ -34,9 +41,9 @@ public class HUDMessenger : MonoBehaviour
             displayCoroutine = StartCoroutine(DisplayMessage(displayBox, displaySpeed));
     }
 
-    public void CorruptedDisplay(string message, float length)
+    public void CorruptedDisplay(Localizer.TextIdentifier message, float length)
     {
-        messages.Enqueue(new Message(message, length));
+        messages.Enqueue(new Message(Localizer.instance.GetLanguageText(message), length));
 
         if (displayCoroutine != null)
             StopCoroutine(displayCoroutine);
@@ -57,6 +64,7 @@ public class HUDMessenger : MonoBehaviour
             float displayLength = currentMessage.length;
             string message = currentMessage.message;
             displayBox.text = "";
+            displayBox.font = Localizer.instance.GetCurrentFont();
 
             for (int i = 0; i < message.Length; i++)
             {

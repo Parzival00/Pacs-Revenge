@@ -24,7 +24,7 @@ public class LocalizedText : MonoBehaviour
     {
         if (textIdentifier != Localizer.TextIdentifier.None)
         {
-            print("Set text to new language");
+            //print("Set text to new language");
             textField.text = Localizer.instance.GetLanguageText(textIdentifier);
             textField.font = Localizer.instance.GetCurrentFont();
         }

@@ -2731,6 +2731,7 @@ GameObject:
   - component: {fileID: 37795618}
   - component: {fileID: 37795617}
   - component: {fileID: 37795616}
+  - component: {fileID: 37795619}
   m_Layer: 5
   m_Name: ReturnToMenu
   m_TagString: Untagged
@@ -2853,6 +2854,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 37795614}
   m_CullTransparentMesh: 1
+--- !u!114 &37795619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37795614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 1171679013}
+  textIdentifier: 87
 --- !u!1 &39543189
 GameObject:
   m_ObjectHideFlags: 0
@@ -57447,6 +57462,7 @@ MonoBehaviour:
   difficultyScreen: {fileID: 0}
   howToPlayUI: {fileID: 0}
   achievementsScreen: {fileID: 0}
+  introSkipScreen: {fileID: 0}
   achievementDisplay: {fileID: 0}
   screenResolution: {fileID: 0}
   fov: {fileID: 0}
@@ -57470,6 +57486,7 @@ MonoBehaviour:
   miscSource: {fileID: 0}
   MouseSensitivity: {fileID: 0}
   viewBobbingToggle: {fileID: 0}
+  languageDropdown: {fileID: 0}
   movement: {fileID: 0}
   shooting: {fileID: 0}
   enemies: {fileID: 0}
@@ -57491,6 +57508,14 @@ MonoBehaviour:
   shieldUsed: {fileID: 0}
   livesUsed: {fileID: 0}
   totalPellets: {fileID: 0}
+  mainMenuStart: {fileID: 0}
+  mainMenuContinue: {fileID: 0}
+  continueButton: {fileID: 0}
+  weaponSelectStart: {fileID: 0}
+  difficultySelectStart: {fileID: 0}
+  optionsStart: {fileID: 0}
+  skipIntroStart: {fileID: 0}
+  pauseGameStart: {fileID: 0}
 --- !u!1 &882358993
 GameObject:
   m_ObjectHideFlags: 0
@@ -77658,8 +77683,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 19.683998, y: 0}
-  m_SizeDelta: {x: 39.368, y: 0}
+  m_AnchoredPosition: {x: 102.49, y: 0}
+  m_SizeDelta: {x: 204.98, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1171679013
 MonoBehaviour:
@@ -77708,8 +77733,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 35
-  m_fontSizeBase: 35
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -120697,6 +120722,7 @@ GameObject:
   - component: {fileID: 1822494459}
   - component: {fileID: 1822494461}
   - component: {fileID: 1822494460}
+  - component: {fileID: 1822494462}
   m_Layer: 5
   m_Name: Instructions
   m_TagString: Untagged
@@ -120820,6 +120846,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1822494458}
   m_CullTransparentMesh: 1
+--- !u!114 &1822494462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822494458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 1822494460}
+  textIdentifier: 89
 --- !u!1 &1824544788
 GameObject:
   m_ObjectHideFlags: 0

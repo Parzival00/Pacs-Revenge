@@ -598,6 +598,7 @@ GameObject:
   - component: {fileID: 5437413427895526906}
   - component: {fileID: 2995397623109897228}
   - component: {fileID: 8179676405978676901}
+  - component: {fileID: 2120521531100980810}
   m_Layer: 5
   m_Name: LivesHeader
   m_TagString: Untagged
@@ -721,6 +722,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2120521531100980810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3334841198717115972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 8179676405978676901}
+  textIdentifier: 20
 --- !u!1 &3710627108215492197
 GameObject:
   m_ObjectHideFlags: 0
@@ -866,6 +881,7 @@ GameObject:
   - component: {fileID: 4481579120583165878}
   - component: {fileID: 1069711961517297751}
   - component: {fileID: 3898972255587244185}
+  - component: {fileID: 1215098416303538380}
   m_Layer: 5
   m_Name: ammoHeader
   m_TagString: AmmoCounter
@@ -989,6 +1005,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1215098416303538380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3796586066667098441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 3898972255587244185}
+  textIdentifier: 18
 --- !u!1 &3797307913541275260
 GameObject:
   m_ObjectHideFlags: 0
@@ -1618,6 +1648,7 @@ GameObject:
   - component: {fileID: 8828126464412226338}
   - component: {fileID: 1328136637427790026}
   - component: {fileID: 4829679763944406633}
+  - component: {fileID: 3399484698265957323}
   m_Layer: 5
   m_Name: ShieldHeader
   m_TagString: Untagged
@@ -1741,6 +1772,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3399484698265957323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6789025881515781295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 4829679763944406633}
+  textIdentifier: 19
 --- !u!1 &6992915200923104920
 GameObject:
   m_ObjectHideFlags: 0
@@ -2216,6 +2261,7 @@ GameObject:
   - component: {fileID: 2190640199993051897}
   - component: {fileID: 210412516823006844}
   - component: {fileID: 1330740453776538833}
+  - component: {fileID: 8368367413118223561}
   m_Layer: 5
   m_Name: ScoreHeader
   m_TagString: Untagged
@@ -2239,8 +2285,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 425, y: -25}
-  m_SizeDelta: {x: 426.088, y: 145.874}
+  m_AnchoredPosition: {x: 200.00006, y: -25}
+  m_SizeDelta: {x: 200, y: 43.75}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &210412516823006844
 CanvasRenderer:
@@ -2339,6 +2385,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8368367413118223561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7833215176875126784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 1330740453776538833}
+  textIdentifier: 16
 --- !u!1 &8478701748026740430
 GameObject:
   m_ObjectHideFlags: 0
@@ -2565,6 +2625,7 @@ GameObject:
   - component: {fileID: 4510599222251277945}
   - component: {fileID: 4183193358574683996}
   - component: {fileID: 5480449503417166647}
+  - component: {fileID: 6070067370869794385}
   m_Layer: 5
   m_Name: Pellet Header
   m_TagString: Untagged
@@ -2688,6 +2749,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6070067370869794385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8736326420494892290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d54f6d64040e04b98d3b6711a9a1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 5480449503417166647}
+  textIdentifier: 17
 --- !u!1 &8764252512551101229
 GameObject:
   m_ObjectHideFlags: 0

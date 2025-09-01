@@ -47,8 +47,8 @@ public class FruitController : MonoBehaviour
     DifficultySettings currentDifficultySettings;
 
     [Header("Fruit Spawn Alert Settings")]
-    [SerializeField] string alertMessage = "Fruit Offering Detected";
-    [SerializeField] string corruptionEndingMessage = "Final Offering Detected";
+    [SerializeField] Localizer.TextIdentifier alertMessage = Localizer.TextIdentifier.Game_Fruit_Offering;
+    [SerializeField] Localizer.TextIdentifier corruptionEndingMessage = Localizer.TextIdentifier.Game_Corrupted_Final_Offering;
     [SerializeField] ParticleSystem lightningBeam;
     [SerializeField] GameObject lightningStrike; 
     [SerializeField] AudioSource lightningSoundSource;
