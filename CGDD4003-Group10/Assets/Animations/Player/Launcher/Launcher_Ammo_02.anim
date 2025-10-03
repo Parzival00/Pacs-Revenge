@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Launcher_Battery_6
+  m_Name: Launcher_Ammo_02
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,11 +21,22 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -1902104957, guid: d3b75a25eb4e156449b7167208c9091b, type: 3}
+      value: {fileID: 1755140155, guid: bd47b9710c9a53b49ba59b5386184fce, type: 3}
     - time: 0.083333336
-      value: {fileID: -1902104957, guid: d3b75a25eb4e156449b7167208c9091b, type: 3}
+      value: {fileID: 1755140155, guid: bd47b9710c9a53b49ba59b5386184fce, type: 3}
     attribute: m_Sprite
-    path: LauncherSprite/PR_Launcher_handdrawn_0/PR_Launcher_Battery_1
+    path: LauncherSprite/PR_Launcher_handdrawn_0/PR_Launcher_Ammo_1
+    classID: 212
+    script: {fileID: 0}
+    flags: 2
+  - serializedVersion: 2
+    curve:
+    - time: 0
+      value: {fileID: -25749550, guid: bd47b9710c9a53b49ba59b5386184fce, type: 3}
+    - time: 0.083333336
+      value: {fileID: -25749550, guid: bd47b9710c9a53b49ba59b5386184fce, type: 3}
+    attribute: m_Sprite
+    path: LauncherSprite/PR_Launcher_handdrawn_0/PR_Launcher_Ammo_2
     classID: 212
     script: {fileID: 0}
     flags: 2
@@ -37,7 +48,16 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 165048983
+      path: 1689052642
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
+    - serializedVersion: 2
+      path: 4255495256
       attribute: 0
       script: {fileID: 0}
       typeID: 212
@@ -46,8 +66,10 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -1902104957, guid: d3b75a25eb4e156449b7167208c9091b, type: 3}
-    - {fileID: -1902104957, guid: d3b75a25eb4e156449b7167208c9091b, type: 3}
+    - {fileID: 1755140155, guid: bd47b9710c9a53b49ba59b5386184fce, type: 3}
+    - {fileID: 1755140155, guid: bd47b9710c9a53b49ba59b5386184fce, type: 3}
+    - {fileID: -25749550, guid: bd47b9710c9a53b49ba59b5386184fce, type: 3}
+    - {fileID: -25749550, guid: bd47b9710c9a53b49ba59b5386184fce, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
