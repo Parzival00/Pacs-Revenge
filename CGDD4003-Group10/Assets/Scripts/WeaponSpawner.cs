@@ -7,12 +7,18 @@ public class WeaponSpawner : MonoBehaviour
     [Header("Pickup Spawn Settings")]
     [SerializeField] float spawnInterval;
     [SerializeField] Transform[] spawnPoints;
+    [SerializeField] WeaponInfo[] weaponInfos;
     GameObject weaponPickup;
     protected bool startedSpawning = false;
+
+    WeaponInfo currentWeaponInfo;
+
     // Start is called before the first frame update
     void Start()
     {
         weaponPickup = Resources.Load<GameObject>("Prefabs/GunPickup");
+
+        currentWeaponInfo = weaponInfos[PlayerPrefs.GetInt("Weapon")];
     }
 
     // Update is called once per frame
@@ -39,6 +45,11 @@ public class WeaponSpawner : MonoBehaviour
         w.transform.position = thisSpawnLoc.position;
         w.GetComponentInChildren<FadeIconOut>().enhanced = true;
 
+        WeaponPickup wp= w.GetComponent<WeaponPickup>();
+        if (wp != null)
+        {
+            wp.SetDisplaySprite(currentWeaponInfo.gunIcon);
+        }
     }
 
     public void Reset()

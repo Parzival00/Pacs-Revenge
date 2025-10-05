@@ -96,7 +96,7 @@ public class Barrel : MonoBehaviour
                 if (ob.gameObject.tag == "Enemy")
                 {
 
-                    ob.gameObject.GetComponent<Ghost>().GotHit(ob.gameObject.GetComponent<Ghost>().barrelDamage());
+                    ob.gameObject.GetComponent<Ghost>().GotHit(ob.gameObject.GetComponent<Ghost>().GetInstakillTargetAreaType());
                     /*switch (ob.gameObject.name)
                     {
                         case "Blinky":

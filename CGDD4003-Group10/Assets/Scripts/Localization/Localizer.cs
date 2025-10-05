@@ -135,6 +135,10 @@ public class Localizer : MonoBehaviour
         Achievement_Description_speakers,
         Achievement_Description_speed,
         Achievement_Description_completed,
+        Weapon_Launcher_Name,
+        Weapon_Launcher_Description,
+        Weapon_Sword_Name,
+        Weapon_Sword_Description,
     }
 
     [System.Serializable]

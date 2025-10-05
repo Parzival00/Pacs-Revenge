@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -136,12 +137,6 @@ public class AchievementManager
     /// <param name="title"></param>
     public static void displayAchievement(string title)
     {
-        GameObject popup = Resources.Load<GameObject>("AchievementBG");
-        GameObject.Instantiate(popup);
-        TextMeshProUGUI titleText = GameObject.FindGameObjectWithTag("ATitle").GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI descripText = GameObject.FindGameObjectWithTag("ADescription").GetComponent<TextMeshProUGUI>();
-        Image icon = popup.GetComponentInChildren<Image>();
-
         Achievement current = null;
         foreach (Achievement a in potential)
         {
@@ -156,14 +151,33 @@ public class AchievementManager
         {
             Debug.Log("No Achievement Found");
         }
-        else
+        else if (!current.collected)
         {
+            Debug.Log($"Displaying {title} Achievement");
+
+            GameObject popup = Resources.Load<GameObject>("AchievementBG");
+            Canvas canvas = GameObject.FindFirstObjectByType<Canvas>();
+            GameObject spawnedPopup = GameObject.Instantiate(popup, canvas.transform);
+            TextMeshProUGUI titleText = spawnedPopup.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI descripText = spawnedPopup.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+            Image icon = spawnedPopup.transform.GetChild(0).GetComponentInChildren<Image>();
+
+            current.collected = true;
             collected.Add(current);
             potential.Remove(current);
             titleText.text = current.title;
             descripText.text = current.description;
             icon.sprite = Resources.Load<Sprite>(current.imagePath);
             save(); //saves the new achievement to the save file
+
+            for (int i = 0; i < collected.Count; i++)
+            {
+                Debug.Log($"Collected: {collected[i].title}");
+            }
+            for (int i = 0; i < potential.Count; i++) 
+            {
+                Debug.Log($"Potential: {potential[i].title}");
+            }
 
             SteamIntegrationManager SIM = GameObject.FindObjectOfType<SteamIntegrationManager>();
             SIM.UnlockAchievement(current.api_name);
