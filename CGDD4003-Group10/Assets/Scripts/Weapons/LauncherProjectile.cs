@@ -14,6 +14,8 @@ public class LauncherProjectile : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip explosionClip;
 
+    Vector3 launchDir;
+
     Collider collider;
 
     WeaponInfo weaponInfo;
@@ -22,6 +24,7 @@ public class LauncherProjectile : MonoBehaviour
     bool moving;
 
     bool activated = false;
+    bool oneTimeActivation = false;
 
     // Start is called before the first frame update
     void Start()
@@ -32,16 +35,18 @@ public class LauncherProjectile : MonoBehaviour
         collider = GetComponent<Collider>();
     }
 
-    public void Initialize(WeaponInfo weaponInfo, Launcher launcher)
+    public void Initialize(WeaponInfo weaponInfo, Launcher launcher, Vector3 launchDir)
     {
         this.weaponInfo = weaponInfo;
         this.launcher = launcher;
+        this.launchDir = launchDir.normalized;
     }
 
     void Activate()
     {
         activated = true;
         animator.SetTrigger("Activate");
+        oneTimeActivation = true;
     }
 
     // Update is called once per frame
@@ -56,16 +61,19 @@ public class LauncherProjectile : MonoBehaviour
     /// </summary>
     public void Move()
     {
-        transform.Translate(transform.forward * projectileSpeed * Time.deltaTime, Space.World);
+        transform.Translate(launchDir * projectileSpeed * Time.deltaTime, Space.World);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Wall" || other.tag == "Corner" || other.tag == "T Wall" || other.tag == "Straight" || other.tag == "Floor")
+        if (other.tag == "Wall" || other.tag == "Corner" || other.tag == "T Wall" || other.tag == "Straight" || other.tag == "Floor" || other.tag == "Boss" || other.tag == "Enemy")
         {
             moving = false;
 
-            Invoke("Activate", activationDelay);
+            if (!oneTimeActivation)
+            {
+                Invoke("Activate", activationDelay);
+            }
         }
     }
 
@@ -76,7 +84,9 @@ public class LauncherProjectile : MonoBehaviour
             return;
         }
 
-        if(other.tag == "Enemy")
+        //print($"{other.name} overlapping with Projectile");
+
+        if(other.tag == "Enemy" || other.tag == "Boss")
         {
             activated = false;
 

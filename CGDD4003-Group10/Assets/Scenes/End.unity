@@ -1533,12 +1533,12 @@ MonoBehaviour:
   skipButton: {fileID: 503404324}
   textBox: {fileID: 925138150}
   startDelay: 1.5
-  writingRate: 10
+  writingRate: 25
   timeTillCanSkip: 3
   ending0Text:
-    paragraphs: 5e0000005f00000060000000
-  ending1Text:
     paragraphs: 610000006200000063000000
+  ending1Text:
+    paragraphs: 5e0000005f00000060000000
   ending2Text:
     paragraphs: 640000006500000066000000
   beginningText:
@@ -1546,6 +1546,56 @@ MonoBehaviour:
   credits: {fileID: 46735076}
   continueButton: {fileID: 161782193}
   creditsShowLength: 5
+--- !u!1 &239104181
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 239104183}
+  - component: {fileID: 239104182}
+  m_Layer: 0
+  m_Name: Localizer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &239104182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 239104181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e332923e2401b7841a3d7859b8e9d4c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fontLinks:
+  - languageCode: en
+    font: {fileID: 11400000, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
+  - languageCode: ja
+    font: {fileID: 11400000, guid: 5cee8fb7bf519ad43844ea07f2621d11, type: 2}
+  foreignLanguageFont: {fileID: 11400000, guid: 5cee8fb7bf519ad43844ea07f2621d11, type: 2}
+--- !u!4 &239104183
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 239104181}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.576148, y: -3.9237797, z: 13.098031}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &240944751
 GameObject:
   m_ObjectHideFlags: 0
@@ -3178,6 +3228,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 390183080}
   m_CullTransparentMesh: 1
+--- !u!1 &396745490
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 396745492}
+  - component: {fileID: 396745491}
+  m_Layer: 0
+  m_Name: SteamworksIntegration
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &396745491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396745490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a074058f12a36df47bdbb88217cf395e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &396745492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396745490}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &410212611
 GameObject:
   m_ObjectHideFlags: 0
@@ -7021,8 +7115,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000021935, y: 0.000022888}
-  m_SizeDelta: {x: 1375.4596, y: 717.605}
+  m_AnchoredPosition: {x: -0.000021935, y: 64.39895}
+  m_SizeDelta: {x: 1515.4752, y: 846.4028}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &925138150
 MonoBehaviour:
@@ -7071,8 +7165,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 67
-  m_fontSizeBase: 67
+  m_fontSize: 45
+  m_fontSizeBase: 45
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -11691,6 +11785,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2904926012269488739, guid: 48a25a41d57d0974d96becd5c804cad3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4995750066979028515, guid: 48a25a41d57d0974d96becd5c804cad3, type: 3}
       propertyPath: deathSceneTexture
       value: 
@@ -12750,3 +12848,5 @@ SceneRoots:
   - {fileID: 67537912}
   - {fileID: 1857646909}
   - {fileID: 705037206}
+  - {fileID: 396745492}
+  - {fileID: 239104183}

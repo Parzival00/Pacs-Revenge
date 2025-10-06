@@ -167,7 +167,7 @@ public class Localizer : MonoBehaviour
 
     public void Awake()
     {
-        print(Application.streamingAssetsPath);
+        //print(Application.streamingAssetsPath);
         if (instance == null)
         {
             instance = this;

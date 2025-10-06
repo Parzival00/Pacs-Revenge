@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings.WSA;
 
 public class BossfightEndController : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class BossfightEndController : MonoBehaviour
     [SerializeField] GameObject floor;
     [SerializeField] GameObject pedastal;
     [SerializeField] GameObject portals;
+    [SerializeField] GameObject decorations;
 
     public void StartEndSequence()
     {
@@ -56,6 +58,7 @@ public class BossfightEndController : MonoBehaviour
         floor.SetActive(false);
         pedastal.SetActive(false);
         portals.SetActive(false);
+        decorations.SetActive(false);
 
         GameObject[] corpses = GameObject.FindGameObjectsWithTag("Corpse");
         foreach(GameObject corpse in corpses)

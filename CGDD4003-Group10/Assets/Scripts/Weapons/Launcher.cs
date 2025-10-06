@@ -64,12 +64,12 @@ public class Launcher : Weapon
         //gunAnimator.SetFloat("Speed", 1.5f / cooldownTime);
 
 
-        GameObject projObj = Instantiate(projectilePrefab, projectileSpawnPoint.position, transform.rotation);
+        GameObject projObj = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
         LauncherProjectile proj = projObj.GetComponent<LauncherProjectile>();
 
         if (proj != null)
         {
-            proj.Initialize(weaponInfo, this);
+            proj.Initialize(weaponInfo, this, transform.forward);
             projectiles.Add(proj);
             gunAnimator.SetFloat("Ammo", ammoCount);
         }
@@ -91,7 +91,7 @@ public class Launcher : Weapon
             LauncherProjectile proj = projectiles[0];
             proj.ForceExplosion();
             projectiles.Remove(proj);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.25f);
         }
 
         ammoCount = maxAmmo;
