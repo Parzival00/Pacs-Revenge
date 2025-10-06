@@ -8,6 +8,8 @@ public class CameraShake : MonoBehaviour
 
     bool interruptable;
 
+    Vector3 originalCamPos;
+
     Coroutine shakeCoroutine;
     public void ShakeCamera(float frequency, float smoothing, float length, bool interruptable = true)
     {
@@ -16,7 +18,10 @@ public class CameraShake : MonoBehaviour
         this.interruptable = interruptable;
 
         if (shakeCoroutine != null)
+        {
+            camera.localPosition = originalCamPos;
             StopCoroutine(shakeCoroutine);
+        }
 
         shakeCoroutine = StartCoroutine(Shake(frequency, smoothing, length));
     }
@@ -28,14 +33,17 @@ public class CameraShake : MonoBehaviour
         this.interruptable = interruptable;
 
         if (shakeCoroutine != null)
+        {
+            camera.localPosition = originalCamPos;
             StopCoroutine(shakeCoroutine);
+        }
 
         shakeCoroutine = StartCoroutine(Shake(frequency, 0.5f, 0.2f));
     }
 
     IEnumerator Shake(float frequency, float smoothing, float length)
     {
-        Vector3 originalCamPos = camera.localPosition;
+        originalCamPos = camera.localPosition;
         float t = 0;
         while(t < length)
         {

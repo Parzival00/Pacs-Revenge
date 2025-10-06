@@ -41,7 +41,7 @@ public class BossArenaSetUp : MonoBehaviour
     {
         while (allInnerWalls.position != wTargetY) 
         {
-            Debug.Log("Method has runned");
+            //Debug.Log("Method has runned");
 
             allInnerWalls.position = Vector3.MoveTowards(allInnerWalls.position,wTargetY,wSpeed * Time.deltaTime);
 
@@ -53,7 +53,7 @@ public class BossArenaSetUp : MonoBehaviour
         cameraShake.ShakeCamera(shakeStrength, 0.5f, Mathf.Abs(mapPillars.position.y - pTargetY.y) / pSpeed, false);
         while (mapPillars.position != pTargetY) 
         {
-            Debug.Log("Winner Winner Chicken Dinner");
+            //Debug.Log("Winner Winner Chicken Dinner");
 
             mapPillars.position = Vector3.MoveTowards(mapPillars.position,pTargetY, pSpeed * Time.deltaTime);
 

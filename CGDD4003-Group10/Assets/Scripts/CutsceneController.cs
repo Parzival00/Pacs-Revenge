@@ -48,6 +48,7 @@ public class CutsceneController : MonoBehaviour
         else
         {
             int ending = PlayerPrefs.GetInt("Ending", 1);
+            //ending = 2;
             switch (ending)
             {
                 case 0:
