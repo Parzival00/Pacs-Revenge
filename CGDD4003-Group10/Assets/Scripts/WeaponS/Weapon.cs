@@ -24,7 +24,7 @@ public abstract class Weapon : MonoBehaviour
     {
         this.playerController = playerController;
         //gunTimerCoroutine = StartCoroutine(GunTimer(gunTimeAmount));
-
+        ResetWeapon();
 
         //gunActivated = true;
     }

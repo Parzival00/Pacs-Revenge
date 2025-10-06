@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class Score : MonoBehaviour
 {
@@ -135,6 +136,12 @@ public class Score : MonoBehaviour
             totalShotsFired = 0;
             totalStunsFired = 0;
             totalTimePlayed = 0;
+
+            //Wah Wah! achievement (Play Baby mode)
+            if (difficulty == 0)
+            {
+                AchievementManager.displayAchievement("Wah Wah!");
+            }
 
             fruitsCollected = 0;
             PlayerPrefs.SetInt("FruitsCollected", fruitsCollected);

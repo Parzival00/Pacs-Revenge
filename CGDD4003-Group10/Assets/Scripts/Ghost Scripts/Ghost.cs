@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -1180,6 +1180,33 @@ public class Ghost : MonoBehaviour
         biteSoundSource.PlayOneShot(biteSound);
     }
 
+    public virtual void SpawnBlood(GameObject blood, int amount)
+    {
+        float spawnRadius = 0.6f;
+
+        for (int i = 0; i < amount; i++)
+        {
+            Instantiate(blood, transform.position +
+                    transform.right * Random.Range(-spawnRadius, spawnRadius) +
+                    transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2) +
+                    transform.forward * Random.Range(-spawnRadius / 2, spawnRadius / 2),
+                    Quaternion.identity);
+        }
+    }
+    public virtual void SpawnBlood(int amount)
+    {
+        float spawnRadius = 0.6f;
+
+        for (int i = 0; i < amount; i++)
+        {
+            Instantiate(bigBlood, transform.position +
+                    transform.right * Random.Range(-spawnRadius, spawnRadius) +
+                    transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2) +
+                    transform.forward * Random.Range(-spawnRadius / 2, spawnRadius / 2),
+                    Quaternion.identity);
+        }
+    }
+
     public virtual void PermenantDeath()
     {
         if (navMesh.enabled)
@@ -1188,18 +1215,11 @@ public class Ghost : MonoBehaviour
 
         float spawnRadius = 0.6f;
 
-        for(int i = 0; i < 50; i++)
-        {
-            Instantiate(bigBlood, transform.position +
-                    transform.right * Random.Range(-spawnRadius, spawnRadius) + 
-                    transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2) + 
-                    transform.forward * Random.Range(-spawnRadius / 2, spawnRadius / 2), 
-                    Quaternion.identity);
-        }
+        SpawnBlood(50);
 
         Destroy(gameObject);
     }
-    public TargetAreaType barrelDamage() 
+    public TargetAreaType GetInstakillTargetAreaType() 
     {
         TargetAreaType tp = TargetAreaType.Head;
         return tp;
