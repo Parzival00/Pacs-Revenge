@@ -48,7 +48,10 @@ public static class SaveData
 
             for (int i = 0; i < jsonLines.Length; i++)
             {
-                unlockedWeapons.Add(JsonUtility.FromJson<sInt>(jsonLines[i]));
+                if (jsonLines[i] != "" && jsonLines[i].Contains('{'))
+                {
+                    unlockedWeapons.Add(JsonUtility.FromJson<sInt>(jsonLines[i]));
+                }
             }
         }
         else

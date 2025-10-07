@@ -77,6 +77,8 @@ public class Launcher : Weapon
         {
             Destroy(projObj);
         }
+
+        Score.totalShotsFired++;
     }
 
     public void ProjectileExploded(LauncherProjectile projectile)

@@ -319,6 +319,12 @@ public class Ghost : MonoBehaviour
     //Chase the player
     protected virtual void Chase()
     {
+        Map.GridType currentType = map.SampleGrid(currentGridPosition);
+        if (currentType == Map.GridType.Barrier || currentType == Map.GridType.Wall || currentType == Map.GridType.CorruptedWall)
+        {
+            GotHit(TargetAreaType.Head, 99f);
+        }
+
         Vector2Int playerGridPosition = map.GetPlayerPosition();//CheckEdgePositions(transform.position);
 
         targetGridPosition = playerGridPosition;

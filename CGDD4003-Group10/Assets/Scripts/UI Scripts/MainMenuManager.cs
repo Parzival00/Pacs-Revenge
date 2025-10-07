@@ -584,8 +584,10 @@ public class MainMenuManager : MonoBehaviour
         }
 
         List<int> weaponsUnlocked = new List<int>();
+        print(SaveData.getWeaponsUnlocked());
         foreach(sInt s in SaveData.getWeaponsUnlocked())
         {
+            print(s);
             weaponsUnlocked.Add(s.value);
         }
 

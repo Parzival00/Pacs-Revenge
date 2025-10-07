@@ -156,8 +156,12 @@ public class AchievementManager
             Debug.Log($"Displaying {title} Achievement");
 
             GameObject popup = Resources.Load<GameObject>("AchievementBG");
-            Canvas canvas = GameObject.FindFirstObjectByType<Canvas>();
-            GameObject spawnedPopup = GameObject.Instantiate(popup, canvas.transform);
+            GameObject popupParent = GameObject.FindGameObjectWithTag("AchievementParent");
+            if (popupParent == null)
+            {
+                popupParent = GameObject.FindFirstObjectByType<Canvas>().gameObject;
+            }
+            GameObject spawnedPopup = GameObject.Instantiate(popup, popupParent.transform);
             TextMeshProUGUI titleText = spawnedPopup.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI descripText = spawnedPopup.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
             Image icon = spawnedPopup.transform.GetChild(0).GetComponentInChildren<Image>();
