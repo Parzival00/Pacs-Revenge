@@ -38503,6 +38503,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1789968181}
     - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: extraLifeFlash
+      value: 
+      objectReference: {fileID: 7008451262766591889}
+    - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: shieldAnimator
       value: 
       objectReference: {fileID: 1764588502}
@@ -38510,6 +38514,10 @@ PrefabInstance:
       propertyPath: playerSpawnPoint
       value: 
       objectReference: {fileID: 1692905707}
+    - target: {fileID: 2865670225406934770, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
+      propertyPath: transitionEffect
+      value: 
+      objectReference: {fileID: 7008451262766591890}
     - target: {fileID: 4790564691503176113, guid: 247338dcbe2b1714484b9b71eab9045a, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -49432,16 +49440,16 @@ MonoBehaviour:
   corruptionRangePerLevel: 2
   startWithRandCorruption: 0
   startCorruptionCount: 1
-  endPieceMat: {fileID: 0}
-  straightPieceMat: {fileID: 0}
-  tPieceMat: {fileID: 0}
-  lPieceMat: {fileID: 0}
-  corruptedEndPieceMat: {fileID: 0}
-  corruptedStraightPieceMat: {fileID: 0}
-  corruptedTPieceMat: {fileID: 0}
-  corruptedLPieceMat: {fileID: 0}
-  transLeftPieceMat: {fileID: 0}
-  transRightPieceMat: {fileID: 0}
+  endPieceMat: {fileID: 2100000, guid: 8fb8d574ec792fa4c923d39388fde4b8, type: 2}
+  straightPieceMat: {fileID: 2100000, guid: 8cd9eb7ddda2d774480477e5d3851dda, type: 2}
+  tPieceMat: {fileID: 2100000, guid: 69b4f4b7fd853894ba11fd01892ddfdf, type: 2}
+  lPieceMat: {fileID: 2100000, guid: ac04e3cf50d03114c9c9961f03f9ef3b, type: 2}
+  corruptedEndPieceMat: {fileID: 2100000, guid: 698aaa896db132e48bea276f90c5fab5, type: 2}
+  corruptedStraightPieceMat: {fileID: 2100000, guid: 5d84303107a29b04cb5d78ff08862bb8, type: 2}
+  corruptedTPieceMat: {fileID: 2100000, guid: 4a3685dc03179444186639cafb55e544, type: 2}
+  corruptedLPieceMat: {fileID: 2100000, guid: 03248b4822106764d9ade328b70ded12, type: 2}
+  transLeftPieceMat: {fileID: 2100000, guid: 132c3113cc38f64408044ec4b71854ae, type: 2}
+  transRightPieceMat: {fileID: 2100000, guid: d17120df3fb572d4f83b4e114e1caa1c, type: 2}
   visualizePlayerGridLocation: 0
   visualizeMap: 0
   visualizePlayerNextLocation: 0
@@ -92694,6 +92702,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b5a584725b8c6546a3c6be1c33dd2ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7008451262766591889 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2342722873579527333, guid: 5c2ae3947f92f2148b8d62a5f205cb67, type: 3}
+  m_PrefabInstance: {fileID: 7008451262766591887}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7008451262766591890 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6809632084623713245, guid: 5c2ae3947f92f2148b8d62a5f205cb67, type: 3}
+  m_PrefabInstance: {fileID: 7008451262766591887}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 935d0fed67999d448a2de18e50a72b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &8563898531173655317
