@@ -258,12 +258,14 @@ public class MainMenuManager : MonoBehaviour
     {
         UIAudio.PlayOneShot(buttonClick);
         yield return new WaitForSecondsRealtime(0.3f);
+        SaveData.Save();
         SceneManager.LoadScene(sceneIndex);
     }
     IEnumerator LoadScene(string sceneName)
     {
         UIAudio.PlayOneShot(buttonClick);
         yield return new WaitForSecondsRealtime(0.3f);
+        SaveData.Save();
         SceneManager.LoadScene(sceneName);
     }
 

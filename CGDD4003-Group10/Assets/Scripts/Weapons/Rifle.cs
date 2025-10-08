@@ -64,14 +64,14 @@ public class Rifle : Weapon
 
                 if (targetAreaCollider != null && captureTentacle == null)
                 {
-                    Ghost.HitInformation hitInformation = targetAreaCollider.OnShot(weaponInfo.damageMultiplier);
+                    Ghost.HitInformation hitInformation = targetAreaCollider.OnShot(weaponInfo.damageMultiplier, weaponInfo.scoreMultiplier);
                     Score.AddToScore(Color.gray, (int)((hitInformation.pointWorth + hitInformation.targetArea.pointsAddition) * weaponInfo.scoreMultiplier));
 
                     SpawnBlood(hitInformation.bigBlood, hitInformation.smallBlood, hitInformation.targetArea.difficulty, hit);
                 }
                 else if (bossCollider != null)
                 {
-                    Boss.BossHitInformation hitInformation = bossCollider.boss.GotHit(hit.point, bossCollider.HeadID, weaponInfo.damageMultiplier);
+                    Boss.BossHitInformation hitInformation = bossCollider.boss.GotHit(hit.point, bossCollider.HeadID, weaponInfo.damageMultiplier, weaponInfo.scoreMultiplier);
                     if (hitInformation.pointWorth > 0)
                         Score.AddToScore(Color.gray, (int)(hitInformation.pointWorth * weaponInfo.scoreMultiplier));
                 }

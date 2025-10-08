@@ -53,14 +53,14 @@ public class Shotgun : Weapon
 
                     if (targetAreaCollider != null && captureTentacle == null)
                     {
-                        Ghost.HitInformation hitInformation = targetAreaCollider.OnShot(weaponInfo.damageMultiplier / numOfShots);
+                        Ghost.HitInformation hitInformation = targetAreaCollider.OnShot(weaponInfo.damageMultiplier / numOfShots, weaponInfo.scoreMultiplier / numOfShots);
                         Score.AddToScore(Color.gray, (int)((hitInformation.pointWorth + hitInformation.targetArea.pointsAddition) * (weaponInfo.scoreMultiplier / numOfShots)));
 
                         SpawnBlood(hitInformation.bigBlood, hitInformation.smallBlood, hitInformation.targetArea.difficulty, hit);
                     }
                     else if (bossCollider != null)
                     {
-                        Boss.BossHitInformation hitInformation = bossCollider.boss.GotHit(hit.point, bossCollider.HeadID, weaponInfo.damageMultiplier / numOfShots);
+                        Boss.BossHitInformation hitInformation = bossCollider.boss.GotHit(hit.point, bossCollider.HeadID, weaponInfo.damageMultiplier / numOfShots, weaponInfo.scoreMultiplier / numOfShots);
                         if (hitInformation.pointWorth > 0)
                             Score.AddToScore(Color.gray, (int)(hitInformation.pointWorth * (weaponInfo.scoreMultiplier / numOfShots)));
                     }

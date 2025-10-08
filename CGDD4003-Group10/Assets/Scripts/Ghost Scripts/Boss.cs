@@ -336,7 +336,7 @@ public class Boss : MonoBehaviour
             }
 
             //Movement phase has ended so attack
-            if(movementPhaseTimer <= 0)
+            else if(movementPhaseTimer <= 0)
             {
                 if (canMove)
                     rb.velocity = Vector3.zero;
@@ -348,7 +348,7 @@ public class Boss : MonoBehaviour
             }
 
             //Initiate a dash
-            if(dashStartTimer <= 0)
+            else if(dashStartTimer <= 0)
             {
                 currentState = BossState.Dash;
 
@@ -695,7 +695,7 @@ public class Boss : MonoBehaviour
     }
 
     //Boss was hit with the railgun
-    public BossHitInformation GotHit(Vector3 hitPosition, int headID, float damageMultiplier = 1)
+    public BossHitInformation GotHit(Vector3 hitPosition, int headID, float damageMultiplier = 1, float scoreMultiplier = 1)
     {
         BossHitInformation hit = new BossHitInformation();
         hit.pointWorth = 0;
@@ -736,7 +736,7 @@ public class Boss : MonoBehaviour
             if (bossHit != null) bossHit.Play();
 
             SpawnBlood(3, headID);
-            StartCoroutine(Knockback(-transform.forward * Time.deltaTime * 10000, 0.1f));
+            StartCoroutine(Knockback(-transform.forward * Time.deltaTime * 100, 0.1f));
 
             //hitSoundSource.PlayOneShot(hitSound);
         }
@@ -752,7 +752,7 @@ public class Boss : MonoBehaviour
 
             GameObject go = Instantiate(scoreIncrementPrefab, spawnPoint, scoreIncrementPrefab.transform.rotation);
             ScoreIncrementDisplay display = go.GetComponent<ScoreIncrementDisplay>();
-            if (display) display.SetText((hit.pointWorth).ToString());
+            if (display) display.SetText((Mathf.RoundToInt(hit.pointWorth * scoreMultiplier)).ToString());
         }
 
         //Return the points awarded

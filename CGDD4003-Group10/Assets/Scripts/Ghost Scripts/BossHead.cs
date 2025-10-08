@@ -88,19 +88,19 @@ public class BossHead : MonoBehaviour
         int points = 0;
         if(shieldActive == false && health > 0)
         {
-            health -= amount * Mathf.Max(1, (newGhostsKilled - ghostsKilled - 1) * patienceMultiplier);
-            if(debug) print(name + " - Health: " + health + ", Max Health: " + currentDifficultySettings.maxHealth);
+            health -= amount * Mathf.Max(1, 1 + (newGhostsKilled - ghostsKilled - 1) * (1 - patienceMultiplier));
+            if (debug) print(name + " - Health: " + health + ", Max Health: " + currentDifficultySettings.maxHealth);
             if (health <= 0)
             {
                 health = 0;
                 dead = true;
-                points = Mathf.RoundToInt((float)currentDifficultySettings.killedPointWorth * Mathf.Max(1, (newGhostsKilled - ghostsKilled - 1) * patienceMultiplier));
+                points = Mathf.RoundToInt((float)currentDifficultySettings.killedPointWorth * Mathf.Max(1, 1 + (newGhostsKilled - ghostsKilled - 1) * (1 - patienceMultiplier)));
 
                 boss.HeadKilled(id);
             }
             else
             {
-                points = Mathf.RoundToInt((float)currentDifficultySettings.hitPointWorth * Mathf.Max(1, (newGhostsKilled - ghostsKilled - 1) * patienceMultiplier));
+                points = Mathf.RoundToInt((float)currentDifficultySettings.hitPointWorth * Mathf.Max(1, 1 + (newGhostsKilled - ghostsKilled - 1) * (1 - patienceMultiplier)));
                 this.newGhostsKilled = newGhostsKilled;
                 if (newGhostsKilled - ghostsKilled <= 1)
                     ghostsKilled = newGhostsKilled;

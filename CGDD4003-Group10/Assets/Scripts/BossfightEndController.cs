@@ -23,6 +23,7 @@ public class BossfightEndController : MonoBehaviour
     [SerializeField] GameObject pedastal;
     [SerializeField] GameObject portals;
     [SerializeField] GameObject decorations;
+    [SerializeField] GameObject skyPortal;
 
     public void StartEndSequence()
     {
@@ -59,6 +60,7 @@ public class BossfightEndController : MonoBehaviour
         pedastal.SetActive(false);
         portals.SetActive(false);
         decorations.SetActive(false);
+        skyPortal.SetActive(false);
 
         GameObject[] corpses = GameObject.FindGameObjectsWithTag("Corpse");
         foreach(GameObject corpse in corpses)

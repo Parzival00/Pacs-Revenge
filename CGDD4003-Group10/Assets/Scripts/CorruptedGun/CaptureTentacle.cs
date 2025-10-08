@@ -53,6 +53,8 @@ public class CaptureTentacle : MonoBehaviour
             Init();
         }
         tentacleAnimator.SetTrigger("Reset");
+        tentacleAnimator.ResetTrigger("Retreat");
+        tentacleAnimator.ResetTrigger("Death");
         collider.enabled = true;
     }
 
@@ -69,5 +71,12 @@ public class CaptureTentacle : MonoBehaviour
 
             corruptedGun.TentacleKilled();
         }
+    }
+
+    public void RetreatTentacle()
+    {
+        tentacleAnimator.ResetTrigger("Reset");
+        tentacleAnimator.SetTrigger("Retreat");
+        collider.enabled = false;
     }
 }

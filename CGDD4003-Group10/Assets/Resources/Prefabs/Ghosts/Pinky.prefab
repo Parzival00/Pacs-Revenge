@@ -1503,6 +1503,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8601821738562081083}
   - component: {fileID: 2967585754232143670}
+  - component: {fileID: 3004568496002266427}
   m_Layer: 0
   m_Name: PinkyChaseAudio
   m_TagString: Untagged
@@ -1657,6 +1658,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3004568496002266427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546994504624159493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a345d906991a66a45bb759c952a5d4ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1574672456590183015
 GameObject:
   m_ObjectHideFlags: 0
@@ -4189,7 +4202,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -7493496845745230110, guid: 28f800679063ee84fb2e3c41fee59bc0, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.35
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -4198,7 +4211,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 50
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -5870,7 +5883,7 @@ MonoBehaviour:
   chaseSoundFar: {fileID: 8300000, guid: c4c6294a0b3a6ad4ca1d501716280123, type: 3}
   closeSoundBlendpadding: 1
   dstToBlendToCloseSound: 2.8
-  closePitch: 1.52
+  closePitch: 1.2
   hitSoundSource: {fileID: 5193132898714085241}
   biteSoundSource: {fileID: 6068922168846177825}
   zapSoundSource: {fileID: 2379479028380407056}

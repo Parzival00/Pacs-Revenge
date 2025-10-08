@@ -22,10 +22,10 @@ public class TargetAreaCollider : MonoBehaviour
             ghost = transform.root.GetComponent<Ghost>();
     }
 
-    public Ghost.HitInformation OnShot(float damageMultiplier = 1)
+    public Ghost.HitInformation OnShot(float damageMultiplier = 1, float scoreMultiplier = 1)
     {
         //ghost.GotHit(targetAreaType);
-        return ghost.GotHit(targetAreaType, damageMultiplier);
+        return ghost.GotHit(targetAreaType, damageMultiplier, scoreMultiplier);
     }
 
     public TargetInfo OnTarget()

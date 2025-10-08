@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class CorruptedGun : MonoBehaviour
 {
+    [System.Serializable]
+    public struct DifficultySetting
+    {
+        public int tentacleKillsRequired;
+    }
+
     [SerializeField] CaptureTentacle[] tentacles;
     [SerializeField] bool activate;
     [SerializeField] AudioClip activateSound;
+    [SerializeField] DifficultySetting[] difficultySettings;
+    DifficultySetting currentDifficultySettings;
 
     PlayerController player;
     AudioSource audio;
@@ -26,6 +34,15 @@ public class CorruptedGun : MonoBehaviour
         for (int i = 0; i < totalTentacleAmount; i++)
         {
             tentacles[i].gameObject.SetActive(false);
+        }
+
+        if (Score.difficulty < difficultySettings.Length)
+        {
+            currentDifficultySettings = difficultySettings[Score.difficulty];
+        }
+        else
+        {
+            currentDifficultySettings = difficultySettings[0];
         }
     }
 
@@ -66,7 +83,7 @@ public class CorruptedGun : MonoBehaviour
     {
         killedTentacleCount++;
 
-        if(killedTentacleCount >= totalTentacleAmount)
+        if(killedTentacleCount >= Mathf.Min(currentDifficultySettings.tentacleKillsRequired, totalTentacleAmount))
         {
             deactivation = StartCoroutine(DeactivateEntrapment());
         }
@@ -77,6 +94,11 @@ public class CorruptedGun : MonoBehaviour
     {
         if (player)
             player.SetTrapped(false);
+
+        for (int i = 0; i < totalTentacleAmount; i++)
+        {
+            tentacles[i].RetreatTentacle();
+        }
 
         yield return new WaitForSeconds(1f);
 

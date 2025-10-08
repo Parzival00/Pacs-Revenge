@@ -24,6 +24,8 @@ public class Radar : MonoBehaviour
     
     bool enhancedRadarOn = false;
 
+    HUDMessenger hudMessenger;
+
     GameObject closestPellet;
     private void Start()
     {
@@ -34,6 +36,8 @@ public class Radar : MonoBehaviour
 
         if (indicator && minimapCam)
             indicator.transform.localScale = Vector3.one * minimapCam.orthographicSize * 2;
+
+        hudMessenger = FindObjectOfType<HUDMessenger>();
     }
 
     void Update()
@@ -143,5 +147,7 @@ public class Radar : MonoBehaviour
 
         if (indicator && minimapCam)
             indicator.transform.localScale = Vector3.one * minimapCam.orthographicSize * 2;
+
+        hudMessenger.Display(Localizer.TextIdentifier.Game_Enhanced_Radar_Inactive, 1);
     }
 }

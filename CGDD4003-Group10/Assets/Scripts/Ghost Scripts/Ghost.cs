@@ -354,7 +354,7 @@ public class Ghost : MonoBehaviour
             chaseSoundSource.pitch = farPitch;
         }
 
-        if (!chaseSoundSource.isPlaying || (chaseSoundSource.clip != chaseSoundFar))
+        if ((!chaseSoundSource.isPlaying || (chaseSoundSource.clip != chaseSoundFar)) && !MainMenuManager.isGamePaused)
         {
             chaseSoundSource.Play();
         }
@@ -1082,7 +1082,7 @@ public class Ghost : MonoBehaviour
     /// <summary>
     /// Called when ghost is hit with the gun and sets the mode to respawn and returns a hit information struct which includes points to add and target area hit benefits
     /// </summary>
-    public virtual HitInformation GotHit(TargetAreaType type, float damageMultiplier = 1)
+    public virtual HitInformation GotHit(TargetAreaType type, float damageMultiplier = 1, float scoreMultiplier = 1)
     {
         HitInformation hit = new HitInformation();
         hit.targetArea = GetTargetArea(type);
@@ -1142,7 +1142,7 @@ public class Ghost : MonoBehaviour
             ScoreIncrementDisplay display = go.GetComponent<ScoreIncrementDisplay>();
             if (display)
             {
-                display.SetText((hit.pointWorth + hit.targetArea.pointsAddition).ToString());
+                display.SetText((Mathf.RoundToInt((hit.pointWorth + hit.targetArea.pointsAddition) * scoreMultiplier)).ToString());
             }
         }
         return hit;

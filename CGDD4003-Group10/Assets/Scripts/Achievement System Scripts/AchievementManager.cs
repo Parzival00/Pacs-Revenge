@@ -188,6 +188,10 @@ public class AchievementManager
 
             //Completionist Achievement (Get all other achievements)
             SIM.checkCompletion();
+            if(potential.Count == 1 && potential[0].title == "Completionist")
+            {
+                displayAchievement("Completionist");
+            }
         }
     }
 
@@ -201,6 +205,10 @@ public class AchievementManager
         if (Score.difficulty == 0)
         {
             displayAchievement("Seriously??");
+        }
+        if(deaths.value >= 100)
+        {
+            displayAchievement("OOF");
         }
 
         save();
@@ -217,6 +225,11 @@ public class AchievementManager
             //    Debug.Log(item.value);
             SteamIntegrationManager SIM = GameObject.FindObjectOfType<SteamIntegrationManager>();
             SIM.addFruit();
+
+            if (fruitCollected.Count >= 8)
+            {
+                displayAchievement("Nom Nom Nom");
+            }
         }
         save();
     }
@@ -250,6 +263,16 @@ public class AchievementManager
                 }
                 break;
 
+        }
+
+        checkEndings();
+    }
+
+    public static void checkEndings()
+    {
+        if(endings.ending0 && endings.ending1 && endings.ending2)
+        {
+            displayAchievement("Triple Threat");
         }
     }
 

@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static FruitController;
 using static UnityEngine.Rendering.DebugUI;
 
 public class Score : MonoBehaviour
@@ -137,6 +138,7 @@ public class Score : MonoBehaviour
             totalStunsFired = 0;
             totalTimePlayed = 0;
 
+
             //Wah Wah! achievement (Play Baby mode)
             if (difficulty == 0)
             {
@@ -146,11 +148,13 @@ public class Score : MonoBehaviour
             fruitsCollected = 0;
             PlayerPrefs.SetInt("FruitsCollected", fruitsCollected);
             SaveData.updateLevel(1);
+            SaveData.updateStatuses(score, totalGhostKilled, totalShotsFired, totalStunsFired, totalShieldsRecieved, totalLivesConsumed, totalPelletsCollected, (int)totalTimePlayed, fruitsCollected);
+            SaveData.Save();
         }
-        else
+        /*else
         {
             fruitsCollected = PlayerPrefs.GetInt("FruitsCollected");
-        }
+        }*/
 
         insanityEnding = currentLevelName == "InsanityEnding";
         bossEnding = currentLevelName == "Bossfight";
@@ -227,7 +231,7 @@ public class Score : MonoBehaviour
         else if (bossEnding)
         {
             UpdateScore();
-            pelletRemaining.text = "99$%&!*";
+            pelletRemaining.text = "99$%&*";
 
             bossStungunRechargeTimer -= Time.deltaTime;
 
@@ -464,7 +468,7 @@ public class Score : MonoBehaviour
         PlayerPrefs.SetInt("FruitsCollected", fruitsCollected);
     }
 
-    public static void UpdatePlayerStats(int savedScore, int kills, int shots, int stuns, int shields, int deaths, int pellets, int runtime)
+    public static void UpdatePlayerStats(int savedScore, int kills, int shots, int stuns, int shields, int deaths, int pellets, int runtime, int fruits)
     {
         score = savedScore;
         totalGhostKilled = kills;
@@ -474,6 +478,7 @@ public class Score : MonoBehaviour
         totalLivesConsumed = totalLivesConsumed;
         totalPelletsCollected = pellets;
         totalTimePlayed = (float)runtime;
+        fruitsCollected = fruits;
 
         string statsString = "Score: " + score + "\nKills: " + totalGhostKilled + "\nShots Fired: " + totalShotsFired + "\nStuns Fired: " + totalStunsFired + "\nShields Used: " + totalShieldsRecieved + "\nDeaths: " + totalLivesConsumed + "\nRun Time: " + totalTimePlayed;
         print(statsString);
@@ -523,16 +528,18 @@ public class Score : MonoBehaviour
 
         if (playerDied)
         {
-            SaveData.ClearSave();
             if (bossEnding)
             {
+                SaveData.ClearSave();
                 PlayerPrefs.SetInt("Ending", 0);
+                playerController.SaveLives();
                 totalTimePlayed += Time.time - sceneStartTime;
                 AchievementManager.addEnding(0);
                 SceneManager.LoadScene("End");
             }
             else
             {
+                SaveData.DeathSave();
                 GameEnd();
             }
         }
@@ -561,6 +568,7 @@ public class Score : MonoBehaviour
             else if (bossEnding)
             {
                 PlayerPrefs.SetInt("Ending", 1);
+                playerController.SaveLives();
                 SaveData.ClearSave();
                 totalTimePlayed += Time.time - sceneStartTime;
                 AchievementManager.displayAchievement("You Made It!");
@@ -574,6 +582,7 @@ public class Score : MonoBehaviour
             else if (insanityEnding)
             {
                 PlayerPrefs.SetInt("Ending", 2);
+                playerController.SaveLives();
                 SaveData.ClearSave();
                 totalTimePlayed += Time.time - sceneStartTime;
                 AchievementManager.displayAchievement("Corruption");
@@ -584,8 +593,10 @@ public class Score : MonoBehaviour
             {
                 totalTimePlayed += Time.time - sceneStartTime;
 
+                playerController.SaveLives();
+
                 SaveData.updateLevel(SceneManager.GetActiveScene().buildIndex + 1);
-                SaveData.updateStatuses(score, totalGhostKilled, totalShotsFired, totalStunsFired, totalShieldsRecieved, totalLivesConsumed, totalPelletsCollected, (int)totalTimePlayed);
+                SaveData.updateStatuses(score, totalGhostKilled, totalShotsFired, totalStunsFired, totalShieldsRecieved, totalLivesConsumed, totalPelletsCollected, (int)totalTimePlayed, fruitsCollected);
 
                 switch (SceneManager.GetActiveScene().buildIndex)
                 {

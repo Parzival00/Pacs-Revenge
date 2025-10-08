@@ -139,6 +139,7 @@ public class Localizer : MonoBehaviour
         Weapon_Launcher_Description,
         Weapon_Sword_Name,
         Weapon_Sword_Description,
+        UI_Credits_Guitar_Solo,
     }
 
     [System.Serializable]

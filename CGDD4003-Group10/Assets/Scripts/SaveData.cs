@@ -21,6 +21,7 @@ public static class SaveData
     static sInt currentDeathCount;
     static sInt currentPelletsCollected;
     static sInt currentRunTime;
+    static sInt currentFruitsCollected;
 
     static SaveData()
     {
@@ -39,8 +40,7 @@ public static class SaveData
         currentDeathCount = new sInt(0);
         currentPelletsCollected = new sInt(0);
         currentRunTime = new sInt(0);
-
-
+        currentFruitsCollected = new sInt(0);
 
         if (File.Exists(weaponsFile))
         {
@@ -92,6 +92,7 @@ public static class SaveData
             currentDeathCount = JsonUtility.FromJson<sInt>(jsonLines[lineIndex++]);
             currentPelletsCollected = JsonUtility.FromJson<sInt>(jsonLines[lineIndex++]);
             currentRunTime = JsonUtility.FromJson<sInt>(jsonLines[lineIndex++]);
+            currentFruitsCollected = JsonUtility.FromJson<sInt>(jsonLines[lineIndex++]);
 
             //PlayerPrefs.SetInt("Weapon", currentWeapon.value);
 
@@ -121,8 +122,23 @@ public static class SaveData
         jsonLines.Add(JsonUtility.ToJson(currentDeathCount));
         jsonLines.Add(JsonUtility.ToJson(currentPelletsCollected));
         jsonLines.Add(JsonUtility.ToJson(currentRunTime));
+        jsonLines.Add(JsonUtility.ToJson(currentFruitsCollected));
 
         File.WriteAllLines(saveFile, jsonLines);
+    }
+
+    public static void DeathSave()
+    {
+        File.Delete(saveFile);
+
+        currentScore = new sInt(0);
+        //switch(currentDifficulty.value)
+        //{
+        //    case 0:
+
+        //}
+
+        Save();
     }
 
     public static void ClearSave()
@@ -152,7 +168,10 @@ public static class SaveData
             unlockedWeapons.Add(weapon);
 
             List<string> jsonLines = new List<string>();
-            jsonLines.Add(JsonUtility.ToJson(weapon));
+            foreach(sInt w in unlockedWeapons)
+            {
+                jsonLines.Add(JsonUtility.ToJson(w));
+            }
             File.WriteAllLines(weaponsFile, jsonLines);
         }
     }
@@ -173,7 +192,10 @@ public static class SaveData
             unlockedWeapons.Add(newWeapon);
 
             List<string> jsonLines = new List<string>();
-            jsonLines.Add(JsonUtility.ToJson(newWeapon));
+            foreach (sInt w in unlockedWeapons)
+            {
+                jsonLines.Add(JsonUtility.ToJson(w));
+            }
             File.WriteAllLines(weaponsFile, jsonLines);
         }
     }
@@ -188,7 +210,7 @@ public static class SaveData
         currentWeapon.value = weapon;
     }
 
-    public static void updateStatuses(int score, int kills, int shots, int stuns, int shields, int deaths, int pellets, int runtime)
+    public static void updateStatuses(int score, int kills, int shots, int stuns, int shields, int deaths, int pellets, int runtime, int fruitsCollected)
     {
         currentScore = new sInt(score);
         currentKillCount = new sInt(kills);
@@ -197,6 +219,7 @@ public static class SaveData
         currentDeathCount = new sInt(deaths);
         currentDeathCount = new sInt(pellets);
         currentRunTime = new sInt(runtime);
+        currentFruitsCollected = new sInt(fruitsCollected);
     }
     #endregion
 
@@ -229,7 +252,7 @@ public static class SaveData
     public static void getPlayerMetrics()
     {
         Debug.Log("Getting Player metrics");
-        Score.UpdatePlayerStats(currentScore.value, currentKillCount.value, currentShotsFired.value, currentStuns.value, currentShieldsUsed.value, currentDeathCount.value, currentPelletsCollected.value, currentRunTime.value);
+        Score.UpdatePlayerStats(currentScore.value, currentKillCount.value, currentShotsFired.value, currentStuns.value, currentShieldsUsed.value, currentDeathCount.value, currentPelletsCollected.value, currentRunTime.value, currentFruitsCollected.value);
     }
 
     #endregion

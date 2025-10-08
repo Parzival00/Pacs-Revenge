@@ -25949,6 +25949,23 @@ MonoBehaviour:
   clydeHead: {fileID: 2932101892771913630}
   difficultySettings:
   - difficultyLevel: 0
+    movementSpeed: 175
+    dashSpeed: 300
+    movementPhaseLength: 7
+    dashChance: 0.25
+    dashPhaseLength: 3
+    normalAttackCooldown: 3
+    enrageAttackCooldown: 1.75
+    slamAttackCooldown: 2
+    attackLeading: 0.25
+    blinkyAttackDuration: 2
+    blinkyMaxRange: 15
+    blinkyRotationSmoothing: 2
+    slamThreshold: 3.5
+    slamStunLength: 0.15
+    baseDamage: 65
+    patienceMultiplier: 1.1
+  - difficultyLevel: 1
     movementSpeed: 200
     dashSpeed: 325
     movementPhaseLength: 6
@@ -25965,40 +25982,23 @@ MonoBehaviour:
     slamStunLength: 0.15
     baseDamage: 50
     patienceMultiplier: 1.1
-  - difficultyLevel: 1
-    movementSpeed: 250
-    dashSpeed: 375
-    movementPhaseLength: 4.5
-    dashChance: 0.5
-    dashPhaseLength: 2.25
-    normalAttackCooldown: 1.5
-    enrageAttackCooldown: 1
-    slamAttackCooldown: 1
-    attackLeading: 0.5
-    blinkyAttackDuration: 3
-    blinkyMaxRange: 20
-    blinkyRotationSmoothing: 2.5
-    slamThreshold: 4
-    slamStunLength: 0.2
-    baseDamage: 50
-    patienceMultiplier: 1.05
   - difficultyLevel: 2
-    movementSpeed: 300
-    dashSpeed: 400
-    movementPhaseLength: 3
-    dashChance: 0.7
-    dashPhaseLength: 1.5
-    normalAttackCooldown: 1
-    enrageAttackCooldown: 0.7
-    slamAttackCooldown: 0.7
-    attackLeading: 0.55
-    blinkyAttackDuration: 4
-    blinkyMaxRange: 25
-    blinkyRotationSmoothing: 2.75
-    slamThreshold: 5
-    slamStunLength: 0.35
-    baseDamage: 50
-    patienceMultiplier: 1.035
+    movementSpeed: 250
+    dashSpeed: 350
+    movementPhaseLength: 5
+    dashChance: 0.35
+    dashPhaseLength: 3
+    normalAttackCooldown: 2.25
+    enrageAttackCooldown: 1.25
+    slamAttackCooldown: 1.25
+    attackLeading: 0.4
+    blinkyAttackDuration: 3
+    blinkyMaxRange: 18
+    blinkyRotationSmoothing: 1.5
+    slamThreshold: 3.5
+    slamStunLength: 0.25
+    baseDamage: 40
+    patienceMultiplier: 1.1
   rotationSmoothing: 75
   moveCamShakeStrength: 0.5
   moveCamShakeDropoffDist: 15

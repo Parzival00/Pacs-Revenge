@@ -21,6 +21,8 @@ public class TransitionEffect : MonoBehaviour
 
         if(SceneManager.GetActiveScene().name == "GameOverScene" || SceneManager.GetActiveScene().name == "End")
         {
+            print(PlayerPrefs.GetInt("Lives"));
+            print(Score.insanityEnding);
             if(PlayerPrefs.GetInt("Lives") == 0 || Score.insanityEnding)
             {
                 currentTransitionalMat = deathTransitionMat;

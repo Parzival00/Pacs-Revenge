@@ -962,6 +962,10 @@ public class PlayerController : MonoBehaviour
     {
         canBeDamaged = true;
     }
+    public bool GetCanBeDamaged()
+    {
+        return canBeDamaged;
+    }
     public void TakeDamage()
     {
         if (canBeDamaged)
@@ -1104,7 +1108,7 @@ public class PlayerController : MonoBehaviour
             //end game scene
             //corruptedView.SetFloat("_Strength", 0);
             //Score.GameEnd();
-            SaveData.ClearSave();
+            //SaveData.ClearSave();
             Score score = FindObjectOfType<Score>();
             StartCoroutine(score.SceneEnd(true));
         }
@@ -1267,6 +1271,8 @@ public class PlayerController : MonoBehaviour
             invisibilitySource.PlayOneShot(invisibilityDeactivate);
         }
 
+        hudMessenger.Display(Localizer.TextIdentifier.Game_Invisibility_Inactive, 1);
+
         currentWeapon.OnInvisibilityEnd();
     }
     #endregion
@@ -1315,6 +1321,8 @@ public class PlayerController : MonoBehaviour
     {
         speedBoostActivated = false;
         baseSpeed -= speedIncrease;
+
+        hudMessenger.Display(Localizer.TextIdentifier.Game_Speed_Boost_Inactive, 1);
     }
     #endregion
 

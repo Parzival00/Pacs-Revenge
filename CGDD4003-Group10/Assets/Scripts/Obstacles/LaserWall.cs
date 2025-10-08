@@ -136,7 +136,7 @@ public class LaserWall : MonoBehaviour
         if (other.transform.CompareTag("Player"))
         {
             PlayerController player = other.transform.GetComponent<PlayerController>();
-            if (player != null)
+            if (player != null && player.GetCanBeDamaged())
             {
                 laserShockSound.Play();
                 player.TakeDamage();

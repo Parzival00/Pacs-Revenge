@@ -25,8 +25,13 @@ public class CutsceneController : MonoBehaviour
 
     [Header("Credits")]
     [SerializeField] GameObject credits;
+    [SerializeField] GameObject[] creditPages;
     [SerializeField] GameObject continueButton;
     [SerializeField] float creditsShowLength = 5f;
+
+    [Header("Audio Sources")]
+    [SerializeField] AudioSource victoryMusic;
+    [SerializeField] AudioSource creditsMusic;
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +68,11 @@ public class CutsceneController : MonoBehaviour
             }
         }
 
+        if (victoryMusic != null)
+        {
+            victoryMusic.Play();
+        }
+
         float timer = 0;
 
         textBox.text = "";
@@ -90,13 +100,48 @@ public class CutsceneController : MonoBehaviour
     }
     IEnumerator ShowCreditsSequence()
     {
-        credits.gameObject.SetActive(true);
+        StartCoroutine(PlayCreditsMusic());
+
         textBox.gameObject.SetActive(false);
+
+        credits.gameObject.SetActive(true);
 
         continueButton.gameObject.SetActive(false);
 
-        yield return new WaitForSeconds(creditsShowLength);
+        for (int i = 0; i < creditPages.Length; i++)
+        {
+            
 
-        continueButton.gameObject.SetActive(true);
+            creditPages[i].gameObject.SetActive(true);
+            if (i == creditPages.Length - 1)
+            {
+                continueButton.gameObject.SetActive(true);
+                break;
+            }
+            yield return new WaitForSeconds(creditsShowLength);
+            creditPages[i].gameObject.SetActive(false);
+        }
+    }
+
+    IEnumerator PlayCreditsMusic()
+    {
+        if (victoryMusic != null && victoryMusic.isPlaying) 
+        {
+            float t = 0;
+            float deafenLength = 0.5f;
+            while (t < deafenLength)
+            {
+                victoryMusic.volume = 1 - t / deafenLength;
+                yield return null;
+                t += Time.deltaTime;
+            }
+            victoryMusic.volume = 0;
+            victoryMusic.Stop();
+        }
+
+        if (creditsMusic != null)
+        {
+            creditsMusic.Play();
+        }
     }
 }
