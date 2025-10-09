@@ -168,7 +168,10 @@ public class Score : MonoBehaviour
         AudioListener.volume = 1;
         wonLevel = false;
 
-        pointValueIndicator.text = "";
+        if (pointValueIndicator != null)
+        {
+            pointValueIndicator.text = "";
+        }
         pointsIndicatorAmount = 0;
         previousScore = score;
 
@@ -617,7 +620,7 @@ public class Score : MonoBehaviour
                         SaveData.addWeaponUnlock(2);
                         break;
                     case 7:
-                        SaveData.addWeaponUnlock(2);
+                        SaveData.addWeaponUnlock(3);
                         break;
                         //Can add more weapons here later...
                 }

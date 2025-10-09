@@ -97,6 +97,11 @@ public class DangerIndicatorController : MonoBehaviour
                 clostestGhostDistSqr = float.MaxValue;
                 for (int i = 0; i < ghosts.Length; i++)
                 {
+                    if (ghosts[i] == null)
+                    {
+                        continue;
+                    }
+
                     if (ghosts[i].CurrentMode == Ghost.Mode.Respawn)
                     {
                         continue;
