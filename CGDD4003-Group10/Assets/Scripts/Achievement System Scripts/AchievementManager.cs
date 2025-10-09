@@ -266,6 +266,7 @@ public class AchievementManager
         }
 
         checkEndings();
+        save();
     }
 
     public static void checkEndings()
