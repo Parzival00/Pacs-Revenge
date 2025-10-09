@@ -28,6 +28,8 @@ public class LauncherProjectile : MonoBehaviour
     bool activated = false;
     bool oneTimeActivation = false;
 
+    bool exploding = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -91,6 +93,11 @@ public class LauncherProjectile : MonoBehaviour
 
         if(other.tag == "Enemy" || other.tag == "Boss")
         {
+            if (exploding)
+            {
+                return;
+            }
+
             activated = false;
 
             StartCoroutine(ExplodeRoutine());
@@ -99,6 +106,11 @@ public class LauncherProjectile : MonoBehaviour
 
     public void ForceExplosion()
     {
+        if(exploding)
+        {
+            return;
+        }
+
         if(!activated)
         {
             Activate();
@@ -111,15 +123,21 @@ public class LauncherProjectile : MonoBehaviour
 
     IEnumerator ExplodeRoutine()
     {
-        if(explosionSource && explosionClip)
-        {
-            explosionSource.PlayOneShot(explosionClip);
-        }
+        collider.enabled = false;
+        exploding = true;
+
+
         animator.SetTrigger("Explode");
 
         launcher.ProjectileExploded(this);
 
-        yield return new WaitForSeconds(0.25f);
+
+        yield return new WaitForSeconds(0.4f);
+
+        if (explosionSource && explosionClip)
+        {
+            explosionSource.PlayOneShot(explosionClip);
+        }
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, blastRadius, explodeMask);
         for (int i = 0; i < colliders.Length; i++) 
@@ -153,7 +171,9 @@ public class LauncherProjectile : MonoBehaviour
             }
         }
 
-        Destroy(gameObject, 2f);
+        collider.enabled = false;
+
+        Destroy(gameObject, 4f);
     }
 
     private void OnDrawGizmos()
