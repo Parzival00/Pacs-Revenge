@@ -11,8 +11,10 @@ public class LauncherProjectile : MonoBehaviour
     [SerializeField] float activationDelay = 2f;
     [SerializeField] float blastRadius = 1f;
     [SerializeField] LayerMask explodeMask;
-    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioSource explosionSource;
+    [SerializeField] AudioSource activateSource;
     [SerializeField] AudioClip explosionClip;
+    [SerializeField] AudioClip activateClip;
 
     Vector3 launchDir;
 
@@ -44,6 +46,7 @@ public class LauncherProjectile : MonoBehaviour
 
     void Activate()
     {
+        activateSource.PlayOneShot(activateClip);
         activated = true;
         animator.SetTrigger("Activate");
         oneTimeActivation = true;
@@ -108,9 +111,9 @@ public class LauncherProjectile : MonoBehaviour
 
     IEnumerator ExplodeRoutine()
     {
-        if(audioSource && explosionClip)
+        if(explosionSource && explosionClip)
         {
-            audioSource.PlayOneShot(explosionClip);
+            explosionSource.PlayOneShot(explosionClip);
         }
         animator.SetTrigger("Explode");
 
