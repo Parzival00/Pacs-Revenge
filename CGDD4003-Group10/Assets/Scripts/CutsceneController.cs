@@ -33,6 +33,8 @@ public class CutsceneController : MonoBehaviour
     [SerializeField] AudioSource victoryMusic;
     [SerializeField] AudioSource creditsMusic;
 
+    bool skipped = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -82,6 +84,8 @@ public class CutsceneController : MonoBehaviour
             string paragraphText = Localizer.instance.GetLanguageText(cutsceneText.paragraphs[i]);
             for (int e = 0; e < paragraphText.Length; e++)
             {
+                if (skipped) break;
+
                 if (timer >= timeTillCanSkip) skipButton.SetActive(true);
 
                 textBox.text += paragraphText[e];
@@ -89,9 +93,11 @@ public class CutsceneController : MonoBehaviour
                 timer += 1f / writingRate;
             }
             textBox.text += "\n\n";
+
+            if (skipped) break;
         }
 
-        skipButton.SetActive(true);
+        skipButton.SetActive(!skipped);
     }
 
     public void ShowCredits()
@@ -100,6 +106,8 @@ public class CutsceneController : MonoBehaviour
     }
     IEnumerator ShowCreditsSequence()
     {
+        skipped = true;
+
         StartCoroutine(PlayCreditsMusic());
 
         textBox.gameObject.SetActive(false);
@@ -107,6 +115,7 @@ public class CutsceneController : MonoBehaviour
         credits.gameObject.SetActive(true);
 
         continueButton.gameObject.SetActive(false);
+        skipButton.gameObject.SetActive(false);
 
         for (int i = 0; i < creditPages.Length; i++)
         {
@@ -127,11 +136,13 @@ public class CutsceneController : MonoBehaviour
     {
         if (victoryMusic != null && victoryMusic.isPlaying) 
         {
+            float startVolume = victoryMusic.volume;
+
             float t = 0;
-            float deafenLength = 0.5f;
+            float deafenLength = 1f;
             while (t < deafenLength)
             {
-                victoryMusic.volume = 1 - t / deafenLength;
+                victoryMusic.volume = Mathf.Lerp(0, startVolume, 1 - t / deafenLength);
                 yield return null;
                 t += Time.deltaTime;
             }

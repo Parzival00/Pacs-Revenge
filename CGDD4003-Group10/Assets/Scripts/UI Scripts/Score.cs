@@ -497,7 +497,17 @@ public class Score : MonoBehaviour
 
         wonLevel = true;
 
-        hudMessenger.Display(Localizer.TextIdentifier.Game_Level_Cleared, 2f);
+        if (!playerDied)
+        {
+            if (bossEnding)
+            {
+                hudMessenger.Display(Localizer.TextIdentifier.Game_Boss_Clear, 2f);
+            }
+            else
+            {
+                hudMessenger.Display(Localizer.TextIdentifier.Game_Level_Cleared, 2f);
+            }
+        }
 
         //Resets every scene change
         ghostsKilledThisLevel = 0;
