@@ -604,6 +604,7 @@ RectTransform:
   - {fileID: 1109963727}
   - {fileID: 189187262}
   - {fileID: 1848955716}
+  - {fileID: 499046187}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -984,8 +985,11 @@ MonoBehaviour:
   beginningText:
     paragraphs: 5b0000005c0000005d000000
   credits: {fileID: 46735076}
+  creditPages: []
   continueButton: {fileID: 161782193}
   creditsShowLength: 5
+  victoryMusic: {fileID: 0}
+  creditsMusic: {fileID: 0}
 --- !u!1 &274964235
 GameObject:
   m_ObjectHideFlags: 0
@@ -1934,6 +1938,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 486601986}
   m_CullTransparentMesh: 1
+--- !u!1 &499046186
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 499046187}
+  m_Layer: 5
+  m_Name: AchievementParent
+  m_TagString: AchievementParent
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &499046187
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499046186}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 67537912}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -228, y: -80.88989}
+  m_SizeDelta: {x: 401.4143, y: 161.78027}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &503404324
 GameObject:
   m_ObjectHideFlags: 0

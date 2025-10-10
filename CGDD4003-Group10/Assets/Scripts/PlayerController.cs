@@ -307,18 +307,30 @@ public class PlayerController : MonoBehaviour
             switch (Score.difficulty)
             {
                 case 0:
-                    if (playerLives < defaultPlayerLives)
+                    if (playerLives == 0)
+                    {
+                        playerLives = defaultPlayerLives;
+                    }
+                    else if (playerLives < defaultPlayerLives)
                     {
                         playerLives = defaultPlayerLives;
                     }
                     break;
                 case 1:
-                    if (playerLives < defaultPlayerLives)
+                    if (playerLives == 0)
+                    {
+                        playerLives = 2;
+                    }
+                    else if (playerLives < defaultPlayerLives)
                     {
                         playerLives++;
                     }
                     break;
                 case 2:
+                    if (playerLives == 0)
+                    {
+                        playerLives = 1;
+                    }
                     break;
             }
         }
@@ -719,7 +731,7 @@ public class PlayerController : MonoBehaviour
 
         if (hudMessenger)
         {
-            hudMessenger.Display(railgunAlertMessage, railgunAlertLength);
+            hudMessenger.Display(Localizer.TextIdentifier.Game_Weapon_Message, railgunAlertLength);
         }
 
         currentWeapon.GunAnimator.ResetTrigger("Unequip");

@@ -214,6 +214,7 @@ public static class SaveData
     {
         currentScore = new sInt(score);
         currentKillCount = new sInt(kills);
+        currentStuns = new sInt(stuns);
         currentShotsFired = new sInt(shots);
         currentShieldsUsed = new sInt(shields);
         currentDeathCount = new sInt(deaths);

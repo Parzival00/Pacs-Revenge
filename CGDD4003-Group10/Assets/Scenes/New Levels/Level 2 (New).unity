@@ -28289,9 +28289,9 @@ GameObject:
   - component: {fileID: 689901294}
   - component: {fileID: 689901293}
   - component: {fileID: 689901292}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Plane (1)
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33794,7 +33794,7 @@ PrefabInstance:
     - target: {fileID: 735137633677303596, guid: c3159f505cf2ea4479bc50abe556fb2a, type: 3}
       propertyPath: leverAnimators.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 827528256}
     - target: {fileID: 1999597378129821033, guid: c3159f505cf2ea4479bc50abe556fb2a, type: 3}
       propertyPath: m_Name
       value: ControllableDoor
@@ -33844,6 +33844,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3159f505cf2ea4479bc50abe556fb2a, type: 3}
+--- !u!95 &827528256 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5254232363008982299, guid: c3159f505cf2ea4479bc50abe556fb2a, type: 3}
+  m_PrefabInstance: {fileID: 827528255}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &827543139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -63785,7 +63790,7 @@ GameObject:
   - component: {fileID: 1577671945}
   m_Layer: 14
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -66652,9 +66657,9 @@ GameObject:
   - component: {fileID: 1644757214}
   - component: {fileID: 1644757213}
   - component: {fileID: 1644757212}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Plane (2)
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -163,7 +163,54 @@ public class MainMenuManager : MonoBehaviour
             weaponSelection = PlayerPrefs.GetInt("Weapon", 0);
             PlayerPrefs.SetInt("Weapon", weaponSelection);
             //NavigateWeaponSelection(0);
+
+            SetPlayerPrefDefaults();
         }
+    }
+
+    public void SetPlayerPrefDefaults()
+    {
+        if (!PlayerPrefs.HasKey("MastVolume"))
+            PlayerPrefs.SetFloat("MastVolume", -0.04f);
+
+        if (!PlayerPrefs.HasKey("MusVolume"))
+            PlayerPrefs.SetFloat("MusVolume", 0.0f);
+
+        if (!PlayerPrefs.HasKey("WVolume"))
+            PlayerPrefs.SetFloat("WVolume", -1.29f);
+
+        if (!PlayerPrefs.HasKey("EVolume"))
+            PlayerPrefs.SetFloat("EVolume", 0.0f);
+
+        if (!PlayerPrefs.HasKey("PlVolume"))
+            PlayerPrefs.SetFloat("PlVolume", -0.20f);
+
+        if (!PlayerPrefs.HasKey("PiVolume"))
+            PlayerPrefs.SetFloat("PiVolume", 0.11f);
+
+        if (!PlayerPrefs.HasKey("UIVolume"))
+            PlayerPrefs.SetFloat("UIVolume", 0.0f);
+
+        if (!PlayerPrefs.HasKey("MiscVolume"))
+            PlayerPrefs.SetFloat("MiscVolume", 0.0f);
+
+        if(!PlayerPrefs.HasKey("FOV"))
+            PlayerPrefs.SetFloat("FOV", 70);
+
+        if (!PlayerPrefs.HasKey("Sensitivity"))
+            PlayerPrefs.SetFloat("Sensitivity", 15);
+
+        if (!PlayerPrefs.HasKey("Resolution"))
+            PlayerPrefs.SetFloat("Resolution", 0);
+
+        if (!PlayerPrefs.HasKey("Fullscreen"))
+            PlayerPrefs.SetFloat("Fullscreen", 1);
+
+        if (!PlayerPrefs.HasKey("HeadBob"))
+            PlayerPrefs.SetFloat("HeadBob", 1);
+
+        if (!PlayerPrefs.HasKey("TutorialPrompts"))
+            PlayerPrefs.SetFloat("TutorialPrompts", 0);
     }
 
     public void SaveSettings()
@@ -267,6 +314,25 @@ public class MainMenuManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.3f);
         SaveData.Save();
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void RetryLastLevelScene()
+    {
+        StartCoroutine(RetryLastLevel());
+    }
+    public IEnumerator RetryLastLevel()
+    {
+        UIAudio.PlayOneShot(buttonClick);
+        yield return new WaitForSecondsRealtime(0.3f);
+
+        if (SaveData.getSaveExists())
+        {
+            SceneManager.LoadScene(SaveData.getLevel());
+        }
+        else
+        {
+            SceneManager.LoadScene(1);
+        }
     }
 
     public void ContinueGame()

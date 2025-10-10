@@ -473,6 +473,12 @@ public class Score : MonoBehaviour
 
     public static void UpdatePlayerStats(int savedScore, int kills, int shots, int stuns, int shields, int deaths, int pellets, int runtime, int fruits)
     {
+        string currentLevelName = SceneManager.GetActiveScene().name;
+        if(currentLevelName == "End" || currentLevelName == "GameOverScene")
+        {
+            return;
+        }
+
         score = savedScore;
         totalGhostKilled = kills;
         totalShotsFired = shots;
@@ -567,7 +573,7 @@ public class Score : MonoBehaviour
             }
             else if (currentLevel == 8)
             {
-                if (fruitsCollected >= 14)
+                if (fruitsCollected >= 15)
                 {
                     totalTimePlayed += Time.time - sceneStartTime;
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);

@@ -70,7 +70,7 @@ public class LauncherProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Wall" || other.tag == "Corner" || other.tag == "T Wall" || other.tag == "Straight" || other.tag == "Floor" || other.tag == "Boss" || other.tag == "Enemy")
+        if (other.tag == "Wall" || other.tag == "Corner" || other.tag == "T Wall" || other.tag == "Straight" || other.tag == "Floor" || other.tag == "Boss" || other.tag == "Enemy" || other.tag == "Door")
         {
             moving = false;
 
