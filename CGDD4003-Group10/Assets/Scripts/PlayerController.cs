@@ -1040,6 +1040,7 @@ public class PlayerController : MonoBehaviour
         if (gunActivated)
         {
             StartCoroutine(DeactivateGun());
+            yield return new WaitForSeconds(0.3f);
         }
         else
         {
@@ -1078,6 +1079,10 @@ public class PlayerController : MonoBehaviour
         yield return deathTimer;
         yield return deathTimer;
         yield return deathTimer;
+
+        currentWeapon.gameObject.SetActive(false);
+        stunGun.SetActive(false);
+        gunActivated = false;
 
         if (Score.bossEnding)
         {
