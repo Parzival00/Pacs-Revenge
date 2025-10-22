@@ -20,16 +20,24 @@ public class SteamIntegrationManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        try
+
+        if(Steamworks.SteamClient.IsValid && Steamworks.SteamClient.IsLoggedOn)
         {
-            Steamworks.SteamClient.Init(appID,false);
             connectedToSteam = true;
         }
-        catch (System.Exception e)
+        else
         {
-            connectedToSteam = false;
-            Debug.Log("Failed to connect to steamworks");
-            Debug.LogException(e);
+            try
+            {
+                Steamworks.SteamClient.Init(appID, false);
+                connectedToSteam = true;
+            }
+            catch (System.Exception e)
+            {
+                connectedToSteam = false;
+                Debug.Log("Failed to connect to steamworks");
+                Debug.LogException(e);
+            }
         }
 
     }
@@ -55,6 +63,10 @@ public class SteamIntegrationManager : MonoBehaviour
         {
             var achievement = new Steamworks.Data.Achievement(apiName);
             achievement.Trigger();
+        }
+        else
+        {
+            Debug.Log("Unable to connect to steamworks");
         }
     }
 
@@ -117,6 +129,7 @@ public class SteamIntegrationManager : MonoBehaviour
     {
         if (connectedToSteam)
         {
+            Debug.Log("Disconnecting from steamworks");
             Steamworks.SteamClient.Shutdown();
         }
     }
