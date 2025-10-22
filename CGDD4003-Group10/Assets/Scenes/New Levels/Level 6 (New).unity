@@ -53921,6 +53921,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8554294911076339095, guid: 5501a7048ac1601459b76df80fa45743, type: 3}
+      propertyPath: firstFruitSpawnThreshold
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 8554294911076339095, guid: 5501a7048ac1601459b76df80fa45743, type: 3}
+      propertyPath: secondFruitSpawnThreshold
+      value: 235
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -63467,7 +63475,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1452619233
 MonoBehaviour:
   m_ObjectHideFlags: 0
