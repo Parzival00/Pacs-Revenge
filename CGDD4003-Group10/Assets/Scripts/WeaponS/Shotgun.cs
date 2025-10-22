@@ -53,10 +53,8 @@ public class Shotgun : Weapon
 
                     if (targetAreaCollider != null && captureTentacle == null)
                     {
-                        Ghost.HitInformation hitInformation = targetAreaCollider.OnShot(weaponInfo.damageMultiplier / numOfShots, weaponInfo.scoreMultiplier / numOfShots);
+                        Ghost.HitInformation hitInformation = targetAreaCollider.OnShot(hit, weaponInfo.damageMultiplier / numOfShots, weaponInfo.scoreMultiplier / numOfShots);
                         Score.AddToScore(Color.gray, (int)((hitInformation.pointWorth + hitInformation.targetArea.pointsAddition) * (weaponInfo.scoreMultiplier / numOfShots)));
-
-                        SpawnBlood(hitInformation.bigBlood, hitInformation.smallBlood, hitInformation.targetArea.difficulty, hit);
                     }
                     else if (bossCollider != null)
                     {

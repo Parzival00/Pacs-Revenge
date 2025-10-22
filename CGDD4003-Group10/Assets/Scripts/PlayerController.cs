@@ -333,6 +333,10 @@ public class PlayerController : MonoBehaviour
                     }
                     break;
             }
+            if(Score.bossEnding)
+            {
+                playerLives = defaultPlayerLives;
+            }
         }
 
         switch(Score.difficulty)
@@ -351,6 +355,10 @@ public class PlayerController : MonoBehaviour
                 break;
             case 2:
                 shieldsRemaining = 0;
+                if (Score.bossEnding)
+                {
+                    AddShields();
+                }
                 break;
         }
 

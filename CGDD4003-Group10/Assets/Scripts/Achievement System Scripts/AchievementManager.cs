@@ -184,10 +184,14 @@ public class AchievementManager
             }
 
             SteamIntegrationManager SIM = GameObject.FindObjectOfType<SteamIntegrationManager>();
-            SIM.UnlockAchievement(current.api_name);
+            if (SIM != null)
+            {
+                SIM.UnlockAchievement(current.api_name);
 
-            //Completionist Achievement (Get all other achievements)
-            SIM.checkCompletion();
+                //Completionist Achievement (Get all other achievements)
+                SIM.checkCompletion();
+            }
+
             if(potential.Count == 1 && potential[0].title == "Completionist")
             {
                 displayAchievement("Completionist");
@@ -199,7 +203,10 @@ public class AchievementManager
     {
         deaths.value = (deaths.value + 1);
         SteamIntegrationManager SIM = GameObject.FindObjectOfType<SteamIntegrationManager>();
-        SIM.addDeath();
+        if (SIM != null)
+        {
+            SIM.addDeath();
+        }
 
         //Seriously?? achievement (Die on baby mode)
         if (Score.difficulty == 0)
@@ -224,7 +231,10 @@ public class AchievementManager
             //foreach (var item in fruitCollected)
             //    Debug.Log(item.value);
             SteamIntegrationManager SIM = GameObject.FindObjectOfType<SteamIntegrationManager>();
-            SIM.addFruit();
+            if (SIM != null)
+            {
+                SIM.addFruit();
+            }
 
             if (fruitCollected.Count >= 8)
             {
@@ -243,7 +253,10 @@ public class AchievementManager
                 {
                     endings.ending0 = true;
                     SteamIntegrationManager SIM = GameObject.FindObjectOfType<SteamIntegrationManager>();
-                    SIM.addEnding();
+                    if (SIM != null)
+                    {
+                        SIM.addEnding();
+                    }
                 }
                 break;
             case 1:
@@ -251,7 +264,10 @@ public class AchievementManager
                 {
                     endings.ending1 = true;
                     SteamIntegrationManager SIM = GameObject.FindObjectOfType<SteamIntegrationManager>();
-                    SIM.addEnding();
+                    if (SIM != null)
+                    {
+                        SIM.addEnding();
+                    }
                 }
                 break;
             case 2:
@@ -259,7 +275,10 @@ public class AchievementManager
                 {
                     endings.ending2 = true;
                     SteamIntegrationManager SIM = GameObject.FindObjectOfType<SteamIntegrationManager>();
-                    SIM.addEnding();
+                    if (SIM != null)
+                    {
+                        SIM.addEnding();
+                    }
                 }
                 break;
 

@@ -6,6 +6,7 @@ public class Barrel : MonoBehaviour
     BoxCollider barrelCollider;
     AudioSource boom;
     [SerializeField] float range;
+    [SerializeField] float playerRange;
     [SerializeField] float explosionDelay = 0.5f;
     [SerializeField] float explosionPower = 5f;
     [SerializeField] float stunLength = 5f;
@@ -95,8 +96,9 @@ public class Barrel : MonoBehaviour
 
                 if (ob.gameObject.tag == "Enemy")
                 {
-
-                    ob.gameObject.GetComponent<Ghost>().GotHit(ob.gameObject.GetComponent<Ghost>().GetInstakillTargetAreaType());
+                    Ghost ghost = ob.gameObject.GetComponent<Ghost>();
+                    ghost.GotHit(ob.gameObject.GetComponent<Ghost>().GetInstakillTargetAreaType(), 99);
+                    //ghost.SpawnBlood(10);
                     /*switch (ob.gameObject.name)
                     {
                         case "Blinky":
@@ -130,7 +132,16 @@ public class Barrel : MonoBehaviour
                     }
                     ob.GetComponent<Barrel>().StartExplosion();
                 }
-                else if (ob.gameObject.name.Contains("Player"))
+                /*else if (ob.gameObject.name.Contains("Player"))
+                {
+                    ob.GetComponent<PlayerController>().TakeDamage();
+                }*/
+            }
+
+            Collider[] playersInRange = Physics.OverlapSphere(transform.position, playerRange);
+            foreach (Collider ob in playersInRange)
+            {
+                if (ob.gameObject.name.Contains("Player"))
                 {
                     ob.GetComponent<PlayerController>().TakeDamage();
                 }

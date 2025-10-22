@@ -51,6 +51,25 @@ public class LauncherProjectile : MonoBehaviour
         activated = true;
         animator.SetTrigger("Activate");
         oneTimeActivation = true;
+
+        if(CheckForCaptureTentacles())
+        {
+            ForceExplosion();
+        }
+    }
+
+    bool CheckForCaptureTentacles()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, blastRadius, explodeMask);
+        foreach (Collider collider in colliders)
+        {
+            CaptureTentacle captureTentacle = collider.GetComponent<CaptureTentacle>();
+            if (captureTentacle != null)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     // Update is called once per frame
@@ -90,7 +109,7 @@ public class LauncherProjectile : MonoBehaviour
 
         //print($"{other.name} overlapping with Projectile");
 
-        if(other.tag == "Enemy" || other.tag == "Boss")
+        if(other.tag == "Enemy" || other.tag == "Boss" || other.tag == "CorruptedTentacle")
         {
             if (exploding)
             {
@@ -151,7 +170,7 @@ public class LauncherProjectile : MonoBehaviour
                 Ghost.HitInformation hitInformation = ghost.GotHit(ghost.GetInstakillTargetAreaType(), weaponInfo.damageMultiplier);
                 Score.AddToScore(Color.gray, (int)((hitInformation.pointWorth + hitInformation.targetArea.pointsAddition) * (weaponInfo.scoreMultiplier)));
 
-                ghost.SpawnBlood(10);
+                //ghost.SpawnBlood(10);
             }
             else if (bossCollider != null)
             {

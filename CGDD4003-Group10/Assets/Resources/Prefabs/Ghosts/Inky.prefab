@@ -2977,6 +2977,13 @@ MonoBehaviour:
   spriteRenderer: {fileID: 6129961489518956255}
   bigBlood: {fileID: 7818894797380219674, guid: a8030bb0aebe4954cbed7d6cf6f1d485, type: 3}
   smallBlood: {fileID: 7818894797380219674, guid: f78400dea5c77064ab9b1116dc29382d, type: 3}
+  singleBloodPS: {fileID: 8882132190894468186, guid: 8af70cfdade9d464caf1e4acba7a5b65, type: 3}
+  bigBloodPS: {fileID: 8882132190894468186, guid: 33ee05acd6983494dac734b76d6b0db7, type: 3}
+  explosionBloodPS: {fileID: 0}
+  slashBloodPS: {fileID: 0}
+  bloodPuddles:
+  - {fileID: 6759312960540899430, guid: 8a917494610b6c443816194b4b4da68e, type: 3}
+  - {fileID: 6759312960540899430, guid: 7cf8a105f0b9b08419bb1ba4441c91b0, type: 3}
   corpse: {fileID: 5929986532211604704, guid: b067ddb740fda824e8ec4c2f238550b2, type: 3}
   stunEffect: {fileID: 6659941347964719023}
   minimapIcon: {fileID: 5929181813537319491}
@@ -2996,7 +3003,7 @@ MonoBehaviour:
     levelSpeedIncrease: 0.02
   - difficultyLevel: 2
     health: 75
-    baseSpeed: 6
+    baseSpeed: 5.75
     turnSpeed: 6
     respawnTimeDampener: 0.3
     levelSpeedIncrease: 0.04

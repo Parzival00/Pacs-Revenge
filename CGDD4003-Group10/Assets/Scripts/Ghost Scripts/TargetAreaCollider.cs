@@ -27,6 +27,11 @@ public class TargetAreaCollider : MonoBehaviour
         //ghost.GotHit(targetAreaType);
         return ghost.GotHit(targetAreaType, damageMultiplier, scoreMultiplier);
     }
+    public Ghost.HitInformation OnShot(RaycastHit hit, float damageMultiplier = 1, float scoreMultiplier = 1)
+    {
+        //ghost.GotHit(targetAreaType);
+        return ghost.GotHit(hit, targetAreaType, damageMultiplier, scoreMultiplier);
+    }
 
     public TargetInfo OnTarget()
     {

@@ -67,6 +67,14 @@ public class Ghost : MonoBehaviour
         Hard
     }
 
+    public enum DamageType
+    {
+        Small,
+        Big,
+        Explosion,
+        Slash
+    }
+
     protected Mode currentMode;
     protected Mode previousMode;
     public Mode CurrentMode { get => currentMode; }
@@ -82,6 +90,11 @@ public class Ghost : MonoBehaviour
     [SerializeField] protected SpriteRenderer spriteRenderer;
     [SerializeField] protected GameObject bigBlood;
     [SerializeField] protected GameObject smallBlood;
+    [SerializeField] protected GameObject singleBloodPS;
+    [SerializeField] protected GameObject bigBloodPS;
+    [SerializeField] protected GameObject explosionBloodPS;
+    [SerializeField] protected GameObject slashBloodPS;
+    [SerializeField] protected GameObject[] bloodPuddles;
     [SerializeField] protected GameObject corpse;
     [SerializeField] protected GameObject stunEffect;
     [SerializeField] protected GameObject minimapIcon;
@@ -1079,6 +1092,7 @@ public class Ghost : MonoBehaviour
         return targetAreaDirectory[type];
     }
 
+    int hitSoundsPlaying = 0;
     /// <summary>
     /// Called when ghost is hit with the gun and sets the mode to respawn and returns a hit information struct which includes points to add and target area hit benefits
     /// </summary>
@@ -1100,6 +1114,8 @@ public class Ghost : MonoBehaviour
         {
             if (currentMode != Mode.Respawn)
             {
+                hitSoundsPlaying = 0;
+
                 print($"{name} is dying!");
                 //print("respawning");
                 ghostHealth = 100;
@@ -1110,6 +1126,9 @@ public class Ghost : MonoBehaviour
                 if (navMesh.enabled)
                     navMesh.isStopped = true;
                 //navMesh.enabled = false;
+
+                SpawnBlood(10);
+                SpawnBloodPuddle();
             }
             else
             {
@@ -1125,7 +1144,7 @@ public class Ghost : MonoBehaviour
                 previousMode = currentMode;
             }
 
-            hitSoundSource.PlayOneShot(hitSound);
+            StartCoroutine(PlayHitSound());
             flinchTimer = Time.time + flinchLength * damageMultiplier;
             currentMode = Mode.Flinch;
         }
@@ -1146,6 +1165,14 @@ public class Ghost : MonoBehaviour
             }
         }
         return hit;
+    }
+    public virtual HitInformation GotHit(RaycastHit hit, TargetAreaType type, float damageMultiplier = 1, float scoreMultiplier = 1)
+    {
+        HitInformation hitInfo = GotHit(type, damageMultiplier, scoreMultiplier);
+
+        SpawnBlood(bigBlood, smallBlood, hitInfo.targetArea.difficulty, hit);
+
+        return hitInfo;
     }
 
     public virtual TargetAreaDifficulty GetDifficulty(TargetAreaType targetAreaType)
@@ -1186,6 +1213,20 @@ public class Ghost : MonoBehaviour
         biteSoundSource.PlayOneShot(biteSound);
     }
 
+    public IEnumerator PlayHitSound()
+    {
+        if (hitSoundsPlaying < 3)
+        {
+            hitSoundsPlaying++;
+
+            hitSoundSource.PlayOneShot(hitSound);
+
+            yield return new WaitForSeconds(0.2f);
+
+            hitSoundsPlaying = Mathf.Max(0, hitSoundsPlaying - 1);
+        }
+    }
+
     public virtual void SpawnBlood(GameObject blood, int amount)
     {
         float spawnRadius = 0.6f;
@@ -1203,14 +1244,67 @@ public class Ghost : MonoBehaviour
     {
         float spawnRadius = 0.6f;
 
-        for (int i = 0; i < amount; i++)
+        /*for (int i = 0; i < amount; i++)
         {
             Instantiate(bigBlood, transform.position +
                     transform.right * Random.Range(-spawnRadius, spawnRadius) +
                     transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2) +
                     transform.forward * Random.Range(-spawnRadius / 2, spawnRadius / 2),
                     Quaternion.identity);
+        }*/
+        Destroy(Instantiate(bigBloodPS, transform.position + transform.forward * 0.25f, Quaternion.identity), 3);
+    }
+    public virtual void SpawnBlood(GameObject bigBlood, GameObject smallBlood, Ghost.TargetAreaDifficulty difficulty, RaycastHit hit)
+    {
+        float spawnRadius = 0.5f;
+        /*if (difficulty == Ghost.TargetAreaDifficulty.Easy)
+        {
+            spawnRadius = 0.2f;
+            GameObject blood = smallBlood;
+            for (int i = 0; i < 2; i++)
+            {
+                Instantiate(blood, hit.point +
+                    hit.transform.right * Random.Range(-spawnRadius, spawnRadius) + hit.transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2), Quaternion.identity);
+            }
         }
+        else if (difficulty == Ghost.TargetAreaDifficulty.Medium)
+        {
+            GameObject blood = smallBlood;
+            for (int i = 0; i < 3; i++)
+            {
+                Instantiate(blood, hit.point +
+                    hit.transform.right * Random.Range(-spawnRadius, spawnRadius) + hit.transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2), Quaternion.identity);
+            }
+
+            blood = bigBlood;
+            for (int i = 0; i < 1; i++)
+            {
+                Instantiate(blood, hit.point +
+                    hit.transform.right * Random.Range(-spawnRadius, spawnRadius) + hit.transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2), Quaternion.identity);
+            }
+        }
+        else
+        {
+            GameObject blood = smallBlood;
+            for (int i = 0; i < 4; i++)
+            {
+                Instantiate(blood, hit.point +
+                    hit.transform.right * Random.Range(-spawnRadius, spawnRadius) + hit.transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2), Quaternion.identity);
+            }
+
+            blood = bigBlood;
+            for (int i = 0; i < 3; i++)
+            {
+                Instantiate(blood, hit.point +
+                    hit.transform.right * Random.Range(-spawnRadius, spawnRadius) + hit.transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2), Quaternion.identity);
+            }
+        }*/
+        Destroy(Instantiate(singleBloodPS, hit.point + hit.transform.forward * 0.25f, Quaternion.identity), 3);
+    }
+    public virtual void SpawnBloodPuddle()
+    {
+        GameObject puddlePrefab = bloodPuddles[Random.Range(0, bloodPuddles.Length)];
+        Instantiate(puddlePrefab, transform.position - transform.up * 0.95f + transform.forward * 0.25f, Quaternion.FromToRotation(puddlePrefab.transform.forward, Vector3.up));
     }
 
     public virtual void PermenantDeath()

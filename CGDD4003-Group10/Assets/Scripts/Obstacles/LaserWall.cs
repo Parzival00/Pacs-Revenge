@@ -11,6 +11,7 @@ public class LaserWall : MonoBehaviour
     [SerializeField] Vector2 activationTimes = new Vector2(8, 12);
     [SerializeField] Vector2 cooldownTimes = new Vector2(15, 20);
     [SerializeField] float ghostReactionDelay = 3f;
+    [SerializeField] float playerDamageDelay = 0.25f;
     [SerializeField] GameObject[] lasers;
     [Header("Audio")]
     [SerializeField] AudioSource laserSound;
@@ -28,6 +29,9 @@ public class LaserWall : MonoBehaviour
     float cooldownTime;
 
     float timer = 0;
+
+    float playerTimer = 0;
+    bool playerInRange = false;
 
     Collider collider;
 
@@ -69,20 +73,44 @@ public class LaserWall : MonoBehaviour
         }
 
         timer += Time.deltaTime;
+
+        if (playerInRange)
+        {
+            playerTimer += Time.deltaTime;
+        }
     }
 
     public void ActivateLaser(LaserWallActivator activator)
     {
         currentActivator = activator;
 
-        activated = true;
-        collider.enabled = true;
-
         animator.SetBool("PressedDown", true);
 
         activator1DownSound.Play();
         activator2DownSound.Play();
         laserSound.Play();
+
+        activated = true;
+        timer = 0;
+        activationTime = 99;
+
+        StartCoroutine(ActivateLaserRoutine());
+
+        /*foreach (GameObject obj in lasers)
+        {
+            obj.SetActive(true);
+        }
+
+        timer = 0;
+        activationTime = Random.Range(activationTimes.x, activationTimes.y);
+
+        Invoke("SetLaserAsWall", ghostReactionDelay);*/
+    }
+    public IEnumerator ActivateLaserRoutine()
+    {
+        yield return new WaitForSeconds(0.3f);
+
+        collider.enabled = true;
 
         foreach (GameObject obj in lasers)
         {
@@ -129,6 +157,11 @@ public class LaserWall : MonoBehaviour
                 laserShockSound.Play();
                 ghost.GotHit(Ghost.TargetAreaType.Head, 5);
             }
+        } 
+        else if (other.transform.CompareTag("Player"))
+        {
+            playerTimer = 0;
+            playerInRange = true;
         }
     }
     private void OnTriggerStay(Collider other)
@@ -136,12 +169,21 @@ public class LaserWall : MonoBehaviour
         if (other.transform.CompareTag("Player"))
         {
             PlayerController player = other.transform.GetComponent<PlayerController>();
-            if (player != null && player.GetCanBeDamaged())
+            if (player != null && player.GetCanBeDamaged() && playerTimer >= playerDamageDelay)
             {
                 laserShockSound.Play();
                 player.TakeDamage();
-
+                playerTimer = 0;
             }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.transform.CompareTag("Player"))
+        {
+            playerTimer = 0;
+            playerInRange = false;
         }
     }
 }

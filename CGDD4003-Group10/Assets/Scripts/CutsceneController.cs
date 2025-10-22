@@ -31,6 +31,7 @@ public class CutsceneController : MonoBehaviour
 
     [Header("Audio Sources")]
     [SerializeField] AudioSource victoryMusic;
+    [SerializeField] AudioSource loserMusic;
     [SerializeField] AudioSource creditsMusic;
 
     bool skipped = false;
@@ -60,19 +61,26 @@ public class CutsceneController : MonoBehaviour
             {
                 case 0:
                     cutsceneText = ending0Text;
+                    if (loserMusic != null)
+                    {
+                        loserMusic.Play();
+                    }
                     break;
                 case 1:
                     cutsceneText = ending1Text;
+                    if (victoryMusic != null)
+                    {
+                        victoryMusic.Play();
+                    }
                     break;
                 case 2:
                     cutsceneText = ending2Text;
+                    if (victoryMusic != null)
+                    {
+                        victoryMusic.Play();
+                    }
                     break;
             }
-        }
-
-        if (victoryMusic != null)
-        {
-            victoryMusic.Play();
         }
 
         float timer = 0;

@@ -88,50 +88,5 @@ public abstract class Weapon : MonoBehaviour
         gunMaterial.SetFloat("_Invisibility", 0);
     }
 
-    public virtual void SpawnBlood(GameObject bigBlood, GameObject smallBlood, Ghost.TargetAreaDifficulty difficulty, RaycastHit hit)
-    {
-        float spawnRadius = 0.5f;
-        if (difficulty == Ghost.TargetAreaDifficulty.Easy)
-        {
-            spawnRadius = 0.2f;
-            GameObject blood = smallBlood;
-            for (int i = 0; i < 2; i++)
-            {
-                Instantiate(blood, hit.point +
-                    hit.transform.right * Random.Range(-spawnRadius, spawnRadius) + hit.transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2), Quaternion.identity);
-            }
-        }
-        else if (difficulty == Ghost.TargetAreaDifficulty.Medium)
-        {
-            GameObject blood = smallBlood;
-            for (int i = 0; i < 3; i++)
-            {
-                Instantiate(blood, hit.point +
-                    hit.transform.right * Random.Range(-spawnRadius, spawnRadius) + hit.transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2), Quaternion.identity);
-            }
 
-            blood = bigBlood;
-            for (int i = 0; i < 1; i++)
-            {
-                Instantiate(blood, hit.point +
-                    hit.transform.right * Random.Range(-spawnRadius, spawnRadius) + hit.transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2), Quaternion.identity);
-            }
-        }
-        else
-        {
-            GameObject blood = smallBlood;
-            for (int i = 0; i < 4; i++)
-            {
-                Instantiate(blood, hit.point +
-                    hit.transform.right * Random.Range(-spawnRadius, spawnRadius) + hit.transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2), Quaternion.identity);
-            }
-
-            blood = bigBlood;
-            for (int i = 0; i < 3; i++)
-            {
-                Instantiate(blood, hit.point +
-                    hit.transform.right * Random.Range(-spawnRadius, spawnRadius) + hit.transform.up * Random.Range(-spawnRadius / 2, spawnRadius / 2), Quaternion.identity);
-            }
-        }
-    }
 }
