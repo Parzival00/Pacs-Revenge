@@ -5697,6 +5697,14 @@ PrefabInstance:
       propertyPath: difficultySettings.Array.data[1].baseRailgunDamage
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 4229955907849833385, guid: 44d1f67e11d61b54680223d02cd6d7b7, type: 3}
+      propertyPath: difficultySettings.Array.data[1].patienceMultiplier
+      value: 1.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229955907849833385, guid: 44d1f67e11d61b54680223d02cd6d7b7, type: 3}
+      propertyPath: difficultySettings.Array.data[2].patienceMultiplier
+      value: 1.18
+      objectReference: {fileID: 0}
     - target: {fileID: 4908435809966705173, guid: 44d1f67e11d61b54680223d02cd6d7b7, type: 3}
       propertyPath: m_DynamicOccludee
       value: 1
@@ -43293,6 +43301,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8554294911076339095, guid: 5501a7048ac1601459b76df80fa45743, type: 3}
+      propertyPath: difficultySettings.Array.data[0].bossFruitInterval
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8554294911076339095, guid: 5501a7048ac1601459b76df80fa45743, type: 3}
+      propertyPath: difficultySettings.Array.data[1].bossFruitInterval
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 8554294911076339095, guid: 5501a7048ac1601459b76df80fa45743, type: 3}
+      propertyPath: difficultySettings.Array.data[2].bossFruitInterval
+      value: 45
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -75211,14 +75231,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySettings:
   - difficultyLevel: 0
-    normalSpawnInterval: 15
-    enrageSpawnInterval: 12
-  - difficultyLevel: 1
     normalSpawnInterval: 12
-    enrageSpawnInterval: 10
+    enrageSpawnInterval: 9
+  - difficultyLevel: 1
+    normalSpawnInterval: 9
+    enrageSpawnInterval: 7
   - difficultyLevel: 2
-    normalSpawnInterval: 10
-    enrageSpawnInterval: 8
+    normalSpawnInterval: 7
+    enrageSpawnInterval: 5
   boss: {fileID: 160048201}
   map: {fileID: 1105822210}
   lightningEffect: {fileID: 6025207607581697775, guid: c5642c6311f4e344bbc38aedb89b38e7, type: 3}

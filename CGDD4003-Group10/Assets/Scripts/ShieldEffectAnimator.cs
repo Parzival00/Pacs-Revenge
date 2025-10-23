@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShieldEffectAnimator : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class ShieldEffectAnimator : MonoBehaviour
     [SerializeField] float deactivateStepSize = 0.1f;
     [SerializeField] float breakSpeed = 10;
     [SerializeField] float breakStepSize = 0.1f;
+    [SerializeField] Image shieldDamageImage;
+    [SerializeField] Image shieldIncreaseImage;
+    [SerializeField] float flashSpeed = 0.5f;
 
     [Header("Shield Audio Settings")]
     [SerializeField] AudioSource shieldSource;
@@ -31,6 +35,9 @@ public class ShieldEffectAnimator : MonoBehaviour
         shieldEffect.SetFloat("_BreakProgress", 0);
         shieldEffect.SetFloat("_ShieldVignetteSmoothness", vignetteMax);
         isAnimating = false;
+
+        shieldIncreaseImage.gameObject.SetActive(false);
+        shieldDamageImage.gameObject.SetActive(false);
     }
 
     public void PlayShieldUp()
@@ -89,6 +96,51 @@ public class ShieldEffectAnimator : MonoBehaviour
         shieldEffect.SetFloat("_ShieldVignetteSmoothness", vignetteMax);
 
         isAnimating = false;
+    }
+    public void PlayExtraShieldUp()
+    {
+        StartCoroutine(ExtraShieldFlash());
+    }
+    IEnumerator ExtraShieldFlash()
+    {
+        shieldDamageImage.gameObject.SetActive(false);
+        shieldIncreaseImage.gameObject.SetActive(true);
+
+        float alpha = 0;
+        Color color = shieldIncreaseImage.color;
+        color.a = alpha;
+        shieldIncreaseImage.color = color;
+
+        float change = 1 / (flashSpeed / 2);
+        while (alpha < .75f)
+        {
+            alpha += change * Time.deltaTime;
+            print(alpha);
+            color = shieldIncreaseImage.color;
+            color.a = alpha;
+            shieldIncreaseImage.color = color;
+            yield return null;
+        }
+
+        alpha = 0.75f;
+        color = shieldIncreaseImage.color;
+        color.a = alpha;
+        shieldIncreaseImage.color = color;
+
+        while (alpha > 0)
+        {
+            alpha -= change * Time.deltaTime;
+            color = shieldIncreaseImage.color;
+            color.a = alpha;
+            shieldIncreaseImage.color = color;
+            yield return null;
+        }
+
+        alpha = 0;
+        color = shieldIncreaseImage.color;
+        color.a = alpha;
+        shieldIncreaseImage.color = color;
+        shieldIncreaseImage.gameObject.SetActive(false);
     }
 
     public void PlayShieldDown()
@@ -185,6 +237,52 @@ public class ShieldEffectAnimator : MonoBehaviour
         {
             shieldSource.PlayOneShot(shieldBreak_Partial);
         }
+        StartCoroutine(DamageFlash());
+    }
+    public void PlayDamageFlash()
+    {
+        StartCoroutine(DamageFlash());
+    }
+    IEnumerator DamageFlash()
+    {
+        shieldIncreaseImage.gameObject.SetActive(false);
+        shieldDamageImage.gameObject.SetActive(true);
+
+        float alpha = 0;
+        Color color = shieldDamageImage.color;
+        color.a = alpha;
+        shieldDamageImage.color = color;
+
+        float change = 1 / (flashSpeed / 2);
+        while (alpha < .75f)
+        {
+            alpha += change * Time.deltaTime;
+            print(alpha);
+            color = shieldDamageImage.color;
+            color.a = alpha;
+            shieldDamageImage.color = color;
+            yield return null;
+        }
+
+        alpha = 0.75f;
+        color = shieldDamageImage.color;
+        color.a = alpha;
+        shieldDamageImage.color = color;
+
+        while (alpha > 0)
+        {
+            alpha -= change * Time.deltaTime;
+            color = shieldDamageImage.color;
+            color.a = alpha;
+            shieldDamageImage.color = color;
+            yield return null;
+        }
+
+        alpha = 0;
+        color = shieldDamageImage.color;
+        color.a = alpha;
+        shieldDamageImage.color = color;
+        shieldDamageImage.gameObject.SetActive(false);
     }
 
     private void OnApplicationQuit()

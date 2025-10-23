@@ -76,7 +76,7 @@ MonoBehaviour:
     scale: 2.25
     speed: 12.5
     timeToLive: 2.75
-    impactRegisterDelay: 0.3
+    impactRegisterDelay: 0.25
     attackLeading: -0.3
     followPlayer: 1
     followSmoothing: 3.5
@@ -84,7 +84,7 @@ MonoBehaviour:
     scale: 2.5
     speed: 14.5
     timeToLive: 3.25
-    impactRegisterDelay: 0.25
+    impactRegisterDelay: 0.175
     attackLeading: -0.1
     followPlayer: 1
     followSmoothing: 6
@@ -92,7 +92,7 @@ MonoBehaviour:
     scale: 3
     speed: 13
     timeToLive: 4
-    impactRegisterDelay: 0.15
+    impactRegisterDelay: 0.1
     attackLeading: 0
     followPlayer: 1
     followSmoothing: 8
@@ -122,7 +122,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.19631489
+  m_Radius: 0.22
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &5021636358095362478
 Rigidbody:
@@ -299,7 +299,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Radius: 0.41137877
+  m_Radius: 0.64
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5976028726896031455
 GameObject:

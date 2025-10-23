@@ -498,6 +498,11 @@ public class PlayerController : MonoBehaviour
             {
                 //ghost.PlayBiteSound();
                 StartCoroutine(DeathSequence());
+
+                if(shieldAnimator != null)
+                {
+                    shieldAnimator.PlayDamageFlash();
+                }
             }
         }
         else
@@ -901,6 +906,11 @@ public class PlayerController : MonoBehaviour
                     {
                         ghost.PlayBiteSound();
                         StartCoroutine(DeathSequence());
+
+                        if(shieldAnimator != null)
+                        {
+                            shieldAnimator.PlayDamageFlash();
+                        }
                     }
                 }
                 else
@@ -952,6 +962,10 @@ public class PlayerController : MonoBehaviour
                 {
                     //ghost.PlayBiteSound();
                     StartCoroutine(DeathSequence());
+                    if(shieldAnimator != null)
+                    {
+                        shieldAnimator.PlayDamageFlash();
+                    }
                 }
             }
             else
@@ -994,6 +1008,11 @@ public class PlayerController : MonoBehaviour
             {
                 if (!inDeathSequence)
                 {
+                    if(shieldAnimator != null)
+                    {
+                        shieldAnimator.PlayDamageFlash();
+                    }
+
                     //ghost.PlayBiteSound();
                     StartCoroutine(DeathSequence());
                 }
@@ -1178,6 +1197,10 @@ public class PlayerController : MonoBehaviour
         if (shieldAnimator != null && shieldsRemaining == 1)
         {
             shieldAnimator.PlayShieldUp();
+        }
+        else if (shieldAnimator != null && shieldsRemaining > 1)
+        {
+            shieldAnimator.PlayExtraShieldUp();
         }
     }
 
