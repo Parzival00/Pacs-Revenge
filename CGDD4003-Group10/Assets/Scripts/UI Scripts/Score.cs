@@ -286,6 +286,8 @@ public class Score : MonoBehaviour
                 if (bossTimerParent) bossTimerParent.SetActive(false);
             }
         }
+
+        //print($"totalGhostKilled: {totalGhostKilled}, totalPelletsCollected: {totalPelletsCollected}, totalShieldsRecieved: {totalShieldsRecieved}, totalLivesConsumed: {totalLivesConsumed}, totalShotsFired: {totalShotsFired}, totalStunsFired: {totalStunsFired}");
     }
 
     bool timerEndSequenceStarted = false;
@@ -563,7 +565,18 @@ public class Score : MonoBehaviour
             }
             else
             {
-                SaveData.DeathSave();
+                switch(difficulty)
+                {
+                    case 0:
+                        SaveData.DeathSave();
+                        break;
+                    case 1:
+                        SaveData.DeathSave();
+                        break;
+                    case 2:
+                        SaveData.ClearSave();
+                        break;
+                }
                 GameEnd();
             }
         }

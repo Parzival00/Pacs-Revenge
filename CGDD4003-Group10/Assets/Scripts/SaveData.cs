@@ -98,7 +98,7 @@ public static class SaveData
 
             getPlayerMetrics();
 
-            Debug.Log("Current level: " + currentLevelIndex.value + "\nCurrently equipped weapon: " + currentWeapon.value + "\nNumber of weapons Unlocked: " + unlockedWeapons.Count);
+            Debug.Log("Current level: " + currentLevelIndex.value + "\nCurrently equipped weapon: " + currentWeapon.value + "\nNumber of weapons Unlocked: " + unlockedWeapons.Count + "\nTotal Pellets Collected: " + currentPelletsCollected.value);
         }
     }
 
@@ -218,7 +218,7 @@ public static class SaveData
         currentShotsFired = new sInt(shots);
         currentShieldsUsed = new sInt(shields);
         currentDeathCount = new sInt(deaths);
-        currentDeathCount = new sInt(pellets);
+        currentPelletsCollected = new sInt(pellets);
         currentRunTime = new sInt(runtime);
         currentFruitsCollected = new sInt(fruitsCollected);
     }
