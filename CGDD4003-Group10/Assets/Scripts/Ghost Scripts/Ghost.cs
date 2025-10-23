@@ -1304,7 +1304,7 @@ public class Ghost : MonoBehaviour
     public virtual void SpawnBloodPuddle()
     {
         GameObject puddlePrefab = bloodPuddles[Random.Range(0, bloodPuddles.Length)];
-        Instantiate(puddlePrefab, transform.position - transform.up * 0.95f + transform.forward * 0.25f, Quaternion.FromToRotation(puddlePrefab.transform.forward, Vector3.up));
+        Instantiate(puddlePrefab, transform.position - transform.up * 0.90f + transform.forward * 0.25f, Quaternion.FromToRotation(puddlePrefab.transform.forward, Vector3.up));
     }
 
     public virtual void PermenantDeath()

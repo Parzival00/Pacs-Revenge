@@ -30,6 +30,7 @@ public class BossSpawner : MonoBehaviour
     [SerializeField] Map map;
     [SerializeField] GameObject lightningEffect;
     [SerializeField] GameObject[] ghosts;
+    [SerializeField] GameObject endGhost;
     [SerializeField] float spawnRadius = 10f;
     [SerializeField] float bossTimerEndInterval = 0.1f;
 
@@ -88,7 +89,10 @@ public class BossSpawner : MonoBehaviour
 
                 spawnTimer = boss.damage == 7 ? currentDifficultySettings.enrageSpawnInterval : currentDifficultySettings.normalSpawnInterval;
 
-                if (Score.bossTimerEnded) spawnTimer = bossTimerEndInterval;
+                if (Score.bossTimerEnded)
+                {
+                    spawnTimer = bossTimerEndInterval;
+                }
             }
         }
     }
@@ -135,9 +139,16 @@ public class BossSpawner : MonoBehaviour
 
         if (spawnGhosts)
         {
-            GameObject ghostObj = Instantiate(ghosts[currentGhost], spawnPos, Quaternion.identity);
-
-            spawnedGhosts.Add(ghostObj.GetComponent<Ghost>());
+            if (!Score.bossTimerEnded)
+            {
+                GameObject ghostObj = Instantiate(ghosts[currentGhost], spawnPos, Quaternion.identity);
+                spawnedGhosts.Add(ghostObj.GetComponent<Ghost>());
+            }
+            else
+            {
+                GameObject ghostObj = Instantiate(endGhost, spawnPos, Quaternion.identity);
+                spawnedGhosts.Add(ghostObj.GetComponent<Ghost>());
+            }
         }
     }
 

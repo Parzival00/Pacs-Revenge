@@ -49,6 +49,8 @@ public class Score : MonoBehaviour
     [SerializeField] RenderTexture gameSceneRenderTex;
     [SerializeField] float bossFightStartDelay = 15f;
     [SerializeField] float bossFightPortalMaxSize = 15f;
+    [SerializeField] GameObject normalSkyBox;
+    [SerializeField] GameObject corruptedSkyBox;
     [SerializeField] DifficultySettings[] difficultySettings;
     [SerializeField] bool demo;
 
@@ -312,6 +314,9 @@ public class Score : MonoBehaviour
 
         gameSceneCamera.backgroundColor = bossTimerEndBackgroundColor;
         bossfightPortal.SetActive(false);
+
+        normalSkyBox.SetActive(false);
+        corruptedSkyBox.SetActive(true);
 
         yield return new WaitForSeconds(0.15f);
 

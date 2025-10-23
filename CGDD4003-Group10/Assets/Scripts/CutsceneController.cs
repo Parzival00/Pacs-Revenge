@@ -94,6 +94,11 @@ public class CutsceneController : MonoBehaviour
             {
                 if (skipped) break;
 
+                if(!loserMusic.isPlaying && !victoryMusic.isPlaying && !creditsMusic.isPlaying)
+                {
+                    creditsMusic.Play();
+                }
+
                 if (timer >= timeTillCanSkip) skipButton.SetActive(true);
 
                 textBox.text += paragraphText[e];
@@ -157,8 +162,23 @@ public class CutsceneController : MonoBehaviour
             victoryMusic.volume = 0;
             victoryMusic.Stop();
         }
+        if (loserMusic != null && loserMusic.isPlaying)
+        {
+            float startVolume = loserMusic.volume;
 
-        if (creditsMusic != null)
+            float t = 0;
+            float deafenLength = 1f;
+            while (t < deafenLength)
+            {
+                loserMusic.volume = Mathf.Lerp(0, startVolume, 1 - t / deafenLength);
+                yield return null;
+                t += Time.deltaTime;
+            }
+            loserMusic.volume = 0;
+            loserMusic.Stop();
+        }
+
+        if (creditsMusic != null && !creditsMusic.isPlaying)
         {
             creditsMusic.Play();
         }

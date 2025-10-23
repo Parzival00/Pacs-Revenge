@@ -605,7 +605,7 @@ public class Boss : MonoBehaviour
         float timer = 0;
         while (timer < currentDifficultySettings.blinkyAttackDuration)
         {
-            if (blinkyHead.dead) break; //Cancel attack if blinky head dies
+            if (blinkyHead.dead || currentState == BossState.Initial) break; //Cancel attack if blinky head dies
 
             //Find the closest distance the laser should be shooting and update all positions
             float distance = currentDifficultySettings.blinkyMaxRange;
@@ -735,7 +735,7 @@ public class Boss : MonoBehaviour
         {
             if (bossHit != null) bossHit.Play();
 
-            SpawnBlood(3, headID);
+            SpawnBlood(1, headID);
             StartCoroutine(Knockback(-transform.forward * Time.deltaTime * 100, 0.1f));
 
             //hitSoundSource.PlayOneShot(hitSound);
@@ -786,7 +786,7 @@ public class Boss : MonoBehaviour
             if (bossSpawner) bossSpawner.ChangeGhostWeight(3, 0);
         }
 
-        SpawnBlood(bloodAmount, headID);
+        SpawnBlood(bloodAmount, headID, true);
 
         if (damage == 7 && headID < 3) //All three bottoms got killed so enrage
             StartCoroutine(EnrageSequence());
@@ -842,7 +842,7 @@ public class Boss : MonoBehaviour
         canMove = true;
     }
 
-    void SpawnBlood(int bloodAmount, int headID)
+    void SpawnBlood(int bloodAmount, int headID, bool death = false)
     {
         GameObject bigBlood = bigInkyBloodPrefab;
         GameObject smallBlood = smallInkyBloodPrefab;
@@ -871,22 +871,22 @@ public class Boss : MonoBehaviour
                 bloodSpawnArea = clydeBloodSpawnArea;
                 break;
         }
-
-        for (int i = 0; i < bloodAmount; i++)
+        
+        if(death)
         {
-            Vector3 spawnPoint = bloodSpawnArea.gameObject.transform.position + new Vector3(
-                Random.Range(-bloodSpawnArea.bounds.extents.x, bloodSpawnArea.bounds.extents.x),
-                Random.Range(-bloodSpawnArea.bounds.extents.y, bloodSpawnArea.bounds.extents.y),
-                Random.Range(-bloodSpawnArea.bounds.extents.z, bloodSpawnArea.bounds.extents.z)
-            );
+            Destroy(Instantiate(bigBlood, bloodSpawnArea.gameObject.transform.position, bigBlood.transform.rotation), 3);
+        }
+        else
+        {
+            for (int i = 0; i < bloodAmount; i++)
+            {
+                Vector3 spawnPoint = bloodSpawnArea.gameObject.transform.position + new Vector3(
+                    Random.Range(-bloodSpawnArea.bounds.extents.x, bloodSpawnArea.bounds.extents.x),
+                    Random.Range(-bloodSpawnArea.bounds.extents.y, bloodSpawnArea.bounds.extents.y),
+                    Random.Range(-bloodSpawnArea.bounds.extents.z, bloodSpawnArea.bounds.extents.z)
+                );
 
-            if (Random.Range(0, 5) < 1)
-            {
-                Instantiate(smallBlood, spawnPoint, smallBlood.transform.rotation);
-            }
-            else
-            {
-                Instantiate(bigBlood, spawnPoint, bigBlood.transform.rotation);
+                Destroy(Instantiate(smallBlood, spawnPoint, smallBlood.transform.rotation), 3);
             }
         }
     }
@@ -938,6 +938,8 @@ public class Boss : MonoBehaviour
 
         currentState = BossState.Initial;
         Invoke("Initial", respawnDelay);
+
+        blinkyLaser.gameObject.SetActive(false);
     }
 
     void PlaySlamSound()
