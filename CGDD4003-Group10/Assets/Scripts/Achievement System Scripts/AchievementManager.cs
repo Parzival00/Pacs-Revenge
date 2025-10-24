@@ -46,7 +46,7 @@ public class AchievementManager
     {
         saveFile = Application.persistentDataPath + "/achievements.json";
         fruitFile = Application.persistentDataPath + "/fruits.json";
-        //Debug.Log(saveFile);
+        Debug.Log("RUNNING ACHIEVEMENT LOADS");
         //populates every achievement to the potential list if there is no file found
         if (!File.Exists(saveFile))
         {
@@ -91,7 +91,6 @@ public class AchievementManager
                 Achievement a = JsonUtility.FromJson<Achievement>(jsonLines[i]);
                 if (a.collected)
                 {
-                    //Debug.Log(a.title + " was collected");
                     collected.Add(a);
                 }
                 else
@@ -124,7 +123,7 @@ public class AchievementManager
         File.WriteAllLines(saveFile, jsonLines);
 
         jsonLines = new List<string>();
-        foreach(sInt f in fruitCollected)
+        foreach (sInt f in fruitCollected)
         {
             jsonLines.Add(JsonUtility.ToJson(f));
         }
@@ -140,14 +139,14 @@ public class AchievementManager
         Achievement current = null;
         foreach (Achievement a in potential)
         {
-            if(a.title.Equals(title))
+            if (a.title.Equals(title))
             {
                 current = a;
                 break;
             }
         }
 
-        if(current == null)
+        if (current == null)
         {
             Debug.Log("No Achievement Found");
         }
@@ -178,7 +177,7 @@ public class AchievementManager
             {
                 Debug.Log($"Collected: {collected[i].title}");
             }
-            for (int i = 0; i < potential.Count; i++) 
+            for (int i = 0; i < potential.Count; i++)
             {
                 Debug.Log($"Potential: {potential[i].title}");
             }
@@ -187,18 +186,27 @@ public class AchievementManager
             if (SIM != null)
             {
                 SIM.UnlockAchievement(current.api_name);
-
                 //Completionist Achievement (Get all other achievements)
                 SIM.checkCompletion();
             }
 
-            if(potential.Count == 1 && potential[0].title == "Completionist")
+            if (potential.Count == 1 && potential[0].title == "Completionist")
             {
                 displayAchievement("Completionist");
             }
         }
     }
-
+    public static void stealthCollectAchievement(Achievement a)
+    {
+        a.collected = true;
+        collected.Add(a);
+        potential.Remove(a);
+        save();
+        if (potential.Count == 1 && potential[0].title == "Completionist")
+        {
+            displayAchievement("Completionist");
+        }
+    }
     public static void addDeath()
     {
         deaths.value = (deaths.value + 1);

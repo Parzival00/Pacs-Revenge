@@ -30,6 +30,7 @@ public class SteamIntegrationManager : MonoBehaviour
             try
             {
                 Steamworks.SteamClient.Init(appID, false);
+                Debug.Log("connected to steamworks");
                 connectedToSteam = true;
             }
             catch (System.Exception e)
@@ -40,6 +41,19 @@ public class SteamIntegrationManager : MonoBehaviour
             }
         }
 
+        //Achievement Sync
+        foreach (Achievement a in AchievementManager.getCompletedAchievements())
+        {
+            this.checkCompletedUnlockForSync(a.api_name);
+        }
+        foreach (Achievement a in AchievementManager.getPotentialAchievements())
+        {
+            if (this.checkPotentialUnlockForSync(a.api_name))
+            {
+                AchievementManager.stealthCollectAchievement(a);
+            }
+        }
+        //ResetAchievements();
     }
 
     void OnApplicationQuit()
@@ -124,6 +138,29 @@ public class SteamIntegrationManager : MonoBehaviour
         }
     }
 
+    public void checkCompletedUnlockForSync(string apiName)
+    {
+        if (connectedToSteam)
+        {
+            var achievement = new Steamworks.Data.Achievement(apiName);
+            Debug.Log("Syncing Achievement: " + achievement.Name);
+            if (!achievement.State)
+            {
+                achievement.Trigger();
+            }
+        }
+    }
+    public bool checkPotentialUnlockForSync(string apiName)
+    {
+        if (connectedToSteam)
+        {
+            var achievement = new Steamworks.Data.Achievement(apiName);
+            Debug.Log("Syncing Achievement: " + achievement.Name);
+            return achievement.State;
+        }
+        return false;
+    }
+
     // Call this before exiting the game
     public void DisconnectFromSteam()
     {
@@ -140,8 +177,8 @@ public class SteamIntegrationManager : MonoBehaviour
     {
         if (connectedToSteam)
         {
-            Steamworks.SteamUserStats.RequestCurrentStats();
             Steamworks.SteamUserStats.ResetAll(true);
+            Debug.Log("Reset Achievements");
         }
     }
 }
