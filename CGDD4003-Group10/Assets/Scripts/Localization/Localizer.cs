@@ -142,6 +142,7 @@ public class Localizer : MonoBehaviour
         UI_Credits_Guitar_Solo,
         Game_Boss_Clear,
         Game_End_Baby_Mode_Insult,
+        UI_MainMenu_Nightmare_Warning,
     }
 
     [System.Serializable]

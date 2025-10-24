@@ -94,7 +94,7 @@ public class CutsceneController : MonoBehaviour
             {
                 if (skipped) break;
 
-                if(!loserMusic.isPlaying && !victoryMusic.isPlaying && !creditsMusic.isPlaying)
+                if((loserMusic == null || !loserMusic.isPlaying) && (victoryMusic == null || !victoryMusic.isPlaying) && creditsMusic != null && !creditsMusic.isPlaying)
                 {
                     creditsMusic.Play();
                 }

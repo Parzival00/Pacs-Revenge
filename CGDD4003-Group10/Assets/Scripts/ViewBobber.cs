@@ -27,21 +27,34 @@ public class ViewBobber : MonoBehaviour
     {
         if (pc.canMove == true)
         {
+            //Vector3 pos = transform.localPosition;
+
             if (Mathf.Abs(pc.velocity.x) > 0.1f || Mathf.Abs(pc.velocity.z) > 0.1f)
             {
                 //player is walking
                 timer += Time.deltaTime * walkBobSpeed;
+                //timer += Time.deltaTime * walkBobSpeed * Mathf.PI * 2f;
+                //if (timer > Mathf.PI * 2f) timer -= Mathf.PI * 2f;
                 float sinedTimer = Mathf.Sin(timer);
+                //float offset = Mathf.Sin(timer) * bobAmount;
+
+                //pos.y = defaultYpos + offset;
 
                 if (PlayerPrefs.GetInt("HeadBob") == 1)
                 {
                     transform.localPosition = new Vector3(transform.localPosition.x, defaultYpos + sinedTimer * bobAmount, transform.localPosition.z);
+                    //transform.localPosition = pos;
                 } else
                 {
                     transform.localPosition = new Vector3(transform.localPosition.x, Mathf.Lerp(transform.localPosition.y, defaultYpos, Time.deltaTime * walkBobSpeed), transform.localPosition.z);
                 }
 
-                if (sinedTimer < footstepThreshold && !stepped)
+                /*if (Mathf.Sin(timer - Time.deltaTime * walkBobSpeed * Mathf.PI * 2f) >= footstepThreshold &&
+                    Mathf.Sin(timer) < footstepThreshold)
+                {
+                    feet.PlayOneShot(footstep);
+                }*/
+                /*if (sinedTimer < footstepThreshold && !stepped)
                 {
                     feet.PlayOneShot(footstep);
                     stepped = true;
@@ -49,7 +62,7 @@ public class ViewBobber : MonoBehaviour
                 else if (sinedTimer >= footstepThreshold && stepped)
                 {
                     stepped = false;
-                }
+                }*/
             }
             else
             {

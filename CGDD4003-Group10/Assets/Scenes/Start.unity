@@ -989,6 +989,7 @@ MonoBehaviour:
   continueButton: {fileID: 161782193}
   creditsShowLength: 5
   victoryMusic: {fileID: 0}
+  loserMusic: {fileID: 0}
   creditsMusic: {fileID: 0}
 --- !u!1 &274964235
 GameObject:
@@ -1198,6 +1199,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 292745814}
   m_CullTransparentMesh: 1
+--- !u!1 &309678851
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 309678853}
+  - component: {fileID: 309678852}
+  m_Layer: 0
+  m_Name: Localizer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &309678852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309678851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e332923e2401b7841a3d7859b8e9d4c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fontLinks:
+  - languageCode: en
+    font: {fileID: 11400000, guid: 701ef25a206866d439598aabf4ca0c91, type: 2}
+  - languageCode: ja
+    font: {fileID: 11400000, guid: 5cee8fb7bf519ad43844ea07f2621d11, type: 2}
+  foreignLanguageFont: {fileID: 11400000, guid: 5cee8fb7bf519ad43844ea07f2621d11, type: 2}
+--- !u!4 &309678853
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309678851}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.576148, y: -3.9237797, z: 13.098031}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &326124540
 GameObject:
   m_ObjectHideFlags: 0
@@ -4828,6 +4879,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1536613043}
   m_CullTransparentMesh: 1
+--- !u!1 &1592784432
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1592784434}
+  - component: {fileID: 1592784433}
+  m_Layer: 0
+  m_Name: SteamworksIntegration
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1592784433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592784432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a074058f12a36df47bdbb88217cf395e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1592784434
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592784432}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1602189333
 GameObject:
   m_ObjectHideFlags: 0
@@ -6180,3 +6275,5 @@ SceneRoots:
   - {fileID: 67537912}
   - {fileID: 1857646909}
   - {fileID: 705037206}
+  - {fileID: 1592784434}
+  - {fileID: 309678853}
