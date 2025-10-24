@@ -640,10 +640,10 @@ public class Score : MonoBehaviour
                     case 2:
                         SaveData.addWeaponUnlock(1);
                         break;
-                    case 5:
+                    case 4:
                         SaveData.addWeaponUnlock(2);
                         break;
-                    case 7:
+                    case 6:
                         SaveData.addWeaponUnlock(3);
                         break;
                         //Can add more weapons here later...

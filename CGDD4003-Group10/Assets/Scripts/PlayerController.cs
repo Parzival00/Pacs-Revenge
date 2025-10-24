@@ -1142,6 +1142,21 @@ public class PlayerController : MonoBehaviour
 
         transform.position = playerSpawnPoint.position;
 
+        if (Score.bossEnding)
+        {
+            switch (Score.difficulty)
+            {
+                case 0:
+                    AddShields();
+                    break;
+                case 1:
+                    AddShields();
+                    break;
+                case 2:
+                    break;
+            }
+        }
+
         playerLives--;
         Score.totalLivesConsumed++;
         AchievementManager.addDeath();

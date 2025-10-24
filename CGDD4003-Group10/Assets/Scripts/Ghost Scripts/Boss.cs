@@ -940,6 +940,19 @@ public class Boss : MonoBehaviour
         Invoke("Initial", respawnDelay);
 
         blinkyLaser.gameObject.SetActive(false);
+
+        Projectile[] projs = FindObjectsOfType<Projectile>();
+
+        if(projs != null)
+        {
+            for (int i = 0; i < projs.Length; i++)
+            {
+                if (projs[i] != null)
+                {
+                    Destroy(projs[i]);
+                }
+            }
+        }
     }
 
     void PlaySlamSound()
