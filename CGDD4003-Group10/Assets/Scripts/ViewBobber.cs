@@ -54,7 +54,7 @@ public class ViewBobber : MonoBehaviour
                 {
                     feet.PlayOneShot(footstep);
                 }*/
-                /*if (sinedTimer < footstepThreshold && !stepped)
+                if (sinedTimer < footstepThreshold && !stepped)
                 {
                     feet.PlayOneShot(footstep);
                     stepped = true;
@@ -62,7 +62,7 @@ public class ViewBobber : MonoBehaviour
                 else if (sinedTimer >= footstepThreshold && stepped)
                 {
                     stepped = false;
-                }*/
+                }
             }
             else
             {

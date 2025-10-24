@@ -577,6 +577,10 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void StungunFire()
     {
+        if(Score.insanityEnding)
+        {
+            return;
+        }
 
         StunGunCanFire = stunFireTimer <= 0 && stunAmmoCount > 0;
 
