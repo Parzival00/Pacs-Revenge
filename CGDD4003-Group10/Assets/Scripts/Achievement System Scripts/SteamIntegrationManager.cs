@@ -66,7 +66,14 @@ public class SteamIntegrationManager : MonoBehaviour
     {
         if (connectedToSteam)
         {
-            Steamworks.SteamClient.RunCallbacks();
+            try
+            {
+                Steamworks.SteamClient.RunCallbacks();
+            }
+            catch (System.Exception e)
+            {
+                Debug.Log($"Some Steam error occured - {e.Message}");
+            }
         }
     }
 
@@ -75,8 +82,15 @@ public class SteamIntegrationManager : MonoBehaviour
         Debug.Log($"Calling steamworks for {apiName} Achievement");
         if(connectedToSteam)
         {
-            var achievement = new Steamworks.Data.Achievement(apiName);
-            achievement.Trigger();
+            try
+            {
+                var achievement = new Steamworks.Data.Achievement(apiName);
+                achievement.Trigger();
+            }
+            catch (System.Exception e)
+            {
+                Debug.Log($"Some Steam error occured - {e.Message}");
+            }
         }
         else
         {
@@ -88,10 +102,20 @@ public class SteamIntegrationManager : MonoBehaviour
     {
         if (connectedToSteam)
         {
-            Steamworks.SteamUserStats.RequestCurrentStats();
-            Steamworks.SteamUserStats.AddStat("deaths", 1);
-            Steamworks.SteamUserStats.StoreStats();
-            Steamworks.SteamUserStats.IndicateAchievementProgress("oof", Steamworks.SteamUserStats.GetStatInt("deaths"), 100);
+            try
+            {
+                Steamworks.SteamUserStats.RequestCurrentStats();
+                if (Steamworks.SteamUserStats.GetStatInt("deaths") < 100)
+                {
+                    Steamworks.SteamUserStats.AddStat("deaths", 1);
+                    Steamworks.SteamUserStats.StoreStats();
+                    Steamworks.SteamUserStats.IndicateAchievementProgress("oof", Steamworks.SteamUserStats.GetStatInt("deaths"), 100);
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.Log("Reached max deaths");
+            }
         }
     }
 
@@ -99,10 +123,20 @@ public class SteamIntegrationManager : MonoBehaviour
     {
         if (connectedToSteam)
         {
-            Steamworks.SteamUserStats.RequestCurrentStats();
-            Steamworks.SteamUserStats.AddStat("fruits", 1);
-            Steamworks.SteamUserStats.StoreStats();
-            Steamworks.SteamUserStats.IndicateAchievementProgress("nom", Steamworks.SteamUserStats.GetStatInt("fruits"), 9);
+            try
+            {
+                Steamworks.SteamUserStats.RequestCurrentStats();
+                if (Steamworks.SteamUserStats.GetStatInt("fruits") < 9)
+                {
+                    Steamworks.SteamUserStats.AddStat("fruits", 1);
+                    Steamworks.SteamUserStats.StoreStats();
+                    Steamworks.SteamUserStats.IndicateAchievementProgress("nom", Steamworks.SteamUserStats.GetStatInt("fruits"), 9);
+                }
+            }
+            catch(System.Exception e)
+            {
+                Debug.Log("Reached max fruits");
+            }
         }
     }
 
@@ -110,10 +144,20 @@ public class SteamIntegrationManager : MonoBehaviour
     {
         if (connectedToSteam)
         {
-            Steamworks.SteamUserStats.RequestCurrentStats();
-            Steamworks.SteamUserStats.AddStat("endings", 1);
-            Steamworks.SteamUserStats.StoreStats();
-            Steamworks.SteamUserStats.IndicateAchievementProgress("triple_threat", Steamworks.SteamUserStats.GetStatInt("endings"), 3);
+            try
+            {
+                Steamworks.SteamUserStats.RequestCurrentStats();
+                if (Steamworks.SteamUserStats.GetStatInt("endings") < 3)
+                {
+                    Steamworks.SteamUserStats.AddStat("endings", 1);
+                    Steamworks.SteamUserStats.StoreStats();
+                    Steamworks.SteamUserStats.IndicateAchievementProgress("triple_threat", Steamworks.SteamUserStats.GetStatInt("endings"), 3);
+                }
+            }
+            catch(System.Exception e)
+            {
+                Debug.Log("Reached max endings");
+            }
         }
     }
 
@@ -121,20 +165,27 @@ public class SteamIntegrationManager : MonoBehaviour
     {
         if (connectedToSteam)
         {
-            int numberUnlocked = 0;
-            int totalAchievements = 0;
-            Steamworks.SteamUserStats.RequestCurrentStats();
-            foreach (Steamworks.Data.Achievement a in Steamworks.SteamUserStats.Achievements)
+            try
             {
-                totalAchievements++;
-                if(a.State)
+                int numberUnlocked = 0;
+                int totalAchievements = 0;
+                Steamworks.SteamUserStats.RequestCurrentStats();
+                foreach (Steamworks.Data.Achievement a in Steamworks.SteamUserStats.Achievements)
                 {
-                    numberUnlocked++;
+                    totalAchievements++;
+                    if (a.State)
+                    {
+                        numberUnlocked++;
+                    }
                 }
+                Steamworks.SteamUserStats.SetStat("achievements", numberUnlocked);
+                Steamworks.SteamUserStats.StoreStats();
+                Steamworks.SteamUserStats.IndicateAchievementProgress("completed", Steamworks.SteamUserStats.GetStatInt("achievements"), totalAchievements);
             }
-            Steamworks.SteamUserStats.SetStat("achievements", numberUnlocked);
-            Steamworks.SteamUserStats.StoreStats();
-            Steamworks.SteamUserStats.IndicateAchievementProgress("completed", Steamworks.SteamUserStats.GetStatInt("achievements"), totalAchievements);
+            catch(System.Exception e)
+            {
+                Debug.Log($"Some Steam error occured - {e.Message}");
+            }
         }
     }
 
@@ -142,11 +193,18 @@ public class SteamIntegrationManager : MonoBehaviour
     {
         if (connectedToSteam)
         {
-            var achievement = new Steamworks.Data.Achievement(apiName);
-            Debug.Log("Syncing Achievement: " + achievement.Name);
-            if (!achievement.State)
+            try
             {
-                achievement.Trigger();
+                var achievement = new Steamworks.Data.Achievement(apiName);
+                Debug.Log("Syncing Achievement: " + achievement.Name);
+                if (!achievement.State)
+                {
+                    achievement.Trigger();
+                }
+            }
+            catch(System.Exception e)
+            {
+                Debug.Log($"Some Steam error occured - {e.Message}");
             }
         }
     }
@@ -154,9 +212,16 @@ public class SteamIntegrationManager : MonoBehaviour
     {
         if (connectedToSteam)
         {
-            var achievement = new Steamworks.Data.Achievement(apiName);
-            Debug.Log("Syncing Achievement: " + achievement.Name);
-            return achievement.State;
+            try
+            {
+                var achievement = new Steamworks.Data.Achievement(apiName);
+                Debug.Log("Syncing Achievement: " + achievement.Name);
+                return achievement.State;
+            }
+            catch (System.Exception e)
+            {
+                Debug.Log($"Some Steam error occured - {e.Message}");
+            }
         }
         return false;
     }
@@ -166,8 +231,15 @@ public class SteamIntegrationManager : MonoBehaviour
     {
         if (connectedToSteam)
         {
-            Debug.Log("Disconnecting from steamworks");
-            Steamworks.SteamClient.Shutdown();
+            try
+            {
+                Debug.Log("Disconnecting from steamworks");
+                Steamworks.SteamClient.Shutdown();
+            }
+            catch(System.Exception e)
+            {
+                Debug.Log($"Some Steam error occured - {e.Message}");
+            }
         }
     }
 
