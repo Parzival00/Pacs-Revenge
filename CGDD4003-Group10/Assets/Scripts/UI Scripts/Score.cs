@@ -582,7 +582,7 @@ public class Score : MonoBehaviour
         }
         else
         {
-            if (demo && currentLevel == 2)
+            if (demo && currentLevel >= 2)
             {
                 PlayerPrefs.SetInt("Ending", 1);
                 totalTimePlayed += Time.time - sceneStartTime;
@@ -635,18 +635,21 @@ public class Score : MonoBehaviour
                 SaveData.updateLevel(SceneManager.GetActiveScene().buildIndex + 1);
                 SaveData.updateStatuses(score, totalGhostKilled, totalShotsFired, totalStunsFired, totalShieldsRecieved, totalLivesConsumed, totalPelletsCollected, (int)totalTimePlayed, fruitsCollected);
 
-                switch (SceneManager.GetActiveScene().buildIndex)
+                if (!demo)
                 {
-                    case 2:
-                        SaveData.addWeaponUnlock(1);
-                        break;
-                    case 4:
-                        SaveData.addWeaponUnlock(2);
-                        break;
-                    case 6:
-                        SaveData.addWeaponUnlock(3);
-                        break;
-                        //Can add more weapons here later...
+                    switch (SceneManager.GetActiveScene().buildIndex)
+                    {
+                        case 2:
+                            SaveData.addWeaponUnlock(1);
+                            break;
+                        case 4:
+                            SaveData.addWeaponUnlock(2);
+                            break;
+                        case 6:
+                            SaveData.addWeaponUnlock(3);
+                            break;
+                            //Can add more weapons here later...
+                    }
                 }
 
                 SaveData.Save();

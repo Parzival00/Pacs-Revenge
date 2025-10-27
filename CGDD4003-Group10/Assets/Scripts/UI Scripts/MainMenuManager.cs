@@ -12,6 +12,8 @@ public class MainMenuManager : MonoBehaviour
 {
     public static bool isGamePaused;
 
+    [SerializeField] bool demo = false;
+
     [Header("Menu Interaction Settings")]
     [SerializeField] AudioSource UIAudio;
     [SerializeField] AudioClip buttonClick;
@@ -344,7 +346,18 @@ public class MainMenuManager : MonoBehaviour
         SaveData.getPlayerMetrics();
         print("Setting difficulty to " + SaveData.getDifficulty() + " Setting weapon to " + weaponSelection);
 
-        SceneManager.LoadScene(SaveData.getLevel());
+        int levelToLoad = SaveData.getLevel();
+        if(demo && levelToLoad > 2)
+        {
+            levelToLoad = 1;
+        }
+        if(demo && weaponSelection != 0)
+        {
+            PlayerPrefs.SetInt("Weapon", 0);
+            SaveData.updateCurrentWeapon(0);
+        }
+
+        SceneManager.LoadScene(levelToLoad);
     }
 
     public void DisplayOptions() 
@@ -667,7 +680,7 @@ public class MainMenuManager : MonoBehaviour
         }
         weaponSelection = weaponSelection % weaponInfos.Length;
 
-        if (weaponsUnlocked.Contains(weaponSelection))
+        if ((demo && weaponSelection == 0) || (!demo && weaponsUnlocked.Contains(weaponSelection)))
         {
             weaponImage.sprite = weaponInfos[weaponSelection].gunIcon;
             weaponImage.color = Color.white;

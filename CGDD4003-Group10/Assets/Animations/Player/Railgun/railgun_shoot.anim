@@ -189,6 +189,36 @@ AnimationClip:
     classID: 1
     script: {fileID: 0}
     flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.5
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_IsActive
+    path: railgun_Sprite/pr_railgun_shot_charge
+    classID: 1
+    script: {fileID: 0}
+    flags: 0
   m_PPtrCurves:
   - serializedVersion: 2
     curve:
@@ -210,6 +240,21 @@ AnimationClip:
       value: {fileID: -752978582, guid: 24f09752ebcaeb34eb1e58c435d80384, type: 3}
     attribute: m_Sprite
     path: railgun_Sprite
+    classID: 212
+    script: {fileID: 0}
+    flags: 2
+  - serializedVersion: 2
+    curve:
+    - time: 0
+      value: {fileID: -1825221085, guid: 9cf6b3bc42de58f44bb9d3a3b72db5dd, type: 3}
+    - time: 0.2
+      value: {fileID: -627072135, guid: 9cf6b3bc42de58f44bb9d3a3b72db5dd, type: 3}
+    - time: 0.3
+      value: {fileID: 985362610, guid: 9cf6b3bc42de58f44bb9d3a3b72db5dd, type: 3}
+    - time: 0.4
+      value: {fileID: -467747733, guid: 9cf6b3bc42de58f44bb9d3a3b72db5dd, type: 3}
+    attribute: m_Sprite
+    path: railgun_Sprite/pr_railgun_shot_charge
     classID: 212
     script: {fileID: 0}
     flags: 2
@@ -257,7 +302,25 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
+      path: 2229747355
+      attribute: 2086281974
+      script: {fileID: 0}
+      typeID: 1
+      customType: 0
+      isPPtrCurve: 0
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
+    - serializedVersion: 2
       path: 4234856157
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
+    - serializedVersion: 2
+      path: 2229747355
       attribute: 0
       script: {fileID: 0}
       typeID: 212
@@ -283,6 +346,10 @@ AnimationClip:
     - {fileID: 870049222, guid: 24f09752ebcaeb34eb1e58c435d80384, type: 3}
     - {fileID: 972261115, guid: 24f09752ebcaeb34eb1e58c435d80384, type: 3}
     - {fileID: -752978582, guid: 24f09752ebcaeb34eb1e58c435d80384, type: 3}
+    - {fileID: -1825221085, guid: 9cf6b3bc42de58f44bb9d3a3b72db5dd, type: 3}
+    - {fileID: -627072135, guid: 9cf6b3bc42de58f44bb9d3a3b72db5dd, type: 3}
+    - {fileID: 985362610, guid: 9cf6b3bc42de58f44bb9d3a3b72db5dd, type: 3}
+    - {fileID: -467747733, guid: 9cf6b3bc42de58f44bb9d3a3b72db5dd, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -521,6 +588,36 @@ AnimationClip:
     attribute: m_LocalPosition.z
     path: 
     classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.5
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_IsActive
+    path: railgun_Sprite/pr_railgun_shot_charge
+    classID: 1
     script: {fileID: 0}
     flags: 0
   m_EulerEditorCurves: []

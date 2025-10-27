@@ -44,6 +44,9 @@ public class AchievementManager
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void Load()
     {
+        //For Demo Purposes
+        //return;
+
         saveFile = Application.persistentDataPath + "/achievements.json";
         fruitFile = Application.persistentDataPath + "/fruits.json";
         Debug.Log("RUNNING ACHIEVEMENT LOADS");
@@ -107,6 +110,9 @@ public class AchievementManager
     /// </summary>
     public static void save()
     {
+        //For Demo Purposes
+        //return;
+
         List<string> jsonLines = new List<string>
         {
             JsonUtility.ToJson(endings),
@@ -136,6 +142,9 @@ public class AchievementManager
     /// <param name="title"></param>
     public static void displayAchievement(string title)
     {
+        //For Demo Purposes
+        //return;
+
         Achievement current = null;
         foreach (Achievement a in potential)
         {
@@ -198,6 +207,9 @@ public class AchievementManager
     }
     public static void stealthCollectAchievement(Achievement a)
     {
+        //For Demo Purposes
+        //return;
+
         a.collected = true;
         collected.Add(a);
         potential.Remove(a);
@@ -209,6 +221,9 @@ public class AchievementManager
     }
     public static void addDeath()
     {
+        //For Demo Purposes
+        //return;
+
         deaths.value = (deaths.value + 1);
         SteamIntegrationManager SIM = GameObject.FindObjectOfType<SteamIntegrationManager>();
         if (SIM != null)
@@ -231,6 +246,9 @@ public class AchievementManager
 
     public static void addFruit(int f)
     {
+        //For Demo Purposes
+        //return;
+
         sInt sf = new sInt(f);
         if (!fruitObtained(sf))
         {
@@ -254,7 +272,10 @@ public class AchievementManager
 
     public static void addEnding(int endingNum)
     {
-        switch(endingNum)
+        //For Demo Purposes
+        //return;
+
+        switch (endingNum)
         {
             case 0:
                 if(!endings.ending0)
@@ -298,7 +319,10 @@ public class AchievementManager
 
     public static void checkEndings()
     {
-        if(endings.ending0 && endings.ending1 && endings.ending2)
+        //For Demo Purposes
+        //return;
+
+        if (endings.ending0 && endings.ending1 && endings.ending2)
         {
             displayAchievement("Triple Threat");
         }
@@ -306,6 +330,9 @@ public class AchievementManager
 
     private static bool fruitObtained(sInt f)
     {
+        //For Demo Purposes
+        //return false;
+
         foreach (sInt item in fruitCollected)
         {
             if(item.value == f.value)

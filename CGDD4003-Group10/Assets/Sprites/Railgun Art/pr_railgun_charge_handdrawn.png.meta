@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 370b0a72dc7227547a6adbc035fbb150
+guid: 9cf6b3bc42de58f44bb9d3a3b72db5dd
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 50
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PR_Shotty_handdrawn_battery_0
+      name: pr_railgun_charge_handdrawn_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 96
-        height: 52
+        width: 480
+        height: 270
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,104 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 93d481de3ff635142bb0e3028c571400
-      internalID: -454197004
+      spriteID: 092da672adb279e40938d9e8e19cc0d2
+      internalID: 1633816692
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PR_Shotty_handdrawn_battery_1
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 96
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ded02c33516aaf145acf49390691fd65
-      internalID: -498730667
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PR_Shotty_handdrawn_battery_2
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 96
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f59548fa8a3412a4386ee6dff640dc29
-      internalID: -2101937693
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PR_Shotty_handdrawn_battery_3
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 0
-        width: 96
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6f86666a3e7e74e40a1e7de6e8a3a0a5
-      internalID: 1682445835
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PR_Shotty_handdrawn_battery_4
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 0
-        width: 96
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d95b04f157d90484a91579c81ff5782e
-      internalID: -692344641
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PR_Shotty_handdrawn_battery_5
+      name: pr_railgun_charge_handdrawn_1
       rect:
         serializedVersion: 2
         x: 480
         y: 0
-        width: 96
-        height: 52
+        width: 480
+        height: 270
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -242,20 +158,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b9aa6c34b6c9cf4eb0d87f45b48ba89
-      internalID: -1033637446
+      spriteID: 1ee7737e3061ef143b5176f0bb7b4e37
+      internalID: -1896470438
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PR_Shotty_handdrawn_battery_6
+      name: pr_railgun_charge_handdrawn_2
       rect:
         serializedVersion: 2
-        x: 576
+        x: 960
         y: 0
-        width: 96
-        height: 52
+        width: 480
+        height: 270
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -263,20 +179,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ee5d111d4aaf9548a4620c309e26b38
-      internalID: -329537283
+      spriteID: 03451f69721ed9d4c9200991e81e6463
+      internalID: 1262552581
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PR_Shotty_handdrawn_battery_7
+      name: pr_railgun_charge_handdrawn_3
       rect:
         serializedVersion: 2
-        x: 672
+        x: 1440
         y: 0
-        width: 96
-        height: 52
+        width: 480
+        height: 270
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -284,20 +200,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3c111e8d8865e9542b0f728e2c3fee02
-      internalID: -1029813601
+      spriteID: dab127325ebad40499056a7324ddef8b
+      internalID: -1825221085
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PR_Shotty_handdrawn_battery_8
+      name: pr_railgun_charge_handdrawn_4
       rect:
         serializedVersion: 2
-        x: 768
+        x: 1920
         y: 0
-        width: 96
-        height: 52
+        width: 480
+        height: 270
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -305,20 +221,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7b96f7e39d46a24789bca89de416ebc
-      internalID: 693445907
+      spriteID: 9bafe2040a6c948448412e42834ecacd
+      internalID: -627072135
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PR_Shotty_handdrawn_battery_9
+      name: pr_railgun_charge_handdrawn_5
       rect:
         serializedVersion: 2
-        x: 864
+        x: 2400
         y: 0
-        width: 96
-        height: 52
+        width: 480
+        height: 270
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -326,8 +242,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 741724388c83e3f40b8a36a6e397d095
-      internalID: 1873614437
+      spriteID: 4b437401130064d459bc643368ab9dc9
+      internalID: 985362610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pr_railgun_charge_handdrawn_6
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 0
+        width: 480
+        height: 270
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f421ee9e11db7ca4f8a6bd90a403449d
+      internalID: -467747733
       vertices: []
       indices: 
       edges: []
@@ -335,7 +272,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 6a73df373fc25034c8d0bf134383247c
+    spriteID: 0ec0f8ece94337a4ab3b6b01ae532258
     internalID: 0
     vertices: []
     indices: 
@@ -343,16 +280,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PR_Shotty_handdrawn_battery_0: -454197004
-      PR_Shotty_handdrawn_battery_1: -498730667
-      PR_Shotty_handdrawn_battery_2: -2101937693
-      PR_Shotty_handdrawn_battery_3: 1682445835
-      PR_Shotty_handdrawn_battery_4: -692344641
-      PR_Shotty_handdrawn_battery_5: -1033637446
-      PR_Shotty_handdrawn_battery_6: -329537283
-      PR_Shotty_handdrawn_battery_7: -1029813601
-      PR_Shotty_handdrawn_battery_8: 693445907
-      PR_Shotty_handdrawn_battery_9: 1873614437
+      pr_railgun_charge_handdrawn_0: 1633816692
+      pr_railgun_charge_handdrawn_1: -1896470438
+      pr_railgun_charge_handdrawn_2: 1262552581
+      pr_railgun_charge_handdrawn_3: -1825221085
+      pr_railgun_charge_handdrawn_4: -627072135
+      pr_railgun_charge_handdrawn_5: 985362610
+      pr_railgun_charge_handdrawn_6: -467747733
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
