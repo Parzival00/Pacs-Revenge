@@ -8,276 +8,278 @@ using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
-    private List<ScoreEntry> highScores = new List<ScoreEntry>();
-    StreamReader savedScores;
-    StreamWriter editScores;
-    private int tempListIndex;
+  private List<ScoreEntry> highScores = new List<ScoreEntry>();
+  StreamReader savedScores;
+  StreamWriter editScores;
+  private int tempListIndex;
 
-    private string playerIntials;
+  private string playerIntials;
 
-    [SerializeField] bool deleteHighScoreFile;
+  [SerializeField] bool deleteHighScoreFile;
 
-    [Header("UI Components")]
-    [SerializeField] Camera cam;
-    [SerializeField] TMP_InputField uiInput;
-    [SerializeField] TMP_Text highScoreDisplay;
-    [SerializeField] TMP_Text currentPlayerScore;
-    [SerializeField] TMP_Text babyModeInsult;
-    [SerializeField] Image caret;
-    [SerializeField] float characterWidth;
-    [SerializeField] float blinkRate = 3f;
-    Vector2 caretStartPos;
+  [Header("UI Components")]
+  [SerializeField] Camera cam;
+  [SerializeField] TMP_InputField uiInput;
+  [SerializeField] TMP_Text highScoreDisplay;
+  [SerializeField] TMP_Text currentPlayerScore;
+  [SerializeField] TMP_Text babyModeInsult;
+  [SerializeField] Image caret;
+  [SerializeField] float characterWidth;
+  [SerializeField] float blinkRate = 3f;
+  Vector2 caretStartPos;
 
-    RectTransform caretRect;
+  RectTransform caretRect;
 
-    bool wroteToFile = false;
+  bool wroteToFile = false;
 
-    public struct ScoreEntry
+  public struct ScoreEntry
+  {
+    public int playerRank, playerScore;
+    public string name;
+
+    public ScoreEntry(int rank, string intials, int score)
     {
-        public int playerRank, playerScore;
-        public string name;
-
-        public ScoreEntry(int rank, string intials, int score)
-        {
-            playerRank = rank;
-            name = intials;
-            playerScore = score;
-        }
-        public override string ToString()
-        {
-            return string.Format("{0,-4}{1,4}", $"{this.playerRank}.", this.name) + string.Format("{0,10}", this.playerScore);// this.playerRank + ".   " + this.name + "   " + this.playerScore;
-        }
-        public string ToFileFormat()
-        {
-            return this.playerRank + " " + this.name + " " + this.playerScore;
-        }
+      playerRank = rank;
+      name = intials;
+      playerScore = score;
     }
 
-    public void Start()
+    public override string ToString()
     {
-        wroteToFile = false;
+      return string.Format("{0,-4}{1,4}", $"{this.playerRank}.", this.name) + string.Format("{0,10}", this.playerScore);// this.playerRank + ".   " + this.name + "   " + this.playerScore;
+    }
+    public string ToFileFormat()
+    {
+      return this.playerRank + " " + this.name + " " + this.playerScore;
+    }
+  }
 
-        if (deleteHighScoreFile)
-        {
-            if (File.Exists((Application.persistentDataPath + "/Scores.txt")))
-            {
-                File.Delete(Application.persistentDataPath + "/Scores.txt");
-            }
-        }
+  public void Start()
+  {
+    wroteToFile = false;
 
-        if(PlayerPrefs.GetInt("Difficulty") == 0) 
-        {
-            uiInput.gameObject.SetActive(false);
-            highScoreDisplay.gameObject.SetActive(false);
-            currentPlayerScore.gameObject.SetActive(false);
-            babyModeInsult.gameObject.SetActive(true); 
-        } 
-        else
-        {
-            babyModeInsult.gameObject.SetActive(false);
-            uiInput.gameObject.SetActive(true);
-            highScoreDisplay.gameObject.SetActive(true);
-            currentPlayerScore.gameObject.SetActive(true);
-            DisplayCurrentScore();
-        }
-
-        caretRect = caret.GetComponent<RectTransform>();
-        caretStartPos = caretRect.anchoredPosition;
+    if (deleteHighScoreFile)
+    {
+      if (File.Exists((Application.persistentDataPath + "/Scores.txt")))
+      {
+        File.Delete(Application.persistentDataPath + "/Scores.txt");
+      }
     }
 
-
-    public void ReadScores()
+    if (PlayerPrefs.GetInt("Difficulty") == 0)
     {
-        string tempLine = "";
-        string[] lineSplit;
-        int tempRank, tempScore;
-        ScoreEntry tempScoreManager;
-
-        if(!File.Exists((Application.persistentDataPath + "/Scores.txt"))){
-            File.WriteAllText(Application.persistentDataPath + "/Scores.txt", "");
-        }
-
-        using (savedScores = new StreamReader(Application.persistentDataPath + "/Scores.txt"))
-        {
-            while (!savedScores.EndOfStream)
-            {
-                tempLine = savedScores.ReadLine();
-                lineSplit = tempLine.Split(' ');
-
-                if (lineSplit.Length != 3) continue;
-
-                tempRank = Int32.Parse(lineSplit[0]);
-                tempScore = Int32.Parse(lineSplit[2]);
-
-                tempScoreManager = new ScoreEntry(tempRank, lineSplit[1], tempScore);
-                highScores.Add(tempScoreManager);
-            }
-        }
+      uiInput.gameObject.SetActive(false);
+      highScoreDisplay.gameObject.SetActive(false);
+      currentPlayerScore.gameObject.SetActive(false);
+      babyModeInsult.gameObject.SetActive(true);
     }
-    public void AddPlayerScore(string input)
+    else
     {
-        ReadScores();
-
-        //if (Input.GetKeyDown(KeyCode.Return))
-        //{
-            if (uiInput.text.Equals("") || uiInput.Equals(null))
-            {
-                playerIntials = "BOO";
-            }
-            playerIntials = uiInput.text.ToUpper();
-            uiInput.gameObject.SetActive(false);
-            currentPlayerScore.gameObject.SetActive(false);
-        //}
-
-        bool matchingNameFound = false;
-        bool removedMatchingName = false;
-
-        //Check for matching name already in high score list and remove it
-        for (int i = 0; i < highScores.Count; i++)
-        {
-            if(highScores[i].name == playerIntials)
-            {
-                matchingNameFound = true;
-                if (highScores[i].playerScore < Score.score)
-                {
-                    removedMatchingName = true;
-                    print("Matching Name");
-                    highScores.RemoveAt(i);
-
-                    //Update rank positions of all entries after removed entry
-                    for (int e = i; e < highScores.Count; e++)
-                    {
-                        ScoreEntry temp = highScores[e];
-                        temp.playerRank -= 1;
-
-                        highScores.Insert(e, temp);
-                        highScores.RemoveAt(e + 1);
-                    }
-                }
-            }
-        }
-
-        if (!matchingNameFound || (matchingNameFound && removedMatchingName))
-        {
-            bool foundInsertLocation = false;
-            tempListIndex = highScores.Count;
-
-            //Find index of new entry into high score list
-            for (int i = 0; i < highScores.Count; i++)
-            {
-                if (Score.score > highScores[i].playerScore && foundInsertLocation == false)
-                {
-                    foundInsertLocation = true;
-
-                    tempListIndex = i;
-                }
-            }
-
-            //Add new entry
-            if (tempListIndex < highScores.Count)
-            {
-                highScores.Insert(tempListIndex, new ScoreEntry(tempListIndex + 1, playerIntials, Score.score));
-            }
-            else
-            {
-                highScores.Add(new ScoreEntry(highScores.Count + 1, playerIntials, Score.score));
-            }
-
-            //Trim list to only ten entries
-            //if (highScores.Count > 10)
-            //    highScores.RemoveAt(10);
-
-            //Update rank positions of all entries after newly inserted entry
-            for (int i = tempListIndex + 1; i < highScores.Count; i++)
-            {
-                ScoreEntry temp = highScores[i];
-                temp.playerRank += 1;
-
-                highScores.Insert(i, temp);
-                highScores.RemoveAt(i + 1);
-            }
-        }
-
-        DisplayHighScores();
+      babyModeInsult.gameObject.SetActive(false);
+      uiInput.gameObject.SetActive(true);
+      highScoreDisplay.gameObject.SetActive(true);
+      currentPlayerScore.gameObject.SetActive(true);
+      DisplayCurrentScore();
     }
 
-    public void DisplayHighScores()
+    caretRect = caret.GetComponent<RectTransform>();
+    caretStartPos = caretRect.anchoredPosition;
+  }
+
+
+  public void ReadScores()
+  {
+    string tempLine = "";
+    string[] lineSplit;
+    int tempRank, tempScore;
+    ScoreEntry tempScoreManager;
+
+    if (!File.Exists((Application.persistentDataPath + "/Scores.txt")))
     {
-        highScoreDisplay.text = "";
-        for(int i = 0; i < 10 && i < highScores.Count; i++)
+      File.WriteAllText(Application.persistentDataPath + "/Scores.txt", "");
+    }
+
+    using (savedScores = new StreamReader(Application.persistentDataPath + "/Scores.txt"))
+    {
+      while (!savedScores.EndOfStream)
+      {
+        tempLine = savedScores.ReadLine();
+        lineSplit = tempLine.Split(' ');
+
+        if (lineSplit.Length != 3) continue;
+
+        tempRank = Int32.Parse(lineSplit[0]);
+        tempScore = Int32.Parse(lineSplit[2]);
+
+        tempScoreManager = new ScoreEntry(tempRank, lineSplit[1], tempScore);
+        highScores.Add(tempScoreManager);
+      }
+    }
+  }
+  public void AddPlayerScore(string input)
+  {
+    ReadScores();
+
+    //if (Input.GetKeyDown(KeyCode.Return))
+    //{
+    if (uiInput.text.Equals("") || uiInput.Equals(null))
+    {
+      playerIntials = "BOO";
+    }
+    playerIntials = uiInput.text.ToUpper();
+    uiInput.gameObject.SetActive(false);
+    currentPlayerScore.gameObject.SetActive(false);
+    //}
+
+    bool matchingNameFound = false;
+    bool removedMatchingName = false;
+
+    //Check for matching name already in high score list and remove it
+    for (int i = 0; i < highScores.Count; i++)
+    {
+      if (highScores[i].name == playerIntials)
+      {
+        matchingNameFound = true;
+        if (highScores[i].playerScore < Score.score)
         {
-            highScoreDisplay.text += highScores[i].ToString() + "\n";
-        }
+          removedMatchingName = true;
+          print("Matching Name");
+          highScores.RemoveAt(i);
 
-        if(!wroteToFile)
-            WriteToScoreFile();
+          //Update rank positions of all entries after removed entry
+          for (int e = i; e < highScores.Count; e++)
+          {
+            ScoreEntry temp = highScores[e];
+            temp.playerRank -= 1;
+
+            highScores.Insert(e, temp);
+            highScores.RemoveAt(e + 1);
+          }
+        }
+      }
     }
 
-    public void WriteToScoreFile() 
+    if (!matchingNameFound || (matchingNameFound && removedMatchingName))
     {
-        wroteToFile = true;
+      bool foundInsertLocation = false;
+      tempListIndex = highScores.Count;
 
-        if (!File.Exists((Application.persistentDataPath + "/Scores.txt")))
+      //Find index of new entry into high score list
+      for (int i = 0; i < highScores.Count; i++)
+      {
+        if (Score.score > highScores[i].playerScore && foundInsertLocation == false)
         {
-            File.WriteAllText(Application.persistentDataPath + "/Scores.txt", "");
+          foundInsertLocation = true;
+
+          tempListIndex = i;
         }
+      }
 
-        using (editScores = new StreamWriter(Application.persistentDataPath + "/Scores.txt"))
-        {
-            foreach (ScoreEntry highscores in highScores) 
-            {
-                editScores.WriteLine(highscores.ToFileFormat());
-            }
-        }
+      //Add new entry
+      if (tempListIndex < highScores.Count)
+      {
+        highScores.Insert(tempListIndex, new ScoreEntry(tempListIndex + 1, playerIntials, Score.score));
+      }
+      else
+      {
+        highScores.Add(new ScoreEntry(highScores.Count + 1, playerIntials, Score.score));
+      }
+
+      //Trim list to only ten entries
+      //if (highScores.Count > 10)
+      //    highScores.RemoveAt(10);
+
+      //Update rank positions of all entries after newly inserted entry
+      for (int i = tempListIndex + 1; i < highScores.Count; i++)
+      {
+        ScoreEntry temp = highScores[i];
+        temp.playerRank += 1;
+
+        highScores.Insert(i, temp);
+        highScores.RemoveAt(i + 1);
+      }
     }
-    public void DisplayCurrentScore() 
+
+    DisplayHighScores();
+  }
+
+  public void DisplayHighScores()
+  {
+    highScoreDisplay.text = "";
+    for (int i = 0; i < 10 && i < highScores.Count; i++)
     {
-        int playerScore = Score.score;
-        currentPlayerScore.font = Localizer.instance.GetCurrentFont();
-        currentPlayerScore.text = $"{Localizer.instance.GetLanguageText(Localizer.TextIdentifier.UI_HighScore_Score)}: " + playerScore;
+      highScoreDisplay.text += highScores[i].ToString() + "\n";
     }
 
-    Coroutine blinkCoroutine;
-    IEnumerator BlinkCaret()
+    if (!wroteToFile)
+      WriteToScoreFile();
+  }
+
+  public void WriteToScoreFile()
+  {
+    wroteToFile = true;
+
+    if (!File.Exists((Application.persistentDataPath + "/Scores.txt")))
     {
-        float timeBtwBlinks = 1 / blinkRate;
-        float timer = 0;
-        while(caret.gameObject.activeInHierarchy)
-        {
-            if(timer > timeBtwBlinks)
-            {
-                caret.enabled = !caret.enabled;
-                timer = 0;
-            }
-            yield return null;
-            timer += Time.deltaTime;
-        }
+      File.WriteAllText(Application.persistentDataPath + "/Scores.txt", "");
     }
 
-    public void OnValueChangedInput()
+    using (editScores = new StreamWriter(Application.persistentDataPath + "/Scores.txt"))
     {
-        string s = uiInput.text.ToUpper();
-
-        caretRect.anchoredPosition = caretStartPos + Vector2.right * s.Length * characterWidth;
-
-        if (s.Length >= 3)
-        {
-            caret.gameObject.SetActive(false);
-        }
+      foreach (ScoreEntry highscores in highScores)
+      {
+        editScores.WriteLine(highscores.ToFileFormat());
+      }
     }
+  }
+  public void DisplayCurrentScore()
+  {
+    int playerScore = Score.score;
+    currentPlayerScore.font = Localizer.instance.GetCurrentFont();
+    currentPlayerScore.text = $"{Localizer.instance.GetLanguageText(Localizer.TextIdentifier.UI_HighScore_Score)}: " + playerScore;
+  }
 
-    public void OnSelectInput()
+  Coroutine blinkCoroutine;
+  IEnumerator BlinkCaret()
+  {
+    float timeBtwBlinks = 1 / blinkRate;
+    float timer = 0;
+    while (caret.gameObject.activeInHierarchy)
     {
-        if (uiInput.text.ToUpper().Length < 3)
-        {
-            caret.gameObject.SetActive(true);
-            if (blinkCoroutine != null) StopCoroutine(blinkCoroutine);
-            blinkCoroutine = StartCoroutine(BlinkCaret());
-        }
+      if (timer > timeBtwBlinks)
+      {
+        caret.enabled = !caret.enabled;
+        timer = 0;
+      }
+      yield return null;
+      timer += Time.deltaTime;
     }
+  }
 
-    public void OnDeselectInput()
+  public void OnValueChangedInput()
+  {
+    string s = uiInput.text.ToUpper();
+
+    caretRect.anchoredPosition = caretStartPos + Vector2.right * s.Length * characterWidth;
+
+    if (s.Length >= 3)
     {
-        caret.gameObject.SetActive(false);
+      caret.gameObject.SetActive(false);
     }
+  }
+
+  public void OnSelectInput()
+  {
+    if (uiInput.text.ToUpper().Length < 3)
+    {
+      caret.gameObject.SetActive(true);
+      if (blinkCoroutine != null) StopCoroutine(blinkCoroutine);
+      blinkCoroutine = StartCoroutine(BlinkCaret());
+    }
+  }
+
+  public void OnDeselectInput()
+  {
+    caret.gameObject.SetActive(false);
+  }
 }
