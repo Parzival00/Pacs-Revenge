@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
-  private List<ScoreEntry> highScores = new List<ScoreEntry>();
+  private List<HighScoreEntry> highScores = new List<HighScoreEntry>();
   StreamReader savedScores;
   StreamWriter editScores;
   private int tempListIndex;
@@ -31,28 +31,6 @@ public class ScoreManager : MonoBehaviour
   RectTransform caretRect;
 
   bool wroteToFile = false;
-
-  public struct ScoreEntry
-  {
-    public int playerRank, playerScore;
-    public string name;
-
-    public ScoreEntry(int rank, string intials, int score)
-    {
-      playerRank = rank;
-      name = intials;
-      playerScore = score;
-    }
-
-    public override string ToString()
-    {
-      return string.Format("{0,-4}{1,4}", $"{this.playerRank}.", this.name) + string.Format("{0,10}", this.playerScore);// this.playerRank + ".   " + this.name + "   " + this.playerScore;
-    }
-    public string ToFileFormat()
-    {
-      return this.playerRank + " " + this.name + " " + this.playerScore;
-    }
-  }
 
   public void Start()
   {
@@ -92,7 +70,7 @@ public class ScoreManager : MonoBehaviour
     string tempLine = "";
     string[] lineSplit;
     int tempRank, tempScore;
-    ScoreEntry tempScoreManager;
+    HighScoreEntry tempScoreManager;
 
     if (!File.Exists((Application.persistentDataPath + "/Scores.txt")))
     {
@@ -111,8 +89,8 @@ public class ScoreManager : MonoBehaviour
         tempRank = Int32.Parse(lineSplit[0]);
         tempScore = Int32.Parse(lineSplit[2]);
 
-        tempScoreManager = new ScoreEntry(tempRank, lineSplit[1], tempScore);
-        highScores.Add(tempScoreManager);
+        //tempScoreManager = new HighScoreEntry(tempRank, lineSplit[1], tempScore);
+        //highScores.Add(tempScoreManager);
       }
     }
   }
@@ -149,7 +127,7 @@ public class ScoreManager : MonoBehaviour
           //Update rank positions of all entries after removed entry
           for (int e = i; e < highScores.Count; e++)
           {
-            ScoreEntry temp = highScores[e];
+            HighScoreEntry temp = highScores[e];
             temp.playerRank -= 1;
 
             highScores.Insert(e, temp);
@@ -178,11 +156,11 @@ public class ScoreManager : MonoBehaviour
       //Add new entry
       if (tempListIndex < highScores.Count)
       {
-        highScores.Insert(tempListIndex, new ScoreEntry(tempListIndex + 1, playerIntials, Score.score));
+        //highScores.Insert(tempListIndex, new HighScoreEntry(tempListIndex + 1, playerIntials, Score.score));
       }
       else
       {
-        highScores.Add(new ScoreEntry(highScores.Count + 1, playerIntials, Score.score));
+        //highScores.Add(new HighScoreEntry(highScores.Count + 1, playerIntials, Score.score));
       }
 
       //Trim list to only ten entries
@@ -192,7 +170,7 @@ public class ScoreManager : MonoBehaviour
       //Update rank positions of all entries after newly inserted entry
       for (int i = tempListIndex + 1; i < highScores.Count; i++)
       {
-        ScoreEntry temp = highScores[i];
+        HighScoreEntry temp = highScores[i];
         temp.playerRank += 1;
 
         highScores.Insert(i, temp);
@@ -226,7 +204,7 @@ public class ScoreManager : MonoBehaviour
 
     using (editScores = new StreamWriter(Application.persistentDataPath + "/Scores.txt"))
     {
-      foreach (ScoreEntry highscores in highScores)
+      foreach (HighScoreEntry highscores in highScores)
       {
         editScores.WriteLine(highscores.ToFileFormat());
       }
